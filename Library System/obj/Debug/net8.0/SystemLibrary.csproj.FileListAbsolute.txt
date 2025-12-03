@@ -791,6 +791,7 @@ C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\Sys
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.sourcelink.json
+<<<<<<< HEAD
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.json
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
@@ -844,3 +845,7 @@ C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.pdb
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
 C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
+=======
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Newtonsoft.Json.dll
+>>>>>>> 989cd7affacb903e58d815ecbbc2737e06e8465d

@@ -119,9 +119,11 @@
         <div id="toast" class="toast">@toastMessage</div>
 
         <script src="~/js/AdminDb/AdminDb.js" asp-append-version="true"></script>
-        @{
+        @{ 
             ViewBag.CurrentPage = "home";
             ViewBag.Role = "Professor";
+            ViewBag.AdminName = Model.ProfessorName;
+            ViewBag.AdminInitials = Model.ProfessorInitials;
         }
         @await Html.PartialAsync("_AdminBottomBar")
 
