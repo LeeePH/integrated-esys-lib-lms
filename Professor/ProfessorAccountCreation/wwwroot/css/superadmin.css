@@ -1,0 +1,228 @@
+/* General Body */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FCFFF5;
+    color: #006B99;
+    font-size: 13px; /* slightly smaller for compact design */
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Page Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    color: #006B99;
+    font-weight: 600;
+    font-size: 1.6rem; /* slightly smaller */
+}
+
+/* Filter/Search Section */
+.filter-search {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    gap: 0.6rem;
+}
+
+    .filter-search select,
+    .filter-search input {
+        padding: 0.45rem 0.65rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 0.9rem;
+        min-width: 160px;
+    }
+
+    .filter-search button {
+        font-size: 0.9rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 5px;
+        text-decoration: none; /* remove underline */
+    }
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem; /* slightly smaller */
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+th {
+    background-color: #006B99;
+    color: #FCFFF5;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #FCFFF5;
+}
+
+tr:hover {
+    background-color: #BFBFBF;
+    color: black;
+    transition: 0.3s;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem; /* slightly smaller */
+    text-decoration: none; /* remove underline for all buttons */
+    transition: 0.2s;
+}
+
+.btn-add {
+    background-color: #049F6E;
+    margin-bottom: 1rem;
+}
+
+    .btn-add:hover {
+        background-color: #037A55;
+    }
+
+.btn-edit {
+    background-color: #FF9809;
+}
+
+    .btn-edit:hover {
+        background-color: #e68a00;
+    }
+
+.btn-delete {
+    background-color: #8F2809;
+}
+
+    .btn-delete:hover {
+        background-color: #6b1f07;
+    }
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    gap: 0.25rem;
+}
+
+    .pagination li a {
+        display: block;
+        padding: 0.4rem 0.7rem;
+        background-color: #006B99;
+        color: #FCFFF5;
+        border-radius: 5px;
+        text-decoration: none; /* remove underline */
+        font-size: 0.85rem;
+    }
+
+        .pagination li a.active {
+            background-color: #049F6E;
+        }
+
+        .pagination li a:hover {
+            background-color: #037A55;
+        }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filter-search {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+        .filter-search select,
+        .filter-search input,
+        .filter-search button {
+            width: 100%;
+        }
+
+    table {
+        font-size: 0.8rem; /* even smaller on mobile */
+    }
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+    .dashboard-header h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #006B99;
+    }
+
+/* Logout Button */
+.btn-logout {
+    background-color: #8F2809;
+    color: #FCFFF5;
+    padding: 0.45rem 0.85rem;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none; /* remove underline */
+    transition: 0.2s;
+}
+
+    .btn-logout:hover {
+        background-color: #6b1f07;
+    }
+
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d9534f;
+    color: white;
+    padding: 0.9rem 1.4rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.5s ease, top 0.5s ease;
+}
+
+    .toast.show {
+        opacity: 1;
+        pointer-events: auto;
+        top: 40px;
+    }
+

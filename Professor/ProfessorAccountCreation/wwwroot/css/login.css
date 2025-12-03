@@ -1,0 +1,87 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #FCFFF5; /* light neutral background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card Container */
+.login-card {
+    background-color: #FFFFFF;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+    .login-card h2 {
+        color: #006B99; /* Primary color */
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Form Fields */
+    .login-card form div {
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .login-card label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        color: #049F6E; /* subtle secondary color */
+    }
+
+    .login-card input[type="email"],
+    .login-card input[type="password"],
+    .login-card input[type="text"] {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+        transition: border 0.3s;
+    }
+
+    .login-card input:focus {
+        border-color: #006B99;
+        outline: none;
+    }
+
+    /* Button */
+    .login-card button {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #006B99; /* primary color */
+        color: #FCFFF5; /* white text */
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+        .login-card button:hover {
+            background-color: #049F6E; /* hover effect */
+        }
+
+/* Error Message */
+.error {
+    color: #8F2809; /* dark red */
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}

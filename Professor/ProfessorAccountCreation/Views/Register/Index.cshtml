@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Professor Registration";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] | LMS Subsystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/register.css" />
+</head>
+
+<body>
+    <header>
+        Professor Registration
+    </header>
+
+    <main>
+        <div class="registration-container">
+
+            <form asp-controller="SuperAdmin" asp-action="Index" method="get">
+                <button class="back-btn">Back to Dashboard</button>
+            </form>
+
+            <h2>Professor Information Form</h2>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-error">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <form asp-action="Register" method="post">
+
+                <!-- NAME FIELDS -->
+                <div>
+                    <label for="LastName">Last Name *</label>
+                    <input type="text" id="LastName" name="LastName" required
+                           pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'.,-]+$" />
+                </div>
+
+                <div>
+                    <label for="GivenName">Given Name *</label>
+                    <input type="text" id="GivenName" name="GivenName" required
+                           pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'.,-]+$" />
+                </div>
+
+                <div>
+                    <label for="MiddleName">Middle Name</label>
+                    <input type="text" id="MiddleName" name="MiddleName"
+                           pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'.,-]*$" />
+                </div>
+
+                <div>
+                    <label for="Extension">Extension (e.g., Jr., III)</label>
+                    <input type="text" id="Extension" name="Extension"
+                           pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'.,-]*$" />
+                </div>
+
+                <!-- EMAIL -->
+                <div>
+                    <label for="Email">Email Address *</label>
+                    <input type="email" id="Email" name="Email" required
+                           pattern="[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+                </div>
+
+                <!-- FACULTY ROLE -->
+                <div>
+                    <label for="FacultyRole">Faculty Appointment *</label>
+                    <select id="FacultyRole" name="FacultyRole" required>
+                        <option value="">-- Select Appointment Type --</option>
+                        <option value="Full-Time Faculty">Full-Time Faculty</option>
+                        <option value="Part-Time / Adjunct Faculty">Part-Time / Adjunct Faculty</option>
+                    </select>
+                </div>
+
+                <!-- PROGRAM -->
+                <div>
+                    <label>Department *</label>
+                    <div class="program-options">
+                        <label><input type="checkbox" name="Programs" value="Information Technology" /> Information Technology</label>
+                        <label><input type="checkbox" name="Programs" value="Entrepreneurship" /> Entrepreneurship</label>
+                        <label><input type="checkbox" name="Programs" value="General Education" /> General Education</label>
+                    </div>
+                </div>
+
+                <!-- EDUCATION -->
+                <div class="education-group">
+                    <h3>Educational Background</h3>
+                    <div class="education-sub">
+
+                        <!-- BACHELOR -->
+                        <div>
+                            <label for="BachelorSelect">Bachelor’s Degree</label>
+                            <select id="BachelorSelect" name="BachelorSelect">
+                                <option value="">-- Select Degree --</option>
+                                <option value="BS Information Technology">BS Information Technology</option>
+                                <option value="BS Computer Science">BS Computer Science</option>
+                                <option value="BS Information Systems">BS Information Systems</option>
+                                <option value="BS Entrepreneurship">BS Entrepreneurship</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
+                            <input type="text"
+                                   id="BachelorOther"
+                                   name="Bachelor"
+                                   placeholder="Please specify"
+                                   style="display:none; margin-top:10px;" />
+                        </div>
+
+                        <!-- MASTERS -->
+                        <div>
+                            <label for="MastersSelect">Master’s Degree</label>
+                            <select id="MastersSelect" name="MastersSelect">
+                                <option value="">-- Select Degree --</option>
+                                <option value="MS Computer Science">MS Computer Science</option>
+                                <option value="MBA">MBA</option>
+                                <option value="MEd">MEd</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
+                            <input type="text"
+                                   id="MastersOther"
+                                   name="Masters"
+                                   placeholder="Please specify"
+                                   style="display:none; margin-top:10px;" />
+                        </div>
+
+                        <!-- PHD -->
+                        <div>
+                            <label for="PhDSelect">PhD / Doctorate</label>
+                            <select id="PhDSelect" name="PhDSelect">
+                                <option value="">-- Select Degree --</option>
+                                <option value="PhD in Information Systems">PhD in Information Systems</option>
+                                <option value="EdD">EdD</option>
+                                <option value="DBA">DBA</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
+                            <input type="text"
+                                   id="PhDOther"
+                                   name="PhD"
+                                   placeholder="Please specify"
+                                   style="display:none; margin-top:10px;" />
+                        </div>
+
+                        <!-- LICENSES -->
+                        <div>
+                            <label for="LicensesSelect">Licenses / Certifications</label>
+                            <select id="LicensesSelect" name="LicensesSelect">
+                                <option value="">-- Select Certification --</option>
+                                <option value="LET / LPT">LET / LPT</option>
+                                <option value="Cisco Certification">Cisco Certification</option>
+                                <option value="NC Certifications">NC Certifications</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
+                            <input type="text"
+                                   id="LicensesOther"
+                                   name="Licenses"
+                                   placeholder="Please specify"
+                                   style="display:none; margin-top:10px;" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Registration</button>
+            </form>
+        </div>
+    </main>
+   
+    <script src="~/js/register.js"></script>
+</body>
+</html>

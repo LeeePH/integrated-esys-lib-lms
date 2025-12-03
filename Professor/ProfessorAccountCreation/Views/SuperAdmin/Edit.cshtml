@@ -1,0 +1,170 @@
+﻿@model ProfessorAccountCreation.Models.Professor
+@{
+    ViewData["Title"] = "Edit Professor";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/edit.css" />
+ 
+</head>
+<body>
+    <header class="header">
+        Prof Admin — Edit Professor
+    </header>
+
+    <main class="edit-container">
+        <div class="edit-card">
+            <h2>Edit Professor Information</h2>
+            <form asp-action="Edit" method="post">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <!-- Name Fields -->
+                <div class="form-group">
+                    <label for="LastName">Last Name *</label>
+                    <input type="text" id="LastName" name="LastName" value="@Model.LastName" required />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="GivenName">Given Name *</label>
+                    <input type="text" id="GivenName" name="GivenName" value="@Model.GivenName" required />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="MiddleName">Middle Name</label>
+                    <input type="text" id="MiddleName" name="MiddleName" value="@Model.MiddleName" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="Extension">Extension (e.g., Jr., III)</label>
+                    <input type="text" id="Extension" name="Extension" value="@Model.Extension" />
+                </div>
+                <br />
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="Email">Email Address *</label>
+                    <input type="email" id="Email" name="Email" value="@Model.Email" required />
+                </div>
+                <br />
+                <!-- Program Selection -->
+                <div class="form-group">
+                    <label>Program(s) *</label>
+                    <div class="program-options">
+                        <label><input type="checkbox" name="Programs" value="Information Technology" @(Model.Programs.Contains("Information Technology") ? "checked" : "") /> Information Technology</label>
+                        <label><input type="checkbox" name="Programs" value="Entrepreneurship" @(Model.Programs.Contains("Entrepreneurship") ? "checked" : "") /> Entrepreneurship</label>
+                        <label><input type="checkbox" name="Programs" value="General Education" @(Model.Programs.Contains("General Education") ? "checked" : "") /> General Education</label>
+                    </div>
+                </div>
+                <br />
+                <!-- Faculty Role -->
+                <div class="form-group">
+                    <label for="FacultyRole">Faculty Appointment *</label>
+                    <select id="FacultyRole" name="FacultyRole" required>
+                        <option value="">-- Select Appointment Type --</option>
+                        <!option value="Full-Time Faculty" @(Model.FacultyRole == "Full-Time Faculty" ? "selected" : "")>Full-Time Faculty</!option>
+                        <!option value="Part-Time / Adjunct Faculty" @(Model.FacultyRole == "Part-Time / Adjunct Faculty" ? "selected" : "")>Part-Time / Adjunct Faculty</!option>
+                    </select>
+                </div>
+
+
+                               <!-- EDUCATION -->
+                <div class="education-group">
+                    <h3>Educational Background</h3>
+                    <div class="education-sub">
+
+                        <!-- BACHELOR -->
+                        <div class="form-group">
+                            <label for="BachelorSelect">Bachelor’s Degree</label>
+                            <select id="BachelorSelect" name="BachelorSelect">
+                                <option value="">-- Select Degree --</option>
+                                <!option value="BS Information Technology" @(Model.Bachelor == "BS Information Technology" ? "selected" : "")>BS Information Technology</!option>
+                                <!option value="BS Computer Science" @(Model.Bachelor == "BS Computer Science" ? "selected" : "")>BS Computer Science</!option>
+                                <!option value="BS Information Systems" @(Model.Bachelor == "BS Information Systems" ? "selected" : "")>BS Information Systems</!option>
+                                <!option value="BS Entrepreneurship" @(Model.Bachelor == "BS Entrepreneurship" ? "selected" : "")>BS Entrepreneurship</!option>
+                                <!option value="OTHER" @(Model.Bachelor != null && !new[] { "BS Information Technology", "BS Computer Science", "BS Information Systems", "BS Entrepreneurship" }.Contains(Model.Bachelor) ? "selected" : "")>Other</!option>
+                            </select>
+
+                            <input type="text"
+                                   id="BachelorOther"
+                                   name="Bachelor"
+                                   placeholder="Please specify"
+                                   style="display:@(Model.Bachelor != null && !new[] { "BS Information Technology", "BS Computer Science", "BS Information Systems", "BS Entrepreneurship" }.Contains(Model.Bachelor) ? "block" : "none"); margin-top:10px;"
+                                   value="@(Model.Bachelor != null && !new[] { "BS Information Technology", "BS Computer Science", "BS Information Systems", "BS Entrepreneurship" }.Contains(Model.Bachelor) ? Model.Bachelor : "")" />
+                        </div>
+
+
+        <!-- MASTERS -->
+        <div class="form-group">
+            <label for="MastersSelect">Master’s Degree</label>
+            <select id="MastersSelect" name="MastersSelect">
+                <option value="">-- Select Degree --</option>
+                <!option value="MS Computer Science" @(Model.Masters == "MS Computer Science" ? "selected" : "")>MS Computer Science</!option>
+                <!option value="MBA" @(Model.Masters == "MBA" ? "selected" : "")>MBA</!option>
+                <!option value="MEd" @(Model.Masters == "MEd" ? "selected" : "")>MEd</!option>
+                <!option value="OTHER" @(Model.Masters != null && !new[] { "MS Computer Science", "MBA", "MEd" }.Contains(Model.Masters) ? "selected" : "")>Other</!option>
+            </select>
+
+            <input type="text"
+                   id="MastersOther"
+                   name="Masters"
+                   placeholder="Please specify"
+                   style="display:@(Model.Masters != null && !new[] { "MS Computer Science", "MBA", "MEd" }.Contains(Model.Masters) ? "block" : "none"); margin-top:10px;"
+                   value="@(Model.Masters != null && !new[] { "MS Computer Science", "MBA", "MEd" }.Contains(Model.Masters) ? Model.Masters : "")" />
+        </div>
+
+        <!-- PHD -->
+        <div class="form-group">
+            <label for="PhDSelect">PhD / Doctorate</label>
+            <select id="PhDSelect" name="PhDSelect">
+                <option value="">-- Select Degree --</option>
+                <!option value="PhD in Information Systems" @(Model.PhD == "PhD in Information Systems" ? "selected" : "")>PhD in Information Systems</!option>
+                <!option value="EdD" @(Model.PhD == "EdD" ? "selected" : "")>EdD</!option>
+                <!option value="DBA" @(Model.PhD == "DBA" ? "selected" : "")>DBA</!option>
+                <!option value="OTHER" @(Model.PhD != null && !new[] { "PhD in Information Systems", "EdD", "DBA" }.Contains(Model.PhD) ? "selected" : "")>Other</!option>
+            </select>
+
+            <input type="text"
+                   id="PhDOther"
+                   name="PhD"
+                   placeholder="Please specify"
+                   style="display:@(Model.PhD != null && !new[] { "PhD in Information Systems", "EdD", "DBA" }.Contains(Model.PhD) ? "block" : "none"); margin-top:10px;"
+                   value="@(Model.PhD != null && !new[] { "PhD in Information Systems", "EdD", "DBA" }.Contains(Model.PhD) ? Model.PhD : "")" />
+        </div>
+
+        <!-- LICENSES -->
+        <div class="form-group">
+            <label for="LicensesSelect">Licenses / Certifications</label>
+            <select id="LicensesSelect" name="LicensesSelect">
+                <option value="">-- Select Certification --</option>
+                <!option value="LET / LPT" @(Model.Licenses == "LET / LPT" ? "selected" : "")>LET / LPT</!option>
+                <!option value="Cisco Certification" @(Model.Licenses == "Cisco Certification" ? "selected" : "")>Cisco Certification</!option>
+                <!option value="NC Certifications" @(Model.Licenses == "NC Certifications" ? "selected" : "")>NC Certifications</!option>
+                <!option value="OTHER" @(Model.Licenses != null && !new[] { "LET / LPT", "Cisco Certification", "NC Certifications" }.Contains(Model.Licenses) ? "selected" : "")>Other</!option>
+            </select>
+
+            <input type="text"
+                   id="LicensesOther"
+                   name="Licenses"
+                   placeholder="Please specify"
+                   style="display:@(Model.Licenses != null && !new[] { "LET / LPT", "Cisco Certification", "NC Certifications" }.Contains(Model.Licenses) ? "block" : "none"); margin-top:10px;"
+                   value="@(Model.Licenses != null && !new[] { "LET / LPT", "Cisco Certification", "NC Certifications" }.Contains(Model.Licenses) ? Model.Licenses : "")" />
+        </div>
+
+    </div>
+</div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Save Changes</button>
+                    <a asp-controller="SuperAdmin" asp-action="Index" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="~/js/register.js"></script>
+</body>
+</html>

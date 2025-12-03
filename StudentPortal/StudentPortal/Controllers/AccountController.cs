@@ -4,6 +4,7 @@ using StudentPortal.Models;
 using StudentPortal.Services;
 using BCrypt.Net;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StudentPortal.Controllers
@@ -151,7 +152,177 @@ namespace StudentPortal.Controllers
                 return RedirectToAction("Index", "StudentDb");
             }
 
-            // Student not found in enrollment system - check portal system ONLY for non-student users (admin/faculty)
+            // Student not found in enrollment system - check ProfessorDB for professors
+            Professor? professor = null;
+            try
+            {
+                professor = await _mongoService.GetProfessorByEmailAsync(normalizedEmail);
+            }
+            catch (Exception)
+            {
+                // Continue to check portal users if ProfessorDB check fails
+            }
+
+            if (professor != null)
+            {
+                // Get professor email and name using helper methods
+                var professorEmail = professor.GetEmail();
+                var professorName = professor.GetFullName();
+                
+                if (string.IsNullOrEmpty(professorEmail))
+                {
+                    ViewBag.Error = "Professor account found but email is missing.";
+                    return View(model);
+                }
+
+                // Get or create portal user for lockout tracking
+                var portalUser = await _mongoService.GetUserByEmailAsync(professorEmail);
+                
+                // Check if account is locked
+                if (portalUser != null && portalUser.LockoutEndTime.HasValue && portalUser.LockoutEndTime.Value > DateTime.UtcNow)
+                {
+                    var remaining = portalUser.LockoutEndTime.Value - DateTime.UtcNow;
+                    ViewBag.Error = $"Your account is locked. Try again in {remaining.Minutes} minute(s).";
+                    return View(model);
+                }
+
+                // Check if temporary password has expired
+                if (professor.IsTemporaryPassword == true && professor.TempPasswordExpiresAt.HasValue)
+                {
+                    if (professor.TempPasswordExpiresAt.Value < DateTime.UtcNow)
+                    {
+                        ViewBag.Error = "Your temporary password has expired. Please contact the administrator to reset your password.";
+                        return View(model);
+                    }
+                }
+
+                // Determine password field (could be Password, PasswordHash, or plain text)
+                var professorPasswordHash = professor.GetPasswordHash();
+                var storedPassword = professorPasswordHash;
+                
+                // Debug logging
+                Console.WriteLine($"[Login] Professor found - Email: {professorEmail}, HasPasswordHash: {!string.IsNullOrEmpty(professorPasswordHash)}, FullName: {professorName}");
+                
+                if (string.IsNullOrEmpty(storedPassword))
+                {
+                    ViewBag.Error = "Invalid email or password.";
+                    return View(model);
+                }
+
+                // Verify password - try BCrypt first, then plain text comparison
+                bool passwordValid = false;
+                try
+                {
+                    // Try BCrypt verification first (most common)
+                    passwordValid = BCrypt.Net.BCrypt.Verify(model.Password, storedPassword);
+                }
+                catch
+                {
+                    // If BCrypt fails, try plain text comparison (for unhashed passwords)
+                    try
+                    {
+                        passwordValid = storedPassword.Equals(model.Password, StringComparison.Ordinal);
+                    }
+                    catch
+                    {
+                        passwordValid = false;
+                    }
+                }
+
+                if (!passwordValid)
+                {
+                    // Track failed attempts in portal user record
+                    if (portalUser == null)
+                    {
+                        // Create portal user in StudentDB for tracking failed attempts
+                        // Hash the password if it's plain text for storage
+                        var passwordToStore = storedPassword;
+                        if (!storedPassword.StartsWith("$2") && !storedPassword.StartsWith("$2a") && !storedPassword.StartsWith("$2b"))
+                        {
+                            // Plain text password, hash it for storage
+                            passwordToStore = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                        }
+                        
+                        // Sync professor to StudentDB Users collection with role "Professor"
+                        portalUser = await _mongoService.CreateUserFromProfessorAsync(professor, passwordToStore);
+                    }
+                    
+                    if (portalUser != null)
+                    {
+                        portalUser.FailedLoginAttempts = (portalUser.FailedLoginAttempts ?? 0) + 1;
+                        
+                        // Lock after 3 failed attempts
+                        if (portalUser.FailedLoginAttempts >= 3)
+                        {
+                            portalUser.LockoutEndTime = DateTime.UtcNow.AddMinutes(3);
+                            portalUser.FailedLoginAttempts = 0;
+                            await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, portalUser.FailedLoginAttempts, portalUser.LockoutEndTime);
+                            ViewBag.Error = "Too many failed attempts. Your account is locked for 3 minutes.";
+                        }
+                        else
+                        {
+                            await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, portalUser.FailedLoginAttempts, null);
+                            ViewBag.Error = $"Incorrect email or password. {3 - portalUser.FailedLoginAttempts} attempt(s) left before suspension.";
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Incorrect email or password.";
+                    }
+                    
+                    return View(model);
+                }
+
+                // Password is valid - sync user from ProfessorDB to StudentDB Users collection
+                // Hash the password if it's plain text for storage
+                var finalPassword = storedPassword;
+                if (!storedPassword.StartsWith("$2") && !storedPassword.StartsWith("$2a") && !storedPassword.StartsWith("$2b"))
+                {
+                    // Plain text password, hash it for storage
+                    finalPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                }
+
+                // Sync professor to StudentDB Users collection with role "Professor"
+                portalUser = await _mongoService.CreateUserFromProfessorAsync(professor, finalPassword);
+
+                if (portalUser == null)
+                {
+                    ViewBag.Error = "Unable to complete login. Please try again.";
+                    return View(model);
+                }
+
+                // Clear lockout if time has passed
+                if (portalUser.LockoutEndTime.HasValue && portalUser.LockoutEndTime.Value <= DateTime.UtcNow)
+                {
+                    portalUser.LockoutEndTime = null;
+                    portalUser.FailedLoginAttempts = 0;
+                    await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, 0, null);
+                }
+
+                // Password correct - reset security fields
+                portalUser.FailedLoginAttempts = 0;
+                portalUser.LockoutEndTime = null;
+                portalUser.Password = finalPassword;
+                portalUser.IsVerified = true;
+                portalUser.Role = "Professor"; // Ensure role is Professor
+                if (!string.IsNullOrEmpty(professorName))
+                {
+                    portalUser.FullName = professorName;
+                }
+                await _mongoService.UpdateUserAsync(portalUser);
+
+                // ✅ Successful login from ProfessorDB - now synced to StudentDB Users
+                // Save session data
+                HttpContext.Session.SetString("UserEmail", professorEmail);
+                HttpContext.Session.SetString("UserName", !string.IsNullOrEmpty(professorName) ? professorName : professorEmail);
+                HttpContext.Session.SetString("UserRole", "Professor"); // Set role as Professor
+                HttpContext.Session.SetString("UserId", portalUser.Id ?? professor.Id);
+
+                // Redirect to admin/faculty dashboard
+                return RedirectToAction("Index", "AdminDb");
+            }
+
+            // Not found in enrollment or ProfessorDB - check portal system ONLY for non-student users (admin/faculty)
             var user = await _mongoService.GetUserByEmailAsync(normalizedEmail);
             
             if (user == null)
@@ -230,6 +401,7 @@ namespace StudentPortal.Controllers
             {
                 case "admin":
                 case "faculty":
+                case "professor":
                     return RedirectToAction("Index", "AdminDb");
                 default:
                     return RedirectToAction("Index", "StudentDb");

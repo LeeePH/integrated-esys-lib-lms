@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace StudentPortal.Models
 {
+    [BsonIgnoreExtraElements] // Ignore extra fields from professorDB (e.g., "Subjects")
     public class User
     {
         [BsonId]

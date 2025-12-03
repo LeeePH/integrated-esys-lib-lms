@@ -18,6 +18,7 @@ namespace StudentPortal.Services
     {
         private readonly IMongoDatabase _database;
         private readonly IMongoDatabase _enrollmentDatabase;
+        private readonly IMongoDatabase _professorDatabase;
         private readonly IMongoCollection<User> _users;
         private readonly IMongoCollection<ClassItem> _classes;
         private readonly IMongoCollection<StudentRecord> _students;
@@ -32,6 +33,8 @@ namespace StudentPortal.Services
         private readonly IMongoCollection<StudentPortal.Models.AdminDb.AntiCheatLog> _antiCheatLogsCollection;
         private readonly IMongoCollection<StudentPortal.Models.StudentDb.AssessmentResult> _assessmentResultsCollection;
         private readonly IMongoCollection<EnrollmentStudent> _enrollmentStudents;
+        private readonly IMongoCollection<Professor> _professors;
+        private readonly string _professorCollectionName;
 
         public IMongoDatabase Database => _database;
 
@@ -175,6 +178,268 @@ namespace StudentPortal.Services
             {
                 _enrollmentStudents = _enrollmentDatabase.GetCollection<EnrollmentStudent>("students");
             }
+
+            // Professor database connection (ProfessorDB)
+            var professorConnectionString = config["ProfessorDb:ConnectionString"] ?? config["MongoDb:ConnectionString"];
+            var professorDatabaseName = config["ProfessorDb:Database"] ?? "ProfessorDB";
+            var professorClient = new MongoClient(professorConnectionString);
+            
+            try
+            {
+                var databases = professorClient.ListDatabaseNames().ToList();
+                var dbNameVariations = new[] { professorDatabaseName, "ProfessorDB", "professordb", "PROFESSORDB" };
+                IMongoDatabase? foundProfessorDatabase = null;
+                
+                foreach (var dbName in dbNameVariations)
+                {
+                    if (databases.Contains(dbName))
+                    {
+                        var testDb = professorClient.GetDatabase(dbName);
+                        try
+                        {
+                            var collections = testDb.ListCollectionNames().ToList();
+                            Console.WriteLine($"[MongoDbService] Available collections in {dbName}: {string.Join(", ", collections)}");
+                            
+                            // Try common collection names for professors - prioritize "Professors" first
+                            var collectionVariations = new[] { "Professors", "professors", "PROFESSORS", "Users", "users", "USERS" };
+                            string? foundCollectionName = null;
+                            foreach (var collName in collectionVariations)
+                            {
+                                if (collections.Contains(collName))
+                                {
+                                    foundProfessorDatabase = testDb;
+                                    foundCollectionName = collName;
+                                    _professors = foundProfessorDatabase.GetCollection<Professor>(collName);
+                                    Console.WriteLine($"[MongoDbService] Found professor collection: {collName}");
+                                    break;
+                                }
+                            }
+                            if (foundCollectionName != null)
+                            {
+                                _professorCollectionName = foundCollectionName;
+                                break;
+                            }
+                            if (foundProfessorDatabase != null) break;
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    }
+                }
+                
+                if (foundProfessorDatabase == null)
+                {
+                    _professorDatabase = professorClient.GetDatabase(professorDatabaseName);
+                    // Try to find the collection in the database
+                    try
+                    {
+                        var collections = _professorDatabase.ListCollectionNames().ToList();
+                        Console.WriteLine($"[MongoDbService] Collections in {professorDatabaseName}: {string.Join(", ", collections)}");
+                        
+                        // Try "Professors" first, then "Users"
+                        if (collections.Contains("Professors"))
+                        {
+                            _professorCollectionName = "Professors";
+                            Console.WriteLine($"[MongoDbService] Using collection: Professors");
+                        }
+                        else if (collections.Contains("professors"))
+                        {
+                            _professorCollectionName = "professors";
+                            Console.WriteLine($"[MongoDbService] Using collection: professors");
+                        }
+                        else if (collections.Contains("Users"))
+                        {
+                            _professorCollectionName = "Users";
+                            Console.WriteLine($"[MongoDbService] Using collection: Users");
+                        }
+                        else
+                        {
+                            // Default to "Professors" (most likely for ProfessorDB)
+                            _professorCollectionName = "Professors";
+                            Console.WriteLine($"[MongoDbService] Defaulting to collection: Professors");
+                        }
+                    }
+                    catch
+                    {
+                        // Default to "Professors" (most likely for ProfessorDB)
+                        _professorCollectionName = "Professors";
+                        Console.WriteLine($"[MongoDbService] Exception occurred, defaulting to collection: Professors");
+                    }
+                    _professors = _professorDatabase.GetCollection<Professor>(_professorCollectionName);
+                }
+                else
+                {
+                    _professorDatabase = foundProfessorDatabase;
+                    Console.WriteLine($"[MongoDbService] Using found database with collection: {_professorCollectionName}");
+                }
+                
+                // Verify connection
+                _professorDatabase.RunCommand<BsonDocument>(new BsonDocument("ping", 1));
+                Console.WriteLine($"[MongoDbService] ProfessorDB connection verified. Using collection: {_professorCollectionName}");
+            }
+            catch (Exception ex)
+            {
+                // Fallback to configured database name
+                Console.WriteLine($"[MongoDbService] Exception connecting to ProfessorDB: {ex.Message}");
+                _professorDatabase = professorClient.GetDatabase(professorDatabaseName);
+                // Default to "Professors" (most likely for ProfessorDB)
+                _professorCollectionName = "Professors";
+                _professors = _professorDatabase.GetCollection<Professor>(_professorCollectionName);
+                Console.WriteLine($"[MongoDbService] Fallback: Using collection: {_professorCollectionName}");
+            }
+        }
+
+        // ---------------- PROFESSORS ----------------
+        public async Task<Professor?> GetProfessorByEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return null;
+            var normalizedEmail = email.Trim().ToLowerInvariant();
+            var originalEmail = email.Trim();
+            
+            Console.WriteLine($"[GetProfessorByEmailAsync] Searching for professor with email: {originalEmail}");
+            Console.WriteLine($"[GetProfessorByEmailAsync] Using collection: {_professorCollectionName}");
+            
+            try
+            {
+                // Use BsonDocument collection directly for more reliable querying
+                var bsonCollection = _professorDatabase.GetCollection<BsonDocument>(_professorCollectionName);
+                
+                // First, let's check if the collection exists and has documents
+                var documentCount = await bsonCollection.CountDocumentsAsync(FilterDefinition<BsonDocument>.Empty);
+                Console.WriteLine($"[GetProfessorByEmailAsync] Collection '{_professorCollectionName}' has {documentCount} documents");
+                
+                // Try multiple field name variations: "email" (actual DB field) first, then "Email" (legacy)
+                var emailFieldVariations = new[] { "email", "Email" };
+                
+                foreach (var emailField in emailFieldVariations)
+                {
+                    // Try case-insensitive regex search first (most reliable)
+                    var bsonFilter = Builders<BsonDocument>.Filter.Regex(emailField, new BsonRegularExpression($"^{System.Text.RegularExpressions.Regex.Escape(normalizedEmail)}$", "i"));
+                    var bsonProfessor = await bsonCollection.Find(bsonFilter).FirstOrDefaultAsync();
+                    
+                    if (bsonProfessor != null)
+                    {
+                        try
+                        {
+                            // Convert BsonDocument to Professor
+                            var professor = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<Professor>(bsonProfessor);
+                            
+                            // Ensure email is populated from any field variation
+                            if (string.IsNullOrEmpty(professor.Email) && string.IsNullOrEmpty(professor.EmailLegacy))
+                            {
+                                // Try to get email from BsonDocument directly
+                                if (bsonProfessor.Contains("email"))
+                                    professor.Email = bsonProfessor["email"].AsString;
+                                else if (bsonProfessor.Contains("Email"))
+                                    professor.EmailLegacy = bsonProfessor["Email"].AsString;
+                            }
+                            
+                            // Ensure passwordHash is populated
+                            if (string.IsNullOrEmpty(professor.PasswordHash) && string.IsNullOrEmpty(professor.PasswordHashLegacy) && string.IsNullOrEmpty(professor.Password))
+                            {
+                                if (bsonProfessor.Contains("passwordHash"))
+                                    professor.PasswordHash = bsonProfessor["passwordHash"].AsString;
+                                else if (bsonProfessor.Contains("PasswordHash"))
+                                    professor.PasswordHashLegacy = bsonProfessor["PasswordHash"].AsString;
+                                else if (bsonProfessor.Contains("Password"))
+                                    professor.Password = bsonProfessor["Password"].AsString;
+                            }
+                            
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Found professor: Email={professor.GetEmail()}, HasPasswordHash={!string.IsNullOrEmpty(professor.GetPasswordHash())}, FullName={professor.GetFullName()}");
+                            return professor;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Error deserializing professor: {ex.Message}");
+                            // Continue to try other methods
+                        }
+                    }
+                    
+                    // Fallback: Try exact match with original email (case-sensitive)
+                    bsonFilter = Builders<BsonDocument>.Filter.Eq(emailField, originalEmail);
+                    bsonProfessor = await bsonCollection.Find(bsonFilter).FirstOrDefaultAsync();
+                    
+                    if (bsonProfessor != null)
+                    {
+                        try
+                        {
+                            var professor = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<Professor>(bsonProfessor);
+                            
+                            // Ensure email is populated
+                            if (string.IsNullOrEmpty(professor.Email) && string.IsNullOrEmpty(professor.EmailLegacy))
+                            {
+                                if (bsonProfessor.Contains("email"))
+                                    professor.Email = bsonProfessor["email"].AsString;
+                                else if (bsonProfessor.Contains("Email"))
+                                    professor.EmailLegacy = bsonProfessor["Email"].AsString;
+                            }
+                            
+                            // Ensure passwordHash is populated
+                            if (string.IsNullOrEmpty(professor.PasswordHash) && string.IsNullOrEmpty(professor.PasswordHashLegacy) && string.IsNullOrEmpty(professor.Password))
+                            {
+                                if (bsonProfessor.Contains("passwordHash"))
+                                    professor.PasswordHash = bsonProfessor["passwordHash"].AsString;
+                                else if (bsonProfessor.Contains("PasswordHash"))
+                                    professor.PasswordHashLegacy = bsonProfessor["PasswordHash"].AsString;
+                            }
+                            
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Found professor (exact match): Email={professor.GetEmail()}");
+                            return professor;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Error deserializing professor (exact match): {ex.Message}");
+                        }
+                    }
+                    
+                    // Fallback: Try normalized lowercase
+                    bsonFilter = Builders<BsonDocument>.Filter.Eq(emailField, normalizedEmail);
+                    bsonProfessor = await bsonCollection.Find(bsonFilter).FirstOrDefaultAsync();
+                    
+                    if (bsonProfessor != null)
+                    {
+                        try
+                        {
+                            var professor = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<Professor>(bsonProfessor);
+                            
+                            // Ensure email is populated
+                            if (string.IsNullOrEmpty(professor.Email) && string.IsNullOrEmpty(professor.EmailLegacy))
+                            {
+                                if (bsonProfessor.Contains("email"))
+                                    professor.Email = bsonProfessor["email"].AsString;
+                                else if (bsonProfessor.Contains("Email"))
+                                    professor.EmailLegacy = bsonProfessor["Email"].AsString;
+                            }
+                            
+                            // Ensure passwordHash is populated
+                            if (string.IsNullOrEmpty(professor.PasswordHash) && string.IsNullOrEmpty(professor.PasswordHashLegacy) && string.IsNullOrEmpty(professor.Password))
+                            {
+                                if (bsonProfessor.Contains("passwordHash"))
+                                    professor.PasswordHash = bsonProfessor["passwordHash"].AsString;
+                                else if (bsonProfessor.Contains("PasswordHash"))
+                                    professor.PasswordHashLegacy = bsonProfessor["PasswordHash"].AsString;
+                            }
+                            
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Found professor (normalized): Email={professor.GetEmail()}");
+                            return professor;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[GetProfessorByEmailAsync] Error deserializing professor (normalized): {ex.Message}");
+                        }
+                    }
+                }
+                
+                Console.WriteLine($"[GetProfessorByEmailAsync] Professor not found for email: {originalEmail} in collection: {_professorCollectionName}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[GetProfessorByEmailAsync] Exception searching for professor: {ex.Message}");
+                Console.WriteLine($"[GetProfessorByEmailAsync] Stack trace: {ex.StackTrace}");
+                return null;
+            }
         }
 
         // ---------------- ENROLLMENT STUDENTS ----------------
@@ -286,6 +551,67 @@ namespace StudentPortal.Services
                 IsVerified = true, // Enrollment students are already verified
                 FullName = "", // Can be populated later if needed
                 Role = "Student",
+                FailedLoginAttempts = 0,
+                LockoutEndTime = null,
+                JoinedClasses = new List<string>()
+            };
+
+            await _users.InsertOneAsync(newUser);
+            return newUser;
+        }
+
+        public async Task<User> CreateUserFromProfessorAsync(Professor professor, string passwordHash)
+        {
+            // Get professor email and name using helper methods
+            var professorEmail = professor.GetEmail();
+            var professorName = professor.GetFullName();
+            
+            if (string.IsNullOrEmpty(professorEmail))
+            {
+                throw new ArgumentException("Professor email is required.");
+            }
+
+            // Check if user already exists (case-insensitive)
+            var existingUser = await GetUserByEmailAsync(professorEmail);
+            
+            if (existingUser != null)
+            {
+                // User already exists, always sync password hash and ensure correct role/status
+                var filter = Builders<User>.Filter.Eq(u => u.Email, existingUser.Email);
+                var update = Builders<User>.Update
+                    .Set(u => u.Password, passwordHash) // Always sync password hash from ProfessorDB
+                    .Set(u => u.IsVerified, true) // Ensure verified status
+                    .Set(u => u.Role, "Professor"); // Ensure role is Professor
+                
+                // Update FullName if available
+                if (!string.IsNullOrEmpty(professorName))
+                {
+                    update = update.Set(u => u.FullName, professorName);
+                }
+                
+                await _users.UpdateOneAsync(filter, update);
+                
+                // Update local object for return
+                existingUser.Password = passwordHash;
+                existingUser.IsVerified = true;
+                existingUser.Role = "Professor";
+                if (!string.IsNullOrEmpty(professorName))
+                {
+                    existingUser.FullName = professorName;
+                }
+                
+                return existingUser;
+            }
+
+            // Create new user from professor data in StudentDB Users collection
+            var newUser = new User
+            {
+                Email = professorEmail,
+                Password = passwordHash, // Use the password hash (hashed if needed)
+                OTP = "",
+                IsVerified = true, // Professors from ProfessorDB are already verified
+                FullName = !string.IsNullOrEmpty(professorName) ? professorName : "",
+                Role = "Professor", // Set role as Professor
                 FailedLoginAttempts = 0,
                 LockoutEndTime = null,
                 JoinedClasses = new List<string>()
@@ -925,6 +1251,54 @@ namespace StudentPortal.Services
                 user.JoinedClasses.Add(classCode);
 
             await UpdateUserAsync(user);
+        }
+
+        public async Task<bool> RemoveStudentFromClassById(string studentId, string classId)
+        {
+            if (string.IsNullOrEmpty(studentId) || string.IsNullOrEmpty(classId))
+                throw new ArgumentException("StudentId and ClassId are required.");
+
+            // Get the class to find the class code
+            var classItem = await GetClassByIdAsync(classId);
+            if (classItem == null)
+                throw new KeyNotFoundException($"Class with id {classId} not found.");
+
+            // Get the user by student ID
+            var user = await _users.Find(u => u.Id == studentId).FirstOrDefaultAsync();
+            if (user == null)
+                throw new KeyNotFoundException($"User with id {studentId} not found.");
+
+            // Remove the class code from JoinedClasses
+            if (user.JoinedClasses != null && user.JoinedClasses.Contains(classItem.ClassCode))
+            {
+                var filter = Builders<User>.Filter.Eq(u => u.Id, studentId);
+                var update = Builders<User>.Update.Pull(u => u.JoinedClasses, classItem.ClassCode);
+                var result = await _users.UpdateOneAsync(filter, update);
+                return result.ModifiedCount > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RemoveStudentFromClassByEmail(string studentEmail, string classCode)
+        {
+            if (string.IsNullOrEmpty(studentEmail) || string.IsNullOrEmpty(classCode))
+                throw new ArgumentException("Email and ClassCode are required.");
+
+            var user = await _users.Find(u => u.Email == studentEmail).FirstOrDefaultAsync();
+            if (user == null)
+                throw new KeyNotFoundException($"User with email {studentEmail} not found.");
+
+            // Remove the class code from JoinedClasses
+            if (user.JoinedClasses != null && user.JoinedClasses.Contains(classCode))
+            {
+                var filter = Builders<User>.Filter.Eq(u => u.Email, studentEmail);
+                var update = Builders<User>.Update.Pull(u => u.JoinedClasses, classCode);
+                var result = await _users.UpdateOneAsync(filter, update);
+                return result.ModifiedCount > 0;
+            }
+
+            return false;
         }
 
         // ---------------- ASSESSMENT MANAGEMENT ----------------
