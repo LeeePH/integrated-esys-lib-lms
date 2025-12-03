@@ -703,6 +703,18 @@ namespace StudentPortal.Services
             return await _classes.Find(_ => true).ToListAsync();
         }
 
+        /// <summary>
+        /// Get classes owned by a specific professor (by email).
+        /// </summary>
+        public async Task<List<ClassItem>> GetClassesByOwnerEmailAsync(string ownerEmail)
+        {
+            if (string.IsNullOrWhiteSpace(ownerEmail))
+                return new List<ClassItem>();
+
+            var normalized = ownerEmail.Trim().ToLowerInvariant();
+            return await _classes.Find(c => c.OwnerEmail.ToLower() == normalized).ToListAsync();
+        }
+
         public async Task<ClassItem?> GetClassByCodeAsync(string code)
         {
             return await _classes.Find(c => c.ClassCode == code).FirstOrDefaultAsync();

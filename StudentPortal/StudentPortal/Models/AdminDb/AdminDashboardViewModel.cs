@@ -26,6 +26,9 @@ namespace StudentPortal.Models.AdminDb
         public string BackgroundImageUrl { get; set; } = "";
         public string InstructorName { get; set; } = string.Empty;
 
+        // Owner email used to filter classes per professor
+        public string OwnerEmail { get; set; } = string.Empty;
+
         // optional: keep old properties for backwards compat/future code that used them
         public string CreatorName { get; set; } = string.Empty;
         public string CreatorInitials { get; set; } = string.Empty;

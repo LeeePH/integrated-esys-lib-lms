@@ -318,8 +318,8 @@ namespace StudentPortal.Controllers
                 HttpContext.Session.SetString("UserRole", "Professor"); // Set role as Professor
                 HttpContext.Session.SetString("UserId", portalUser.Id ?? professor.Id);
 
-                // Redirect to admin/faculty dashboard
-                return RedirectToAction("Index", "AdminDb");
+                // Redirect to professor dashboard
+                return RedirectToAction("Index", "ProfessorDb");
             }
 
             // Not found in enrollment or ProfessorDB - check portal system ONLY for non-student users (admin/faculty)
@@ -401,8 +401,9 @@ namespace StudentPortal.Controllers
             {
                 case "admin":
                 case "faculty":
-                case "professor":
                     return RedirectToAction("Index", "AdminDb");
+                case "professor":
+                    return RedirectToAction("Index", "ProfessorDb");
                 default:
                     return RedirectToAction("Index", "StudentDb");
             }

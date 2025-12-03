@@ -1212,7 +1212,7 @@ namespace SystemLibrary.Controllers
                 return null;
             }
         }
-
+        
 
 
         // Helper method to delete book image
