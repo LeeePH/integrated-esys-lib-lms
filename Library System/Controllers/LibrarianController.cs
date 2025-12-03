@@ -678,6 +678,28 @@ namespace SystemLibrary.Controllers
                     Console.WriteLine($"[Librarian.EditBook] Error reading IsActive from form: {ex}");
                 }
 
+                // Robustly handle IsReferenceOnly (checkbox) in case model binder doesn't set it as expected
+                try
+                {
+                    var isReferenceOnlyVal = Request.Form["IsReferenceOnly"].ToString();
+                    if (!string.IsNullOrEmpty(isReferenceOnlyVal))
+                    {
+                        // Handle multiple values (hidden false + checkbox true) or comma-separated values like "false,true"
+                        if (isReferenceOnlyVal.Contains(","))
+                        {
+                            var parts = isReferenceOnlyVal.Split(',');
+                            isReferenceOnlyVal = parts[parts.Length - 1].Trim();
+                        }
+
+                        // Checkbox pattern: hidden false + checkbox true when checked
+                        book.IsReferenceOnly = isReferenceOnlyVal.Equals("true", System.StringComparison.OrdinalIgnoreCase);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[Librarian.EditBook] Error reading IsReferenceOnly from form: {ex}");
+                }
+
                 // Validate the form data
                 if (!ModelState.IsValid)
                 {
@@ -888,8 +910,21 @@ namespace SystemLibrary.Controllers
                     return null;
                 }
 
-                // Create uploads directory if it doesn't exist
-                var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "books");
+                // Get upload path from configuration or use default
+                var uploadPath = _configuration["FileUpload:UploadPath"];
+                string uploadsFolder;
+                
+                if (!string.IsNullOrEmpty(uploadPath) && Path.IsPathRooted(uploadPath))
+                {
+                    // Use configured absolute path (e.g., network drive: \\server\shared\uploads\books)
+                    uploadsFolder = Path.Combine(uploadPath, "books");
+                }
+                else
+                {
+                    // Use relative path within wwwroot (default behavior)
+                    uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "books");
+                }
+                
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -905,7 +940,8 @@ namespace SystemLibrary.Controllers
                     await imageFile.CopyToAsync(fileStream);
                 }
 
-                // Return relative path for database
+                // Return relative path for database (always use /uploads/books/ path)
+                // The actual file is stored in uploadsFolder, but we return a relative URL path
                 return $"/uploads/books/{uniqueFileName}";
             }
             catch (Exception ex)

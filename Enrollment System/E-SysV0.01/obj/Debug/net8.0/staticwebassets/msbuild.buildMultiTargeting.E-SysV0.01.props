@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\E-SysV0.01.props" />
+</Project>
