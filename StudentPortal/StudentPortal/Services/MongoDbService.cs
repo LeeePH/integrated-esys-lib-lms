@@ -66,13 +66,13 @@ namespace StudentPortal.Services
                         
                         try
                         {
-                            var collections = testDb.ListCollectionNames().ToList();
+                        var collections = testDb.ListCollectionNames().ToList();
                             
                             // Check for students collection (case-sensitive)
-                            if (collections.Contains("students"))
-                            {
-                                var studentsCollection = testDb.GetCollection<BsonDocument>("students");
-                                var studentCount = studentsCollection.CountDocuments(FilterDefinition<BsonDocument>.Empty);
+                        if (collections.Contains("students"))
+                        {
+                            var studentsCollection = testDb.GetCollection<BsonDocument>("students");
+                            var studentCount = studentsCollection.CountDocuments(FilterDefinition<BsonDocument>.Empty);
                                 
                                 // Use this database if it has students
                                 foundDatabase = testDb;
@@ -90,12 +90,12 @@ namespace StudentPortal.Services
                                         var studentsCollection = testDb.GetCollection<BsonDocument>(collName);
                                         var studentCount = studentsCollection.CountDocuments(FilterDefinition<BsonDocument>.Empty);
                                         
-                                        foundDatabase = testDb;
-                                        foundDbName = dbName;
+                                foundDatabase = testDb;
+                                foundDbName = dbName;
                                         // Update the collection reference to use the correct case
                                         _enrollmentStudents = foundDatabase.GetCollection<EnrollmentStudent>(collName);
-                                        break;
-                                    }
+                                break;
+                            }
                                 }
                                 
                                 if (foundDatabase != null) break;
@@ -148,8 +148,8 @@ namespace StudentPortal.Services
                 
                 foreach (var collName in collectionNames)
                 {
-                    try
-                    {
+            try
+            {
                         var testCollection = _enrollmentDatabase.GetCollection<BsonDocument>(collName);
                         var count = testCollection.CountDocuments(FilterDefinition<BsonDocument>.Empty);
                         if (count >= 0) // Collection exists (even if empty)
@@ -158,7 +158,7 @@ namespace StudentPortal.Services
                             collectionFound = true;
                             break;
                         }
-                    }
+            }
                     catch
                     {
                         continue;
@@ -166,7 +166,7 @@ namespace StudentPortal.Services
                 }
                 
                 if (!collectionFound)
-                {
+            {
                     // Default to "students" (lowercase)
                     _enrollmentStudents = _enrollmentDatabase.GetCollection<EnrollmentStudent>("students");
                 }
@@ -261,17 +261,17 @@ namespace StudentPortal.Services
             if (existingUser != null)
             {
                 // User already exists, always sync password hash and ensure correct role/status
-                var filter = Builders<User>.Filter.Eq(u => u.Email, existingUser.Email);
-                var update = Builders<User>.Update
+                    var filter = Builders<User>.Filter.Eq(u => u.Email, existingUser.Email);
+                    var update = Builders<User>.Update
                     .Set(u => u.Password, enrollmentStudent.PasswordHash) // Always sync password hash from enrollment
                     .Set(u => u.IsVerified, true) // Ensure verified status
                     .Set(u => u.Role, "Student"); // Ensure role is Student
                 
-                await _users.UpdateOneAsync(filter, update);
+                    await _users.UpdateOneAsync(filter, update);
                 
                 // Update local object for return
-                existingUser.Password = enrollmentStudent.PasswordHash;
-                existingUser.IsVerified = true;
+                    existingUser.Password = enrollmentStudent.PasswordHash;
+                    existingUser.IsVerified = true;
                 existingUser.Role = "Student";
                 
                 return existingUser;

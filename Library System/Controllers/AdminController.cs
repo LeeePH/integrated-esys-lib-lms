@@ -949,11 +949,60 @@ namespace SystemLibrary.Controllers
             {
                 try
                 {
+                    // Get existing book first to preserve critical data
+                    var existingBook = await _bookService.GetBookByIdAsync(id);
+                    if (existingBook == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Robustly handle IsActive (checkbox) in case model binder doesn't set it as expected
+                    try
+                    {
+                        var isActiveVal = Request.Form["IsActive"].ToString();
+                        if (!string.IsNullOrEmpty(isActiveVal))
+                        {
+                            // Handle multiple values (hidden false + checkbox true) or comma-separated values like "false,true"
+                            if (isActiveVal.Contains(","))
+                            {
+                                var parts = isActiveVal.Split(',');
+                                isActiveVal = parts[parts.Length - 1].Trim();
+                            }
+
+                            // Checkbox pattern: hidden false + checkbox true when checked
+                            book.IsActive = isActiveVal.Equals("true", System.StringComparison.OrdinalIgnoreCase);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Admin.EditBook] Error reading IsActive from form: {ex}");
+                    }
+
+                    // Robustly handle IsReferenceOnly (checkbox) in case model binder doesn't set it as expected
+                    try
+                    {
+                        var isReferenceOnlyVal = Request.Form["IsReferenceOnly"].ToString();
+                        if (!string.IsNullOrEmpty(isReferenceOnlyVal))
+                        {
+                            // Handle multiple values (hidden false + checkbox true) or comma-separated values like "false,true"
+                            if (isReferenceOnlyVal.Contains(","))
+                            {
+                                var parts = isReferenceOnlyVal.Split(',');
+                                isReferenceOnlyVal = parts[parts.Length - 1].Trim();
+                            }
+
+                            // Checkbox pattern: hidden false + checkbox true when checked
+                            book.IsReferenceOnly = isReferenceOnlyVal.Equals("true", System.StringComparison.OrdinalIgnoreCase);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[Admin.EditBook] Error reading IsReferenceOnly from form: {ex}");
+                    }
+
                     // Handle image upload
                     if (bookImage != null && bookImage.Length > 0)
                     {
-                        // Get existing book to delete old image
-                        var existingBook = await _bookService.GetBookByIdAsync(id);
                         if (existingBook != null && !existingBook.Image.Contains("default-book.png"))
                         {
                             DeleteBookImage(existingBook.Image);
@@ -968,13 +1017,12 @@ namespace SystemLibrary.Controllers
                     // If no new image uploaded, keep the existing image
                     else if (string.IsNullOrEmpty(book.Image))
                     {
-                        var existingBook = await _bookService.GetBookByIdAsync(id);
                         if (existingBook != null)
                         {
                             book.Image = existingBook.Image;
                         }
                     }
-                    Console.WriteLine($"[Admin.EditBook] existingBook.IsActive=?, incoming book.IsActive={book.IsActive}");
+                    Console.WriteLine($"[Admin.EditBook] existingBook.IsActive={existingBook?.IsActive}, incoming book.IsActive={book.IsActive}, existingBook.IsReferenceOnly={existingBook?.IsReferenceOnly}, incoming book.IsReferenceOnly={book.IsReferenceOnly}");
 
                     var success = await _bookService.UpdateBookAsync(id, book);
 
@@ -1124,8 +1172,21 @@ namespace SystemLibrary.Controllers
                     return null;
                 }
 
-                // Create uploads directory if it doesn't exist
-                var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "books");
+                // Get upload path from configuration or use default
+                var uploadPath = _configuration["FileUpload:UploadPath"];
+                string uploadsFolder;
+                
+                if (!string.IsNullOrEmpty(uploadPath) && Path.IsPathRooted(uploadPath))
+                {
+                    // Use configured absolute path (e.g., network drive: \\server\shared\uploads\books)
+                    uploadsFolder = Path.Combine(uploadPath, "books");
+                }
+                else
+                {
+                    // Use relative path within wwwroot (default behavior)
+                    uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "books");
+                }
+                
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -1141,7 +1202,8 @@ namespace SystemLibrary.Controllers
                     await imageFile.CopyToAsync(fileStream);
                 }
 
-                // Return relative path for database
+                // Return relative path for database (always use /uploads/books/ path)
+                // The actual file is stored in uploadsFolder, but we return a relative URL path
                 return $"/uploads/books/{uniqueFileName}";
             }
             catch (Exception ex)

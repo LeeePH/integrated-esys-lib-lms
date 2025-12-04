@@ -790,3 +790,4 @@ C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\ref
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.pdb
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.sourcelink.json

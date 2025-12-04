@@ -111,6 +111,23 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Configure static files with custom file provider for shared uploads if configured
+var uploadPath = builder.Configuration["FileUpload:UploadPath"];
+if (!string.IsNullOrEmpty(uploadPath) && Path.IsPathRooted(uploadPath))
+{
+    // If a network/shared path is configured, serve files from there
+    var sharedUploadPath = Path.Combine(uploadPath, "books");
+    if (Directory.Exists(sharedUploadPath))
+    {
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(sharedUploadPath),
+            RequestPath = "/uploads/books"
+        });
+    }
+}
+
 app.UseStaticFiles();
 
 app.UseRouting();

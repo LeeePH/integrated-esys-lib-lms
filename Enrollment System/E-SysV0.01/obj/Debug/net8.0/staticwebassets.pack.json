@@ -1,0 +1,485 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\E-SysV0.01.bundle.scp.css",
+      "PackagePath": "staticwebassets\\E-SysV0.01.iieqzdd7x6.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\audio\\beep.wav",
+      "PackagePath": "staticwebassets\\audio\\beep.wav"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\css\\AdminStyles.css",
+      "PackagePath": "staticwebassets\\css\\AdminStyles.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\css\\EnrollmentStyles.css",
+      "PackagePath": "staticwebassets\\css\\EnrollmentStyles.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\css\\modals.css",
+      "PackagePath": "staticwebassets\\css\\modals.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\data\\cities.json",
+      "PackagePath": "staticwebassets\\data\\cities.json"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\ForgotPasswordIcon.svg",
+      "PackagePath": "staticwebassets\\images\\ForgotPasswordIcon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\OTPIcon.svg",
+      "PackagePath": "staticwebassets\\images\\OTPIcon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\account-icon.svg",
+      "PackagePath": "staticwebassets\\images\\account-icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\arrow-left.svg",
+      "PackagePath": "staticwebassets\\images\\arrow-left.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\arrow.svg",
+      "PackagePath": "staticwebassets\\images\\arrow.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\background-img1.svg",
+      "PackagePath": "staticwebassets\\images\\background-img1.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\background-img2.svg",
+      "PackagePath": "staticwebassets\\images\\background-img2.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\background-img3.svg",
+      "PackagePath": "staticwebassets\\images\\background-img3.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\book-open-text-black.svg",
+      "PackagePath": "staticwebassets\\images\\book-open-text-black.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\book-open-text.svg",
+      "PackagePath": "staticwebassets\\images\\book-open-text.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\book.svg",
+      "PackagePath": "staticwebassets\\images\\book.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\chart-area.svg",
+      "PackagePath": "staticwebassets\\images\\chart-area.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\circle-check.svg",
+      "PackagePath": "staticwebassets\\images\\circle-check.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\clock.svg",
+      "PackagePath": "staticwebassets\\images\\clock.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\education-icon.svg",
+      "PackagePath": "staticwebassets\\images\\education-icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\email.svg",
+      "PackagePath": "staticwebassets\\images\\email.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\facebook.svg",
+      "PackagePath": "staticwebassets\\images\\facebook.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\file-up.svg",
+      "PackagePath": "staticwebassets\\images\\file-up.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\globe.svg",
+      "PackagePath": "staticwebassets\\images\\globe.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\hero-image.svg",
+      "PackagePath": "staticwebassets\\images\\hero-image.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\home.svg",
+      "PackagePath": "staticwebassets\\images\\home.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\instagram.svg",
+      "PackagePath": "staticwebassets\\images\\instagram.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\key.svg",
+      "PackagePath": "staticwebassets\\images\\key.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\location.svg",
+      "PackagePath": "staticwebassets\\images\\location.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\logo-black.svg",
+      "PackagePath": "staticwebassets\\images\\logo-black.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\logo-blue.svg",
+      "PackagePath": "staticwebassets\\images\\logo-blue.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\logo.svg",
+      "PackagePath": "staticwebassets\\images\\logo.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\phone.svg",
+      "PackagePath": "staticwebassets\\images\\phone.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\settings.svg",
+      "PackagePath": "staticwebassets\\images\\settings.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\star.svg",
+      "PackagePath": "staticwebassets\\images\\star.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\student-icon-white.svg",
+      "PackagePath": "staticwebassets\\images\\student-icon-white.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\student-icon.svg",
+      "PackagePath": "staticwebassets\\images\\student-icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\student.svg",
+      "PackagePath": "staticwebassets\\images\\student.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\transferee-icon.svg",
+      "PackagePath": "staticwebassets\\images\\transferee-icon.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\triangle-alert.svg",
+      "PackagePath": "staticwebassets\\images\\triangle-alert.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\upload.svg",
+      "PackagePath": "staticwebassets\\images\\upload.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\user-round-pen-black.svg",
+      "PackagePath": "staticwebassets\\images\\user-round-pen-black.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\user-round-pen.svg",
+      "PackagePath": "staticwebassets\\images\\user-round-pen.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\images\\x.svg",
+      "PackagePath": "staticwebassets\\images\\x.svg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\admin-enrolled-2nd-sem-details.js",
+      "PackagePath": "staticwebassets\\js\\admin-enrolled-2nd-sem-details.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\admin-enrolled-details.js",
+      "PackagePath": "staticwebassets\\js\\admin-enrolled-details.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\admin-notifications.js",
+      "PackagePath": "staticwebassets\\js\\admin-notifications.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\admin-request-details-transferee.js",
+      "PackagePath": "staticwebassets\\js\\admin-request-details-transferee.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\admin-request-details.js",
+      "PackagePath": "staticwebassets\\js\\admin-request-details.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\change-password-modal.js",
+      "PackagePath": "staticwebassets\\js\\change-password-modal.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\forgot-password.js",
+      "PackagePath": "staticwebassets\\js\\forgot-password.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\modals.js",
+      "PackagePath": "staticwebassets\\js\\modals.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\js\\subject-selection-2nd-year.js",
+      "PackagePath": "staticwebassets\\js\\subject-selection-2nd-year.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Enrollment System\\E-SysV0.01\\wwwroot\\uploads\\announcements\\022293dcd6d7423aa5ae546d732aa472.jpg",
+      "PackagePath": "staticwebassets\\uploads\\announcements\\022293dcd6d7423aa5ae546d732aa472.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.E-SysV0.01.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.E-SysV0.01.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.E-SysV0.01.props",
+      "PackagePath": "build\\E-SysV0.01.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.E-SysV0.01.props",
+      "PackagePath": "buildMultiTargeting\\E-SysV0.01.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.E-SysV0.01.props",
+      "PackagePath": "buildTransitive\\E-SysV0.01.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
