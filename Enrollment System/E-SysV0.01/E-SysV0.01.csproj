@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>E_SysV0._01</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+		<PackageReference Include="MailKit" Version="4.13.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
+		<PackageReference Include="QuestPDF" Version="2025.7.2" />
+	</ItemGroup>
+
+	<!-- Exclude Razor Pages (Pages/...) from build; we use MVC controllers + views -->
+	<ItemGroup>
+		<Compile Remove="Areas\Student\Views\Student\Irregular\**" />
+		<Compile Remove="Areas\Student\Views\Student\Regular\**" />
+		<Compile Remove="Pages\**\*.cshtml.cs" />
+		<Content Remove="Areas\Student\Views\Student\Irregular\**" />
+		<Content Remove="Areas\Student\Views\Student\Regular\**" />
+		<Content Remove="Pages\**\*.cshtml" />
+		<EmbeddedResource Remove="Areas\Student\Views\Student\Irregular\**" />
+		<EmbeddedResource Remove="Areas\Student\Views\Student\Regular\**" />
+		<None Remove="Areas\Student\Views\Student\Irregular\**" />
+		<None Remove="Areas\Student\Views\Student\Regular\**" />
+		<None Remove="Pages\**\*.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Areas\Student\Views\Student\Irregular\" />
+	  <Folder Include="Areas\Student\Views\Student\Regular\" />
+	  <Folder Include="wwwroot\uploads\announcements\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Areas\Admin\Views\Admin\AcceptedShifter.cshtml" />
+	</ItemGroup>
+</Project>

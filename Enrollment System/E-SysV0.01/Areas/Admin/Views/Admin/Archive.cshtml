@@ -1,0 +1,93 @@
+﻿@model List<E_SysV0._01.Models.EnrollmentArchive>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    var ay = ViewBag.FilterAY as string ?? "";
+}
+<div class="card">
+    <div class="card-body">
+        <h2 class="mb-3">Archived Enrollments</h2>
+        <form method="get" class="row g-2 align-items-end mb-3">
+            <div class="col-auto">
+                <label class="form-label">Academic Year</label>
+                <input type="text" name="ay" class="form-control" value="@ay" placeholder="e.g. 2025-2026" />
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-secondary" href="@Url.Action("Archive", "Admin", new { area = "Admin" })">Clear</a>
+            </div>
+
+        </form>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="alert alert-info mb-0">
+                No archived records@(string.IsNullOrWhiteSpace(ay) ? "" : $" for AY {ay}").
+                @* ✅ DEBUG: Show count for debugging *@
+                <br><small class="text-muted">Total records in database: Check console logs</small>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info mb-3">
+                <strong>Found @Model.Count archived record(s)</strong>
+                @if (!string.IsNullOrWhiteSpace(ay))
+                {
+                    <span> for Academic Year: <strong>@ay</strong></span>
+                }
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th>Archived At</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Program</th>
+                            <th>AY</th>
+                            <th>Semester</th>
+                            <th>Status at Archive</th>
+                            <th>Archive Reason</th> @* ✅ NEW COLUMN *@
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var a in Model)
+                        {
+                            <tr>
+                                <td>@a.ArchivedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@a.FullName</td>
+                                <td>@a.Email</td>
+                                <td>@a.Program</td>
+                                <td>@a.AcademicYear</td>
+                                <td>
+                                    @* ✅ HIGHLIGHT EMPTY SEMESTERS *@
+                                    @if (string.IsNullOrWhiteSpace(a.Semester))
+                                    {
+                                        <span class="badge bg-warning text-dark">Empty</span>
+                                    }
+                                    else
+                                    {
+                                        @a.Semester
+                                    }
+                                </td>
+                                <td><span class="badge bg-secondary">@a.StatusAtArchive</span></td>
+                                <td><small class="text-muted">@(a.ArchiveReason ?? "-")</small></td> @* ✅ NEW *@
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       href="@Url.Action("ArchiveDetails", "Admin", new { area = "Admin", id = a.Id })">
+                                        Details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+

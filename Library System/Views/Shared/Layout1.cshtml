@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SIA_solution</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="~/images/library.png" alt="Library Logo">
+            </div>
+
+            <nav class="menu">
+                @if (ViewBag.Role == "Admin")
+                {
+                        <a asp-controller="Admin" asp-action="AdminDashboard" class="menu-item">
+                            <img src="/images/dashboard.png" alt="Dashboard">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="StudentRecord" class="menu-item">
+                            <img src="/images/students.png" alt="Students">
+                            <span class="menu-text">Student Records</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="BookInventory" class="menu-item">
+                            <img src="/images/books.png" alt="Books">
+                            <span class="menu-text">Book Inventory</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="BorrowReturn" class="menu-item">
+                            <img src="/images/borrow.png" alt="Borrow">
+                            <span class="menu-text">Borrow & Return</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="Reservation" class="menu-item">
+                            <img src="/images/reservation.png" alt="Reservation">
+                            <span class="menu-text">Reservation</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="Penalty" class="menu-item">
+                            <img src="/images/penalty.png" alt="Penalty">
+                            <span class="menu-text">Penalty</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="UserSettings" class="menu-item">
+                            <img src="/images/settings.png" alt="Settings">
+                            <span class="menu-text">User Settings</span>
+                        </a>
+                        <a asp-controller="Admin" asp-action="SystemMaintenance" class="menu-item">
+                            <img src="/images/maintenance.png" alt="System">
+                            <span class="menu-text">System Maintenance</span>
+                        </a>
+                }
+                else if (ViewBag.Role == "Librarian")
+                {
+                        <a asp-controller="Librarian" asp-action="LibrarianDashboard" class="menu-item">
+                            <img src="/images/dashboard.png" alt="Dashboard">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                        <a asp-controller="Librarian" asp-action="Catalog" class="menu-item">
+                            <img src="/images/catalog.png" alt="Catalog">
+                            <span class="menu-text">Catalog</span>
+                        </a>
+                        <a asp-controller="Librarian" asp-action="Transaction" class="menu-item">
+                            <img src="/images/transactions.png" alt="Transaction">
+                            <span class="menu-text">Transactions</span>
+                        </a>
+                        <a asp-controller="Librarian" asp-action="Return" class="menu-item">
+                            <img src="/images/returns.png" alt="Return">
+                            <span class="menu-text">Returns</span>
+                        </a>
+                        <a asp-controller="Librarian" asp-action="Reservation" class="menu-item">
+                            <img src="/images/reservations.png" alt="Reservation">
+                            <span class="menu-text">Reservation</span>
+                        </a>
+                        <a asp-controller="Librarian" asp-action="Reports" class="menu-item">
+                            <img src="/images/reports.png" alt="Reports">
+                            <span class="menu-text">Reports</span>
+                        </a>
+                }
+                else if (ViewBag.Role == "Student")
+                {
+                        <a asp-controller="Student" asp-action="StudentDashboard" class="menu-item">
+                            <img src="/images/dashboard.png" alt="Dashboard">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                        <a asp-controller="Student" asp-action="SearchBooks" class="menu-item">
+                            <img src="/images/search.png" alt="Search">
+                            <span class="menu-text">Search Books</span>
+                        </a>
+                        <a asp-controller="Student" asp-action="Borrowings" class="menu-item">
+                            <img src="/images/loanperiod.png" alt="Borrow">
+                            <span class="menu-text">My Borrowed Books</span>
+                        </a>
+                        <a asp-controller="Student" asp-action="Notifications" class="menu-item">
+                            <img src="/images/notifications.png" alt="Notifications">
+                            <span class="menu-text">Notifications</span>
+                        </a>
+                        <a asp-controller="Student" asp-action="Account" class="menu-item">
+                            <img src="/images/accounts.png" alt="Account">
+                            <span class="menu-text">My Account</span>
+                        </a>
+                }
+            </nav>
+
+
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <header class="header"> 
+                <form asp-controller="Account" asp-action="Logout" method="post"> 
+                <button type="submit" class="logout"> Log Out <img src="/images/logout.png" alt="Logout">
+                    </button> 
+                    </form> 
+                    </header>
+
+            @RenderBody()
+        </main>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

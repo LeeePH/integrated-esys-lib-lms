@@ -1,0 +1,128 @@
+﻿using E_SysV0._01.Models;
+using E_SysV0._01.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace E_SysV0._01.Areas.Student.Controllers
+{
+    [Area("Student")]
+    public class TransfereeEnrollmentController : Controller
+    {
+        private readonly MongoDBServices _firebase;
+        private readonly IWebHostEnvironment _env;
+
+        public TransfereeEnrollmentController(MongoDBServices firebase, IWebHostEnvironment env)
+        {
+            _firebase = firebase;
+            _env = env;
+        }
+
+        [HttpGet]
+        public IActionResult TransfereeEnrollment()
+            => View("~/Areas/Student/Views/Student/TransfereeEnrollment.cshtml");
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TransfereeEnrollment(
+            string fullName,
+            string email,
+            string emergencyContactName,
+            string emergencyContactPhone,
+            IFormFile transfereeForm,
+            IFormFile form138,
+            IFormFile goodMoral,
+            IFormFile medicalClearance,
+            IFormFile diploma)
+        {
+            try
+            {
+                var normalizedEmail = (email ?? string.Empty).Trim().ToLowerInvariant();
+
+                var existing = await _firebase.GetLatestRequestByEmailAsync(normalizedEmail);
+                if (existing != null)
+                {
+                    if (existing.Status is "Pending" or "Accepted")
+                    {
+                        TempData["Error"] = $"An enrollment already exists for {normalizedEmail} (Status: {existing.Status}). Please check your email.";
+                        return RedirectToAction(nameof(TransfereeEnrollment));
+                    }
+                    if (!string.IsNullOrWhiteSpace(existing.Status) &&
+                        existing.Status.StartsWith("Rejected", StringComparison.OrdinalIgnoreCase) &&
+                        !string.IsNullOrWhiteSpace(existing.EditToken) &&
+                        existing.EditTokenExpires > DateTime.UtcNow)
+                    {
+                        TempData["Error"] = "Your previous submission was rejected. Use the edit link sent to your email to revise.";
+                        return RedirectToAction(nameof(TransfereeEnrollment));
+                    }
+                }
+
+                const long MaxFileBytes = 10 * 1024 * 1024; // 10 MB
+                var allowedTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    "application/pdf", "image/jpeg", "image/png"
+                };
+                string? ValidateFile(IFormFile f, string label)
+                {
+                    if (f == null || f.Length == 0) return $"{label} is required.";
+                    if (f.Length > MaxFileBytes) return $"{label} exceeds the 10 MB limit.";
+                    if (!allowedTypes.Contains(f.ContentType)) return $"{label} must be PDF or JPG/PNG.";
+                    return null;
+                }
+
+                var validations = new[]
+                {
+                    ValidateFile(transfereeForm,"Transferee Form"),
+                    ValidateFile(form138,"Form 138"),
+                    ValidateFile(goodMoral,"Certificate of Good Moral"),
+                    ValidateFile(medicalClearance,"Medical Clearance"),
+                    ValidateFile(diploma,"High School Diploma")
+                }.Where(m => m != null).ToArray();
+
+                if (validations.Length > 0)
+                {
+                    TempData["Error"] = string.Join(" ", validations!);
+                    return RedirectToAction(nameof(TransfereeEnrollment));
+                }
+
+                var request = new EnrollmentRequest
+                {
+                    Id = Guid.NewGuid().ToString("N"),
+                    FullName = fullName ?? "",
+                    Email = normalizedEmail,
+                    EmergencyContactName = emergencyContactName ?? "",
+                    EmergencyContactPhone = emergencyContactPhone ?? "",
+                    Type = "Transferee",
+                    Status = "Pending",
+                    SubmittedAt = DateTime.UtcNow
+                };
+
+                var baseFolder = Path.Combine(_env.WebRootPath, "uploads", "enrollments", request.Id);
+                Directory.CreateDirectory(baseFolder);
+
+                async Task<string?> SaveFileAsync(IFormFile file, string prefix)
+                {
+                    if (file == null || file.Length == 0) return null;
+                    var fileName = prefix + Path.GetExtension(file.FileName);
+                    var filePath = Path.Combine(baseFolder, fileName);
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(stream);
+                    return $"/uploads/enrollments/{request.Id}/{fileName}";
+                }
+
+                request.EnrollmentFormPath = await SaveFileAsync(transfereeForm, "transferee-form");
+                request.Form138Path = await SaveFileAsync(form138, "form-138");
+                request.GoodMoralPath = await SaveFileAsync(goodMoral, "good-moral");
+                request.MedicalClearancePath = await SaveFileAsync(medicalClearance, "medical-clearance");
+                request.DiplomaPath = await SaveFileAsync(diploma, "diploma");
+
+                await _firebase.SubmitEnrollmentRequestAsync(request);
+                TempData["Success"] = "Enrollment submitted. Watch your email.";
+                return RedirectToAction(nameof(TransfereeEnrollment));
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Submission failed: {ex.Message}";
+                return View("~/Areas/Student/Views/Student/TransfereeEnrollment.cshtml");
+            }
+        }
+    }
+}

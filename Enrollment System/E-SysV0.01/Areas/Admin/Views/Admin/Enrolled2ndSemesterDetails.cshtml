@@ -1,0 +1,473 @@
+﻿@model E_SysV0._01.Models.SecondSemesterEnrolledViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "2nd Semester Enrolled - Set Remarks";
+}
+
+<div class="card">
+
+    @if (TempData["Success"] is string successMsg)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>@successMsg</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] is string errorMsg)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>@errorMsg</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="text-end">
+        <a href="@Url.Action("Enrolled2ndSem", "Admin", new { area = "Admin" })"
+           class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to List
+        </a>
+    </div>
+
+    @* --- START FORM HERE so all inputs (including transferee flags) are inside the same form --- *@
+    <form asp-action="UpdateSecondSemesterRemarks" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Enrollment.Id" />
+
+        @{
+            // Show flags for any transferee (regular or irregular).
+            // Previously we gated on ExtraFields Academic.YearLevel/Academic.Semester which caused the panel to be hidden
+            // when those keys were missing for already-enrolled records.
+            var isTransferee = !string.IsNullOrEmpty(Model.Enrollment?.Type)
+            && Model.Enrollment.Type.IndexOf("Transferee", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            // Keep reading extras if present (used elsewhere)
+            var yearLevel = Model.Enrollment?.ExtraFields?.GetValueOrDefault("Academic.YearLevel", "") ?? "";
+            var semester = Model.Enrollment?.ExtraFields?.GetValueOrDefault("Academic.Semester", "") ?? "";
+
+            // Existing saved flags
+            var existingFlags = Model.Enrollment?.DocumentFlags ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            // Display the Transferee document flags panel for any transferee record.
+            // If you want to restrict to only 1st Year 2nd Semester records, replace the right-hand side with the previous check.
+            var showTransfereeDocPanel = isTransferee;
+        }
+
+        @if (showTransfereeDocPanel)
+        {
+            <div class="mb-4">
+                <h6 class="mt-2 mb-2"><i class="fas fa-file-alt me-2"></i>Transferee — Second Semester Required Documents</h6>
+                <div class="alert alert-info">
+                    These document flags are specific for transferees enrolled in 1st Year 2nd Semester.
+                    Use the dropdowns to mark each document's status. These values are saved to the enrollment record and
+                    will be used when accepting or putting the request on hold.
+                </div>
+
+                <div class="row g-3">
+                    @{
+                        // Full transferee required list (includes the common freshmen ones + transferee extras)
+                        var keys = new[] {
+                                "Form138", "GoodMoral", "Diploma", "MedicalCertificate",
+                                "CertificateOfIndigency", "BirthCertificate",
+                                "GuidanceClearance", "TranscriptOfRecords"
+                                };
+
+                        string LabelFor(string k) => k switch
+                        {
+                            "Form138" => "Form 138",
+                            "GoodMoral" => "Good Moral",
+                            "Diploma" => "Diploma",
+                            "MedicalCertificate" => "Medical Certificate",
+                            "CertificateOfIndigency" => "Certificate of Indigency",
+                            "BirthCertificate" => "Birth Certificate",
+                            "GuidanceClearance" => "Guidance Clearance",
+                            "TranscriptOfRecords" => "Transcript of Records",
+                            _ => k
+                        };
+
+                        string CurrentVal(string k) => existingFlags.TryGetValue(k, out var v) ? (v ?? "") : "";
+                        var allowedOptions = new[] { "", "Submitted", "To be followed", "Ineligible" };
+                    }
+
+                    @foreach (var key in keys)
+                    {
+                        var cur = CurrentVal(key);
+                        <div class="col-md-4">
+                            <label class="form-label">@LabelFor(key)</label>
+                            <select name="flags[@key]" class="form-select form-select-sm">
+                                @foreach (var opt in allowedOptions)
+                                {
+                                    var sel = string.Equals(opt, cur, StringComparison.OrdinalIgnoreCase) ? "selected" : null;
+                                    <option value="@opt" selected="@(sel == "selected")">@(!string.IsNullOrEmpty(opt) ? opt : "(unset)")</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+                <h2 class="mb-1">@Model.StudentName - 2nd Semester Remarks</h2>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                    <span class="badge bg-info text-dark fs-6">
+                        <i class="fas fa-calendar-alt me-2"></i>1st Year 2nd Semester
+                    </span>
+                    <span class="badge bg-light text-dark border">
+                        <i class="fas fa-graduation-cap me-1"></i>@Model.Program
+                    </span>
+                    <span class="badge bg-light text-dark border">
+                        <i class="fas fa-envelope me-1"></i>@Model.Email
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Instructions:</strong> Set remarks for 2nd semester subjects below. The system will automatically calculate
+            which 2nd Year 1st Semester subjects the student is eligible for based on <strong>both</strong> 1st and 2nd semester remarks.
+        </div>
+
+        <!-- 1st Semester Subjects (Read-only) -->
+        <div class="mb-4">
+            <h6 class="mt-4 mb-3">
+                <i class="fas fa-book-open me-2"></i>1st Semester Subjects (Read-only)
+            </h6>
+            <div class="alert alert-secondary">
+                <i class="fas fa-lock me-2"></i>
+                These remarks were set during 1st semester enrollment and are shown here for reference.
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:110px;">Code</th>
+                            <th>Title</th>
+                            <th style="width:70px;">Units</th>
+                            <th style="width:150px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.FirstSemesterSubjects.Count > 0)
+                        {
+                            foreach (var subject in Model.FirstSemesterSubjects)
+                            {
+                                var remark = Model.FirstSemesterRemarks.GetValueOrDefault(subject.Code, "Not set");
+                                var badgeClass = remark.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                                remark.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                                "bg-warning text-dark";
+                                <tr>
+                                    <td><strong>@subject.Code</strong></td>
+                                    <td>@subject.Title</td>
+                                    <td>@subject.Units</td>
+                                    <td>
+                                        <span class="badge @badgeClass">@remark</span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No 1st semester subjects found</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Hidden inputs for 1st semester remarks (for JavaScript collection) *@
+        <div id="firstSemRemarksData" style="display:none;">
+            @if (Model.FirstSemesterRemarks != null)
+            {
+                foreach (var kvp in Model.FirstSemesterRemarks)
+                {
+                    <input type="hidden" name="firstSemRemarks[@kvp.Key]" value="@kvp.Value" />
+                }
+            }
+        </div>
+
+        <!-- 2nd Semester Subjects (Editable) -->
+        <div class="mb-4">
+            <h6 class="mt-4 mb-3">
+                <i class="fas fa-edit me-2"></i>2nd Semester Subjects (Set Remarks)
+            </h6>
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Important:</strong> Set all remarks before calculating eligibility. Mark subjects as <strong>Pass</strong>
+                or <strong>Fail</strong> based on the student's performance this semester.
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-striped align-middle" id="secondSemSubjectsTable">
+                    <thead>
+                        <tr>
+                            <th style="width:110px;">Code</th>
+                            <th>Title</th>
+                            <th style="width:70px;">Units</th>
+                            <th style="width:200px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.SecondSemesterSubjects.Count > 0)
+                        {
+                            foreach (var subject in Model.SecondSemesterSubjects)
+                            {
+                                var currentRemark = Model.SecondSemesterRemarks.GetValueOrDefault(subject.Code, "ongoing");
+                                <tr>
+                                    <td><strong>@subject.Code</strong></td>
+                                    <td>@subject.Title</td>
+                                    <td>@subject.Units</td>
+                                    <td>
+                                        <div class="remarks-switch-container">
+                                            <div class="btn-group btn-group-sm remarks-switch" role="group" data-subject-code="@subject.Code">
+                                                <input type="radio" class="btn-check" name="secondSemRemarks[@subject.Code]"
+                                                       id="fail_@subject.Code" value="fail" autocomplete="off"
+                                                       checked="@(currentRemark == "fail")">
+                                                <label class="btn btn-outline-danger" for="fail_@subject.Code">Fail</label>
+
+                                                <input type="radio" class="btn-check" name="secondSemRemarks[@subject.Code]"
+                                                       id="ongoing_@subject.Code" value="ongoing" autocomplete="off"
+                                                       checked="@(currentRemark == "ongoing")">
+                                                <label class="btn btn-outline-warning" for="ongoing_@subject.Code">Ongoing</label>
+
+                                                <input type="radio" class="btn-check" name="secondSemRemarks[@subject.Code]"
+                                                       id="pass_@subject.Code" value="pass" autocomplete="off"
+                                                       checked="@(currentRemark == "pass")">
+                                                <label class="btn btn-outline-success" for="pass_@subject.Code">Pass</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No 2nd semester subjects found</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Calculate Eligibility Button -->
+        <div class="text-center mb-4 mt-4">
+            <div class="card shadow-sm border-0 mx-auto" style="max-width: 700px;">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <i class="fas fa-calculator me-2 text-primary"></i>
+                        Calculate 2nd Year Eligibility
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        Click the button below to calculate which 2nd Year 1st Semester subjects the student can enroll in
+                        based on prerequisites from <strong>both</strong> 1st and 2nd semester subject remarks.
+                    </p>
+
+                    <button type="button" class="btn btn-info btn-lg" id="btnCalculateEligibility">
+                        <i class="fas fa-calculator me-2"></i>
+                        Calculate 2nd Year 1st Semester Eligibility
+                    </button>
+
+                    <div class="alert alert-warning mt-3 mb-0">
+                        <small>
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            <strong>Note:</strong> All subjects must be marked as <strong>Pass</strong> or <strong>Fail</strong>
+                            before the student can enroll for 2nd Year. Subjects marked as "Ongoing" will block enrollment.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2nd Year Eligibility Results -->
+        <div id="secondYearEligibilitySection" class="d-none">
+            <hr class="my-4" />
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-clipboard-check me-2"></i>
+                        2nd Year 1st Semester Eligibility Results
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Eligibility calculated based on <strong>both</strong> 1st and 2nd semester subject remarks.
+                        <span class="float-end">
+                            <button type="button" class="btn btn-sm btn-outline-success" onclick="document.getElementById('btnSaveRemarks').scrollIntoView({behavior:'smooth'})">
+                                <i class="fas fa-save me-1"></i>Save Results
+                            </button>
+                        </span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm align-middle" id="secondYearEligibilityTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:110px;">Code</th>
+                                    <th>Title</th>
+                                    <th style="width:70px;">Units</th>
+                                    <th style="width:200px;">Prerequisites</th>
+                                    <th style="width:250px;">Eligibility Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="secondYearEligibilityBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden field to store calculated eligibility -->
+        <div id="eligibilityData"></div>
+
+        <!-- Save Button -->
+        <div class="mb-3 mt-4">
+            <button type="submit" class="btn btn-success btn-lg" id="btnSaveRemarks">
+                <i class="fas fa-save me-2"></i> Save Remarks & Eligibility
+            </button>
+            <span class="small text-muted ms-2">
+                Saves 2nd semester remarks and calculated 2nd Year eligibility to the database.
+            </span>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <div id="enrolled2ndSemConfig"
+         data-request-id="@Model.Enrollment.Id"
+         data-program="@Model.Program"
+         data-first-sem-remarks='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.FirstSemesterRemarks))'
+         data-second-sem-remarks='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SecondSemesterRemarks))'
+         data-prerequisites='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PrerequisiteMap))'
+         data-calc-url='@Url.Action("CalculateSecondYearEligibility", "Admin", new { area = "Admin" })'>
+    </div>
+    <script src="~/js/admin-enrolled-2nd-sem-details.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Locate the transferee flags panel (rendered only when applicable)
+            const flagsPanelHeader = Array.from(document.querySelectorAll('h6'))
+                .find(h => h.textContent && h.textContent.includes('Transferee — Second Semester Required Documents'));
+            if (!flagsPanelHeader) return;
+
+            // Inject a progress badge next to the header if missing
+            let progressBadge = document.getElementById('flagProgressEnrolledTransferee');
+            if (!progressBadge) {
+                progressBadge = document.createElement('span');
+                progressBadge.id = 'flagProgressEnrolledTransferee';
+                progressBadge.className = 'badge bg-secondary ms-3';
+                progressBadge.textContent = '0/0 flagged';
+                flagsPanelHeader.appendChild(progressBadge);
+            }
+
+            // Find all transferee flag selects in the current form
+            const form = document.querySelector('form[action*="UpdateSecondSemesterRemarks"]') || document.querySelector('form');
+            const flagSelects = Array.from(form.querySelectorAll('select[name^="flags["]'));
+
+            // Soft docs that may be "To be followed" instead of Submitted
+            const SOFT_DOCS = new Set(['GoodMoral', 'Diploma']);
+
+            function getKeyFromSelect(s) {
+                return s.dataset.key || (s.name || '').match(/\[([^\]]+)\]/)?.[1] || s.name;
+            }
+
+            function updateProgress() {
+                const total = flagSelects.length;
+                const flagged = flagSelects.filter(s => (s.value || '').trim().length > 0).length;
+                progressBadge.textContent = `${flagged}/${total} flagged`;
+                progressBadge.className = 'badge ' + (flagged === total ? 'bg-success ms-3' : 'bg-secondary ms-3');
+            }
+
+            // Show a small inline help under the panel (only once)
+            let helpEl = document.getElementById('flagHelpEnrolledTransferee');
+            if (!helpEl) {
+                helpEl = document.createElement('div');
+                helpEl.id = 'flagHelpEnrolledTransferee';
+                helpEl.className = 'small text-muted mt-2';
+                helpEl.innerHTML = 'Admins can update these flags to allow enrollment (e.g. mark as <strong>Submitted</strong> or <strong>To be followed</strong>).';
+                flagsPanelHeader.parentElement.insertBefore(helpEl, flagsPanelHeader.nextSibling);
+            }
+
+            // Wire change listeners
+            flagSelects.forEach(s => {
+                // store data-key for convenience
+                if (!s.dataset.key) {
+                    const key = getKeyFromSelect(s);
+                    if (key) s.dataset.key = key;
+                }
+                s.addEventListener('change', updateProgress);
+            });
+
+            updateProgress();
+
+            // When saving the remarks (form submit), prompt if required documents are not Submitted
+            form.addEventListener('submit', function (e) {
+                // Only run check if we are editing flags (transferee panel present)
+                if (flagSelects.length === 0) return;
+
+                const values = {};
+                flagSelects.forEach(s => {
+                    const k = getKeyFromSelect(s);
+                    values[k] = (s.value || '').trim();
+                });
+
+                // Determine missing required docs (non-soft that are not 'Submitted')
+                const missingRequired = Object.entries(values)
+                    .filter(([k, v]) => !SOFT_DOCS.has(k) && (!v || !v.equals?.('Submitted') && v !== 'Submitted'))
+                    .map(x => x[0]);
+
+                // If there are missing required docs, ask admin to confirm
+                if (missingRequired.length > 0) {
+                    const friendly = missingRequired.slice(0, 6).join(', ') + (missingRequired.length > 6 ? ', ...' : '');
+                    const confirmMsg = 'The following required documents are not marked "Submitted":\n' +
+                        friendly +
+                        '\n\nDo you want to continue saving (the student may not be allowed to enroll until required documents are submitted)?';
+
+                    if (!confirm(confirmMsg)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+
+                // No further special handling required; flags are standard form inputs and will be posted.
+            });
+
+            // Expose a small reset helper (if needed) — optional
+            const resetBtnId = 'btnResetTransfereeFlagsEnrolled';
+            if (!document.getElementById(resetBtnId)) {
+                const container = document.createElement('div');
+                container.className = 'mt-2';
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = resetBtnId;
+                btn.className = 'btn btn-sm btn-outline-secondary';
+                btn.textContent = 'Reset flags to saved values';
+                container.appendChild(btn);
+                // place after helpEl
+                helpEl.parentElement.insertBefore(container, helpEl.nextSibling);
+
+                // store original values and wire reset
+                const original = {};
+                flagSelects.forEach(s => original[getKeyFromSelect(s)] = s.value || '');
+
+                btn.addEventListener('click', () => {
+                    flagSelects.forEach(s => {
+                        const k = getKeyFromSelect(s);
+                        if (original.hasOwnProperty(k)) {
+                            s.value = original[k];
+                            s.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                    updateProgress();
+                });
+            }
+        });
+    </script>
+}

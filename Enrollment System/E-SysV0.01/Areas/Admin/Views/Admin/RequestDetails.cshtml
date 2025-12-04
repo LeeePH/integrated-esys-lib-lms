@@ -1,0 +1,565 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@using E_SysV0._01.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "Request Details";
+
+    string FlagVal(string key) => (Model.DocumentFlags != null && Model.DocumentFlags.TryGetValue(key, out var v)) ? v : "";
+
+    var docs = new[] { "Form138", "GoodMoral", "Diploma", "MedicalCertificate", "CertificateOfIndigency", "BirthCertificate" };
+    var docLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Form138"] = "Form 138",
+        ["GoodMoral"] = "Good Moral",
+        ["Diploma"] = "Diploma",
+        ["MedicalCertificate"] = "Medical Certificate",
+        ["CertificateOfIndigency"] = "Certificate of Indigency",
+        ["BirthCertificate"] = "Birth Certificate"
+    };
+
+    var extra = Model.ExtraFields ?? new Dictionary<string, string>();
+    string Get(string prefix, string name)
+    {
+        var key = string.IsNullOrEmpty(prefix) ? name : $"{prefix}.{name}";
+        return extra.TryGetValue(key, out var v) ? v : "";
+    }
+
+    bool capKnown = ViewBag.ProgramCapacityProgram != null && ViewBag.ProgramCapacityLimit != null;
+    bool capFull = ViewBag.ProgramCapacityFull == true;
+    string capProgram = ViewBag.ProgramCapacityProgram as string ?? "";
+    int? capLimit = ViewBag.ProgramCapacityLimit as int?;
+    int? capEnrolled = ViewBag.ProgramCapacityEnrolled as int?;
+
+  
+
+    var subjects = ViewBag.SubjectSchedules as List<dynamic> ?? new List<dynamic>();
+    var enrolledSemester = extra.TryGetValue("Academic.Semester", out var sem) ? sem : "";
+
+    var settings = ViewBag.EnrollmentSettings as EnrollmentSettings;
+    bool currentSemesterEnded = false;
+
+    if (settings != null)
+    {
+        var now = DateTime.UtcNow;
+
+        if (enrolledSemester.StartsWith("1", StringComparison.OrdinalIgnoreCase))
+        {
+            currentSemesterEnded = settings.Semester1EndsAtUtc.HasValue &&
+                                   now >= settings.Semester1EndsAtUtc.Value;
+        }
+        else if (enrolledSemester.StartsWith("2", StringComparison.OrdinalIgnoreCase))
+        {
+            currentSemesterEnded = settings.Semester2EndsAtUtc.HasValue &&
+                                   now >= settings.Semester2EndsAtUtc.Value;
+        }
+    }
+
+    bool remarksEditable = currentSemesterEnded;
+
+  
+
+    var program = !string.IsNullOrWhiteSpace(Get("Academic", "Program"))
+        ? Get("Academic", "Program")
+        : (Model.Program ?? "BSIT");
+
+    var enrolledYearLevel = extra.TryGetValue("Academic.YearLevel", out var yl) ? yl : "1st Year";
+    var enrolledSemester2 = extra.TryGetValue("Academic.Semester", out var sem2) ? sem2 : "";
+
+    var is2ndYear = enrolledYearLevel.Contains("2nd Year", StringComparison.OrdinalIgnoreCase);
+    var is2ndYearPending = is2ndYear &&
+        (string.Equals(Model.Status, "1st Sem Pending", StringComparison.OrdinalIgnoreCase) ||
+         string.Equals(Model.Status, "2nd Sem Pending", StringComparison.OrdinalIgnoreCase));
+
+    bool isEnrolled = (Model.Status ?? "").StartsWith("Enrolled", StringComparison.OrdinalIgnoreCase);
+    bool isSecondSemPending = string.Equals(Model.Status, "2nd Sem Pending", StringComparison.OrdinalIgnoreCase) && !is2ndYear;
+    bool isFirstSemPending = string.Equals(Model.Status, "1st Sem Pending", StringComparison.OrdinalIgnoreCase) && !is2ndYear;
+
+    // ✅ FIXED: Use var instead of List<dynamic> for anonymous types
+    var secondSemCanonical = is2ndYear
+        ? (string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+            ? E_SysV0._01.Models.BSENTSubjectModels._2ndYear._2ndYear2ndSem.Subjects
+            : E_SysV0._01.Models.BSITSubjectModels._2ndYear._2ndYear2ndSem.Subjects)
+            .Select(s => new
+            {
+                code = s.Code,
+                title = s.Title,
+                units = s.Units,
+                prereq = (string.IsNullOrWhiteSpace(s.PreRequisite) ? new string[0] : s.PreRequisite.Split(',').Select(x => x.Trim()).ToArray())
+            })
+            .ToList()
+        : (string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+            ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear2ndSem.Subjects
+            : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear2ndSem.Subjects)
+            .Select(s => new
+            {
+                code = s.Code,
+                title = s.Title,
+                units = s.Units,
+                prereq = (string.IsNullOrWhiteSpace(s.PreRequisite) ? new string[0] : s.PreRequisite.Split(',').Select(x => x.Trim()).ToArray())
+            })
+            .ToList();
+
+    var prereqMap = ViewBag.Prerequisites as Dictionary<string, List<string>>
+        ?? new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+    bool is2ndSemEnrolled = isEnrolled && enrolledSemester.StartsWith("2", StringComparison.OrdinalIgnoreCase);
+    if (is2ndSemEnrolled)
+    {
+        remarksEditable = true;
+    }
+}
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-1"></i>@err</div>
+}
+@if (TempData["Info"] is string info)
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i>@info</div>
+}
+
+@if (capKnown)
+{
+    <div class="alert @(capFull ? "alert-warning" : "alert-secondary") d-flex align-items-center justify-content-between">
+        <div>
+            <span class="badge bg-primary">@capProgram</span>
+            @if (capFull)
+            {
+                <span class="ms-2 text-danger fw-bold">Cannot Accept New Enrollments, Program is full!</span>
+            }
+        </div>
+    </div>
+}
+
+<div class="card">
+    <h2 class="mb-2">Request Details - @Model.FullName</h2>
+    <p class="text-muted mb-3">Review the submitted information before taking action.</p>
+
+    <div class="d-flex w-100 rounded-2 p-2 review-section-title">
+        <h4 class="ms-2">
+            @(is2ndYear ? "2nd Year" : "Freshmen") Enrollment Form (Review)
+        </h4>
+    </div>
+
+    <div class="mt-3">
+        <h4 class="section-spaced">Basic Information</h4>
+        <hr />
+
+        <strong>Personal Details</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Last Name</div><div class="data-value">@Get("Student", "LastName")</div></div>
+            <div class="data-item"><div class="data-label">First Name</div><div class="data-value">@Get("Student", "FirstName")</div></div>
+            <div class="data-item"><div class="data-label">Middle Name</div><div class="data-value">@Get("Student", "MiddleName")</div></div>
+            <div class="data-item"><div class="data-label">Suffix</div><div class="data-value">@Get("Student", "Extension")</div></div>
+        </div>
+        <br />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Gender</div><div class="data-value">@Get("Student", "Sex")</div></div>
+            <div class="data-item"><div class="data-label">Contact Number</div><div class="data-value">@Get("Student", "ContactNumber")</div></div>
+            <div class="data-item"><div class="data-label">Email Address</div><div class="data-value">@Get("Student", "EmailAddress")</div></div>
+        </div>
+
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">House/Street</div><div class="data-value">@Get("StudentAddress", "HouseStreet")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("StudentAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("StudentAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("StudentAddress", "PostalCode")</div></div>
+        </div>
+
+        <strong>Academic Information</strong>
+        <div class="data-grid mt-2 mb-4">
+            <div class="data-item"><div class="data-label">Program</div><div class="data-value">@(Get("Academic", "Program") != "" ? Get("Academic", "Program") : Model.Program)</div></div>
+            <div class="data-item"><div class="data-label">Year Level</div><div class="data-value">@Get("Academic", "YearLevel")</div></div>
+            <div class="data-item"><div class="data-label">Semester</div><div class="data-value">@Get("Academic", "Semester")</div></div>
+        </div>
+
+        <h4 class="section-spaced">Previous School Attended</h4>
+        <hr />
+
+        <h5 class="fw-bold">Elementary School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("ElementarySchool", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("ElementarySchool", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("ElementarySchool", "YearGraduated")</div></div>
+        </div>
+
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("ElementaryAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("ElementaryAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("ElementaryAddress", "PostalCode")</div></div>
+        </div>
+
+        <h5 class="fw-bold">High School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("HighSchool", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("HighSchool", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("HighSchool", "YearGraduated")</div></div>
+        </div>
+
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("HighSchoolAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("HighSchoolAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("HighSchoolAddress", "PostalCode")</div></div>
+        </div>
+
+        <h5 class="fw-bold">Senior High School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("SeniorHigh", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("SeniorHigh", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Strand</div><div class="data-value">@Get("SeniorHigh", "Strand")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("SeniorHigh", "YearGraduated")</div></div>
+        </div>
+
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-4">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("SeniorHighAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("SeniorHighAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("SeniorHighAddress", "PostalCode")</div></div>
+        </div>
+
+        <h4 class="section-spaced">Parent/Guardian Information</h4>
+        <hr />
+
+        <strong>Personal Details</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Last Name</div><div class="data-value">@Get("Guardian", "LastName")</div></div>
+            <div class="data-item"><div class="data-label">First Name</div><div class="data-value">@Get("Guardian", "FirstName")</div></div>
+            <div class="data-item"><div class="data-label">Middle Name</div><div class="data-value">@Get("Guardian", "MiddleName")</div></div>
+            <div class="data-item"><div class="data-label">Extension</div><div class="data-value">@Get("Guardian", "Extension")</div></div>
+        </div>
+
+        <strong>Contact Details</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Contact Number</div><div class="data-value">@Get("Guardian", "ContactNumber")</div></div>
+            <div class="data-item"><div class="data-label">Relationship</div><div class="data-value">@Get("Guardian", "Relationship")</div></div>
+        </div>
+
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-2">
+            <div class="data-item"><div class="data-label">House/Street</div><div class="data-value">@Get("GuardianAddress", "HouseStreet")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("GuardianAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("GuardianAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("GuardianAddress", "PostalCode")</div></div>
+        </div>
+        <br />
+
+        <div class="mt-2 mb-2">
+            <span class="me-3"><strong>Type:</strong> @Model.Type</span>
+            <span class="me-3"><strong>Status:</strong> <span class="badge bg-secondary">@Model.Status</span></span>
+            <span class="me-3"><strong>Submitted:</strong> @Model.SubmittedAt.ToString("MMM dd, yyyy 'at' h:mm tt")</span>
+            @if (Model.LastUpdatedAt != null)
+            {
+                <span class="me-3"><strong>Last Updated:</strong> @Model.LastUpdatedAt?.ToString("MMM dd, yyyy 'at' h:mm tt")</span>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex align-items-center justify-content-between">
+        <h6 class="mt-4 mb-3">Document Flags</h6>
+        <div class="small text-muted">
+            <span class="me-3">
+                Legend:
+                <span class="badge bg-outline border text-secondary" style="font-weight:400;">unset</span>
+                <span class="badge bg-success">Submitted</span>
+                <span class="badge bg-warning text-dark">To be followed</span>
+                <span class="badge bg-dark">Ineligible</span>
+            </span>
+            <span id="flagProgress" class="badge bg-secondary">
+                @(isSecondSemPending ? "Flags not required" : "0/6 flagged")
+            </span>
+        </div>
+    </div>
+    <hr />
+
+    @if (isSecondSemPending || is2ndYearPending)
+    {
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>@(is2ndYearPending ? "2nd Year Enrollment" : "2nd Semester Enrollment"):</strong>
+            Document flags are not required. All documents were verified during @(is2ndYearPending ? "1st year" : "1st semester") enrollment.
+        </div>
+    }
+    else if (isEnrolled)
+    {
+        <!-- ENROLLED STUDENTS: Show read-only flags -->
+        <div class="flag-grid mt-2 mb-3">
+            @for (int i = 0; i < docs.Length; i++)
+            {
+                var d = docs[i];
+                var current = FlagVal(d);
+                var label = docLabels.TryGetValue(d, out var lbl) ? lbl : d;
+                var needsAttention = string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase);
+
+                <div class="flag-item @(needsAttention ? "flag-item-warn" : "")">
+                    <div class="flag-header">
+                        <span class="flag-title">@label</span>
+                        @if (string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-success">Submitted</span>
+                        }
+                        else if (string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-warning text-dark">To be followed</span>
+                        }
+                        else if (string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-dark">Ineligible</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-outline border text-secondary" style="font-weight:400;">unset</span>
+                        }
+                    </div>
+                    <p class="text-muted small mb-0">Status set during enrollment review</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- PENDING STUDENTS: Show editable flag dropdowns -->
+        <div class="flag-grid mt-2 mb-3">
+            @for (int i = 0; i < docs.Length; i++)
+            {
+                var d = docs[i];
+                var current = FlagVal(d);
+                var label = docLabels.TryGetValue(d, out var lbl) ? lbl : d;
+                var needsAttention = string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase);
+
+                var isSoftDoc = d == "GoodMoral" || d == "Diploma";
+
+                <div class="flag-item @(needsAttention ? "flag-item-warn" : "")">
+                    <div class="flag-header">
+                        <span class="flag-title">
+                            @label
+                            @if (isSoftDoc)
+                            {
+                                <span class="badge bg-info text-white ms-1" style="font-size: 0.7rem;">Soft Doc</span>
+                            }
+                        </span>
+                        @if (string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-success">Submitted</span>
+                        }
+                        else if (string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-warning text-dark">To be followed</span>
+                        }
+                        else if (string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-dark">Ineligible</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-outline border text-secondary" style="font-weight:400;">unset</span>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <select class="form-select flag-select select-modern select-sm" aria-label="@d" data-key="@d" style="max-width: 220px;">
+                            <option value="">Choose status...</option>
+                            <option value="Submitted" selected="@(string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase))">Submitted</option>
+                            <option value="To be followed" selected="@(string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase))">To be followed</option>
+                            <option value="Ineligible" selected="@(string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase))">Ineligible</option>
+                        </select>
+                        @if (isSoftDoc)
+                        {
+                            <small class="text-muted">May be "To be followed"</small>
+                        }
+                        else
+                        {
+                            <small class="text-muted">Must be "Submitted" for Accept</small>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="alert alert-info mb-3">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Flagging Rules:</strong>
+            <ul class="mb-0 mt-2">
+                <li><strong>Accept:</strong> Hard documents (Form138, MedCert, Indigency, BirthCert) must be "Submitted". Good Moral and Diploma may be "To be followed".</li>
+                <li><strong>Hold:</strong> Hard documents marked "To be followed" OR program capacity full.</li>
+                <li><strong>Reject:</strong> Any document marked "Ineligible".</li>
+            </ul>
+        </div>
+    }
+</div>
+
+@{
+    var actionable =
+        isFirstSemPending
+        || is2ndYearPending 
+        || string.Equals(Model.Status, "Account Pending", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(Model.Status, "On Hold", StringComparison.OrdinalIgnoreCase)
+        || isSecondSemPending;
+
+    var isRejected = !string.IsNullOrWhiteSpace(Model.Status) && Model.Status.StartsWith("Rejected", StringComparison.OrdinalIgnoreCase);
+}
+
+<br />
+<br />
+<div class="action-toolbar card mt-5 mx-auto">
+    <div class="card-body d-flex align-items-center justify-content-center flex-wrap gap-3 text-center">
+        <div class="d-flex align-items-center gap-2 justify-content-center">
+            @if (actionable)
+            {
+                <div class="form-check mb-0">
+                    <input class="form-check-input" type="checkbox" value="true" id="chkReviewConfirm">
+                    <label class="form-check-label" for="chkReviewConfirm">I confirm I have reviewed the information above.</label>
+                </div>
+                <span class="hint small d-none d-md-inline">Accept/Hold/Reject require review and proper flagging.</span>
+            }
+            else
+            {
+                <span class="hint small">Actions are unavailable for status: @Model.Status</span>
+            }
+        </div>
+
+        <div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">
+            @if (actionable)
+            {
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Accept" method="post" class="d-inline js-action-form" data-action="accept">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="false" />
+                    <button type="submit" class="btn btn-success" disabled title="Review first">
+                        <i class="fas fa-check"></i> Accept & Enroll
+                    </button>
+                </form>
+
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Hold" method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="hold">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="false" />
+                    <select id="holdReasonSelect" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Awaiting further review" selected>Awaiting further review</option>
+                        <option value="Program capacity reached">Program capacity reached</option>
+                        <option value="Other">Other (specify)</option>
+                    </select>
+                    <input type="hidden" name="reason" id="holdReasonValue" value="Awaiting further review" />
+                    <input type="text" id="holdReasonOtherInput" class="form-control input-modern d-none" placeholder="Specify reason" style="min-width: 220px;" />
+                    <button type="submit" class="btn btn-warning" disabled title="Review first">
+                        <i class="fas fa-pause"></i> On Hold
+                    </button>
+                </form>
+
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Reject" method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="reject">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <select name="reason" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Unqualified">Unqualified</option>
+                        <option value="Violates Policy">Violates Policy</option>
+                        <option value="Missed Deadlines">Missed Deadlines</option>
+                        <option value="No Capacity">No Capacity</option>
+                    </select>
+                    <input type="text" name="notes" class="form-control input-modern" placeholder="Notes (optional)" style="min-width: 220px;" />
+                    <button type="submit" class="btn btn-danger" disabled title="Flag all documents first">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </form>
+            }
+            else if (isRejected)
+            {
+                <div class="alert alert-warning mb-0 d-flex align-items-center gap-2 py-1 px-2">
+                    <i class="fas fa-info-circle"></i>
+                    This request is rejected. Issue a secure edit link to allow resubmission.
+                </div>
+                <label value="true" id="chkReviewConfirm"></label>
+                <form asp-area="Admin" asp-controller="Admin" asp-action="AllowResubmission" method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="allow">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <label class="col-form-label mb-0">Link validity</label>
+                    <select name="tokenDays" class="form-select select-modern select-sm" style="width:130px;">
+                        <option value="3">3 days</option>
+                        <option value="7" selected>7 days</option>
+                        <option value="14">14 days</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" disabled title="Flag all documents first">
+                        <i class="fas fa-redo"></i> Allow Resubmission
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-info mb-0">Actions are unavailable for status: @Model.Status</div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <div id="requestDetailsConfig"
+         data-request-id="@Model.Id"
+         data-is-second-sem-pending="@(isSecondSemPending ? "true" : "false")"
+         data-is-first-sem-pending="@(isFirstSemPending ? "true" : "false")"
+         data-is-second-year="@(is2ndYear ? "true" : "false")"
+         data-enrolled-year-level="@enrolledYearLevel"
+         data-student-type="@Model.Type"
+         data-is-program-full="@(capFull ? "true" : "false")"
+         data-registration-url="@Url.Action("RegistrationSlip", "Admin", new { area = "Admin" })"
+         data-dashboard-url="@Url.Action("Dashboard", "Admin", new { area = "Admin" })"
+         data-prerequisites='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(prereqMap))'
+         data-secondsem-subjects='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(secondSemCanonical))'
+         data-existing-eligibility='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ExistingSecondSemEligibility ?? new Dictionary<string, string>()))'
+         data-existing-remarks='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ExistingSubjectRemarks ?? new Dictionary<string, string>()))'
+         data-calc-url='@Url.Action("CalculateEligibility", "Admin", new { area = "Admin" })'>
+    </div>
+    <script src="~/js/admin-request-details.js" asp-append-version="true"></script>
+
+    @{
+        var showSlipQuery = Context.Request.Query["showSlip"].ToString();
+        bool showSlip = string.Equals(showSlipQuery, "1", StringComparison.OrdinalIgnoreCase);
+    }
+    @if (showSlip)
+    {
+        <script>
+            (function () {
+                const registrationUrl = '@Url.Action("RegistrationSlip", "Admin", new { area = "Admin", id = Model.Id })';
+                const redirectTarget = '@Url.Action("Dashboard", "Admin", new { area = "Admin" })';
+                (async () => {
+                    try {
+                        const resp = await fetch(registrationUrl, { credentials: 'include', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                        if (!resp.ok) {
+                            console.error('Failed to load registration slip partial:', resp.status);
+                            return;
+                        }
+                        const html = await resp.text();
+                        const containerId = 'registrationModalContainer';
+                        let host = document.getElementById(containerId);
+                        if (!host) { host = document.createElement('div'); host.id = containerId; document.body.appendChild(host); }
+                        host.innerHTML = html;
+
+                        // execute any inline scripts inside partial
+                        host.querySelectorAll('script').forEach(old => {
+                            const s = document.createElement('script');
+                            if (old.src) s.src = old.src; else s.textContent = old.textContent || '';
+                            document.body.appendChild(s);
+                            old.remove();
+                        });
+
+                        const modalEl = document.getElementById('registrationModal');
+                        if (!modalEl) { console.warn('Registration modal element not found in partial.'); return; }
+                        const modal = new bootstrap.Modal(modalEl, { backdrop: 'static' });
+                        modal.show();
+
+                        modalEl.addEventListener('hidden.bs.modal', () => {
+                            host.innerHTML = '';
+                            // redirect to dashboard after close
+                            setTimeout(() => { window.location.href = redirectTarget; }, 20);
+                        }, { once: true });
+                    } catch (ex) {
+                        console.error('Error showing registration slip:', ex);
+                    }
+                })();
+            })();
+        </script>
+    }
+}

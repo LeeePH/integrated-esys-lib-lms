@@ -1,0 +1,210 @@
+@import url('/css/Shared/BottomBar.css');
+
+/* ===============================
+   ROOT VARIABLES
+=============================== */
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ===============================
+   GLOBAL
+=============================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--card-text);
+    overflow-x: hidden;
+}
+
+.student-todo {
+    max-width: 1250px;
+    margin: 80px auto;
+}
+
+/* ===============================
+   HORIZONTAL COLUMN SCROLL
+=============================== */
+.column-container {
+    margin-top: 30px;
+    margin-left: 10px;
+    display: flex;
+    gap: 16px;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+    .column-container::-webkit-scrollbar {
+        margin-top: 10px;
+        height: 8px;
+    }
+
+    .column-container::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 4px;
+    }
+
+/* ===============================
+   SUBJECT COLUMN (VERTICAL SCROLL)
+=============================== */
+.subject-column {
+    flex: 0 0 21.3%; /* take 1/4 of screen width */
+    display: flex;
+    flex-direction: column;
+    background: #f7f9fc;
+    border-radius: 16px;
+    padding: 16px;
+    height: 60vh; /* relative to viewport */
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+    .subject-column h2.subject-name {
+        margin: 0 0 12px 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: #006b99;
+        text-align: center;
+    }
+
+/* Vertical task list inside each subject */
+.tasks-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Vertical scrollbars */
+.subject-column::-webkit-scrollbar {
+    width: 6px;
+}
+
+.subject-column::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+
+/* ===============================
+   TASK CARD
+=============================== */
+.task-card {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(16,24,40,0.08);
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .task-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(16,24,40,0.12);
+    }
+
+    .task-card.green {
+        border-left: 5px solid #22c55e;
+    }
+
+    .task-card.yellow {
+        border-left: 5px solid #eab308;
+    }
+
+    .task-card.red {
+        border-left: 5px solid #ef4444;
+    }
+
+.task-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+    .task-content h3 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .task-content p {
+        margin: 0;
+        font-size: 12px;
+        color: rgba(0,0,0,0.6);
+    }
+
+/* ===============================
+   FIXED TOGGLE BUTTON (BOTTOM RIGHT)
+=============================== */
+.toggle-wrapper {
+    position: fixed;
+    top: 20px; /* keep as is */
+    right: 20px; /* keep as is */
+    z-index: 1000;
+}
+
+.toggle-button {
+    width: 140px; /* total width */
+    height: 36px; /* height */
+    display: flex; /* flex for equal split */
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+    .toggle-button .option {
+        flex: 1; /* equal width */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 12px;
+        transition: all 0.2s ease;
+        text-align: center;
+        user-select: none;
+    }
+
+        .toggle-button .option.active {
+            background: #00577c; /* slightly darkened overlay */
+            color: #fff; /* keep text color unchanged */
+        }
+
+
+        .toggle-button .option:hover:not(.active) {
+            background: rgba(255,255,255,0.15);
+        }
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+@media (max-width: 900px) {
+    .subject-column {
+        flex: 0 0 80%; /* mostly show one column on small screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .column-container {
+        gap: 12px;
+    }
+
+    .task-card {
+        padding: 10px 12px;
+    }
+
+    .toggle-button .option {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,205 @@
+﻿@model List<SystemLibrary.Models.Reservation>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Reservation Details</th>
+                    <th>Request Date</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var reservation = Model[i];
+                    <tr class="reservation-row">
+                        <td>
+                            <div>
+                                <div class="fw-bold text-primary">
+                                    <i class="fas fa-user-circle"></i>
+                                    Student ID: @reservation.UserId.ToString().Substring(0, 8)...
+                                </div>
+                                <div class="text-muted small">
+                                    <i class="fas fa-book"></i>
+                                    Book ID: @reservation.BookId.ToString().Substring(0, 8)...
+                                </div>
+                                @if (!string.IsNullOrEmpty(reservation.Status) && reservation.Status != "Pending")
+                                {
+                                    <div class="text-muted small">
+                                        <i class="fas fa-info-circle"></i>
+                                        @if (reservation.Status == "Approved")
+                                        {
+                                            <span>Due: @reservation.DueDate?.ToString("MM/dd/yyyy")</span>
+                                        }
+                                        else if (reservation.Status == "Rejected")
+                                        {
+                                            <span>Processed: @reservation.ApprovalDate?.ToString("MM/dd/yyyy")</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-nowrap">
+                                @reservation.ReservationDate.ToString("MM/dd/yyyy")
+                            </div>
+                            <div class="text-muted small">
+                                @reservation.ReservationDate.ToString("HH:mm")
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary rounded-pill">@(i + 1)</span>
+                        </td>
+                        <td>
+                            @switch (reservation.Status)
+                            {
+                                case "Pending":
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-clock"></i> Pending
+                                    </span>
+                                    break;
+                                case "Approved":
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check"></i> Ready
+                                    </span>
+                                    break;
+                                case "Rejected":
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times"></i> Cancelled
+                                    </span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary">@reservation.Status</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @if (reservation.Status == "Pending")
+                            {
+                                <div class="btn-group" role="group">
+                                    <form asp-controller="Librarian" asp-action="ApproveReservation" method="post" style="display: inline;">
+                                        <input type="hidden" name="reservationId" value="@reservation._id" />
+                                        <button type="submit"
+                                                class="btn btn-success btn-sm"
+                                                onclick="return confirm('Are you sure you want to approve this reservation?')"
+                                                title="Approve Reservation">
+                                            <i class="fas fa-check"></i> APPROVE
+                                        </button>
+                                    </form>
+                                    <form asp-controller="Librarian" asp-action="RejectReservation" method="post" style="display: inline;">
+                                        <input type="hidden" name="reservationId" value="@reservation._id" />
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to cancel this reservation?')"
+                                                title="Cancel Reservation">
+                                            <i class="fas fa-times"></i> CANCEL
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            else if (reservation.Status == "Approved")
+                            {
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-outline-primary btn-sm"
+                                            onclick="markAsPickedUp('@reservation._id')"
+                                            title="Mark as Picked Up">
+                                        <i class="fas fa-hand-holding"></i> PICKED UP
+                                    </button>
+                                    <button class="btn btn-outline-info btn-sm"
+                                            onclick="viewDetails('@reservation._id')"
+                                            title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary btn-sm"
+                                        onclick="viewDetails('@reservation._id')"
+                                        title="View Details">
+                                    <i class="fas fa-eye"></i> VIEW
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+        <h5 class="text-muted">No reservations found</h5>
+        <p class="text-muted">No reservations match the current filter criteria.</p>
+    </div>
+}
+
+<script>
+    function markAsPickedUp(reservationId) {
+        if (confirm('Mark this reservation as picked up?')) {
+            // Add your logic here to mark as picked up
+            // You might want to add a new action method in your controller
+            console.log('Marking reservation as picked up:', reservationId);
+        }
+    }
+
+    function viewDetails(reservationId) {
+        // Add your logic here to view reservation details
+        // You might want to show a modal or redirect to a details page
+        console.log('Viewing details for reservation:', reservationId);
+    }
+
+    // AUTO-REFRESH FIX - This will solve your availability display issue
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-refresh every 20 seconds to show latest book availability
+        setInterval(function() {
+            // Only refresh if no modals are open or forms being submitted
+            if (!document.querySelector('.modal.show') && !document.querySelector('form.submitting')) {
+                console.log('Refreshing to show latest book availability...');
+                location.reload();
+            }
+        }, 20000); // 20 seconds
+
+        // Mark forms as submitting to prevent refresh during submission
+        document.querySelectorAll('form').forEach(function(form) {
+            form.addEventListener('submit', function() {
+                this.classList.add('submitting');
+            });
+        });
+
+        // Optional: Show refresh indicator
+        let refreshCount = 0;
+        const originalTitle = document.title;
+
+        setInterval(function() {
+            refreshCount++;
+            if (refreshCount % 20 === 0) { // Every 20 seconds
+                document.title = '🔄 ' + originalTitle;
+                setTimeout(function() {
+                    document.title = originalTitle;
+                }, 1000);
+            }
+        }, 1000);
+    });
+
+    // Optional: Manual refresh button (you can add this to your page if needed)
+    function refreshReservations() {
+        location.reload();
+    }
+</script>
+
+<!-- Optional: Add this refresh button somewhere in your view if you want manual refresh -->
+<!--
+<div class="mb-3">
+    <button onclick="refreshReservations()" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-sync-alt"></i> Refresh List
+    </button>
+</div>
+-->

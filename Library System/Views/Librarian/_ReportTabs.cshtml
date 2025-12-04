@@ -1,0 +1,22 @@
+﻿<link rel="stylesheet" href="~/css/ReportTabs.css" asp-append-version="true" />
+
+<div class="report-tabs-wrapper">
+    <div class="tabs">
+        <a asp-controller="Librarian" asp-action="Borrowing"
+           class="@(ViewBag.ActiveTab == "borrow" ? "tab-btn active" : "tab-btn")">
+            Borrowing Trend
+        </a>
+        <a asp-controller="Librarian" asp-action="Overdue"
+           class="@(ViewBag.ActiveTab == "overdue" ? "tab-btn active" : "tab-btn")">
+            Overdue Accounts
+        </a>
+        <a asp-controller="Librarian" asp-action="Inventory"
+           class="@(ViewBag.ActiveTab == "inventory" ? "tab-btn active" : "tab-btn")">
+            Inventory Status
+        </a>
+        <a asp-controller="Librarian" asp-action="Activity"
+           class="@(ViewBag.ActiveTab == "activity" ? "tab-btn active" : "tab-btn")">
+            Student Activity
+        </a>
+    </div>
+</div>

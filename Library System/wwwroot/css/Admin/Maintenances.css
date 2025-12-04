@@ -1,0 +1,160 @@
+﻿/* === GLOBAL STYLING === */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 70px;
+    color: #222;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(1.05);
+    }
+
+.content {
+    width: 100%;
+    padding: 0px 40px 0px 90px;
+    box-sizing: border-box;
+    margin-top: -50px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    header h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #8b2f00;
+        margin-bottom: 20px;
+    }
+
+/* Tabs below header */
+.tabs {
+    margin: 25px 0;
+}
+
+    .tabs button {
+        border: none;
+        background: #e7ecf1;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-right: 8px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+        .tabs button.active {
+            background: #004b70;
+            color: white;
+        }
+
+.maintenance-section {
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.backup-card,
+.restore-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.backup-card h2,
+.restore-card h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.last-backup {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.restore-card select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    font-size: 15px;
+}
+
+.btn-blue {
+    background: #004b70;
+    color: white;
+}
+
+.btn-orange {
+    background: #f99700;
+    color: white;
+}
+
+.history-section {
+    margin-top: 35px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.history-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f0f0f0;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.btn-download {
+    background: #004b70;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}

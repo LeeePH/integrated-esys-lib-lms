@@ -1,0 +1,276 @@
+﻿﻿@{
+Layout = null;
+var title = (ViewData["Title"] as string) ?? "Admin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@title - Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="~/css/AdminStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading overlay -->
+    <div id="admin-loading-overlay" class="admin-loading-overlay d-none" aria-hidden="true">
+        <div class="admin-loading-box">
+            <div class="spinner-border text-light" role="status" aria-label="Loading"></div>
+            <div id="admin-loading-text" class="mt-2 text-white small"></div>
+        </div>
+    </div>
+
+    <style>
+
+    </style>
+    <div class="fixed-sidebar">
+        <div class="sidebar-brand">
+            Admin Panel
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="@Url.Action("Dashboard", "Admin", new { area = "Admin" })"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="sidebar-separator mt-3 mb-2">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-hourglass-half"></i>Pending Records
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Pending1stSem">
+                                <i class="fas fa-hourglass-start"></i> 1st Semester
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Pending2ndSem">
+                                <i class="fas fa-hourglass-start"></i> 2nd Semester
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-check me-1"></i>Enrolled Records
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Enrolled">
+                                <i class="fas fa-list me-1"></i> 1st Semester
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="Enrolled2ndSem">
+                                <i class="fas fa-list me-1"></i> 2nd Semester
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="@Url.Action("OnHold", "Admin", new { area = "Admin" })"><i class="fas fa-pause-circle"></i> On Hold</a></li>
+                <li><a href="@Url.Action("Rejected", "Admin", new { area = "Admin" })"><i class="fas fa-times-circle"></i> Rejected</a></li>
+                <li class="sidebar-separator mt-3 mb-2">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-check me-1"></i>Shifter Records (WIP)
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="PendingShifter">
+                                <i class="fas fa-clock me-1"></i> Pending Shifter
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="AcceptedShifter">
+                                <i class="fas fa-check-circle me-1"></i> Accepted Shifter
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="OnHoldShifter">
+                                <i class="fas fa-pause-circle me-1"></i> On-Hold Shifter
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Admin" asp-action="RejectedShifter">
+                                <i class="fas fa-times-circle me-1"></i> Rejected Shifter
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-separator mt-3 mb-2">
+                </li>
+                <li><a href="@Url.Action("AdminPosting", "Admin", new { area = "Admin" })"><i class="fas fa-bullhorn"></i> Announcement </a></li>
+                <li><a href="@Url.Action("AdminSettings", "Admin", new { area = "Admin" })"><i class="fas fa-flask"></i> Admin Settings</a></li>
+                <li><a href="@Url.Action("Archive", "Admin", new { area = "Admin" })"> <i class="fas fa-archive me-1"></i> Archive</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-bottom">
+            <form asp-area="Admin" asp-controller="Admin" asp-action="Logout" method="post">
+
+
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-link p-0" style="color:white; text-decoration:none;">Log Out</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="fixed-header">
+        <div class="header-title">
+            <span>@title</span>
+        </div>
+        <div class="header-content d-flex align-items-center gap-3">
+            <div class="notif-dropdown">
+                <button id="notifBtn" class="btn btn-link text-decoration-none position-relative">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+                </button>
+                <div id="notifPanel" class="notif-panel p-2">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong>Notifications</strong>
+                        <div class="d-flex gap-2">
+                            <button id="markAllRead" class="btn btn-sm btn-outline-secondary">Mark as all read</button>
+                            <button id="clearNotif" class="btn btn-sm btn-outline-danger">Clear</button>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 mb-2 small">
+                        <div class="form-check m-0">
+                            <input class="form-check-input" type="checkbox" id="settingSound">
+                            <label class="form-check-label" for="settingSound">Sound</label>
+                        </div>
+                        <div class="form-check m-0">
+                            <input class="form-check-input" type="checkbox" id="settingBrowser">
+                            <label class="form-check-label" for="settingBrowser">Browser pop-ups</label>
+                        </div>
+                    </div>
+                    <div id="notifList" class="notif-list"></div>
+                    <div id="notifEmpty" class="text-muted small">No notifications.</div>
+                </div>
+            </div>
+
+
+
+            <span>@User?.Identity?.Name</span>
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </header>
+
+    <div class="main-content">
+        @RenderBody()
+        <footer><p>&copy; @DateTime.Now.Year - Enrollment System</p></footer>
+    </div>
+    <audio id="notifSound" preload="auto">
+        <source src="~/audio/beep.wav" type="audio/wav">
+    </audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin-notifications.js"></script>
+    <script>
+
+          // NEW: Typeahead search
+        (function () {
+            const form = document.getElementById('adminSearchForm');
+            const input = document.getElementById('adminSearchInput');
+            const panel = document.getElementById('adminSearchPanel');
+
+            let lastQuery = '';
+            let timer = null;
+
+            function hidePanel() { panel.classList.remove('show'); }
+            function showPanel() { panel.classList.add('show'); }
+            function clearPanel() { panel.innerHTML = ''; }
+
+            function render(items) {
+                clearPanel();
+                if (!items || items.length === 0) {
+                    panel.innerHTML = '<div class="search-empty">No matches.</div>';
+                    showPanel();
+                    return;
+                }
+                const frag = document.createDocumentFragment();
+                items.forEach(it => {
+                    const div = document.createElement('div');
+                    div.className = 'search-item';
+                    div.innerHTML = `
+                        <a href="${it.link}">
+                            <div><strong>${it.fullName}</strong></div>
+                            <div class="search-meta">
+                                ${it.email} • ${it.type} • <span class="badge bg-secondary">${it.status}</span>
+                            </div>
+                        </a>`;
+                    frag.appendChild(div);
+                });
+                panel.appendChild(frag);
+                showPanel();
+            }
+
+            async function search(q) {
+                if (!q || q.length < 2) { hidePanel(); return; }
+                lastQuery = q;
+                try {
+                    const url = '@Url.Action("Search", "Admin", new { area = "Admin" })' + `?q=${encodeURIComponent(q)}&take=8`;
+                    const resp = await fetch(url, { method: 'GET' });
+                    if (!resp.ok) { hidePanel(); return; }
+                    const data = await resp.json();
+                    render(data.items || []);
+                } catch {
+                    hidePanel();
+                }
+            }
+
+            function debounceSearch() {
+                const q = (input.value || '').trim();
+                clearTimeout(timer);
+                timer = setTimeout(() => search(q), 200);
+            }
+
+            input.addEventListener('input', debounceSearch);
+            input.addEventListener('focus', () => {
+                if ((input.value || '').trim().length >= 2) showPanel();
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const q = (input.value || '').trim();
+                if (!q) { hidePanel(); return; }
+                // If there is only one current item, navigate; else show panel
+                const items = panel.querySelectorAll('.search-item a');
+                if (items.length === 1) {
+                    window.location.href = items[0].getAttribute('href');
+                } else {
+                    search(q);
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                const within = form.contains(e.target) || panel.contains(e.target);
+                if (!within) hidePanel();
+            });
+              window.AdminLoading = (function () {
+            const overlay = document.getElementById('admin-loading-overlay');
+            const textEl = document.getElementById('admin-loading-text');
+            function show(text) {
+                if (textEl) textEl.textContent = text || 'Processing...';
+                overlay?.classList.remove('d-none');
+            }
+            function hide() {
+                overlay?.classList.add('d-none');
+                if (textEl) textEl.textContent = '';
+            }
+            return { show, hide };
+
+        })();
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

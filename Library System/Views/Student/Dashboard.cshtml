@@ -1,0 +1,424 @@
+﻿@model SystemLibrary.ViewModels.StudentDashboardViewModel
+@{
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/student/students.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="dashboard-container">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="greeting">
+            Hi, <span class="student-name">@Model.StudentName</span>
+        </div>
+
+        <!-- Stats -->
+        <section class="stats">
+            <div class="stat-box blue">
+                <div class="stat-content">
+                    <div class="stat-number">@Model.ActiveBorrowings</div>
+                    <div class="stat-icon-wrapper">
+                        <img src="~/images/active.png" alt="Active Borrowings" class="stat-icon" />
+                    </div>
+                </div>
+                <div class="stat-label">Active Borrowings</div>
+            </div>
+
+            <div class="stat-box red">
+                <div class="stat-content">
+                    <div class="stat-number">@Model.OverdueBooks</div>
+                    <div class="stat-icon-wrapper">
+                        <img src="~/images/overdue.png" alt="Overdue Books" class="stat-icon" />
+                    </div>
+                </div>
+                <div class="stat-label">Overdue Books</div>
+            </div>
+        </section>
+
+        <!-- Penalties Section -->
+        @if (Model.HasPendingPenalties)
+        {
+            <section class="penalties-section">
+                <h2>
+                    Pending Penalties
+                </h2>
+                <div class="penalty-alert">
+                    <div class="penalty-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="penalty-content">
+                        <div class="penalty-title">You have pending penalties</div>
+                        <div class="penalty-amount">Total: ₱@Model.TotalPendingPenalties.ToString("F2")</div>
+                        <div class="penalty-message">You cannot borrow books until all penalties are settled.</div>
+                    </div>
+                </div>
+                <div class="penalty-list">
+                    @foreach (var penalty in Model.PendingPenalties)
+                    {
+                        <div class="penalty-item">
+                            <div class="penalty-info">
+                                <div class="penalty-book">@penalty.BookTitle</div>
+                                <div class="penalty-type">@penalty.PenaltyType - @penalty.Description</div>
+                                <div class="penalty-date">@penalty.CreatedDate.ToString("MMM dd, yyyy")</div>
+                            </div>
+                            <div class="penalty-amount">₱@penalty.Amount.ToString("F2")</div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+
+        <!-- Current Borrowings -->
+        <section class="current-borrowing">
+            <h2>
+                <img src="~/images/borrow.png" alt="Current Borrowing" class="title-icon" />
+                Current Borrowing
+            </h2>
+            <div class="borrow-list">
+                @if (Model.CurrentBorrowings != null && Model.CurrentBorrowings.Any())
+                {
+                    foreach (var borrowing in Model.CurrentBorrowings)
+                    {
+                                <div class="borrow-card @(borrowing.IsOverdue ? "overdue" : "")">
+                                    <img src="@borrowing.BookCover" alt="Book Cover" class="book-cover" />
+                                    <div class="book-details">
+                                        <p class="book-title">@borrowing.BookTitle</p>
+                                        <p class="book-author">by @borrowing.BookAuthor</p>
+
+                                        <div class="date-row">
+                                            <div class="borrowed-date">
+                                                <span>Borrowed Date: @borrowing.BorrowedDate.ToString("MM/dd/yyyy")</span>
+                                            </div>
+                                            <div class="due-date-wrapper">
+                                                <span class="due-date @(borrowing.IsOverdue ? "text-danger" : (borrowing.DaysRemaining <= 3 ? "text-warning" : ""))">
+                                                    Due Date: @borrowing.DueDate.ToString("MM/dd/yyyy")
+                                                </span>
+                                                <span class="days-remaining badge
+                                                            @(borrowing.IsOverdue ? "bg-danger" : "bg-warning")">
+                                            @if (borrowing.IsOverdue)
+                                            {
+                                                @($"OVERDUE - {Math.Abs(borrowing.DaysRemaining)} minute(s) late")
+                                            }
+                                            else
+                                            {
+                                                @("DUE NOW")
+                                            }
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    }
+                }
+                else
+                {
+                        <div class="empty-borrowed">
+                            <img src="~/images/ghost.png" alt="Ghost" class="ghost-img" />
+                            <p>You have no active borrowings at the moment.</p>
+                        </div>
+                }
+            </div>
+        </section>
+    </main>
+
+    <!-- Notifications -->
+    <aside class="notifications">
+        <h2 class="notif-title">
+            <span style="display: flex; align-items: center; gap: 12px;">
+                <img src="~/images/notif.png" alt="Notifications" class="notif-icon" />
+                Notifications
+            </span>
+            <button id="clearReadBtn" onclick="openClearModal()" class="tab-btn"
+                    style="display:@(Model.Notifications != null && Model.Notifications.Any() ? "inline-flex" : "none");">
+                <span>Clear</span>
+            </button>
+        </h2>
+
+        <div class="notif-list" id="notifList">
+            @if (Model.Notifications != null && Model.Notifications.Any())
+            {
+                foreach (var notification in Model.Notifications)
+                {
+                            <div class="notif-card @(notification.Type?.ToLower().Replace("_", "-") ?? "") @(notification.IsRead ? "read" : "unread")"
+                                 data-id="@notification._id"
+                                 data-isread="@notification.IsRead"
+                                 onclick="redirectToNotifications()"
+                                 style="cursor: pointer;">
+                                <div class="notif-content">
+                                    <strong>@notification.Title</strong>
+                                    <p>@notification.Message</p>
+                                </div>
+
+                                <!-- 3-dot dropdown menu -->
+                                <div class="notif-menu">
+                                    <button class="menu-btn" onclick="toggleMenu(this); event.stopPropagation();">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="menu-dropdown">
+                                        <li onclick="tryArchiveNotification(this, '@notification._id'); event.stopPropagation();"
+                                            data-isread="@notification.IsRead">
+                                            Archive
+                                        </li>
+                                        <li id="delete modal" onclick="openDeleteModal('@notification._id'); event.stopPropagation();">Delete</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                }
+            }
+            else
+            {
+                    <div id="emptyNotif" class="empty-notif">
+                        <i class="fas fa-bell-slash fa-3x"></i>
+                        <strong>NO NEW NOTIFICATIONS</strong>
+                        <p>You're all caught up!</p>
+                    </div>
+            }
+        </div>
+    </aside>
+
+
+    <div id="clearModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+
+    <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #006B99;">
+                <h3 style="margin: 0;">Clear Notification</h3>
+            </div>
+            <p style="color: #666; margin-bottom: 1.5rem;">
+             Are you sure you want to clear all notifications from the dashboard?
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button onclick="closeClearModal()" style="background: #f0f0f0; color: #333;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Cancel
+                </button>
+                <button onclick="confirmClearAll()" style="background: #006B99; color: white;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Clear 
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #EF0202;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+                <h3 style="margin: 0;">Delete Notification?</h3>
+            </div>
+            <p style="color: #666; margin-bottom: 1.5rem;">
+                This action cannot be undone. Are you sure you want to delete this notification?
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button onclick="closeDeleteModal()" style="background: #f0f0f0; color: #333;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Cancel
+                </button>
+                <button onclick="confirmDelete()" style="background: #EF0202; color: white;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let notificationToDelete = null;
+
+        // Toggle 3-dot menu
+        function toggleMenu(button) {
+            const dropdown = button.nextElementSibling;
+            document.querySelectorAll('.menu-dropdown').forEach(menu => {
+                if (menu !== dropdown) menu.classList.remove('show');
+            });
+            dropdown.classList.toggle('show');
+            event.stopPropagation();
+        }
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.menu-dropdown').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        });
+
+        // Archive
+
+        function tryArchiveNotification(element, id) {
+            const isRead = element.getAttribute('data-isread') === 'true';
+
+            if (!isRead) {
+                // visually indicate it's disabled
+                element.style.pointerEvents = 'none';
+                element.style.opacity = '0.5';
+                element.textContent = 'Unread (Cannot Archive)';
+                setTimeout(() => {
+                    element.style.pointerEvents = 'auto';
+                    element.style.opacity = '1';
+                    element.textContent = 'Archive';
+                }, 1500);
+                return;
+            }
+
+            // proceed if read
+            archiveNotification(id);
+        }
+
+
+        function archiveNotification(id) {
+            fetch('/Student/ArchiveNotification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `notificationId=${id}&isArchived=true`
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const card = document.querySelector(`[data-id="${id}"]`);
+                        if (card) {
+                            card.style.transition = 'all 0.3s ease-out';
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.remove();
+                                checkEmptyNotifState();
+                            }, 300);
+                        }
+                    } else {
+                        alert('Failed to archive notification');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error archiving notification:', err);
+                    alert('Error archiving notification');
+                });
+        }
+
+        // Clear All Notifications
+        function clearAllNotifications() {
+            // Get all notification cards (not just read ones)
+            const allCards = document.querySelectorAll('.notif-card');
+            const emptyNotif = document.getElementById('emptyNotif');
+            const clearBtn = document.getElementById('clearReadBtn');
+
+            if (allCards.length === 0) {
+                alert('No notifications to clear.');
+                return;
+            }
+
+            // Animate all cards out
+            allCards.forEach(card => {
+                card.style.transition = 'all 0.4s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(50px)';
+                setTimeout(() => card.remove(), 400);
+            });
+
+            // Hide clear button
+            clearBtn.style.display = 'none';
+
+            // Show empty state
+            setTimeout(() => {
+                emptyNotif.style.display = 'flex';
+                emptyNotif.style.opacity = '0';
+                emptyNotif.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => { emptyNotif.style.opacity = '1'; }, 10);
+            }, 400);
+
+            // Mark all notifications as archived on server
+            fetch('/Student/ClearAllReadNotifications', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('Failed to clear notifications on server:', data.message);
+                    }
+                })
+                .catch(err => console.error('Error clearing notifications:', err));
+        }
+
+
+
+        // empty state
+
+        function checkEmptyNotifState() {
+            const notifCards = document.querySelectorAll('.notif-card');
+            const emptyNotif = document.getElementById('emptyNotif');
+            const clearBtn = document.getElementById('clearReadBtn');
+
+            if (notifCards.length === 0) {
+                emptyNotif.style.display = 'flex';
+                clearBtn.style.display = 'none';
+            } else {
+                emptyNotif.style.display = 'none';
+                clearBtn.style.display = 'inline-flex';
+            }
+        }
+
+
+        // Delete modal open
+        function openDeleteModal(id) {
+            notificationToDelete = id;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        // Confirm delete
+        function confirmDelete() {
+            if (!notificationToDelete) return;
+
+            fetch('/Student/DeleteNotification', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `notificationId=${notificationToDelete}`
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const card = document.querySelector(`[data-id="${notificationToDelete}"]`);
+                        if (card) {
+                            card.style.transition = 'all 0.3s ease-out';
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateX(100%)';
+                            setTimeout(() => {
+                                card.remove();
+                                checkEmptyNotifState();
+                            }, 300);
+                        }
+                    }
+                    closeDeleteModal();
+                });
+        }
+
+        function redirectToNotifications() {
+            window.location.href = '/Student/Notifications';
+        }
+
+        // Close modal
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            notificationToDelete = null;
+        }
+
+               function openClearModal() {
+            document.getElementById('clearModal').style.display = 'flex';
+        }
+
+
+        function closeClearModal() {
+            document.getElementById('clearModal').style.display = 'none';
+        }
+
+        function confirmClearAll() {
+            closeClearModal();
+            clearAllNotifications(); 
+        }
+
+    </script>
+
+

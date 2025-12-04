@@ -1,0 +1,2133 @@
+﻿@model StudentDashboardViewModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+
+    var ef = Model.Enrollment?.ExtraFields ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    string PF(string key, string fallback = "") => ef.TryGetValue(key, out var v) && !string.IsNullOrWhiteSpace(v) ? v : fallback;
+    string DayName(int d) => d switch { 1 => "Mon", 2 => "Tue", 3 => "Wed", 4 => "Thu", 5 => "Fri", 6 => "Sat", 7 => "Sun", _ => "-" };
+
+    string status = Model.Enrollment?.Status ?? "None";
+    bool isEnrolled = status.StartsWith("Enrolled", StringComparison.OrdinalIgnoreCase);
+    bool isPendingSem = status.EndsWith("Sem Pending", StringComparison.OrdinalIgnoreCase);
+    bool isRejected = status.StartsWith("Rejected", StringComparison.OrdinalIgnoreCase);
+    bool hasSection = !string.IsNullOrWhiteSpace(Model.SectionId);
+    string AcadProgram() => PF("Academic.Program", "BSIT");
+    string AcadYearLevel() => PF("Academic.YearLevel", "-");
+    string AcadSemester() => PF("Academic.Semester", Model.EnrollmentSemester);
+    string AcadYear() => PF("Academic.AcademicYear", Model.EnrollmentAcademicYear);
+
+    var flags = Model.Enrollment?.DocumentFlags ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    // Base required documents (all students)
+    string[] baseReqKeys = new[] { "Form138", "GoodMoral", "Diploma", "MedicalCertificate", "CertificateOfIndigency", "BirthCertificate" };
+
+    // Extra required documents for transferees
+    string[] transfereeExtraKeys = new[] { "GuidanceClearance", "TranscriptOfRecords" };
+
+    // Build final list of keys to show (include transferee extras when student is transferee)
+    var reqKeysList = new List<string>(baseReqKeys);
+    // Treat any Type that starts with "Transferee" (covers "Transferee", "Transferee-Regular", etc.)
+    var isTransferee = !string.IsNullOrWhiteSpace(Model.Type) && Model.Type.StartsWith("Transferee", StringComparison.OrdinalIgnoreCase);
+    if (isTransferee)
+    {
+        reqKeysList.AddRange(transfereeExtraKeys);
+    }
+    var reqKeys = reqKeysList.ToArray();
+
+    // Updated function: check all displayed keys for Submitted
+    bool AllSubmitted()
+    {
+        if (flags == null || flags.Count == 0) return false;
+        foreach (var k in reqKeys)
+        {
+            if (!flags.TryGetValue(k, out var v)) return false;
+            if (!string.Equals((v ?? "").Trim(), "Submitted", StringComparison.OrdinalIgnoreCase)) return false;
+        }
+        return true;
+    }
+
+    bool isFreshmen = string.Equals(Model.Type ?? "", "Freshmen", StringComparison.OrdinalIgnoreCase);
+    bool secondSemOpen = string.Equals(Model.EnrollmentSemester ?? "", "2nd Semester", StringComparison.OrdinalIgnoreCase);
+    bool firstSemActive = string.Equals(Model.EnrollmentSemester ?? "", "1st Semester", StringComparison.OrdinalIgnoreCase);
+    bool complianceComplete = AllSubmitted();
+    bool isSecondSemRequest = (Model.Enrollment?.Status ?? "").Contains("2nd", StringComparison.OrdinalIgnoreCase)
+                              || string.Equals(AcadSemester(), "2nd Semester", StringComparison.OrdinalIgnoreCase);
+    // treat any enrollment that is pending (status contains "Pending") as compliant for the UI (but we will still require docs for transferees)
+    bool isEnrollmentPending = (Model.Enrollment?.Status ?? "").IndexOf("Pending", StringComparison.OrdinalIgnoreCase) >= 0;
+
+
+    // detect already-enrolled 2nd Year students and treat like 2nd-sem compliance in UI
+    bool isSecondYearEnrolled = isEnrolled &&
+        (!string.IsNullOrWhiteSpace(AcadYearLevel()) &&
+         AcadYearLevel().IndexOf("2nd", StringComparison.OrdinalIgnoreCase) >= 0);
+
+    var subjectRemarks = Model.Enrollment?.ExtraFields?
+            .Where(kvp => kvp.Key.StartsWith("SubjectRemarks.", StringComparison.OrdinalIgnoreCase))
+            .ToDictionary(
+                kvp => kvp.Key.Substring("SubjectRemarks.".Length),
+                kvp => kvp.Value,
+                StringComparer.OrdinalIgnoreCase
+            ) ?? new Dictionary<string, string>();
+
+    var previousRemarks = Model.SubjectRemarks ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    // ✅ NEW: Use curriculum validation result from controller
+    // Student is irregular if:
+    // 1. Missing any required subjects from curriculum, OR
+    // 2. Failed any subjects (even if all assigned subjects passed)
+    bool hasFailedSubjects = Model.HasFailedSubjects; // ✅ Now based on CurriculumValidator
+    bool hasMissingSubjects = Model.MissingSubjects != null && Model.MissingSubjects.Any();
+    bool hasActualFailures = Model.FailedSubjects != null && Model.FailedSubjects.Any();
+
+    // ✅ CRITICAL: Student is irregular if EITHER missing subjects OR failed subjects
+    bool isIrregular = hasFailedSubjects || hasMissingSubjects || hasActualFailures;
+
+    string defaultEnrollmentType = isIrregular ? "Irregular" : "Regular";
+
+    // ✅ DEBUG: Log detection result
+    Console.WriteLine($"[View] hasFailedSubjects={hasFailedSubjects}, hasMissing={hasMissingSubjects}, hasFailures={hasActualFailures}");
+    Console.WriteLine($"[View] Final enrollment type: {defaultEnrollmentType}");
+
+    // ✅ NEW LOGIC: Collect ALL subject remarks from ALL sources (current + previous + archived)
+    var allSubjectRemarks = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    // Priority 1: Current enrollment ExtraFields (admin-saved remarks for ALL semesters)
+    if (Model.Enrollment?.ExtraFields != null)
+    {
+        foreach (var kvp in Model.Enrollment.ExtraFields)
+        {
+            if (kvp.Key.StartsWith("SubjectRemarks.", StringComparison.OrdinalIgnoreCase))
+            {
+                // Extract subject code (handle both "SubjectRemarks.CC101" and "SubjectRemarks.2ndSem.CC101")
+                var subjectCode = kvp.Key.Substring("SubjectRemarks.".Length)
+                                         .Replace("2ndSem.", "")
+                                         .Replace("1stSem.", "")
+                                         .Trim();
+
+                if (!string.IsNullOrWhiteSpace(subjectCode) && !string.IsNullOrWhiteSpace(kvp.Value))
+                {
+                    allSubjectRemarks[subjectCode] = kvp.Value.Trim();
+                }
+            }
+        }
+    }
+
+    // Priority 2: Model.SubjectRemarks (includes both current and previous subjects from StudentAccountController)
+    if (Model.SubjectRemarks != null)
+    {
+        foreach (var kvp in Model.SubjectRemarks)
+        {
+            if (!string.IsNullOrWhiteSpace(kvp.Key) && !string.IsNullOrWhiteSpace(kvp.Value))
+            {
+                // Don't overwrite if already exists (ExtraFields has priority)
+                if (!allSubjectRemarks.ContainsKey(kvp.Key))
+                {
+                    allSubjectRemarks[kvp.Key] = kvp.Value.Trim();
+                }
+            }
+        }
+    }
+
+    // Priority 3: Model.PreviousSubjectRemarks (fallback for older data)
+    if (Model.PreviousSubjectRemarks != null)
+    {
+        foreach (var kvp in Model.PreviousSubjectRemarks)
+        {
+            if (!string.IsNullOrWhiteSpace(kvp.Key) && !string.IsNullOrWhiteSpace(kvp.Value))
+            {
+                if (!allSubjectRemarks.ContainsKey(kvp.Key))
+                {
+                    allSubjectRemarks[kvp.Key] = kvp.Value.Trim();
+                }
+            }
+        }
+    }
+
+    // Priority 4: Current schedule subjects (from SubjectSchedules)
+    if (Model.SubjectSchedules != null)
+    {
+        foreach (var schedule in Model.SubjectSchedules)
+        {
+            if (!string.IsNullOrWhiteSpace(schedule.Code))
+            {
+                // Check if we already have a remark for this subject
+                if (!allSubjectRemarks.ContainsKey(schedule.Code))
+                {
+                    // Default to "ongoing" if no remark exists
+                    allSubjectRemarks[schedule.Code] = "ongoing";
+                }
+            }
+        }
+    }
+
+    // Priority 5: Previous subjects (from PreviousSubjects list)
+    if (Model.PreviousSubjects != null)
+    {
+        foreach (var subject in Model.PreviousSubjects)
+        {
+            if (!string.IsNullOrWhiteSpace(subject.Code))
+            {
+                if (!allSubjectRemarks.ContainsKey(subject.Code))
+                {
+                    allSubjectRemarks[subject.Code] = "ongoing";
+                }
+            }
+        }
+    }
+
+    // ✅ CRITICAL FIX: Check if ANY subject has failed (normalize variations)
+    bool hasAnyFailedSubject = allSubjectRemarks.Values.Any(remark =>
+    {
+        var normalized = (remark ?? "").Trim().ToLowerInvariant();
+        return normalized == "fail" ||
+               normalized == "failed" ||
+               normalized == "failing";
+    });
+
+  
+
+    // ✅ DEBUG: Log all remarks for troubleshooting (remove in production)
+    Console.WriteLine($"[StudentDashboard] Total remarks collected: {allSubjectRemarks.Count}");
+    Console.WriteLine($"[StudentDashboard] Failed subjects detected: {hasFailedSubjects}");
+    Console.WriteLine($"[StudentDashboard] Enrollment type: {defaultEnrollmentType}");
+
+    // helper for disabling student submission when transferee isn't compliant
+    bool transfereeBlocked = isTransferee && !complianceComplete;
+    bool requiresCompliance = isTransferee || !(isSecondSemRequest || isSecondYearEnrolled || isEnrollmentPending);
+
+    string transfereeBlockTitle = "Transferees must submit all required documents (Guidance Clearance & Transcript of Records included) before submitting enrollment.";
+}
+<style>
+    .nav-container {
+        border-radius: 50px;
+        overflow: hidden;
+    }
+
+    .nav-btn {
+        border-radius: 50rem !important;
+        color: black;
+        padding: .4rem .75rem;
+        display: inline-block;
+        font-size: 2rem;
+        font-weight: 500;
+        background: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+        .nav-btn:hover,
+        .nav-btn:active,
+        .nav-btn:focus,
+        .nav-btn:focus-visible {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        .nav-btn.active,
+        .nav-btn:hover {
+            background: #066B99 !important;
+            color: #fff !important;
+        }
+
+</style>
+
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger mb-2">@err</div>
+}
+@if (TempData["Success"] is string ok)
+{
+    <div class="alert alert-success mb-2">@ok</div> //needs redesign
+}
+
+<div class="p-3" style="background-color:#066B99; min-height: 100vh; padding-right: 4rem !important;">
+
+    <div class="d-flex gap-2 align-items-start">
+        <a asp-area="Student" asp-controller="Landing" asp-action="EnrollmentLandingPage" class="btn bg-white mt-1" title="Back">
+            <img src="~/images/arrow-left.svg" alt="Back" width="25" />
+        </a>
+
+        <div class="d-flex flex-column flex-grow-1">
+            <div class="d-flex flex-column text-white mb-4">
+                <h4 class="mb-1">Enrollment Dashboard</h4>
+                <p class="mb-0">Manage your enrollment and academic information.</p>
+            </div>
+
+            <div class="d-flex flex-nowrap text-center w-100 justify-content-around bg-white px-3 py-2 gap-3 mb-4 nav-container"
+                 role="tablist" aria-label="Student dashboard tabs">
+
+                <button id="tabbtn-compliance" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn active"
+                        type="button" role="tab" aria-selected="true" aria-controls="pane-compliance"
+                        data-bs-toggle="tab" data-bs-target="#pane-compliance">
+                    Compliance
+                </button>
+                <button id="tabbtn-history" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn"
+                        type="button" role="tab" aria-selected="false" aria-controls="pane-history"
+                        data-bs-toggle="tab" data-bs-target="#pane-history">
+                    History
+                </button>
+                <button id="tabbtn-enrollment" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn"
+                        type="button" role="tab" aria-selected="false" aria-controls="pane-enrollment"
+                        data-bs-toggle="tab" data-bs-target="#pane-enrollment">
+                    Enrollment
+                </button>
+                <button id="tabbtn-student-info" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn"
+                        type="button" role="tab" aria-selected="false" aria-controls="pane-student-info"
+                        data-bs-toggle="tab" data-bs-target="#pane-student-info">
+                    Student Information
+                </button>
+                <button id="tabbtn-subjects-schedule" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn"
+                        type="button" role="tab" aria-selected="false" aria-controls="pane-subjects-schedule"
+                        data-bs-toggle="tab" data-bs-target="#pane-subjects-schedule">
+                    Subject & Schedule
+                </button>
+                <button id="tabbtn-previous" class="flex-grow-1 rounded-5 text-decoration-none fs-6 nav-btn"
+                        type="button" role="tab" aria-selected="false" aria-controls="pane-previous"
+                        data-bs-toggle="tab" data-bs-target="#pane-previous">
+                    Previous Subjects
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pane-compliance" role="tabpanel" aria-labelledby="tabbtn-compliance">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Document Compliance</span>
+
+                        </div>
+                        <div class="card-body">
+                            @* ✅ NEW: Library Penalties Section *@
+                            @if (Model.HasPendingPenalties)
+                            {
+                                <div class="alert alert-warning d-flex justify-content-between align-items-center mb-3" role="alert">
+                                    <div>
+                                        <strong>⚠️ Pending Library Penalties</strong>
+                                        <p class="mb-0 mt-1">You have <strong>@Model.PendingPenalties.Count</strong> pending penalty(ies) totaling <strong>₱@Model.TotalPendingPenalties.ToString("N2")</strong></p>
+                                    </div>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#penaltyModal">
+                                        👁️ View Penalties
+                                    </button>
+                                </div>
+                            }
+                            else if (Model.Penalties != null && Model.Penalties.Any())
+                            {
+                                <div class="alert alert-success d-flex justify-content-between align-items-center mb-3" role="alert">
+                                    <div>
+                                        <strong>✅ Library Penalties</strong>
+                                        <p class="mb-0 mt-1">All penalties have been settled.</p>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#penaltyModal">
+                                        👁️ View History
+                                    </button>
+                                </div>
+                            }
+                            @if (Model.Enrollment == null)
+                            {
+                                <div class="alert alert-info mb-0">No enrollment record yet.</div>
+                            }
+                            else if (!isTransferee && (isSecondSemRequest || isSecondYearEnrolled || isEnrollmentPending))
+                            {
+                                <div class="alert alert-success mb-0">
+                                    No additional document compliance is required. Your documents were already validated.
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row g-3">
+                                    @foreach (var k in reqKeys)
+                                    {
+                                        var label = k switch
+                                        {
+                                            "Form138" => "Form 138",
+                                            "GoodMoral" => "Good Moral",
+                                            "Diploma" => "Diploma",
+                                            "MedicalCertificate" => "Medical Certificate",
+                                            "CertificateOfIndigency" => "Certificate of Indigency",
+                                            "BirthCertificate" => "Birth Certificate",
+                                            "GuidanceClearance" => "Guidance Clearance",
+                                            "TranscriptOfRecords" => "Transcript of Records",
+                                            _ => k
+                                        };
+                                        var val = flags.TryGetValue(k, out var v) ? (v ?? "").Trim() : "";
+                                        var badge = string.IsNullOrEmpty(val) ? "secondary" :
+                                        string.Equals(val, "Submitted", StringComparison.OrdinalIgnoreCase) ? "success" :
+                                        string.Equals(val, "To be followed", StringComparison.OrdinalIgnoreCase) ? "warning text-dark" : "dark";
+                                        <div class="col-md-4">
+                                            <div class="border rounded p-2 h-100">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <strong>@label</strong>
+                                                    <span class="badge bg-@badge">@(!string.IsNullOrEmpty(val) ? val : "unset")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <hr />
+                                @if (complianceComplete)
+                                {
+                                    <div class="alert alert-success mb-0">
+                                        All required documents have been marked as Submitted.
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning">
+                                        The following require attention before future enrollments:
+                                        <ul class="mb-0">
+                                            @foreach (var k in reqKeys)
+                                            {
+                                                var needs = !flags.TryGetValue(k, out var v) || string.IsNullOrWhiteSpace(v) || !string.Equals(v.Trim(), "Submitted", StringComparison.OrdinalIgnoreCase);
+                                                if (!needs) { continue; }
+                                                var label = k switch
+                                                {
+                                                    "Form138" => "Form 138",
+                                                    "GoodMoral" => "Good Moral",
+                                                    "Diploma" => "Diploma",
+                                                    "MedicalCertificate" => "Medical Certificate",
+                                                    "CertificateOfIndigency" => "Certificate of Indigency",
+                                                    "BirthCertificate" => "Birth Certificate",
+                                                    "GuidanceClearance" => "Guidance Clearance",
+                                                    "TranscriptOfRecords" => "Transcript of Records",
+                                                    _ => k
+                                                };
+                                                <li>@label</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+          
+<div class="tab-pane fade" id="pane-history" role="tabpanel" aria-labelledby="tabbtn-history">
+    <div class="card">
+        <div class="card-header">Account History</div>
+        <div class="card-body">
+            @if (Model.EnrollmentHistory == null || Model.EnrollmentHistory.Count == 0)
+            {
+                <div class="text-muted">No history available.</div>
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var req in Model.EnrollmentHistory.OrderByDescending(r => r.SubmittedAt))
+                    {
+                        var ex = req.ExtraFields ?? new Dictionary<string,string>();
+                        string Get(string p, string n) { var k = string.IsNullOrEmpty(p) ? n : $"{p}.{n}"; return ex.TryGetValue(k, out var v) ? v : ""; }
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <strong>@(Get("Academic","Semester") != "" ? Get("Academic","Semester") : "-")</strong>
+                                    <span class="text-muted ms-2">AY: @(Get("Academic","AcademicYear") != "" ? Get("Academic","AcademicYear") : "-")</span>
+                                    <div class="small text-muted">@req.SubmittedAt.ToLocalTime().ToString("f")</div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-secondary">@req.Status</span>
+                                    @if (!string.IsNullOrWhiteSpace(req.Reason))
+                                    {
+                                        <div class="small text-muted mt-1">@req.Reason</div>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+                </div>
+
+
+@{
+    var scheduleCodes = Model.SubjectSchedules?.Select(s => s.Code)
+        .Where(c => !string.IsNullOrWhiteSpace(c))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToList() ?? new List<string>();
+
+    bool hasOngoingSubjects = false;
+    foreach (var code in scheduleCodes)
+    {
+        string remark = null;
+
+        // Prefer admin-saved enrollment ExtraFields first, then model remarks
+        if (subjectRemarks != null && subjectRemarks.TryGetValue(code, out var r1) && !string.IsNullOrWhiteSpace(r1))
+        {
+            remark = r1;
+        }
+        else if (previousRemarks != null && previousRemarks.TryGetValue(code, out var r2) && !string.IsNullOrWhiteSpace(r2))
+        {
+            remark = r2;
+        }
+
+        if (string.IsNullOrWhiteSpace(remark) ||
+            !(remark.Equals("pass", StringComparison.OrdinalIgnoreCase) || remark.Equals("fail", StringComparison.OrdinalIgnoreCase)))
+        {
+            hasOngoingSubjects = true;
+            break;
+        }
+
+    }
+                }
+              <!-- Enrollment -->
+<div class="tab-pane fade" id="pane-enrollment" role="tabpanel" aria-labelledby="tabbtn-enrollment">
+    <section class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <span class="badge bg-@(Model.EnrollmentOpen ? "success" : "secondary")">
+                    @(Model.EnrollmentOpen ? "Enrollment Open" : "Enrollment Closed")
+                </span>
+
+                @*<div class="alert alert-info mt-3">
+    <h5><i class="fas fa-random me-2"></i>Want to shift to a different program?</h5>
+    <p class="mb-2">If you're currently enrolled and wish to change programs, you can submit a shifter request.</p>
+    <a href="@Url.Action("ShifterEnrollment", "ShifterEnrollment", new { area = "Student" })" 
+       class="btn btn-outline-primary">
+        <i class="fas fa-exchange-alt me-2"></i>Request Program Shift
+    </a>
+</div> *@
+                <small class="ms-2 text-white">
+                    Semester: @Model.EnrollmentSemester
+                    @if (!string.IsNullOrWhiteSpace(Model.EnrollmentAcademicYear))
+                    { <text> • AY: @Model.EnrollmentAcademicYear</text> }
+
+
+                    @if (Model.Enrollment != null)
+                    {
+                        <text> • Current Status: </text>
+                        <span class="badge bg-outline border text-white" style="font-weight:400;">@Model.Enrollment.Status</span>
+                        @if (!string.IsNullOrWhiteSpace(Model.Enrollment.Reason))
+                        { <span class="text-white"> (@Model.Enrollment.Reason)</span> }
+                    }
+                </small>
+            </div>
+        </div>
+
+
+
+
+
+
+
+                        <h4 class="text-white">Enrollment</h4>
+                        @{
+                           
+
+                            bool completed1stYear2ndSem = isEnrolled &&
+                            string.Equals(AcadYearLevel(), "1st Year", StringComparison.OrdinalIgnoreCase) &&
+                            string.Equals(AcadSemester(), "2nd Semester", StringComparison.OrdinalIgnoreCase);
+
+                            bool canEnrollFor2ndYear1stSem = firstSemActive && completed1stYear2ndSem && Model.EnrollmentOpen;
+
+                            // ✅ NEW: Detect 2nd Year 1st Sem students enrolling for 2nd Year 2nd Sem
+                            bool completed2ndYear1stSem = isEnrolled &&
+                            string.Equals(AcadYearLevel(), "2nd Year", StringComparison.OrdinalIgnoreCase) &&
+                            string.Equals(AcadSemester(), "1st Semester", StringComparison.OrdinalIgnoreCase);
+
+                            bool canEnrollFor2ndYear2ndSem = secondSemOpen && completed2ndYear1stSem && Model.EnrollmentOpen;
+
+                            // ✅ CRITICAL FIX: Only block if trying to enroll for 2nd semester AGAIN (not 2nd year)
+                            bool alreadyEnrolled2ndSem = isEnrolled &&
+                            string.Equals(AcadSemester(), "2nd Semester", StringComparison.OrdinalIgnoreCase) &&
+                            secondSemOpen && !canEnrollFor2ndYear2ndSem; // ✅ Allow if enrolling for 2nd year 2nd sem
+
+                            bool alreadySubmitted2ndSem = isPendingSem &&
+                            Model.Enrollment?.Status?.Contains("2nd Sem Pending", StringComparison.OrdinalIgnoreCase) == true &&
+                            secondSemOpen && !canEnrollFor2ndYear2ndSem; // ✅ Allow if enrolling for 2nd year 2nd sem
+                        }
+
+                        @* ✅ NOW YOU CAN USE THEM IN THE DEBUG SECTION
+                        <div class="alert alert-danger mb-3">
+                            <strong>🔍 TOP-LEVEL DEBUG:</strong><br />
+                            <code>
+                                isEnrolled: <strong>@isEnrolled</strong><br />
+                                AcadYearLevel: <strong>@AcadYearLevel()</strong><br />
+                                AcadSemester: <strong>@AcadSemester()</strong><br />
+                                firstSemActive: <strong>@firstSemActive</strong><br />
+                                secondSemOpen: <strong>@secondSemOpen</strong><br />
+                                completed1stYear2ndSem: <strong>@completed1stYear2ndSem</strong><br />
+                                canEnrollFor2ndYear1stSem: <strong>@canEnrollFor2ndYear1stSem</strong><br />
+                                Model.EnrollmentOpen: <strong>@Model.EnrollmentOpen</strong><br />
+                                Model.EnrollmentSemester: <strong>@Model.EnrollmentSemester</strong><br />
+                            </code>
+                        </div> *@
+                        @* ✅ UPDATED: Show debug when ANY irregular condition is met *@
+                        @if (isIrregular && (Model.MissingSubjects.Any() || Model.FailedSubjects.Any()))
+                        {
+                            <div class="alert alert-warning mt-3">
+                                <h6><i class="fas fa-exclamation-triangle me-2"></i>Irregular Status Explanation:</h6>
+
+                                @if (Model.MissingSubjects.Any())
+                                {
+                                    <p class="mb-2">
+                                        <strong>Missing Subjects from Curriculum:</strong>
+                                        <span class="badge bg-danger ms-2">@Model.MissingSubjects.Count</span>
+                                    </p>
+                                    <ul class="mb-2">
+                                        @foreach (var subject in Model.MissingSubjects)
+                                        {
+                                            <li><code>@subject</code> - Not taken (likely due to failed prerequisites)</li>
+                                        }
+                                    </ul>
+                                }
+
+                                @if (Model.FailedSubjects.Any())
+                                {
+                                    <p class="mb-2">
+                                        <strong>Failed Subjects:</strong>
+                                        <span class="badge bg-danger ms-2">@Model.FailedSubjects.Count</span>
+                                    </p>
+                                    <ul class="mb-0">
+                                        @foreach (var subject in Model.FailedSubjects)
+                                        {
+                                            <li><code>@subject</code> - Failed </li>
+                                        }
+                                    </ul>
+                                }
+
+                                <hr />
+                                <small class="text-muted">
+                                    <strong>Note:</strong> You are enrolled as <strong>Irregular</strong> because you have gaps in the curriculum.
+                                    You will need to complete these subjects in future semesters.
+                                </small>
+                            </div>
+                        }
+
+                        @if (firstSemActive && !completed1stYear2ndSem)
+                        {
+                            <div class="alert alert-info">
+                                2nd Semester enrollment is not yet open.
+                            </div>
+                        }
+                        else if (secondSemOpen || canEnrollFor2ndYear1stSem)
+                        {
+                            if (!Model.EnrollmentOpen)
+                            {
+                                <div class="alert alert-info">Enrollment is closed.</div>
+                            }
+                            else if (alreadyEnrolled2ndSem || alreadySubmitted2ndSem)
+     @* ✅ NEW CONDITION *@
+                            {
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    
+                                    You cannot submit another enrollment for this semester.
+                                </div>
+                            }
+                            else
+                            {
+                                var isEnrollingFor2ndYear = (canEnrollFor2ndYear1stSem || canEnrollFor2ndYear2ndSem) && !secondSemOpen;
+                                var isEnrollingFor2ndYearSecondSem = canEnrollFor2ndYear2ndSem && secondSemOpen; // ✅ NEW
+                                var isEnrollingFor2ndSem = secondSemOpen && !canEnrollFor2ndYear1stSem && !canEnrollFor2ndYear2ndSem;
+
+                                string enrollmentLabel = isEnrollingFor2ndYearSecondSem
+                                ? "2nd Year 2nd Semester"
+                                : (isEnrollingFor2ndYear ? "2nd Year 1st Semester" : "2nd Semester");
+
+                                string targetYearLevel = (isEnrollingFor2ndYear || isEnrollingFor2ndYearSecondSem) ? "2nd Year" : "1st Year";
+                                string targetSemester = isEnrollingFor2ndYearSecondSem
+                                ? "2nd Semester"
+                                : (isEnrollingFor2ndYear ? "1st Semester" : "2nd Semester");
+
+                                string actionName = (isEnrollingFor2ndYear || isEnrollingFor2ndYearSecondSem)
+                                ? "Submit2ndYearEnrollment"
+                                : "SubmitRegularEnrollment";
+
+                                // ✅ FIXED: Better logic to detect if already submitted for NEXT enrollment
+                                var isSecondSemSubmission = false;
+                                var isNextYearSubmission = false;
+                                var is2ndYear2ndSemSubmission = false; // ✅ NEW
+
+                                if (Model.Enrollment != null)
+                                {
+                                    var currentStatus = Model.Enrollment.Status ?? "";
+
+                                    // Check if already submitted for 2nd semester (but not yet enrolled)
+                                    if (secondSemOpen && !canEnrollFor2ndYear2ndSem)
+                                    {
+                                        isSecondSemSubmission = currentStatus.Contains("2nd Sem Pending", StringComparison.OrdinalIgnoreCase);
+                                    }
+
+                                    // Check if already submitted for 2nd year 1st sem (but not yet enrolled)
+                                    if (canEnrollFor2ndYear1stSem)
+                                    {
+                                        var enrolledYearLevel = Model.Enrollment.ExtraFields?.GetValueOrDefault("Academic.YearLevel", "");
+                                        isNextYearSubmission = enrolledYearLevel.Contains("2nd Year", StringComparison.OrdinalIgnoreCase) &&
+                                        AcadYearLevel().Contains("1st Year", StringComparison.OrdinalIgnoreCase) &&
+                                        (currentStatus.Contains("Pending", StringComparison.OrdinalIgnoreCase) ||
+                                        currentStatus.Contains("Hold", StringComparison.OrdinalIgnoreCase));
+                                    }
+
+                                    // ✅ NEW: Check if already submitted for 2nd year 2nd sem
+                                    if (canEnrollFor2ndYear2ndSem)
+                                    {
+                                        var enrolledYearLevel = Model.Enrollment.ExtraFields?.GetValueOrDefault("Academic.YearLevel", "");
+                                        var enrolledSemester = Model.Enrollment.ExtraFields?.GetValueOrDefault("Academic.Semester", "");
+
+                                        is2ndYear2ndSemSubmission = enrolledYearLevel.Contains("2nd Year", StringComparison.OrdinalIgnoreCase) &&
+                                        enrolledSemester.Contains("2nd", StringComparison.OrdinalIgnoreCase) &&
+                                        AcadSemester().Contains("1st", StringComparison.OrdinalIgnoreCase) && // Currently in 1st sem
+                                        (currentStatus.Contains("Pending", StringComparison.OrdinalIgnoreCase) ||
+                                        currentStatus.Contains("Hold", StringComparison.OrdinalIgnoreCase));
+                                    }
+                                }
+
+
+                                @if (isSecondSemSubmission || isNextYearSubmission || is2ndYear2ndSemSubmission) // ✅ UPDATED
+                                {
+                                    @* READ-ONLY VIEW *@
+                                    <div class="card">
+                                        <div class="card-header">Submitted Enrollment (Read-only)</div>
+                                        <div class="card-body">
+                                            @if (canEnrollFor2ndYear1stSem && isNextYearSubmission)
+                                            {
+                                                <div class="alert alert-info mb-3">
+                                                    <i class="fas fa-info-circle me-2"></i>
+                                                    Your 2nd Year 1st Semester enrollment has been submitted and is awaiting admin approval.
+                                                </div>
+                                            }
+                                            @if (canEnrollFor2ndYear2ndSem && is2ndYear2ndSemSubmission) // ✅ NEW
+                                            {
+                                                <div class="alert alert-info mb-3">
+                                                    <i class="fas fa-info-circle me-2"></i>
+                                                    Your 2nd Year 2nd Semester enrollment has been submitted and is awaiting admin approval.
+                                                </div>
+                                            }
+
+                                            <div class="row g-3">
+                        <div class="col-md-3"><label class="form-label">Enroll As</label><div class="form-control-plaintext">@(hasFailedSubjects ? "Irregular" : "Regular")</div></div>
+                        <div class="col-md-3"><label class="form-label">Program</label><div class="form-control-plaintext">@AcadProgram()</div></div>
+                        <div class="col-md-2"><label class="form-label">Year Level</label><div class="form-control-plaintext">@AcadYearLevel()</div></div>
+                        <div class="col-md-2"><label class="form-label">Semester</label><div class="form-control-plaintext">@AcadSemester()</div></div>
+                        <div class="col-md-2"><label class="form-label">Academic Year</label><div class="form-control-plaintext">@AcadYear()</div></div>
+
+                        <div class="col-12"><hr /><h6 class="mb-2">Student - Personal</h6></div>
+                        <div class="col-md-3"><label class="form-label">Last Name</label><div class="form-control-plaintext">@PF("Student.LastName")</div></div>
+                        <div class="col-md-3"><label class="form-label">First Name</label><div class="form-control-plaintext">@PF("Student.FirstName")</div></div>
+                        <div class="col-md-3"><label class="form-label">Middle Name</label><div class="form-control-plaintext">@PF("Student.MiddleName")</div></div>
+                        <div class="col-md-3"><label class="form-label">Extension</label><div class="form-control-plaintext">@PF("Student.Extension")</div></div>
+                        <div class="col-md-3"><label class="form-label">Sex</label><div class="form-control-plaintext">@PF("Student.Sex")</div></div>
+                        <div class="col-md-3"><label class="form-label">Contact Number</label><div class="form-control-plaintext">@PF("Student.ContactNumber")</div></div>
+                        <div class="col-md-6"><label class="form-label">Email Address</label><div class="form-control-plaintext">@(Model.Email ?? PF("Student.EmailAddress"))</div></div>
+
+                        <div class="col-12"><hr /><h6 class="mb-2">Student - Address</h6></div>
+                        <div class="col-md-6"><label class="form-label">House No. & Street</label><div class="form-control-plaintext">@PF("StudentAddress.HouseStreet")</div></div>
+                        <div class="col-md-3"><label class="form-label">Barangay</label><div class="form-control-plaintext">@PF("StudentAddress.Barangay")</div></div>
+                        <div class="col-md-2"><label class="form-label">City</label><div class="form-control-plaintext">@PF("StudentAddress.City")</div></div>
+                        <div class="col-md-1"><label class="form-label">Postal</label><div class="form-control-plaintext">@PF("StudentAddress.PostalCode")</div></div>
+
+                        <div class="col-12"><hr /><h6 class="mb-2">Previous School Attended</h6></div>
+
+                        <strong class="col-12">Elementary School</strong>
+                        <div class="col-md-3"><label class="form-label">School Name</label><div class="form-control-plaintext">@PF("ElementarySchool.SchoolName")</div></div>
+                        <div class="col-md-2"><label class="form-label">School Type</label><div class="form-control-plaintext">@PF("ElementarySchool.SchoolType")</div></div>
+                        <div class="col-md-2"><label class="form-label">Year Graduated</label><div class="form-control-plaintext">@PF("ElementarySchool.YearGraduated")</div></div>
+                        <div class="col-md-2"><label class="form-label">City</label><div class="form-control-plaintext">@PF("ElementaryAddress.City")</div></div>
+                        <div class="col-md-2"><label class="form-label">Barangay</label><div class="form-control-plaintext">@PF("ElementaryAddress.Barangay")</div></div>
+                        <div class="col-md-1"><label class="form-label">Postal</label><div class="form-control-plaintext">@PF("ElementaryAddress.PostalCode")</div></div>
+
+                        <strong class="col-12 mt-2">High School</strong>
+                        <div class="col-md-3"><label class="form-label">School Name</label><div class="form-control-plaintext">@PF("HighSchool.SchoolName")</div></div>
+                        <div class="col-md-2"><label class="form-label">School Type</label><div class="form-control-plaintext">@PF("HighSchool.SchoolType")</div></div>
+                        <div class="col-md-2"><label class="form-label">Year Graduated</label><div class="form-control-plaintext">@PF("HighSchool.YearGraduated")</div></div>
+                        <div class="col-md-2"><label class="form-label">City</label><div class="form-control-plaintext">@PF("HighSchoolAddress.City")</div></div>
+                        <div class="col-md-2"><label class="form-label">Barangay</label><div class="form-control-plaintext">@PF("HighSchoolAddress.Barangay")</div></div>
+                        <div class="col-md-1"><label class="form-label">Postal</label><div class="form-control-plaintext">@PF("HighSchoolAddress.PostalCode")</div></div>
+
+                        <strong class="col-12 mt-2">Senior High School</strong>
+                        <div class="col-md-3"><label class="form-label">School Name</label><div class="form-control-plaintext">@PF("SeniorHigh.SchoolName")</div></div>
+                        <div class="col-md-2"><label class="form-label">School Type</label><div class="form-control-plaintext">@PF("SeniorHigh.SchoolType")</div></div>
+                        <div class="col-md-2"><label class="form-label">Strand</label><div class="form-control-plaintext">@PF("SeniorHigh.Strand")</div></div>
+                        <div class="col-md-2"><label class="form-label">Year Graduated</label><div class="form-control-plaintext">@PF("SeniorHigh.YearGraduated")</div></div>
+                        <div class="col-md-2"><label class="form-label">City</label><div class="form-control-plaintext">@PF("SeniorHighAddress.City")</div></div>
+                        <div class="col-md-2"><label class="form-label">Barangay</label><div class="form-control-plaintext">@PF("SeniorHighAddress.Barangay")</div></div>
+                        <div class="col-md-1"><label class="form-label">Postal</label><div class="form-control-plaintext">@PF("SeniorHighAddress.PostalCode")</div></div>
+
+                        <div class="col-12"><hr /><h6 class="mb-2">Parent / Guardian</h6></div>
+                        <div class="col-md-3"><label class="form-label">Last Name</label><div class="form-control-plaintext">@PF("Guardian.LastName")</div></div>
+                        <div class="col-md-3"><label class="form-label">First Name</label><div class="form-control-plaintext">@PF("Guardian.FirstName")</div></div>
+                        <div class="col-md-3"><label class="form-label">Middle Name</label><div class="form-control-plaintext">@PF("Guardian.MiddleName")</div></div>
+                        <div class="col-md-3"><label class="form-label">Extension</label><div class="form-control-plaintext">@PF("Guardian.Extension")</div></div>
+                        <div class="col-md-3"><label class="form-label">Sex</label><div class="form-control-plaintext">@PF("Guardian.Sex")</div></div>
+                        <div class="col-md-3"><label class="form-label">Contact Number</label><div class="form-control-plaintext">@PF("Guardian.ContactNumber")</div></div>
+                        <div class="col-md-6"><label class="form-label">Relationship</label><div class="form-control-plaintext">@PF("Guardian.Relationship")</div></div>
+
+                        <div class="col-12"><hr /><h6 class="mb-2">Guardian Address</h6></div>
+                        <div class="col-md-6"><label class="form-label">House No. & Street</label><div class="form-control-plaintext">@PF("GuardianAddress.HouseStreet")</div></div>
+                        <div class="col-md-3"><label class="form-label">Barangay</label><div class="form-control-plaintext">@PF("GuardianAddress.Barangay")</div></div>
+                        <div class="col-md-2"><label class="form-label">City</label><div class="form-control-plaintext">@PF("GuardianAddress.City")</div></div>
+                        <div class="col-md-1"><label class="form-label">Postal</label><div class="form-control-plaintext">@PF("GuardianAddress.PostalCode")</div></div>
+                    </div>
+                </div>
+            </div>
+                                  
+                                }
+                                else
+                                {
+                                    @* ✅ EDITABLE ENROLLMENT FORM (Reused for both 2nd Semester and 2nd Year) *@
+                                    <div class="card">
+                                        <div class="card-header">New Semester Enrollment</div>
+                                        <div class="card-body">
+
+                         
+
+
+              
+                                                    <div class="col-12">
+                                                        <hr />
+
+                                     
+
+                                                @if (hasFailedSubjects)
+                                                {
+                                                    @* ============================================ *@
+                                                    @* IRREGULAR STUDENT: Show subject selection CTA *@
+                                                    @* ============================================ *@
+                                                    <div class="card">
+                                                        <div class="card-header bg-warning text-dark">
+                                                            <i class="fas fa-exclamation-triangle me-2"></i>Irregular Enrollment Detected
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="alert alert-warning mb-3">
+                                                                <strong>Subject Selection Required</strong>
+                                                                <p class="mb-2">You have failed subjects from previous semesters. You must select eligible subjects for @enrollmentLabel enrollment.</p>
+                                                                <ul class="mb-0">
+                                                                    <li>Only subjects with passed prerequisites will be available</li>
+                                                                    <li>You can select up to the maximum allowed units</li>
+                                                                  
+                                                                </ul>
+                                                            </div>
+
+                                                         
+
+                                                            <div class="row g-3">
+                                                                @* Academic Info *@
+                                                                <div class="col-12"><hr /><h6 class="mb-2">Academic Information</h6></div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Program</label>
+                                                                    <input name="Academic.Program" value="@AcadProgram()" class="form-control" readonly />
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Current Year Level</label>
+                                                                    <input value="@AcadYearLevel()" class="form-control" readonly />
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Enrolling For</label>
+                                                                    <input value="@enrollmentLabel" class="form-control" readonly />
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Academic Year</label>
+                                                                    <input value="@Model.EnrollmentAcademicYear" class="form-control" readonly />
+                                                                </div>
+
+                                                                @* Student Personal Details *@
+                                                                <div class="col-12"><hr /><h6 class="mb-2">Student - Personal Details</h6></div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                                                    <input name="StudentPersonal.LastName" value="@PF("Student.LastName")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                                                    <input name="StudentPersonal.FirstName" value="@PF("Student.FirstName")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Middle Name <span class="text-danger">*</span></label>
+                                                                    <input name="StudentPersonal.MiddleName" value="@PF("Student.MiddleName")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Extension</label>
+                                                                    <input name="StudentPersonal.Extension" value="@PF("Student.Extension")" class="form-control" />
+                                                                </div>
+
+                                                                @{
+                                                                    var studentSex = PF("Student.Sex");
+                                                                }
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Sex <span class="text-danger">*</span></label>
+                                                                    <select name="StudentPersonal.Sex" class="form-select" required>
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Male" selected="@(studentSex == "Male")">Male</option>
+                                                                        <option value="Female" selected="@(studentSex == "Female")">Female</option>
+                                                                    </select>
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                                                                    <input name="StudentPersonal.ContactNumber"
+                                                                           value="@PF("Student.ContactNumber")"
+                                                                           type="tel"
+                                                                           maxlength="11"
+                                                                           pattern="^09[0-9]{9}$"
+                                                                           class="form-control"
+                                                                           required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                                                    <input name="StudentPersonal.EmailAddress"
+                                                                           value="@(Model.Email ?? PF("Student.EmailAddress"))"
+                                                                           type="email"
+                                                                           class="form-control"
+                                                                           readonly />
+                                                                </div>
+
+                                                                @* Student Address *@
+                                                                <div class="col-12"><hr /><h6 class="mb-2">Student - Address</h6></div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">House No. & Street <span class="text-danger">*</span></label>
+                                                                    <input name="StudentAddress.HouseStreet" value="@PF("StudentAddress.HouseStreet")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Barangay <span class="text-danger">*</span></label>
+                                                                    <input name="StudentAddress.Barangay" value="@PF("StudentAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <label class="form-label">City <span class="text-danger">*</span></label>
+                                                                    <input name="StudentAddress.City" value="@PF("StudentAddress.City")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <label class="form-label">Postal <span class="text-danger">*</span></label>
+                                                                    <input name="StudentAddress.PostalCode"
+                                                                           value="@PF("StudentAddress.PostalCode")"
+                                                                           type="tel"
+                                                                           maxlength="4"
+                                                                           class="form-control"
+                                                                           required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+
+                                                                @* Guardian Personal Details *@
+                                                                <div class="col-12"><hr /><h6 class="mb-2">Parent / Guardian - Personal Details</h6></div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianPersonal.LastName" value="@PF("Guardian.LastName")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianPersonal.FirstName" value="@PF("Guardian.FirstName")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Middle Name</label>
+                                                                    <input name="GuardianPersonal.MiddleName" value="@PF("Guardian.MiddleName")" class="form-control" />
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Extension</label>
+                                                                    <input name="GuardianPersonal.Extension" value="@PF("Guardian.Extension")" class="form-control" />
+                                                                </div>
+
+                                                                @{
+                                                                    var guardianSex = PF("Guardian.Sex");
+                                                                }
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Sex <span class="text-danger">*</span></label>
+                                                                    <select name="GuardianPersonal.Sex" class="form-select" required>
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Male" selected="@(guardianSex == "Male")">Male</option>
+                                                                        <option value="Female" selected="@(guardianSex == "Female")">Female</option>
+                                                                    </select>
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianPersonal.ContactNumber"
+                                                                           value="@PF("Guardian.ContactNumber")"
+                                                                           type="tel"
+                                                                           maxlength="11"
+                                                                           pattern="^09[0-9]{9}$"
+                                                                           class="form-control"
+                                                                           required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Relationship <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianPersonal.Relationship" value="@PF("Guardian.Relationship")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+
+                                                                @* Guardian Address *@
+                                                                <div class="col-12"><hr /><h6 class="mb-2">Guardian Address</h6></div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">House No. & Street <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianAddress.HouseStreet" value="@PF("GuardianAddress.HouseStreet")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="form-label">Barangay <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianAddress.Barangay" value="@PF("GuardianAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <label class="form-label">City <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianAddress.City" value="@PF("GuardianAddress.City")" class="form-control" required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <label class="form-label">Postal <span class="text-danger">*</span></label>
+                                                                    <input name="GuardianAddress.PostalCode"
+                                                                           value="@PF("GuardianAddress.PostalCode")"
+                                                                           type="tel"
+                                                                           maxlength="4"
+                                                                           class="form-control"
+                                                                           required />
+                                                                    <span class="text-danger small"></span>
+                                                                </div>
+                                                                </div>
+                                                            @if (requiresCompliance && !complianceComplete)
+                                                            {
+                                                                <small>Please make sure that you've complied to the document requireds.</small>
+                                                            }
+                                                            else if (hasOngoingSubjects)
+                                                            {
+                                                                <small>No Grades on current Semester Subjects.</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <br />
+                                                                <a class="btn btn-primary btn-lg" href="@Url.Action(isEnrollingFor2ndYear ? "SubjectSelection2ndYear" : "SubjectSelection", "StudentAccount", new { area = "Student" })">
+                                                                    <i class="fas fa-arrow-right me-2"></i>Next: Select Subjects
+                                                                </a>
+                                                            }
+                                                           
+                                                            <p class="text-muted mt-2 mb-0">
+                                                                <small>Your personal and school information will be automatically carried over from your previous enrollment.</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @* ============================================ *@
+                                                    @* REGULAR STUDENT: Full enrollment form with validation *@
+                                                    @* ============================================ *@
+                                                    <div class="card">
+                                                        <div class="card-header bg-success text-white">
+                                                            <i class="fas fa-check-circle me-2"></i>Regular @enrollmentLabel Enrollment
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="alert alert-success mb-3">
+                                                               
+                                                                <p class="mb-2">Please make sure that you've complied and submitted all require documents.</p>
+                                                                <ul class="mb-0">
+                                                                   
+                                                                    <li>Your enrollment will be marked as "Regular"</li>
+                                                                    <li>Review your information carefully before submitting</li>
+                                                                </ul>
+                                                            </div>
+                                                            @if (hasOngoingSubjects)
+                                                            {
+                                                                <div class="alert alert-warning">
+                                                                    <strong>Cannot submit enrollment yet.</strong>
+                                                                    <div class="mt-1">Some subjects are still marked <em>Ongoing</em>. Your enrollment for @enrollmentLabel cannot be submitted until all scheduled subjects are marked by the administrator.</div>
+                                                                </div>
+                                                            }
+                                                            @if (Model.HasPendingPenalties)
+                                                            {
+                                                                <div class="alert alert-danger">
+                                                                    <strong>⚠️ Cannot submit enrollment due to pending library penalties.</strong>
+                                                                    <div class="mt-1">You have <strong>@Model.PendingPenalties.Count</strong> pending penalty(ies) totaling <strong>₱@Model.TotalPendingPenalties.ToString("N2")</strong>. Please settle your penalties at the library counter before submitting enrollment.</div>
+                                                                    <div class="mt-2">
+                                                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#penaltyModal">
+                                                                            View Penalties
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                            <form asp-area="Student" asp-controller="StudentAccount"
+                                                                  asp-action="@((isEnrollingFor2ndYear || isEnrollingFor2ndYearSecondSem) ? "Submit2ndYearEnrollment" : "SubmitRegularEnrollment")"
+                                                                  method="post"
+                                                                  novalidate>
+                                                                @Html.AntiForgeryToken()
+
+                                                                @* Hidden fields for enrollment type *@
+                                                                @if (isEnrollingFor2ndYear)
+                                                                {
+                                                                    <input type="hidden" name="enrollmentType" value="Regular" />
+                                                                    <input type="hidden" name="targetYearLevel" value="2nd Year" />
+                                                                    <input type="hidden" name="targetSemester" value="1st Semester" />
+                                                                }
+                                                                else if (isEnrollingFor2ndYearSecondSem)
+                                                                {
+                                                                    <input type="hidden" name="enrollmentType" value="Regular" />
+                                                                    <input type="hidden" name="targetYearLevel" value="2nd Year" />
+                                                                    <input type="hidden" name="targetSemester" value="2nd Semester" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="hidden" name="EnrollmentType" value="Regular" />
+                                                                }
+
+                                                                <div class="row g-3">
+                                                                    @* Academic Info *@
+                                                                    <div class="col-12"><hr /><h6 class="mb-2">Academic Information</h6></div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Program</label>
+                                                                        <input name="Academic.Program" value="@AcadProgram()" class="form-control" readonly />
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Current Year Level</label>
+                                                                        <input value="@AcadYearLevel()" class="form-control" readonly />
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Enrolling For</label>
+                                                                        <input value="@enrollmentLabel" class="form-control" readonly />
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Academic Year</label>
+                                                                        <input value="@Model.EnrollmentAcademicYear" class="form-control" readonly />
+                                                                    </div>
+
+                                                                    @* Student Personal Details *@
+                                                                    <div class="col-12"><hr /><h6 class="mb-2">Student - Personal Details</h6></div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                                                        <input name="StudentPersonal.LastName" value="@PF("Student.LastName")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                                                        <input name="StudentPersonal.FirstName" value="@PF("Student.FirstName")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Middle Name <span class="text-danger">*</span></label>
+                                                                        <input name="StudentPersonal.MiddleName" value="@PF("Student.MiddleName")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Extension</label>
+                                                                        <input name="StudentPersonal.Extension" value="@PF("Student.Extension")" class="form-control" />
+                                                                    </div>
+
+                                                                    @{
+                                                                        var studentSex = PF("Student.Sex");
+                                                                    }
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Sex <span class="text-danger">*</span></label>
+                                                                        <select name="StudentPersonal.Sex" class="form-select" required>
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Male" selected="@(studentSex == "Male")">Male</option>
+                                                                            <option value="Female" selected="@(studentSex == "Female")">Female</option>
+                                                                        </select>
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                                                                        <input name="StudentPersonal.ContactNumber"
+                                                                               value="@PF("Student.ContactNumber")"
+                                                                               type="tel"
+                                                                               maxlength="11"
+                                                                               pattern="^09[0-9]{9}$"
+                                                                               class="form-control"
+                                                                               required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                                                        <input name="StudentPersonal.EmailAddress"
+                                                                               value="@(Model.Email ?? PF("Student.EmailAddress"))"
+                                                                               type="email"
+                                                                               class="form-control"
+                                                                               readonly />
+                                                                    </div>
+
+                                                                    @* Student Address *@
+                                                                    <div class="col-12"><hr /><h6 class="mb-2">Student - Address</h6></div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="form-label">House No. & Street <span class="text-danger">*</span></label>
+                                                                        <input name="StudentAddress.HouseStreet" value="@PF("StudentAddress.HouseStreet")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Barangay <span class="text-danger">*</span></label>
+                                                                        <input name="StudentAddress.Barangay" value="@PF("StudentAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <label class="form-label">City <span class="text-danger">*</span></label>
+                                                                        <input name="StudentAddress.City" value="@PF("StudentAddress.City")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <label class="form-label">Postal <span class="text-danger">*</span></label>
+                                                                        <input name="StudentAddress.PostalCode"
+                                                                               value="@PF("StudentAddress.PostalCode")"
+                                                                               type="tel"
+                                                                               maxlength="4"
+                                                                               class="form-control"
+                                                                               required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+
+                                                                    @* Guardian Personal Details *@
+                                                                    <div class="col-12"><hr /><h6 class="mb-2">Parent / Guardian - Personal Details</h6></div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianPersonal.LastName" value="@PF("Guardian.LastName")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianPersonal.FirstName" value="@PF("Guardian.FirstName")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Middle Name</label>
+                                                                        <input name="GuardianPersonal.MiddleName" value="@PF("Guardian.MiddleName")" class="form-control" />
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Extension</label>
+                                                                        <input name="GuardianPersonal.Extension" value="@PF("Guardian.Extension")" class="form-control" />
+                                                                    </div>
+
+                                                                    @{
+                                                                        var guardianSex = PF("Guardian.Sex");
+                                                                    }
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Sex <span class="text-danger">*</span></label>
+                                                                        <select name="GuardianPersonal.Sex" class="form-select" required>
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Male" selected="@(guardianSex == "Male")">Male</option>
+                                                                            <option value="Female" selected="@(guardianSex == "Female")">Female</option>
+                                                                        </select>
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianPersonal.ContactNumber"
+                                                                               value="@PF("Guardian.ContactNumber")"
+                                                                               type="tel"
+                                                                               maxlength="11"
+                                                                               pattern="^09[0-9]{9}$"
+                                                                               class="form-control"
+                                                                               required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="form-label">Relationship <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianPersonal.Relationship" value="@PF("Guardian.Relationship")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+
+                                                                    @* Guardian Address *@
+                                                                    <div class="col-12"><hr /><h6 class="mb-2">Guardian Address</h6></div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="form-label">House No. & Street <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianAddress.HouseStreet" value="@PF("GuardianAddress.HouseStreet")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Barangay <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianAddress.Barangay" value="@PF("GuardianAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <label class="form-label">City <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianAddress.City" value="@PF("GuardianAddress.City")" class="form-control" required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <label class="form-label">Postal <span class="text-danger">*</span></label>
+                                                                        <input name="GuardianAddress.PostalCode"
+                                                                               value="@PF("GuardianAddress.PostalCode")"
+                                                                               type="tel"
+                                                                               maxlength="4"
+                                                                               class="form-control"
+                                                                               required />
+                                                                        <span class="text-danger small"></span>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <hr />
+                                                                        <button type="submit" class="btn btn-success btn-lg" @(hasOngoingSubjects || (requiresCompliance && !complianceComplete) || Model.HasPendingPenalties ? "disabled=\"disabled\" title=\"Resolve ongoing subjects, submit required documents, and settle library penalties before submitting\"" : "")>
+                                                                            <i class="fas fa-paper-plane me-2"></i>Submit @enrollmentLabel Enrollment
+                                                                            </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            <p class="text-muted mt-3 mb-0">
+                                                                <small>After submission, your enrollment will be reviewed by the registrar. You will receive an email notification once processed.</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                    </div>
+                        </div>
+            </div>
+            <p class="mt-3 text-muted small" style="color:white;">
+                After approval you will see status and can no longer modify this submission here.
+            </p>
+        }
+    }
+}
+                        else
+                        {
+                            if (!Model.EnrollmentOpen)
+                            {
+                                <div class="alert alert-info">Enrollment is closed.</div>
+                            }
+                            else
+                            {
+                                <div class="card">
+                                    <div class="card-header">New Semester Enrollment</div>
+                                    <div class="card-body">
+                                        <form asp-area="Student" asp-controller="StudentAccount" asp-action="SubmitRegularEnrollment" method="post">
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="row g-3">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Enroll As</label>
+                                                    <select name="EnrollmentType" class="form-select" required>
+                                                        <option value="Regular" selected>Regular</option>
+                                                        <option value="Irregular" disabled>Irregular</option>
+                                                        <option value="Shifter" disabled>Shifter</option>
+                                                        <option value="Returnee" disabled>Returnee</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Program</label>
+                                                    <select class="form-select" disabled>
+                                                        <option>BSIT</option>
+                                                    </select>
+                                                    <input type="hidden" name="Academic.Program" value="@(AcadProgram())" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Year Level</label>
+                                                    <input name="Academic.YearLevel" value="1st Year" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Semester</label>
+                                                    <input name="Academic.Semester" value="@Model.EnrollmentSemester" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Academic Year</label>
+                                                    <input value="@Model.EnrollmentAcademicYear" class="form-control" readonly />
+                                                    <input type="hidden" name="Academic.AcademicYear" value="@Model.EnrollmentAcademicYear" />
+                                                </div>
+
+                                                <div class="col-12"><hr /><h6 class="mb-2">Student - Personal</h6></div>
+@{
+    var studentSex = PF("Student.Sex");
+}
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Last Name</label>
+                                                    <input name="StudentPersonal.LastName" value="@PF("Student.LastName")" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">First Name</label>
+                                                    <input name="StudentPersonal.FirstName" value="@PF("Student.FirstName")" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Middle Name</label>
+                                                    <input name="StudentPersonal.MiddleName" value="@PF("Student.MiddleName")" class="form-control" readonly />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Extension</label>
+                                                    <input name="StudentPersonal.Extension" value="@PF("Student.Extension")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Sex</label>
+                                                    <select class="form-select" disabled>
+                                                        @{
+                                                            string[] sSexes = new[] { "Male", "Female" };
+                                                            foreach (var sx in sSexes)
+                                                            {
+                                                                var isSelected = string.Equals(studentSex, sx, StringComparison.OrdinalIgnoreCase);
+                                                                <option value="@sx" selected="@isSelected">@sx</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" name="StudentPersonal.Sex" value="@studentSex" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Contact Number</label>
+                                                    <input name="StudentPersonal.ContactNumber" value="@PF("Student.ContactNumber")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Email Address</label>
+                                                    <input name="StudentPersonal.EmailAddress" value="@(Model.Email ?? PF("Student.EmailAddress"))" class="form-control" type="email" readonly />
+                                                </div>
+
+                                                <div class="col-12"><hr /><h6 class="mb-2">Student - Address</h6></div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">House No. & Street</label>
+                                                    <input name="StudentAddress.HouseStreet" value="@PF("StudentAddress.HouseStreet")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Barangay</label>
+                                                    <input name="StudentAddress.Barangay" id="StudentAddress_Barangay" value="@PF("StudentAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">City</label>
+                                                    <input name="StudentAddress.City" value="@PF("StudentAddress.City")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="form-label">Postal</label>
+                                                    <input name="StudentAddress.PostalCode" id="StudentAddress_PostalCode" value="@PF("StudentAddress.PostalCode")" class="form-control" required />
+                                                </div>
+
+                                                <div class="col-12"><hr /><h5 class="mb-2">Previous School Attended</h5></div>
+
+                                                <strong class="col-12">Elementary School</strong>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">School Name</label>
+                                                    <input name="ElementarySchool.SchoolName" value="@PF("ElementarySchool.SchoolName")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">School Type</label>
+                                                    <select name="ElementarySchool.SchoolType" class="form-select" required>
+                                                        <option value="">Select...</option>
+                                                        <option value="Private" selected="@(PF("ElementarySchool.SchoolType") == "Private" ? "selected" : null)">Private</option>
+                                                        <option value="Public" selected="@(PF("ElementarySchool.SchoolType") == "Public" ? "selected" : null)">Public</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Year Graduated</label>
+                                                    <input name="ElementarySchool.YearGraduated" value="@PF("ElementarySchool.YearGraduated")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">City</label>
+                                                    <input name="ElementaryAddress.City" value="@PF("ElementaryAddress.City")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Barangay</label>
+                                                    <input name="ElementaryAddress.Barangay" id="ElementaryAddress_Barangay" value="@PF("ElementaryAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input name="ElementaryAddress.PostalCode" id="ElementaryAddress_PostalCode" value="@PF("ElementaryAddress.PostalCode")" class="form-control" required />
+                                                </div>
+
+                                                <strong class="col-12 mt-2">High School</strong>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">School Name</label>
+                                                    <input name="HighSchool.SchoolName" value="@PF("HighSchool.SchoolName")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">School Type</label>
+                                                    <select name="HighSchool.SchoolType" class="form-select" required>
+                                                        <option value="">Select...</option>
+                                                        <option value="Private" selected="@(PF("HighSchool.SchoolType") == "Private" ? "selected" : null)">Private</option>
+                                                        <option value="Public" selected="@(PF("HighSchool.SchoolType") == "Public" ? "selected" : null)">Public</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Year Graduated</label>
+                                                    <input name="HighSchool.YearGraduated" value="@PF("HighSchool.YearGraduated")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">City</label>
+                                                    <input name="HighSchoolAddress.City" value="@PF("HighSchoolAddress.City")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Barangay</label>
+                                                    <input name="HighSchoolAddress.Barangay" id="HighSchoolAddress_Barangay" value="@PF("HighSchoolAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input name="HighSchoolAddress.PostalCode" id="HighSchoolAddress_PostalCode" value="@PF("HighSchoolAddress.PostalCode")" class="form-control" required />
+                                                </div>
+
+                                                <strong class="col-12 mt-2">Senior High School</strong>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">School Name</label>
+                                                    <input name="SeniorHigh.SchoolName" value="@PF("SeniorHigh.SchoolName")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">School Type</label>
+                                                    <select name="SeniorHigh.SchoolType" class="form-select" required>
+                                                        <option value="">Select...</option>
+                                                        <option value="Private" selected="@(PF("SeniorHigh.SchoolType") == "Private" ? "selected" : null)">Private</option>
+                                                        <option value="Public" selected="@(PF("SeniorHigh.SchoolType") == "Public" ? "selected" : null)">Public</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Strand</label>
+                                                    <select name="SeniorHigh.Strand" class="form-select" required>
+                                                        <option value="">Select...</option>
+                                                        <option value="ICT" selected="@(PF("SeniorHigh.Strand") == "ICT" ? "selected" : null)">ICT</option>
+                                                        <option value="STEM" selected="@(PF("SeniorHigh.Strand") == "STEM" ? "selected" : null)">STEM</option>
+                                                        <option value="ABM" selected="@(PF("SeniorHigh.Strand") == "ABM" ? "selected" : null)">ABM</option>
+                                                        <option value="GAS" selected="@(PF("SeniorHigh.Strand") == "GAS" ? "selected" : null)">GAS</option>
+                                                        <option value="HE" selected="@(PF("SeniorHigh.Strand") == "HE" ? "selected" : null)">HE</option>
+                                                        <option value="HUMMS" selected="@(PF("SeniorHigh.Strand") == "HUMMS" ? "selected" : null)">HUMMS</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Year Graduated</label>
+                                                    <input name="SeniorHigh.YearGraduated" value="@PF("SeniorHigh.YearGraduated")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">City</label>
+                                                    <input name="SeniorHighAddress.City" value="@PF("SeniorHighAddress.City")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Barangay</label>
+                                                    <input name="SeniorHighAddress.Barangay" id="SeniorHighAddress_Barangay" value="@PF("SeniorHighAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">Postal Code</label>
+                                                    <input name="SeniorHighAddress.PostalCode" id="SeniorHighAddress_PostalCode" value="@PF("SeniorHighAddress.PostalCode")" class="form-control" required />
+                                                </div>
+
+
+                                                <div class="col-12"><hr /><h6 class="mb-2">Parent / Guardian</h6></div>
+@{
+    var guardianSex = PF("Guardian.Sex");
+}
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Last Name</label>
+                                                    <input name="GuardianPersonal.LastName" value="@PF("Guardian.LastName")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">First Name</label>
+                                                    <input name="GuardianPersonal.FirstName" value="@PF("Guardian.FirstName")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Middle Name</label>
+                                                    <input name="GuardianPersonal.MiddleName" value="@PF("Guardian.MiddleName")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Extension</label>
+                                                    <input name="GuardianPersonal.Extension" value="@PF("Guardian.Extension")" class="form-control" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Sex</label>
+                                                    <select class="form-select" disabled>
+                                                        @{
+                                                            string[] gSexes = new[] { "Male", "Female" };
+                                                            foreach (var sx in gSexes)
+                                                            {
+                                                                var isSelected = string.Equals(guardianSex, sx, StringComparison.OrdinalIgnoreCase);
+                                                                <option value="@sx" selected="@isSelected">@sx</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" name="GuardianPersonal.Sex" value="@guardianSex" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Contact Number</label>
+                                                    <input name="GuardianPersonal.ContactNumber" value="@PF("Guardian.ContactNumber")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Relationship</label>
+                                                    <input name="GuardianPersonal.Relationship" value="@PF("Guardian.Relationship")" class="form-control" required />
+                                                </div>
+
+                                                <div class="col-12"><hr /><h6 class="mb-2">Guardian Address</h6></div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">House No. & Street</label>
+                                                    <input name="GuardianAddress.HouseStreet" value="@PF("GuardianAddress.HouseStreet")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Barangay</label>
+                                                    <input name="GuardianAddress.Barangay" id="GuardianAddress_Barangay" value="@PF("GuardianAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label class="form-label">City</label>
+                                                    <input name="GuardianAddress.City" value="@PF("GuardianAddress.City")" class="form-control" required />
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="form-label">Postal</label>
+                                                    <input name="GuardianAddress.PostalCode" id="GuardianAddress_PostalCode" value="@PF("GuardianAddress.PostalCode")" class="form-control" required />
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <hr />
+                                                    @if (Model.HasPendingPenalties)
+                                                    {
+                                                        <div class="alert alert-danger mb-3">
+                                                            <strong>⚠️ Cannot submit enrollment due to pending library penalties.</strong>
+                                                            <div class="mt-1">You have <strong>@Model.PendingPenalties.Count</strong> pending penalty(ies) totaling <strong>₱@Model.TotalPendingPenalties.ToString("N2")</strong>. Please settle your penalties at the library counter before submitting enrollment.</div>
+                                                            <div class="mt-2">
+                                                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#penaltyModal">
+                                                                    View Penalties
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <button type="submit" class="btn btn-success btn-lg" @(hasOngoingSubjects || (requiresCompliance && !complianceComplete) || Model.HasPendingPenalties ? "disabled=\"disabled\" title=\"Resolve ongoing subjects, submit required documents, and settle library penalties before submitting\"" : "")>
+                                                        Submit Enrollment
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <p class="mt-3 text-muted small">
+                                    After approval you will see status and can no longer modify this submission here.
+                                </p>
+                            }
+                        }
+                    </section>
+                </div>
+
+                @{
+                    // --- derived student info for richer display ---
+                    // canonical from model (may be set by admin flows)
+                    var canonicalType = (Model.Type ?? "").Trim();
+
+                    // use enrollment ExtraFields (ef) already defined above for year/semester and enrolled subjects
+                    string efEnrollmentType = "";
+                    if (ef.TryGetValue("EnrollmentType", out var _et) && !string.IsNullOrWhiteSpace(_et)) efEnrollmentType = _et;
+
+                    string efEnrolledSubjectsCsv = "";
+                    if (ef.TryGetValue("EnrolledSubjects", out var _es) && !string.IsNullOrWhiteSpace(_es)) efEnrolledSubjectsCsv = _es;
+
+                    int enrolledSubjectsCount = 0;
+                    if (!string.IsNullOrWhiteSpace(efEnrolledSubjectsCsv))
+                        enrolledSubjectsCount = efEnrolledSubjectsCsv.Split(',', StringSplitOptions.RemoveEmptyEntries).Length;
+
+                    // Determine a safe enrollment-type to show (explicit override from model / calculated default)
+                    var displayEnrollmentType = !string.IsNullOrWhiteSpace(Model.SecondYearEnrollmentType)
+                    ? Model.SecondYearEnrollmentType
+                    : (!string.IsNullOrWhiteSpace(efEnrollmentType) ? efEnrollmentType : defaultEnrollmentType);
+
+                    // Derive a readable "derived type" based on academic year/semester and irregularity
+                    var yearLevel = AcadYearLevel();
+                    var semester = AcadSemester();
+
+                    string derivedType = canonicalType;
+                    bool hasFailed = Model.HasFailedSubjects;
+
+                    if (string.IsNullOrWhiteSpace(derivedType))
+                    {
+                        // fallback to a sensible default
+                        if (!string.IsNullOrWhiteSpace(yearLevel))
+                        {
+                            if (yearLevel.IndexOf("2nd", StringComparison.OrdinalIgnoreCase) >= 0)
+                                derivedType = hasFailed ? "Sophomore-Irregular" : "Sophomore-Regular";
+                            else
+                                derivedType = hasFailed ? "Freshmen-Irregular" : "Freshmen-Regular";
+                        }
+                        else
+                        {
+                            derivedType = hasFailed ? "Irregular" : "Regular";
+                        }
+                    }
+                    else
+                    {
+                        // Normalize some known cases: keep Transferee label but append regularity when useful
+                        if (derivedType.Equals("Transferee", StringComparison.OrdinalIgnoreCase))
+                        {
+                            derivedType = hasFailed ? "Transferee - Irregular" : "Transferee - Regular";
+                        }
+                        else if (derivedType.IndexOf("Freshmen", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            derivedType = hasFailed ? "Freshmen-Irregular" : "Freshmen-Regular";
+                        }
+                        else if (derivedType.IndexOf("Sophomore", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        yearLevel.IndexOf("2nd", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            derivedType = hasFailed ? "Sophomore-Irregular" : "Sophomore-Regular";
+                        }
+                    }
+
+                    // friendly enrolled date
+                    var enrolledAtText = Model.Enrollment?.LastUpdatedAt?.ToLocalTime().ToString("f") ?? "-";
+                }
+                <!-- Student Information -->
+                <div class="tab-pane fade" id="pane-student-info" role="tabpanel" aria-labelledby="tabbtn-student-info">
+                    <div class="card">
+                        <div class="card-header">Account</div>
+                        <div class="card-body">
+                            <dl class="row mb-0">
+
+
+                                <dt class="col-sm-4">Student Number</dt>
+                                <dd class="col-sm-8">@(!string.IsNullOrWhiteSpace(Model.StudentId) ? Model.StudentId : "-")</dd>
+
+                                <dt class="col-sm-4">Section</dt>
+                                <dd class="col-sm-8">@(!string.IsNullOrWhiteSpace(Model.SectionId) ? Model.SectionId : "-")</dd>
+
+                                <dt class="col-sm-4">Email</dt>
+                                <dd class="col-sm-8">@(!string.IsNullOrWhiteSpace(Model.Email) ? Model.Email : "-")</dd>
+
+                           
+                                <dt class="col-sm-4">Type</dt>
+                                <dd class="col-sm-8">@(!string.IsNullOrWhiteSpace(displayEnrollmentType) ? displayEnrollmentType : "-")</dd>
+
+                               
+
+                                <dt class="col-sm-4">Enrolled Date</dt>
+                                <dd class="col-sm-8">@enrolledAtText</dd>
+
+                                <dt class="col-sm-4">Status</dt>
+                                <dd class="col-sm-8">
+                                    @if (isEnrolled && hasSection)
+                                    {
+                                        <span class="badge bg-success">Enrolled</span>
+                                    }
+                                    else if (isPendingSem)
+                                    {
+
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else if (isRejected)
+                                    {
+
+                                        <span class="badge bg-danger">Rejected</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge bg-secondary">Not Enrolled</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-4">Program</dt>
+                                <dd class="col-sm-8">@AcadProgram()</dd>
+
+                                <dt class="col-sm-4">Year Level</dt>
+                                <dd class="col-sm-8">@AcadYearLevel()</dd>
+
+                                <dt class="col-sm-4">Semester</dt>
+                                <dd class="col-sm-8">@AcadSemester()</dd>
+
+                                <dt class="col-sm-4">Academic Year</dt>
+                                <dd class="col-sm-8">@AcadYear()</dd>
+                            </dl>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Subjects & Schedule -->
+                <div class="tab-pane fade" id="pane-subjects-schedule" role="tabpanel" aria-labelledby="tabbtn-subjects-schedule">
+                    <div class="card">
+                        <div class="card-header">
+                            Subjects & Schedule
+                            @if (!string.IsNullOrWhiteSpace(Model.SectionId))
+                            {
+                                <small class="text-muted ms-2">Section: @Model.SectionId</small>
+                            }
+                            @if (isEnrolled && hasSection)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-secondary float-end" onclick="showRegistrationSlip()">
+                                    <i class="fas fa-file-alt"></i> View Registration Slip
+                                </button>
+                            }
+                        </div>
+                        <div class="card-body">
+                            @if (Model.SubjectSchedules == null || Model.SubjectSchedules.Count == 0)
+                            {
+                                <div class="text-muted">No subjects or schedule to display.</div>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:110px;">Code</th>
+                                                <th>Title</th>
+                                                <th style="width:70px;">Units</th>
+                                                <th style="width:90px;">Day</th>
+                                                <th style="width:140px;">Time</th>
+                                                <th style="width:120px;">Room</th>
+                                                <th style="width:100px;">Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var row in Model.SubjectSchedules)
+                                            {
+                                                // Current remark for this scheduled row (admin-saved or model-provided)
+                                                var currentRemark = Model.SubjectRemarks != null && Model.SubjectRemarks.ContainsKey(row.Code)
+                                                ? (Model.SubjectRemarks[row.Code] ?? "").Trim()
+                                                : "ongoing";
+
+                                                // Was this subject previously failed (historical failed list)
+                                                var previouslyFailed = (Model.FailedSubjects != null) &&
+                                                Model.FailedSubjects.Any(f => string.Equals(f, row.Code, StringComparison.OrdinalIgnoreCase));
+
+                                                // Treat as a true "Retake" only when:
+                                                // - The subject is scheduled this semester (we're iterating scheduled rows), AND
+                                                // - The student previously failed it (FailedSubjects contains the code), AND
+                                                // - The current scheduled instance is not already marked as "Passed"
+                                                var isRetake = previouslyFailed
+                                                && !string.Equals(currentRemark, "pass", StringComparison.OrdinalIgnoreCase)
+                                                && !string.Equals(currentRemark, "passed", StringComparison.OrdinalIgnoreCase);
+
+                                                // Badge style / label
+                                                string badgeClass;
+                                                string displayText;
+                                                string titleAttr = "";
+
+                                                if (isRetake)
+                                                {
+                                                    displayText = "Retake";
+                                                    badgeClass = "bg-info text-white";
+                                                    titleAttr = "title=\"Previously failed — scheduled as a retake this semester\"";
+                                                }
+                                                else
+                                                {
+                                                    var norm = (currentRemark ?? "").Trim().ToLowerInvariant();
+                                                    if (norm == "pass" || norm == "passed")
+                                                    {
+                                                        displayText = "Passed";
+                                                        badgeClass = "bg-success";
+                                                    }
+                                                    else if (norm == "fail" || norm == "failed" || norm == "failing")
+                                                    {
+                                                        displayText = "Failed";
+                                                        badgeClass = "bg-danger";
+                                                    }
+                                                    else
+                                                    {
+                                                        displayText = "Ongoing";
+                                                        badgeClass = "bg-warning";
+                                                    }
+                                                }
+
+                                                <tr>
+                                                    <td>@row.Code</td>
+                                                    <td>@row.Title</td>
+                                                    <td>@row.Units</td>
+                                                    <td>@DayName(row.DayOfWeek)</td>
+                                                    <td>@row.DisplayTime</td>
+                                                    <td>@row.RoomId</td>
+                                                    <td>
+                                                        <span class="badge @badgeClass" @Html.Raw(titleAttr)>@displayText</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="small text-muted">
+                                    Remarks are updated by administrators based on your academic performance.
+                                    "Retake" means this subject was previously failed and is scheduled again in the current term.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="pane-previous" role="tabpanel" aria-labelledby="tabbtn-previous">
+                    <div class="card">
+                        <div class="card-header">Previous Subjects (All Semesters)</div>
+                        <div class="card-body">
+                            @if (Model.PreviousSubjects == null || Model.PreviousSubjects.Count == 0)
+                            {
+                                <div class="text-muted">No previous subjects to display.</div>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:110px;">Code</th>
+                                                <th>Title</th>
+                                                <th style="width:70px;">Units</th>
+                                                <th style="width:120px;">Semester Taken</th>
+                                                <th style="width:100px;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var s in Model.PreviousSubjects)
+                                            {
+                                                @* ✅ FIXED: Use allSubjectRemarks (includes archived data) *@
+                                                var remark = allSubjectRemarks.TryGetValue(s.Code, out var r) ? r : "ongoing";
+
+                                                var badgeClass = remark.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                                                remark.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                                                "bg-warning";
+
+                                                var displayText = remark.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "Completed" :
+                                                remark.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "Failed" :
+                                                "In Progress";
+
+                                                @* ✅ Determine semester *@
+                                                var semesterTaken = "Unknown";
+                                                if (s.Code.StartsWith("CC10", StringComparison.OrdinalIgnoreCase) ||
+                                                s.Code == "GEE1" || s.Code == "PE1")
+                                                {
+                                                    semesterTaken = "1st Year 1st Sem";
+                                                }
+                                                else if (s.Code.StartsWith("CC10", StringComparison.OrdinalIgnoreCase) &&
+                                                int.Parse(s.Code.Substring(4)) > 2)
+                                                {
+                                                    semesterTaken = "1st Year 2nd Sem";
+                                                }
+
+                                                <tr>
+                                                    <td>@s.Code</td>
+                                                    <td>@s.Title</td>
+                                                    <td>@s.Units</td>
+                                                    <td><small class="text-muted">@semesterTaken</small></td>
+                                                    <td>
+                                                        <span class="badge @badgeClass">@displayText</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="small text-muted">
+                                    ✅ Includes all subjects from previous semesters (1st Year 1st & 2nd Semester)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /tab-content -->
+            <datalist id="barangays-list"></datalist>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        async function showRegistrationSlip() {
+            try {
+                const resp = await fetch('@Url.Action("RegistrationSlip","StudentAccount", new { area = "Student" })', { method: 'GET' });
+                const html = await resp.text();
+                if (!resp.ok) { alert(html || 'Failed to load registration slip.'); return; }
+
+                const containerId = 'registrationModalContainer';
+                let host = document.getElementById(containerId);
+                if (!host) { host = document.createElement('div'); host.id = containerId; document.body.appendChild(host); }
+                host.innerHTML = html;
+
+                host.querySelectorAll('script').forEach(old => {
+                    const s = document.createElement('script');
+                    if (old.src) s.src = old.src; else s.textContent = old.textContent || '';
+                    document.body.appendChild(s);
+                    old.remove();
+                });
+
+                const modalEl = document.getElementById('registrationModal');
+                if (!modalEl) { alert('Registration slip could not be displayed.'); return; }
+                const modal = new bootstrap.Modal(modalEl, { backdrop: 'static' });
+                modalEl.addEventListener('hidden.bs.modal', () => { host.innerHTML = ''; }, { once: true });
+                modal.show();
+            } catch {
+                alert('Failed to load registration slip.');
+            }
+        }
+
+        // Keep nav-btn active style in sync with Bootstrap tab activation
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(btn => {
+            btn.addEventListener('shown.bs.tab', (e) => {
+                document.querySelectorAll('.nav-btn').forEach(x => x.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
+        // Fallback tab toggle (works even if Bootstrap data API doesn't)
+        (function ensureTabToggle() {
+            const triggers = Array.from(document.querySelectorAll('[data-bs-toggle="tab"]'));
+            const panes = Array.from(document.querySelectorAll('.tab-content .tab-pane'));
+            if (triggers.length === 0 || panes.length === 0) return;
+
+            triggers.forEach(btn => {
+                btn.addEventListener('click', (ev) => {
+                    const targetSel = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
+                    if (!targetSel || !targetSel.startsWith('#')) return;
+                    const pane = document.querySelector(targetSel);
+                    if (!pane) return;
+
+                    panes.forEach(p => p.classList.remove('show', 'active'));
+                    pane.classList.add('show', 'active');
+
+                    triggers.forEach(t => t.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    triggers.forEach(t => t.setAttribute('aria-selected', t === btn ? 'true' : 'false'));
+                }, { passive: true });
+            });
+        })();
+
+        // Postal/Barangay helper (same as Freshmen form)
+        (function () {
+            const listEl = document.getElementById('barangays-list');
+
+            function normalizeName(s) {
+                return (s || "")
+                    .toUpperCase()
+                    .replace(/\./g, "")
+                    .replace(/^BRGY\s+|^BARANGAY\s+/g, "")
+                    .trim();
+            }
+
+            function connect(barangayId, postalId, mapping) {
+                const b = document.getElementById(barangayId);
+                const p = document.getElementById(postalId);
+                if (!b || !p) return;
+
+                function fillIfMatch() {
+                    const key = normalizeName(b.value);
+                    const code = mapping[key];
+                    if (code) p.value = code;
+                }
+
+                b.addEventListener('change', fillIfMatch);
+                b.addEventListener('blur', fillIfMatch);
+            }
+
+            fetch('@Url.Content("~/data/quezon-city-barangays.json")', { cache: 'no-cache' })
+                .then(r => r.json())
+                .then(data => {
+                    const items = Array.isArray(data) ? data : [];
+                    const names = [];
+                    const map = {};
+                    for (const it of items) {
+                        if (typeof it === 'string') {
+                            names.push(it);
+                        } else if (it && typeof it === 'object') {
+                            const nm = it.name || it.barangay || "";
+                            if (nm) {
+                                names.push(nm);
+                                if (it.postalCode) {
+                                    map[normalizeName(nm)] = String(it.postalCode);
+                                }
+                            }
+                        }
+                    }
+                    if (listEl) {
+                        listEl.innerHTML = names
+                            .sort((a, b) => a.localeCompare(b))
+                            .map(n => `<option value="${n}"></option>`)
+                            .join('');
+                    }
+                    connect('StudentAddress_Barangay', 'StudentAddress_PostalCode', map);
+                    connect('GuardianAddress_Barangay', 'GuardianAddress_PostalCode', map);
+                    connect('ElementaryAddress_Barangay', 'ElementaryAddress_PostalCode', map);
+                    connect('HighSchoolAddress_Barangay', 'HighSchoolAddress_PostalCode', map);
+                    connect('SeniorHighAddress_Barangay', 'SeniorHighAddress_PostalCode', map);
+                })
+                .catch(err => console.warn('Failed to load barangays list:', err));
+        })();
+    </script>
+}
+
+@* ✅ NEW: Penalty Modal *@
+<div class="modal fade" id="penaltyModal" tabindex="-1" aria-labelledby="penaltyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title" id="penaltyModalLabel">
+                    ⚠️ Library Penalties
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Model.Penalties == null || !Model.Penalties.Any())
+                {
+                    <div class="alert alert-info mb-0">
+                        ℹ️ No penalties found.
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <h6>Summary</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <small class="text-muted">Total Penalties</small>
+                                        <h5 class="mb-0">@Model.Penalties.Count</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card @(Model.HasPendingPenalties ? "bg-warning" : "bg-success") text-white">
+                                    <div class="card-body">
+                                        <small>Pending Amount</small>
+                                        <h5 class="mb-0">₱@Model.TotalPendingPenalties.ToString("N2")</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <h6>Penalty Details</h6>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Book Title</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var penalty in Model.Penalties.OrderByDescending(p => p.CreatedDate))
+                                {
+                                    <tr class="@(penalty.IsPaid ? "" : "table-warning")">
+                                        <td>@penalty.CreatedDate.ToLocalTime().ToString("MMM dd, yyyy")</td>
+                                        <td>@penalty.BookTitle</td>
+                                        <td>
+                                            <span class="badge bg-@(penalty.PenaltyType == "Late" ? "warning" : penalty.PenaltyType == "Damage" ? "danger" : "dark")">
+                                                @penalty.PenaltyType
+                                            </span>
+                                        </td>
+                                        <td><strong>₱@penalty.Amount.ToString("N2")</strong></td>
+                                        <td>
+                                            @if (penalty.IsPaid)
+                                            {
+                                                <span class="badge bg-success">
+                                                    ✅ Paid
+                                                    @if (penalty.PaymentDate.HasValue)
+                                                    {
+                                                        <small class="d-block">@penalty.PaymentDate.Value.ToLocalTime().ToString("MMM dd, yyyy")</small>
+                                                    }
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">
+                                                    ❌ Unpaid
+                                                </span>
+                                            }
+                                        </td>
+                                    </tr>
+                                    @if (!string.IsNullOrWhiteSpace(penalty.Description))
+                                    {
+                                        <tr>
+                                            <td colspan="5" class="small text-muted">
+                                                <strong>Description:</strong> @penalty.Description
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (Model.HasPendingPenalties)
+                    {
+                        <div class="alert alert-warning mt-3">
+                            <strong>⚠️ Important:</strong>
+                            Please settle your pending penalties at the library counter before borrowing books or completing enrollment.
+                        </div>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

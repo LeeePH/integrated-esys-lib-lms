@@ -1,0 +1,455 @@
+@model dynamic
+@{
+    ViewBag.Title = "MOCK data Management";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/Admin/Usermanage.css" />
+</head>
+<body>
+    <main class="content">
+        <header>
+            <h1>MOCK data Management</h1>
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-error">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
+            @if (ViewBag.DebugInfo != null)
+            {
+                <div class="alert" style="background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb;">
+                    <p><strong>Debug Info:</strong> @ViewBag.DebugInfo</p>
+                </div>
+            }
+            <div class="header-actions">
+                <form method="post" asp-action="SeedData" style="display: inline;">
+                    <button type="submit" class="seed-btn" onclick="return confirm('This will add sample MOCK data. Continue?')">
+                        ðŸŒ± Seed Sample Data
+                    </button>
+                </form>
+                <form method="post" asp-action="ForceSeed" style="display: inline; margin-left: 10px;">
+                    <button type="submit" class="seed-btn" style="background: #ff6b6b;" onclick="return confirm('This will force seed MOCK data directly to database. Continue?')">
+                        ðŸ”¥ Force Seed Data
+                    </button>
+                </form>
+            </div>
+        </header>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-error">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <section class="tabs">
+            <button class="active" onclick="showTab('students')">Student MOCK data</button>
+            <button onclick="showTab('staff')">Staff MOCK data</button>
+        </section>
+
+        <!-- Student MOCK data -->
+        <section id="students-tab" class="tab-content active">
+            <div class="data-header">
+                <h2>Student MOCK data (@(ViewBag.Students?.Count ?? 0) records)</h2>
+            </div>
+            
+            <div class="data-list">
+                @if (ViewBag.Students != null && ViewBag.Students.Count > 0)
+                {
+                    @foreach (var student in ViewBag.Students)
+                    {
+                        <div class="data-card student-card">
+                            <div class="data-left">
+                                <div class="avatar student">
+                                    <i class="icon">ðŸ‘¤</i>
+                                </div>
+                                <div class="data-info">
+                                    <h3>@(student?.FullName ?? "N/A")</h3>
+                                    <p class="highlight-id"><strong>Student Number:</strong> @(student?.StudentNumber ?? "N/A")</p>
+                                    <p><strong>Course:</strong> @(student?.Course ?? "N/A")</p>
+                                    <p><strong>Year Level:</strong> @(student?.YearLevel ?? "N/A")</p>
+                                    <p><strong>Department:</strong> @(student?.Department ?? "N/A")</p>
+                                    <p><strong>Contact:</strong> @(student?.ContactNumber ?? "N/A")</p>
+                                </div>
+                            </div>
+                            <div class="data-right">
+                                <div class="status-badges">
+                                    <span class="status @(student?.IsEnrolled == true ? "enrolled" : "not-enrolled")">
+                                        @(student?.IsEnrolled == true ? "ENROLLED" : "NOT ENROLLED")
+                                    </span>
+                                    <span class="status @(student?.IsActive == true ? "active" : "inactive")">
+                                        @(student?.IsActive == true ? "ACTIVE" : "INACTIVE")
+                                    </span>
+                                </div>
+                                <div class="data-dates">
+                                    <p><strong>Enrolled:</strong> @(student?.EnrollmentDate?.ToString("MMM dd, yyyy") ?? "N/A")</p>
+                                    @try
+                                    {
+                                        @if (student?.GraduationDate != null)
+                                        {
+                                            <p><strong>Graduated:</strong> @student.GraduationDate.ToString("MMM dd, yyyy")</p>
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        <!-- Graduation date not available -->
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-data">
+                        <p>No student MOCK data found. Click "Seed Sample Data" to add sample data.</p>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <!-- Staff MOCK data -->
+        <section id="staff-tab" class="tab-content">
+            <div class="data-header">
+                <h2>Staff MOCK data (@(ViewBag.Staff?.Count ?? 0) records)</h2>
+            </div>
+            
+            <div class="data-list">
+                @if (ViewBag.Staff != null && ViewBag.Staff.Count > 0)
+                {
+                    @foreach (var staff in ViewBag.Staff)
+                    {
+                        <div class="data-card staff-card">
+                            <div class="data-left">
+                                <div class="avatar staff">
+                                    <i class="icon">ðŸ‘¥</i>
+                                </div>
+                                <div class="data-info">
+                                    <h3>@(staff?.FullName ?? "N/A")</h3>
+                                    <p class="highlight-id"><strong>Employee ID:</strong> @(staff?.EmployeeId ?? "N/A")</p>
+                                    <p><strong>Position:</strong> @(staff?.Position ?? "N/A")</p>
+                                    <p><strong>Department:</strong> @(staff?.Department ?? "N/A")</p>
+                                    <p><strong>Contact:</strong> @(staff?.ContactNumber ?? "N/A")</p>
+                                    <p><strong>Employment Type:</strong> @(staff?.EmploymentType ?? "N/A")</p>
+                                </div>
+                            </div>
+                            <div class="data-right">
+                                <div class="status-badges">
+                                    <span class="status @(staff?.IsActive == true ? "active" : "inactive")">
+                                        @(staff?.IsActive == true ? "ACTIVE" : "INACTIVE")
+                                    </span>
+                                </div>
+                                <div class="data-dates">
+                                    <p><strong>Hired:</strong> @(staff?.HireDate?.ToString("MMM dd, yyyy") ?? "N/A")</p>
+                                    @try
+                                    {
+                                        @if (staff?.TerminationDate != null)
+                                        {
+                                            <p><strong>Terminated:</strong> @staff.TerminationDate.ToString("MMM dd, yyyy")</p>
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        <!-- Termination date not available -->
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-data">
+                        <p>No staff MOCK data found. Click "Seed Sample Data" to add sample data.</p>
+                    </div>
+                }
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+@section Scripts {
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tabs button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+}
+
+<style>
+    .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .seed-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .seed-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    .alert {
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    .tabs button {
+        background: none;
+        border: none;
+        padding: 12px 24px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        color: #6c757d;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .tabs button.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+    }
+
+    .tabs button:hover {
+        color: #667eea;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .data-header {
+        margin: 20px 0;
+    }
+
+    .data-header h2 {
+        color: #2c3e50;
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .data-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .data-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .data-left {
+        display: flex;
+        gap: 15px;
+        flex: 1;
+    }
+
+    .data-right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .avatar.student {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .avatar.staff {
+        background: #f3e5f5;
+        color: #7b1fa2;
+    }
+
+    .data-info h3 {
+        margin: 0 0 10px 0;
+        color: #2c3e50;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .data-info p {
+        margin: 5px 0;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .highlight-id {
+        background: #e3f2fd !important;
+        color: #1976d2 !important;
+        padding: 8px 12px !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+        border: 2px solid #bbdefb !important;
+    }
+
+    .alert {
+        padding: 12px 16px;
+        margin: 16px 0;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        color: white;
+        border: 1px solid #ff5252;
+    }
+
+    .status-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .status.enrolled {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status.not-enrolled {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .status.active {
+        background: #d1ecf1;
+        color: #0c5460;
+    }
+
+    .status.inactive {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .data-dates {
+        text-align: right;
+    }
+
+    .data-dates p {
+        margin: 3px 0;
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+        font-style: italic;
+        background: white;
+        border-radius: 12px;
+        border: 2px dashed #e9ecef;
+    }
+
+    @@media (max-width: 768px) {
+        .data-card {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .data-right {
+            align-items: flex-start;
+        }
+
+        .status-badges {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .data-dates {
+            text-align: left;
+        }
+    }
+</style>

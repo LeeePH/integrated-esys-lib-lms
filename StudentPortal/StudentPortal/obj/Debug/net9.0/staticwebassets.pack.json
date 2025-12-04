@@ -1,0 +1,753 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminAssessment.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminAssessmentList.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminCheckAssessment.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminCheckAssessment.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminClass.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminClass.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminCreateAssessment.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminCreateAssessment.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminDb.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageClass.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminManageClass.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminManageGrades.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminMaterial.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminMaterial.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminSubject.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminSubject.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminTask.css",
+      "PackagePath": "staticwebassets\\css\\AdminDb\\AdminTask.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Register.css",
+      "PackagePath": "staticwebassets\\css\\Register.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Shared\\AdminBottomBar.css",
+      "PackagePath": "staticwebassets\\css\\Shared\\AdminBottomBar.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Shared\\BottomBar.css",
+      "PackagePath": "staticwebassets\\css\\Shared\\BottomBar.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Shared\\LibraryModal.css",
+      "PackagePath": "staticwebassets\\css\\Shared\\LibraryModal.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentAnswerAssessment.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentAnswerAssessment.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentAssessment.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentClass.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentClass.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentDb.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentMaterial.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentTask.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentTask.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentTodo.css",
+      "PackagePath": "staticwebassets\\css\\StudentDb\\StudentTodo.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\forgotpw.css",
+      "PackagePath": "staticwebassets\\css\\forgotpw.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\1.png",
+      "PackagePath": "staticwebassets\\images\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\10.png",
+      "PackagePath": "staticwebassets\\images\\10.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\2.png",
+      "PackagePath": "staticwebassets\\images\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\3.png",
+      "PackagePath": "staticwebassets\\images\\3.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\5.png",
+      "PackagePath": "staticwebassets\\images\\5.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\6.png",
+      "PackagePath": "staticwebassets\\images\\6.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\7.png",
+      "PackagePath": "staticwebassets\\images\\7.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\8.png",
+      "PackagePath": "staticwebassets\\images\\8.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\9.png",
+      "PackagePath": "staticwebassets\\images\\9.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\SIA ASSETS.png",
+      "PackagePath": "staticwebassets\\images\\SIA ASSETS.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\banner.png",
+      "PackagePath": "staticwebassets\\images\\banner.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\bg1.png",
+      "PackagePath": "staticwebassets\\images\\bg1.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\bg_black.png",
+      "PackagePath": "staticwebassets\\images\\bg_black.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\bg_new.png",
+      "PackagePath": "staticwebassets\\images\\bg_new.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\classbg.jpg",
+      "PackagePath": "staticwebassets\\images\\classbg.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\eye-slash.png",
+      "PackagePath": "staticwebassets\\images\\eye-slash.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\eye.png",
+      "PackagePath": "staticwebassets\\images\\eye.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\profpfp.jpg",
+      "PackagePath": "staticwebassets\\images\\profpfp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\slide1.jpg",
+      "PackagePath": "staticwebassets\\images\\slide1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\slide1logo.png",
+      "PackagePath": "staticwebassets\\images\\slide1logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\images\\studentpfp.jpg",
+      "PackagePath": "staticwebassets\\images\\studentpfp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminAssessment.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminAssessment.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminBottomBar.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminCheckAssesment.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminCheckAssesment.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminClass.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminCreateAssessment.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminCreateAssessment.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminDb.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageClass.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminManageClass.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageGrades.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminManageGrades.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminMaterial.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminMaterial.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminSubject.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminSubject.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminTask.js",
+      "PackagePath": "staticwebassets\\js\\AdminDb\\AdminTask.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\Login.js",
+      "PackagePath": "staticwebassets\\js\\Login.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\Register.js",
+      "PackagePath": "staticwebassets\\js\\Register.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\Anticheat.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentAnswerAssessment.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentAssessment.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentBottomBar.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentBottomBar.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentClass.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentDb.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentMaterial.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentTask.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
+      "PackagePath": "staticwebassets\\js\\StudentDb\\StudentTodo.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\bottombar.js",
+      "PackagePath": "staticwebassets\\js\\bottombar.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\forgotpw.js",
+      "PackagePath": "staticwebassets\\js\\forgotpw.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\155b2b0d-d30e-4447-8307-dbfa605b7a0b_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\155b2b0d-d30e-4447-8307-dbfa605b7a0b_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\25c53f39-6a37-4855-809c-15c735b35d24_MS101_FINALTERM-Activity1 (1).pdf",
+      "PackagePath": "staticwebassets\\uploads\\25c53f39-6a37-4855-809c-15c735b35d24_MS101_FINALTERM-Activity1 (1).pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\2a5b45f7-7de4-48f6-a911-6cfa9a02f446_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\2a5b45f7-7de4-48f6-a911-6cfa9a02f446_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\2c994986-37bc-4484-993c-f46e0afe6e8a_17ce5e38-b3af-4623-98f0-a9ce3f0d74c0 (1) (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\2c994986-37bc-4484-993c-f46e0afe6e8a_17ce5e38-b3af-4623-98f0-a9ce3f0d74c0 (1) (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\3210655b-4b44-48dd-9f7f-60959028adca_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\3210655b-4b44-48dd-9f7f-60959028adca_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\38224af6-3698-44f3-bba9-650d00520133_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\38224af6-3698-44f3-bba9-650d00520133_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\3e8946b5-233d-4f27-b3b0-9cd8cf76645f_QCU.docx",
+      "PackagePath": "staticwebassets\\uploads\\3e8946b5-233d-4f27-b3b0-9cd8cf76645f_QCU.docx"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\4c1024a2-aaa2-4b11-bed9-1772be91ca92_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\4c1024a2-aaa2-4b11-bed9-1772be91ca92_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\4d9fe70e-cac0-4557-91b6-16d83c54db22_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\4d9fe70e-cac0-4557-91b6-16d83c54db22_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\5b2b9c68-112c-43bf-9590-55a143195f01_MS101_FINALTERM-Activity1 (1).pdf",
+      "PackagePath": "staticwebassets\\uploads\\5b2b9c68-112c-43bf-9590-55a143195f01_MS101_FINALTERM-Activity1 (1).pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\691579626a6f889d6fb805e9\\17ce5e38-b3af-4623-98f0-a9ce3f0d74c0 (1).jpg",
+      "PackagePath": "staticwebassets\\uploads\\691579626a6f889d6fb805e9\\17ce5e38-b3af-4623-98f0-a9ce3f0d74c0 (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Galope.docx",
+      "PackagePath": "staticwebassets\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Galope.docx"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Osorio (1).pdf",
+      "PackagePath": "staticwebassets\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Osorio (1).pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\6924be890a552a964ecb83da\\IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6924be890a552a964ecb83da\\OSORIO, RON IVAN E..pdf",
+      "PackagePath": "staticwebassets\\uploads\\6924be890a552a964ecb83da\\OSORIO, RON IVAN E..pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6a898e70-6d0e-4e1a-bef2-1d0e9c756b1f_8786248e-378b-48cf-aec1-8610f037395c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\6a898e70-6d0e-4e1a-bef2-1d0e9c756b1f_8786248e-378b-48cf-aec1-8610f037395c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\6fa51664-06f7-4cc2-9ea2-ace3467fc4bc_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\6fa51664-06f7-4cc2-9ea2-ace3467fc4bc_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\73288477-2acd-4823-868a-e1a6139495bd_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\73288477-2acd-4823-868a-e1a6139495bd_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\76b6081b-1ed5-448a-a38e-8f8eb639c48a_8786248e-378b-48cf-aec1-8610f037395c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\76b6081b-1ed5-448a-a38e-8f8eb639c48a_8786248e-378b-48cf-aec1-8610f037395c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\87dbf25b-78df-416d-8e54-afc5b36866b9_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\87dbf25b-78df-416d-8e54-afc5b36866b9_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\92bd1604-9d38-4bb4-841e-1f1a0163494f_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\92bd1604-9d38-4bb4-841e-1f1a0163494f_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\9af9f205-9ad0-407e-b533-64bf80564df4_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\9af9f205-9ad0-407e-b533-64bf80564df4_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\9c014c82-6fbb-4534-bc62-47d84226767e_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\9c014c82-6fbb-4534-bc62-47d84226767e_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\9dc6b026-4dea-4ea4-b616-8ebf936806a8_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\9dc6b026-4dea-4ea4-b616-8ebf936806a8_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\0052ad24-1e3a-4188-81ce-8ab986c66adc_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\0052ad24-1e3a-4188-81ce-8ab986c66adc_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\0ce76929-12cd-495c-9a6b-8a1eeb845d93_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\0ce76929-12cd-495c-9a6b-8a1eeb845d93_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\16b9695d-516c-4686-8b9d-ce0c8b2c17f2_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\16b9695d-516c-4686-8b9d-ce0c8b2c17f2_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\2c4e0dde-0984-46b8-b3cf-c48b9c72c38b_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\2c4e0dde-0984-46b8-b3cf-c48b9c72c38b_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\2c5ba9ca-e6df-4668-9292-17f72cc2067b_Rheyvon E..pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\2c5ba9ca-e6df-4668-9292-17f72cc2067b_Rheyvon E..pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\612f458e-6840-41d4-9c80-8820a3c522b8_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\612f458e-6840-41d4-9c80-8820a3c522b8_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\8cf015ec-723a-4fa0-8d91-ba2647de0618_ghjgj.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\8cf015ec-723a-4fa0-8d91-ba2647de0618_ghjgj.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\e0bb0ac6-3947-4216-aefd-61bfccfca7d9_ghjgj.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\e0bb0ac6-3947-4216-aefd-61bfccfca7d9_ghjgj.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\G51B79\\fd3013f2-b96c-4927-b2b2-2cb54d7bb677_ghjgj.pdf",
+      "PackagePath": "staticwebassets\\uploads\\G51B79\\fd3013f2-b96c-4927-b2b2-2cb54d7bb677_ghjgj.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\I5RRGH\\a935bda3-23b0-4d21-89f7-79c2ba1776b4_ghjgj.pdf",
+      "PackagePath": "staticwebassets\\uploads\\I5RRGH\\a935bda3-23b0-4d21-89f7-79c2ba1776b4_ghjgj.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\aec3b069-b1da-4482-83e0-20a2062f6cbb_Resume-Malonzo.pdf",
+      "PackagePath": "staticwebassets\\uploads\\aec3b069-b1da-4482-83e0-20a2062f6cbb_Resume-Malonzo.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\b030e1fe-ba79-4ec6-9207-6f6c71c76641_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\b030e1fe-ba79-4ec6-9207-6f6c71c76641_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\b0d8ec2f-233e-4549-a437-f888fd702e28_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\b0d8ec2f-233e-4549-a437-f888fd702e28_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\b185affe-7495-401c-ab5b-4f88edf767ca_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\b185affe-7495-401c-ab5b-4f88edf767ca_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\bc137f8f-6072-42dc-9d8f-9e05130f2946_MS101_FINALTERM-Activity1 (1).pdf",
+      "PackagePath": "staticwebassets\\uploads\\bc137f8f-6072-42dc-9d8f-9e05130f2946_MS101_FINALTERM-Activity1 (1).pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\c054fdc6-303f-4431-a9c5-e0763df1f4a6_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\c054fdc6-303f-4431-a9c5-e0763df1f4a6_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\c25c6076-8b7d-443a-8cf3-4c403975a58e_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\c25c6076-8b7d-443a-8cf3-4c403975a58e_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\d1d7666c-582a-4f3a-a0f3-aa8363a6f115_IPT-ASSIGNMENT-Osorio.pdf",
+      "PackagePath": "staticwebassets\\uploads\\d1d7666c-582a-4f3a-a0f3-aa8363a6f115_IPT-ASSIGNMENT-Osorio.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\d1db766a-d412-45ef-b2e0-95cabdaf357d_Resume-Malonzo.pdf",
+      "PackagePath": "staticwebassets\\uploads\\d1db766a-d412-45ef-b2e0-95cabdaf357d_Resume-Malonzo.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\d9b5a1ee-9d7e-4519-9421-8d070dcb4015_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\d9b5a1ee-9d7e-4519-9421-8d070dcb4015_PRICELIST.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\da13f0ef-5b29-42a3-8604-f6d61de3f1fa_EDICA-RESUME.pdf",
+      "PackagePath": "staticwebassets\\uploads\\da13f0ef-5b29-42a3-8604-f6d61de3f1fa_EDICA-RESUME.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\e11f1f60-eb8c-46aa-a58f-31c0f4be5b6a_ghjgj.pdf",
+      "PackagePath": "staticwebassets\\uploads\\e11f1f60-eb8c-46aa-a58f-31c0f4be5b6a_ghjgj.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\e47e5f2d-e06d-4eca-bb92-cd2ee15eaae0_tita2.pdf",
+      "PackagePath": "staticwebassets\\uploads\\e47e5f2d-e06d-4eca-bb92-cd2ee15eaae0_tita2.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\f1abe551-9126-440a-97a1-dd2320b3ff96_Resume-Malonzo.pdf",
+      "PackagePath": "staticwebassets\\uploads\\f1abe551-9126-440a-97a1-dd2320b3ff96_Resume-Malonzo.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\uploads\\f99dc651-f836-49ac-8742-dd5b11653802_PRICELIST.pdf",
+      "PackagePath": "staticwebassets\\uploads\\f99dc651-f836-49ac-8742-dd5b11653802_PRICELIST.pdf"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.StudentPortal.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.StudentPortal.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.StudentPortal.props",
+      "PackagePath": "build\\StudentPortal.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.StudentPortal.props",
+      "PackagePath": "buildMultiTargeting\\StudentPortal.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.StudentPortal.props",
+      "PackagePath": "buildTransitive\\StudentPortal.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,409 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using StudentPortal.DTO;
+using StudentPortal.Models;
+using StudentPortal.Services;
+using BCrypt.Net;
+using System;
+using System.Threading.Tasks;
+
+namespace StudentPortal.Controllers
+{
+    public class AccountController : Controller
+    {
+        private readonly MongoDbService _mongoService;
+        private readonly EmailService _emailService;
+
+        public AccountController(MongoDbService mongoService, EmailService emailService)
+        {
+            _mongoService = mongoService;
+            _emailService = emailService;
+        }
+
+        // --- LOGIN ---
+        [HttpGet]
+        public IActionResult Login() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Error = "Please enter both email and password.";
+                return View(model);
+            }
+
+            // Normalize email for consistent lookup
+            var normalizedEmail = (model.Email ?? string.Empty).Trim().ToLowerInvariant();
+            
+            if (string.IsNullOrWhiteSpace(normalizedEmail))
+            {
+                ViewBag.Error = "Please enter a valid email address.";
+                return View(model);
+            }
+
+            // ALWAYS check enrollment system FIRST for student authentication
+            // This ensures enrollment system is the source of truth for students
+            EnrollmentStudent? enrollmentStudent = null;
+            try
+            {
+                enrollmentStudent = await _mongoService.GetEnrollmentStudentByEmailAsync(normalizedEmail);
+            }
+            catch (Exception)
+            {
+                // Continue to check portal users for non-student roles
+            }
+            
+            if (enrollmentStudent != null)
+            {
+                // Check account status (if it exists in the database)
+                if (!string.IsNullOrEmpty(enrollmentStudent.AccountStatus) && enrollmentStudent.AccountStatus != "Active")
+                {
+                    ViewBag.Error = "Your account is inactive. Please contact the administrator.";
+                    return View(model);
+                }
+
+                // Get or create portal user for lockout tracking
+                var portalUser = await _mongoService.GetUserByEmailAsync(enrollmentStudent.Email);
+                
+                // Check if account is locked - use UTC consistently
+                if (portalUser != null && portalUser.LockoutEndTime.HasValue && portalUser.LockoutEndTime.Value > DateTime.UtcNow)
+                {
+                    var remaining = portalUser.LockoutEndTime.Value - DateTime.UtcNow;
+                    ViewBag.Error = $"Your account is locked. Try again in {remaining.Minutes} minute(s).";
+                    return View(model);
+                }
+
+                // Verify password using PasswordHash from enrollment system
+                bool passwordValid = false;
+                try
+                {
+                    passwordValid = BCrypt.Net.BCrypt.Verify(model.Password, enrollmentStudent.PasswordHash);
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Invalid email or password.";
+                    return View(model);
+                }
+
+                if (!passwordValid)
+                {
+                    // Track failed attempts in portal user record
+                    if (portalUser == null)
+                    {
+                        // Create portal user for tracking failed attempts
+                        portalUser = await _mongoService.CreateUserFromEnrollmentStudentAsync(enrollmentStudent);
+                    }
+                    
+                    portalUser.FailedLoginAttempts = (portalUser.FailedLoginAttempts ?? 0) + 1;
+                    
+                    // Lock after 3 failed attempts
+                    if (portalUser.FailedLoginAttempts >= 3)
+                    {
+                        portalUser.LockoutEndTime = DateTime.UtcNow.AddMinutes(3);
+                        portalUser.FailedLoginAttempts = 0; // reset after lock
+                        await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, portalUser.FailedLoginAttempts, portalUser.LockoutEndTime);
+                        ViewBag.Error = "Too many failed attempts. Your account is locked for 3 minutes.";
+                    }
+                    else
+                    {
+                        await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, portalUser.FailedLoginAttempts, null);
+                        ViewBag.Error = $"Incorrect email or password. {3 - portalUser.FailedLoginAttempts} attempt(s) left before suspension.";
+                    }
+                    
+                    return View(model);
+                }
+
+                // Password is valid - sync user from enrollment to portal system
+                portalUser = await _mongoService.CreateUserFromEnrollmentStudentAsync(enrollmentStudent);
+                
+                if (portalUser == null)
+                {
+                    ViewBag.Error = "Unable to complete login. Please try again.";
+                    return View(model);
+                }
+
+                // Clear lockout if time has passed
+                if (portalUser.LockoutEndTime.HasValue && portalUser.LockoutEndTime.Value <= DateTime.UtcNow)
+                {
+                    portalUser.LockoutEndTime = null;
+                    portalUser.FailedLoginAttempts = 0;
+                    await _mongoService.UpdateUserLoginStatusAsync(portalUser.Email, 0, null);
+                }
+
+                // Password correct - reset security fields and sync password hash
+                portalUser.FailedLoginAttempts = 0;
+                portalUser.LockoutEndTime = null;
+                portalUser.Password = enrollmentStudent.PasswordHash; // Always sync password hash
+                portalUser.IsVerified = true; // Ensure user is verified
+                portalUser.Role = "Student"; // Ensure role is Student
+                await _mongoService.UpdateUserAsync(portalUser);
+
+                // ✅ Successful login from enrollment system
+                // Save session data
+                HttpContext.Session.SetString("UserEmail", enrollmentStudent.Email);
+                HttpContext.Session.SetString("UserName", enrollmentStudent.Username);
+                HttpContext.Session.SetString("UserRole", "Student");
+                HttpContext.Session.SetString("UserId", portalUser.Id ?? enrollmentStudent.Id);
+                HttpContext.Session.SetString("UserType", enrollmentStudent.Type);
+
+                // Redirect to student dashboard
+                return RedirectToAction("Index", "StudentDb");
+            }
+
+            // Student not found in enrollment system - check portal system ONLY for non-student users (admin/faculty)
+            var user = await _mongoService.GetUserByEmailAsync(normalizedEmail);
+            
+            if (user == null)
+            {
+                ViewBag.Error = "No account found with this email. Students must be registered through the enrollment system.";
+                return View(model);
+            }
+
+            // Only allow portal-only users if they are NOT students
+            // Students MUST come from enrollment system
+            if (user.Role?.ToLower() == "student")
+            {
+                ViewBag.Error = "Student accounts must be registered through the enrollment system. Please contact the administrator.";
+                return View(model);
+            }
+
+            // For non-student users (admin/faculty), proceed with portal authentication
+
+            // Check if user is temporarily locked
+            if (user.LockoutEndTime.HasValue && user.LockoutEndTime.Value > DateTime.UtcNow)
+            {
+                var remaining = user.LockoutEndTime.Value - DateTime.UtcNow;
+                ViewBag.Error = $"Your account is locked. Try again in {remaining.Minutes} minute(s).";
+                return View(model);
+            }
+
+            // Clear lockout if time has passed
+            if (user.LockoutEndTime.HasValue && user.LockoutEndTime.Value <= DateTime.UtcNow)
+            {
+                user.LockoutEndTime = null;
+                user.FailedLoginAttempts = 0;
+                await _mongoService.UpdateUserLoginStatusAsync(user.Email, 0, null);
+            }
+
+            // 🔒 Verify hashed password
+            if (!BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
+                // Increment failed attempts
+                user.FailedLoginAttempts = (user.FailedLoginAttempts ?? 0) + 1;
+
+                // Lock after 3 failed attempts
+                if (user.FailedLoginAttempts >= 3)
+                {
+                    user.LockoutEndTime = DateTime.UtcNow.AddMinutes(3);
+                    user.FailedLoginAttempts = 0; // reset after lock
+                    await _mongoService.UpdateUserLoginStatusAsync(user.Email, user.FailedLoginAttempts, user.LockoutEndTime);
+                    ViewBag.Error = "Too many failed attempts. Your account is locked for 3 minutes.";
+                }
+                else
+                {
+                    await _mongoService.UpdateUserLoginStatusAsync(user.Email, user.FailedLoginAttempts, null);
+                    ViewBag.Error = $"Incorrect email or password. {3 - user.FailedLoginAttempts} attempt(s) left before suspension.";
+                }
+
+                return View(model);
+            }
+
+            // Reset failed attempts after successful login
+            user.FailedLoginAttempts = 0;
+            user.LockoutEndTime = null;
+            await _mongoService.UpdateUserLoginStatusAsync(user.Email, 0, null);
+
+            // 🔐 Verify if account is activated
+            if (!user.IsVerified)
+            {
+                ViewBag.Error = "Your account is not verified yet. Please check your email for OTP.";
+                return View(model);
+            }
+
+            // ✅ Save session data
+            HttpContext.Session.SetString("UserEmail", user.Email);
+            HttpContext.Session.SetString("UserName", user.FullName ?? user.Email);
+            HttpContext.Session.SetString("UserRole", user.Role ?? "Student");
+
+            switch (user.Role?.ToLower())
+            {
+                case "admin":
+                case "faculty":
+                    return RedirectToAction("Index", "AdminDb");
+                default:
+                    return RedirectToAction("Index", "StudentDb");
+            }
+        }
+
+        public IActionResult Index()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            var userRole = HttpContext.Session.GetString("UserRole");
+
+            if (string.IsNullOrEmpty(userEmail))
+                return RedirectToAction("Login", "Account");
+
+            if (userRole != "Admin")
+                return RedirectToAction("Dashboard");
+
+            ViewBag.UserName = userEmail;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            // ✅ Clear all session data
+            HttpContext.Session.Clear();
+
+            // ✅ Redirect to Login page
+            return RedirectToAction("Login", "Account");
+        }
+
+        // --- REGISTER ---
+        [HttpGet]
+        public IActionResult Register() => View();
+
+        // STEP 2: SEND OTP
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendOtp(RegisterPayload model)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { success = false, message = "Invalid registration data." });
+
+            // ✅ Check if user already exists
+            var existingUser = await _mongoService.GetUserByEmailAsync(model.Email);
+            if (existingUser != null)
+            {
+                return Json(new { success = false, message = "Email already exists. Please use another one." });
+            }
+
+            // Generate OTP
+            var otp = new Random().Next(100000, 999999).ToString();
+
+            // Hash password before saving
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+            // Create a new unverified user record (Student by default)
+            await _mongoService.CreateUserAsync(model.Email, hashedPassword, otp, "Student");
+
+            try
+            {
+                await _emailService.SendEmailAsync(
+                    model.Email,
+                    "MySUQC OTP Verification",
+                    $"Your OTP code is: {otp}"
+                );
+
+                return Json(new { success = true, message = "OTP sent successfully!" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Email send failed: " + ex.Message);
+                return Json(new { success = false, message = "We couldn't send the OTP email. Please try again." });
+            }
+        }
+
+        // STEP 3: VERIFY OTP
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyOtp(OtpPayload payload)
+        {
+            var isValid = await _mongoService.VerifyOtpAsync(payload.EmailAddress, payload.OTP);
+
+            if (!isValid)
+                return Json(new { success = false, message = "Invalid OTP. Please try again." });
+
+            await _mongoService.MarkUserAsVerifiedAsync(payload.EmailAddress);
+            return Json(new { success = true, message = "Your account has been verified!" });
+        }
+
+        // STEP 3B: RESEND OTP
+        [HttpPost]
+        public async Task<IActionResult> ResendOtp(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return Json(new { success = false, message = "Email is required." });
+
+            var user = await _mongoService.GetUserByEmailAsync(email);
+            if (user == null)
+                return Json(new { success = false, message = "User not found." });
+
+            if (user.IsVerified)
+                return Json(new { success = false, message = "Account already verified." });
+
+            var otp = new Random().Next(100000, 999999).ToString();
+            await _mongoService.UpdateOtpAsync(email, otp);
+
+            try
+            {
+                await _emailService.SendEmailAsync(
+                    email,
+                    "MySUQC OTP Verification (Resent)",
+                    $"Your new OTP code is: {otp}"
+                );
+
+                return Json(new { success = true, message = "OTP resent successfully!" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Resend OTP failed: " + ex.Message);
+                return Json(new { success = false, message = "Failed to resend OTP. Try again later." });
+            }
+        }
+
+        // --- FORGOT PASSWORD ---
+        [HttpGet]
+        public IActionResult ForgotPassword() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> SendVerificationCode([FromBody] ForgotPasswordViewModel model)
+        {
+            if (string.IsNullOrEmpty(model.Email))
+                return BadRequest("Email is required.");
+
+            var user = await _mongoService.GetUserByEmailAsync(model.Email);
+            if (user == null)
+                return NotFound("No account found with that email.");
+
+            var code = new Random().Next(100000, 999999).ToString();
+            HttpContext.Session.SetString("VerificationCode", code);
+            HttpContext.Session.SetString("ResetEmail", model.Email);
+
+            await _emailService.SendEmailAsync(model.Email, "Password Reset Code", $"Your verification code is: {code}");
+
+            return Ok("Verification code sent.");
+        }
+
+        [HttpPost]
+        public IActionResult VerifyCode([FromBody] ForgotPasswordViewModel model)
+        {
+            var storedCode = HttpContext.Session.GetString("VerificationCode");
+            if (storedCode == null)
+                return BadRequest("Session expired. Please restart the reset process.");
+
+            if (model.VerificationCode != storedCode)
+                return BadRequest("Invalid verification code.");
+
+            return Ok("Code verified successfully.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword([FromBody] ForgotPasswordViewModel model)
+        {
+            var email = HttpContext.Session.GetString("ResetEmail");
+            if (email == null)
+                return BadRequest("Session expired. Please restart the reset process.");
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+            await _mongoService.UpdateUserPasswordAsync(email, hashedPassword);
+
+            HttpContext.Session.Remove("VerificationCode");
+            HttpContext.Session.Remove("ResetEmail");
+
+            return Ok("Password has been reset successfully.");
+        }
+    }
+}

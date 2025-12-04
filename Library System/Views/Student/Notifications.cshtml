@@ -1,0 +1,583 @@
+﻿@model SystemLibrary.ViewModels.StudentDashboardViewModel
+@using System
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Notifications";
+    var _phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+}
+<link rel="stylesheet" href="~/css/student/notified.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="inbox-container">
+    <main class="main-content">
+
+        <!-- Header (Title + Gradient underline only) -->
+        <div class="current-borrowing">
+            <h2>
+                <img src="~/images/inbox.png" alt="Current Borrowing" class="title-icon" />
+                Inbox
+                <span class="inbox-count">(@Model.Notifications.Count(n => !n.IsArchived))</span>
+            </h2>
+        </div>
+
+        <!-- Tabs + Mark all as read (in one row) -->
+        <div class="filter-tabs-row">
+            <div class="filter-tabs">
+                <button class="tab-btn active" data-filter="all" onclick="filterNotifications('all')">
+                    All <span class="tab-count" id="count-all">(@Model.Notifications.Count(n => !n.IsArchived))</span>
+                </button>
+                <button class="tab-btn" data-filter="unread" onclick="filterNotifications('unread')">
+                    Unread <span class="tab-count" id="count-unread">(@Model.UnreadNotificationCount)</span>
+                </button>
+                <button class="tab-btn" data-filter="archived" onclick="filterNotifications('archived')">
+                    Archived <span class="tab-count" id="count-archived">(@Model.Notifications.Count(n => n.IsArchived))</span>
+                </button>
+            </div>
+
+            <div class="inbox-header-right" style="display: flex; gap: 10px;">
+                @if (Model.UnreadNotificationCount > 0)
+                {
+                        <button type="button" class="mark-all-read-btn" onclick="markAllAsRead()">
+                            Mark all as read
+                        </button>
+                }
+                <button type="button"
+                        onclick="openClearModal()"
+                        title="Clear all read notifications"
+                        class="clear-all-btn tab-btn"
+                        style="display: none;">
+                    Clear All
+                </button>
+
+
+            </div>
+
+        </div>
+
+        <!-- Notifications -->
+        <div class="notif-section">
+            @if (Model.Notifications.Any())
+            {
+                foreach (var notif in Model.Notifications)
+                {
+                            <div class="notif-card @(notif.IsRead ? "read" : "unread") @notif.CssClass"
+                                 data-id="@notif._id"
+                                 data-read="@notif.IsRead.ToString().ToLower()"
+                                 data-archived="@notif.IsArchived.ToString().ToLower()"
+                                 style="display: flex; align-items: center; justify-content: space-between;">
+
+                                <div class="notif-left">
+                                    <i class="fas @notif.Icon notif-type-icon"></i>
+                                    <span class="library-text">Library</span>
+                                </div>
+
+                                <div class="notif-right" onclick="markAsRead('@notif._id')" style="cursor: pointer;">
+                                    <strong class="notif-title">@notif.Title</strong>
+                                    <p class="notif-message">@notif.Message</p>
+                                    <small class="notif-date">@TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(notif.CreatedAt, DateTimeKind.Utc), _phTimeZone).ToString("MMM dd, yyyy hh:mm tt")</small>
+                            @if (!notif.IsRead)
+                            {
+                                            <span class="unread-badge">NEW</span>
+                            }
+                                </div>
+
+                                <!-- ACTION BUTTONS (style from FIRST code: outline icon-only inline styles) -->
+                                <div style="display: flex; gap: 10px; margin-left: 20px; flex-shrink: 0;">
+                            @if (notif.IsArchived)
+                            {
+                                            <button onclick="archiveNotification(event, '@notif._id')"
+                                                    style="background: #fff; border: 2px solid #4CAF50; color: #4CAF50; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 16px;"
+                                                    title="Restore"
+                                                    onmouseover="this.style.background='#E8F5E9'"
+                                                    onmouseout="this.style.background='#fff'">
+                                                <i class="fas fa-undo"></i>
+                                            </button>
+                            }
+                            else
+                            {
+                                            <button onclick="archiveNotification(event, '@notif._id')"
+                                                    style="background: #fff; border: 2px solid #ff9800; color: #ff9800; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 16px;"
+                                                    title="Archive"
+                                                    onmouseover="this.style.background='#fff3e0'"
+                                                    onmouseout="this.style.background='#fff'">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                            }
+
+                                    <button onclick="deleteNotification(event, '@notif._id')"
+                                            style="background: #fff; border: 2px solid #f44336; color: #f44336; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 16px;"
+                                            title="Delete"
+                                            onmouseover="this.style.background='#ffebee'"
+                                            onmouseout="this.style.background='#fff'">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                }
+            }
+            else
+            {
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash fa-3x"></i>
+                        <p>No notifications yet.</p>
+                    </div>
+            }
+        </div>
+    </main>
+</div>
+
+ <div id="clearModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+
+    <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #006B99;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+                <h3 style="margin: 0;">Clear Notification</h3>
+            </div>
+            <p style="color: #666; margin-bottom: 1.5rem;">
+             Are you sure you want to clear all read notifications?
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button onclick="closeClearModal()" style="background: #f0f0f0; color: #333;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Cancel
+                </button>
+                <button onclick="confirmClearAll()" style="background: #006B99; color: white;
+                padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">
+                    Clear 
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!-- Delete Confirmation Modal (kept from second code style) -->
+<div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+    <div style="background: white; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; color: #f44336;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+            <h3 style="margin: 0;">Delete Notification?</h3>
+        </div>
+        <p style="color: #666; margin-bottom: 1.5rem;">This action cannot be undone. Are you sure you want to delete this notification?</p>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+            <button onclick="closeDeleteModal()" style="background: #f0f0f0; color: #333; padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">Cancel</button>
+            <button onclick="confirmDelete()" style="background: #f44336; color: white; padding: 0.5rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let notificationToDelete = null;
+    let currentFilter = 'all';
+    let archivedNotifications = []; // cache for archived items fetched from server
+
+    function markAsRead(notificationId) {
+        fetch(`/Student/MarkNotificationRead`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `notificationId=${notificationId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const card = document.querySelector(`[data-id="${notificationId}"]`);
+                if (card) {
+                    card.classList.remove('unread');
+                    card.classList.add('read');
+                    card.setAttribute('data-read', 'true');
+                    const badge = card.querySelector('.unread-badge');
+                    if (badge) badge.remove();
+                    updateCounts();
+                }
+            } else {
+                showToast('Failed to mark as read');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('Error marking notification read');
+        });
+    }
+
+    function markAllAsRead() {
+        fetch(`/Student/MarkAllNotificationsRead`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // reload to reflect server state simply
+                location.reload();
+            } else {
+                showToast('Failed to mark all as read');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('Error marking all as read');
+        });
+    }
+
+    let clearAllConfirmed = false; // used to track modal confirmation
+
+    function openClearModal() {
+        document.getElementById('clearModal').style.display = 'flex';
+    }
+
+    function closeClearModal() {
+        document.getElementById('clearModal').style.display = 'none';
+    }
+
+    function confirmClearAll() {
+        clearAllConfirmed = true;
+        closeClearModal();
+        clearAllRead(); // call the main function after confirming
+    }
+
+    // Main function that performs the clearing
+    function clearAllRead() {
+        if (!clearAllConfirmed) {
+            openClearModal();
+            return; // wait for confirmation
+        }
+        clearAllConfirmed = false; // reset for next time
+
+        const cards = document.querySelectorAll('.notif-card');
+        const readCards = Array.from(cards).filter(card => {
+            const isRead = card.getAttribute('data-read') === 'true';
+            const isArchived = card.getAttribute('data-archived') === 'true';
+            return isRead && !isArchived;
+        });
+
+        if (readCards.length === 0) {
+            showToast('No read notifications to clear');
+            return;
+        }
+
+        // Fade out each read notification
+        readCards.forEach(card => {
+            card.setAttribute('data-archived', 'true');
+            card.style.transition = 'all 0.3s ease-out';
+            card.style.opacity = '0';
+            setTimeout(() => card.style.display = 'none', 300);
+        });
+
+        updateCounts();
+        checkEmptyState();
+        showToast('Cleared all read notifications');
+
+        // Send to server
+        fetch(`/Student/ClearAllReadNotifications`, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                showToast('Failed to clear on server');
+                console.error('ClearAllReadNotifications failed');
+            }
+        })
+        .catch(err => {
+            console.error('Error clearing:', err);
+            showToast('Error clearing notifications');
+        });
+    }
+
+
+
+    function archiveNotification(event, notificationId) {
+        event.stopPropagation();
+        const card = document.querySelector(`[data-id="${notificationId}"]`);
+        if (!card) return;
+
+        const prevArchived = card.getAttribute('data-archived') === 'true';
+        const newArchivedState = !prevArchived;
+
+        // Optimistically update UI
+        card.setAttribute('data-archived', newArchivedState.toString());
+
+        const archiveBtn = card.querySelector('button[onclick*="archiveNotification"]');
+        if (archiveBtn) {
+            if (newArchivedState) {
+                // archived -> change to restore appearance
+                archiveBtn.style.borderColor = '#4CAF50';
+                archiveBtn.style.color = '#4CAF50';
+                archiveBtn.title = 'Restore';
+                archiveBtn.onmouseover = function() { this.style.background = '#E8F5E9'; };
+                archiveBtn.innerHTML = '<i class="fas fa-undo"></i>';
+                showToast('Notification archived');
+            } else {
+                // restored -> back to archive appearance
+                archiveBtn.style.borderColor = '#ff9800';
+                archiveBtn.style.color = '#ff9800';
+                archiveBtn.title = 'Archive';
+                archiveBtn.onmouseover = function() { this.style.background = '#fff3e0'; };
+                archiveBtn.innerHTML = '<i class="fas fa-archive"></i>';
+                showToast('Notification restored');
+            }
+            archiveBtn.onmouseout = function() { this.style.background = '#fff'; };
+        }
+
+        // Send change to server
+        fetch(`/Student/ArchiveNotification`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `notificationId=${notificationId}&isArchived=${newArchivedState}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCounts();
+                filterNotifications(currentFilter);
+            } else {
+                // revert on failure
+                card.setAttribute('data-archived', prevArchived.toString());
+                // revert button appearance
+                if (archiveBtn) {
+                    if (prevArchived) {
+                        archiveBtn.style.borderColor = '#4CAF50';
+                        archiveBtn.style.color = '#4CAF50';
+                        archiveBtn.innerHTML = '<i class="fas fa-undo"></i>';
+                    } else {
+                        archiveBtn.style.borderColor = '#ff9800';
+                        archiveBtn.style.color = '#ff9800';
+                        archiveBtn.innerHTML = '<i class="fas fa-archive"></i>';
+                    }
+                }
+                showToast('Failed to update notification');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            card.setAttribute('data-archived', prevArchived.toString());
+            showToast('Error updating notification');
+        });
+    }
+
+    function deleteNotification(event, notificationId) {
+        event.stopPropagation();
+        notificationToDelete = notificationId;
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function confirmDelete() {
+        if (!notificationToDelete) return;
+
+        fetch(`/Student/DeleteNotification`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `notificationId=${notificationToDelete}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const card = document.querySelector(`[data-id="${notificationToDelete}"]`);
+                if (card) {
+                    card.style.transition = 'all 0.3s ease-out';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        card.remove();
+                        updateCounts();
+                        checkEmptyState();
+                        showToast('Notification deleted');
+                    }, 300);
+                } else {
+                    updateCounts();
+                    showToast('Notification deleted');
+                }
+            } else {
+                showToast('Failed to delete notification');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('Error deleting notification');
+        })
+        .finally(() => {
+            closeDeleteModal();
+        });
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+        notificationToDelete = null;
+    }
+
+    function filterNotifications(filter) {
+        currentFilter = filter;
+        const cards = document.querySelectorAll('.notif-card');
+        const tabs = document.querySelectorAll('.tab-btn');
+
+        // Update active tab
+        tabs.forEach(tab => {
+            if (tab.getAttribute('data-filter') === filter) tab.classList.add('active');
+            else tab.classList.remove('active');
+        });
+
+        // If clicking archived and no archived fetched yet, attempt to fetch archived ones
+        if (filter === 'archived' && archivedNotifications.length === 0) {
+            fetchArchivedNotifications();
+        }
+
+           cards.forEach(card => {
+        const isRead = card.getAttribute('data-read') === 'true';
+        const isArchived = card.getAttribute('data-archived') === 'true';
+        let shouldShow = false;
+
+        if (filter === 'all') shouldShow = !isArchived;
+        else if (filter === 'unread') shouldShow = !isRead && !isArchived;
+        else if (filter === 'archived') shouldShow = isArchived;
+
+        card.style.display = shouldShow ? 'flex' : 'none';
+    });
+
+
+    updateCounts();
+    checkEmptyState();
+
+    }
+
+    function fetchArchivedNotifications() {
+        // optional endpoint - controller should return { success: true, notifications: [...] }
+        fetch(`/Student/GetArchivedNotifications`, { method: 'GET', headers: { 'Accept': 'application/json' } })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && Array.isArray(data.notifications)) {
+                const notifSection = document.querySelector('.notif-section');
+                data.notifications.forEach(notif => {
+                    // avoid duplicate
+                    if (!document.querySelector(`[data-id="${notif._id}"]`)) {
+                        notifSection.insertAdjacentHTML('beforeend', createNotificationCard(notif));
+                    }
+                });
+                archivedNotifications = data.notifications;
+                updateCounts();
+                checkEmptyState();
+            }
+        })
+        .catch(err => console.error('Error fetching archived notifications:', err));
+    }
+
+    function createNotificationCard(notif) {
+        // Note: keep inline styles for action buttons consistent
+        const isRead = notif.isRead ? 'read' : 'unread';
+        const html = `
+            <div class="notif-card ${isRead}" data-id="${notif._id}" data-read="${(notif.isRead).toString().toLowerCase()}" data-archived="true" style="display:flex;align-items:center;justify-content:space-between;">
+                <div class="notif-left">
+                    <i class="fas ${notif.icon} notif-type-icon"></i>
+                    <span class="library-text">Library</span>
+                </div>
+                <div class="notif-right" onclick="markAsRead('${notif._id}')" style="cursor:pointer;">
+                    <strong class="notif-title">${escapeHtml(notif.title)}</strong>
+                    <p class="notif-message">${escapeHtml(notif.message)}</p>
+                    <small class="notif-date">${new Date(notif.createdAt).toLocaleString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}</small>
+                </div>
+                <div style="display:flex;gap:10px;margin-left:20px;flex-shrink:0;">
+                    <button onclick="archiveNotification(event, '${notif._id}')" style="background:#fff;border:2px solid #4CAF50;color:#4CAF50;padding:10px 15px;border-radius:6px;cursor:pointer;font-size:16px;" title="Restore" onmouseover="this.style.background='#E8F5E9'" onmouseout="this.style.background='#fff'">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <button onclick="deleteNotification(event, '${notif._id}')" style="background:#fff;border:2px solid #f44336;color:#f44336;padding:10px 15px;border-radius:6px;cursor:pointer;font-size:16px;" title="Delete" onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='#fff'">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        return html;
+    }
+
+    // small helper to avoid XSS when injecting server data into DOM
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+        function updateCounts() {
+        const cards = document.querySelectorAll('.notif-card');
+        let all = 0, unread = 0, read = 0, archived = 0;
+
+        cards.forEach(card => {
+            const isRead = card.getAttribute('data-read') === 'true';
+            const isArchived = card.getAttribute('data-archived') === 'true';
+
+            if (!isArchived) all++;
+            if (!isRead && !isArchived) unread++;
+            if (isRead && !isArchived) read++;
+            if (isArchived) archived++;
+        });
+
+        // Update text counts
+        const elAll = document.getElementById('count-all');
+        const elUnread = document.getElementById('count-unread');
+        const elArchived = document.getElementById('count-archived');
+        const inboxCount = document.querySelector('.inbox-count');
+
+        if (elAll) elAll.textContent = `(${all})`;
+        if (elUnread) elUnread.textContent = `(${unread})`;
+        if (elArchived) elArchived.textContent = `(${archived})`;
+        if (inboxCount) inboxCount.textContent = `(${all})`;
+
+        // Buttons visibility
+        const markAllBtn = document.querySelector('.mark-all-read-btn');
+        const clearAllBtn = document.querySelector('.clear-all-btn');
+
+        // Hide or show "Mark all as read"
+        if (markAllBtn) markAllBtn.style.display = unread > 0 ? 'block' : 'none';
+
+        // Show/hide Clear All based on tab and read count
+        if (clearAllBtn) {
+            if (currentFilter === 'all') {
+                clearAllBtn.style.display = read > 0 ? 'block' : 'none';
+            } else {
+                clearAllBtn.style.display = 'none'; // hide in unread and archived
+            }
+        }
+    }
+
+
+
+    function checkEmptyState() {
+        const visibleCards = Array.from(document.querySelectorAll('.notif-card')).filter(card => card.style.display !== 'none');
+        const notifSection = document.querySelector('.notif-section');
+        let existingEmpty = notifSection ? notifSection.querySelector('.empty-state-dynamic') : null;
+
+        if (visibleCards.length === 0) {
+            if (!existingEmpty && notifSection) {
+                let message = 'No notifications';
+                if (currentFilter === 'unread') message = 'No unread notifications';
+                if (currentFilter === 'archived') message = 'No archived notifications';
+
+                const emptyState = document.createElement('div');
+                emptyState.className = 'empty-state empty-state-dynamic';
+                emptyState.innerHTML = `<i class="fas fa-bell-slash fa-3x"></i><p>${message}</p>`;
+                notifSection.appendChild(emptyState);
+            }
+        } else {
+            if (existingEmpty) existingEmpty.remove();
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position: fixed; bottom: 2rem; right: 2rem; background: #333; color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1001; transition: all 0.3s ease; opacity:0;';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.style.opacity = '1', 10);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+
+    // initialize on load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCounts();
+        filterNotifications('all');
+    });
+</script>
+
+

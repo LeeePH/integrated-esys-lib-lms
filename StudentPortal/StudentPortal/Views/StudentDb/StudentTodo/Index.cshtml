@@ -1,0 +1,80 @@
+﻿@model StudentPortal.Models.StudentDb.StudentTodoViewModel
+@{
+    ViewData["Title"] = "To-Do • " + Model.StudentName;
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/studentdb/studenttodo.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="page">
+
+        <main class="student-todo">
+
+            <!-- COLUMN-CONTAINER (HORIZONTAL SCROLL) -->
+            <div class="column-container">
+                @foreach (var subj in Model.Subjects)
+                {
+                    <div class="subject-column">
+                        <h2 class="subject-name">@subj.Title</h2>
+                        <div class="tasks-vertical">
+                            @foreach (var t in subj.Tasks)
+                            {
+                                <div class="task-card @t.ColorClass" data-status="@t.Status">
+                                    <div class="task-content">
+                                        <h3 class="task-name">@t.Name</h3>
+                                        <p class="deadline">Deadline: @t.Deadline</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+
+        <!-- Toggle Button (fixed bottom-right) -->
+        <div class="toggle-wrapper fixed-toggle">
+            <div class="toggle-button" id="toggleButton" role="toolbar" aria-label="Filter tasks">
+                <span class="option active" data-view="todo">To-Do</span>
+                <span class="option" data-view="pastdue">Past Due</span>
+            </div>
+        </div>
+
+        <!-- BOTTOM BAR -->
+        <div class="bottom-bar">
+            <div class="user-profile" id="userProfile">
+                <div class="user-avatar">@Model.StudentInitials</div>
+                <div class="user-name">@Model.StudentName</div>
+                <div class="user-popup" id="userPopup">Exit • Sign out</div>
+            </div>
+
+            <div class="menu-wrap">
+                <div class="menu-circle" id="menuCircle" title="Open menu" role="button" tabindex="0">
+                    <div class="menu-grid"><span></span><span></span><span></span><span></span></div>
+                </div>
+
+                <div class="radial-actions" id="radialActions">
+                    <button class="action home" data-page="home" data-label="Home"><i class="fa-solid fa-house"></i></button>
+                    <button class="action subjects selected" data-page="subjects" data-label="Subjects"><i class="fa-solid fa-book"></i></button>
+                    <button class="action todo" data-page="todo" data-label="To-Do"><i class="fa-solid fa-pencil"></i></button>
+                </div>
+            </div>
+
+            <div class="right-space"></div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="~/js/studentdb/studenttodo.js" asp-append-version="true"></script>
+</body>
+</html>

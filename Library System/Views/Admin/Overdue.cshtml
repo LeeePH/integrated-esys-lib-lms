@@ -1,0 +1,200 @@
+﻿@model SystemLibrary.ViewModels.OverdueReportViewModel
+@{
+    ViewBag.Title = "Reports and Analytics - Overdue Accounts";
+    ViewBag.ActiveTab = "overdue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/overdue.css" />
+
+<main class="content">
+    <!-- Header -->
+    <header>
+        <h1>Reports and Analytics</h1>
+        <div class="filter">
+            <select id="overdueFilter" onchange="filterByDateRange(this.value)">
+                <option value="30" selected="@(Model.DaysRange == 30)">Last 30 Days</option>
+                <option value="60" selected="@(Model.DaysRange == 60)">Last 60 Days</option>
+                <option value="90" selected="@(Model.DaysRange == 90)">Last 90 Days</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Tabs -->
+    <section class="tabs">
+        @await Html.PartialAsync("_ReportTabs")
+    </section>
+
+    <!-- Overdue Accounts Report -->
+    <section class="report-card">
+        <div class="report-header">
+            <h2>Overdue Accounts</h2>
+            <div class="header-controls">
+                <div class="search-box">
+                    <input type="text" placeholder="Search overdue accounts..." id="searchOverdue" onkeyup="searchOverdueAccounts()" />
+                    <img src="~/images/searchicon.png" alt="Search" class="search-icon" />
+                </div>
+                <div class="filter-controls">
+                    <select id="statusFilter" onchange="filterByStatus()">
+                        <option value="all">All Accounts</option>
+                        <option value="restricted">Restricted Only</option>
+                        <option value="active">Active Only</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat red">
+                <h3>@Model.TotalOverdueAccounts</h3>
+                <p>Overdue Accounts</p>
+            </div>
+            <div class="stat orange">
+                <h3>@Model.TotalOverdueBooks</h3>
+                <p>Overdue Books</p>
+            </div>
+            <div class="stat green">
+                <h3>₱@Model.TotalFees.ToString("N2")</h3>
+                <p>Total Fees</p>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            @if (Model.OverdueAccounts.Any())
+            {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Overdue Books</th>
+                                <th>Days Overdue</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overdueTable">
+                        @foreach (var account in Model.OverdueAccounts)
+                        {
+                                    <tr class="overdue-row" 
+                                        data-student="@account.StudentName.ToLower()" 
+                                        data-number="@account.StudentNumber.ToLower()">
+                                        <td>@account.StudentName</td>
+                                        <td>@account.OverdueBookCount</td>
+                                        <td>@account.MaxDaysOverdue</td>
+                                        <td>
+                                    @if (account.IsRestricted)
+                                    {
+                                                    <span class="restricted">Restricted</span>
+                                    }
+                                    else
+                                    {
+                                                    <span class="active">Active</span>
+                                    }
+                                        </td>
+                                        <td>
+                                    @if (account.IsRestricted)
+                                    {
+                                                    <a href="@Url.Action("UserSettingsStudent", "Admin")" 
+                                                       class="request-btn active" 
+                                                       title="Go to Student User Settings">
+                                                        Manage Student Account
+                                                    </a>
+                                    }
+                                    else
+                                    {
+                                                    <button class="view-btn" 
+                                                            onclick="showOverdueBooks(@Html.Raw(Json.Serialize(account.StudentName)), @Html.Raw(Json.Serialize(account.OverdueBooks)))">
+                                                        View Details
+                                                    </button>
+                                    }
+                                        </td>
+                                    </tr>
+                        }
+                        </tbody>
+                    </table>
+            }
+            else
+            {
+                    <div class="empty-state">
+                        <p>No overdue accounts found</p>
+                    </div>
+            }
+        </div>
+    </section>
+</main>
+
+<!-- Overdue Books Details Modal -->
+<div class="action-popup" id="overdueDetailsModal" style="display: none;">
+    <div class="popup-content large">
+        <span class="close" onclick="closeOverdueDetails()">&times;</span>
+        <h2 id="detailsStudentName"></h2>
+        <div id="overdueBooksList"></div>
+        <div class="popup-buttons">
+            <button class="popup-done" onclick="closeOverdueDetails()">Close</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function filterByDateRange(days) {
+        window.location.href = '@Url.Action("Overdue", "Admin")?daysRange=' + days;
+    }
+
+    function searchOverdueAccounts() {
+        const input = document.getElementById('searchOverdue').value.toLowerCase();
+        const rows = document.querySelectorAll('.overdue-row');
+
+        rows.forEach(row => {
+            const student = row.dataset.student;
+            const number = row.dataset.number;
+            const match = student.includes(input) || number.includes(input);
+            row.style.display = match ? '' : 'none';
+        });
+    }
+
+    function filterByStatus() {
+        const statusFilter = document.getElementById('statusFilter').value;
+        const rows = document.querySelectorAll('.overdue-row');
+
+        rows.forEach(row => {
+            const isRestricted = row.querySelector('.restricted') !== null;
+            let show = true;
+
+            if (statusFilter === 'restricted') {
+                show = isRestricted;
+            } else if (statusFilter === 'active') {
+                show = !isRestricted;
+            }
+
+            row.style.display = show ? '' : 'none';
+        });
+    }
+
+    function showOverdueBooks(studentName, books) {
+        document.getElementById('detailsStudentName').textContent = studentName + "'s Overdue Books";
+
+        let html = '<table style="width: 100%; margin-top: 20px;"><thead><tr><th>Book Title</th><th>Due Date</th><th>Days Overdue</th><th>Late Fee</th></tr></thead><tbody>';
+
+        books.forEach(book => {
+            html += `<tr>
+                <td>${book.bookTitle}</td>
+                <td>${new Date(book.dueDate).toLocaleDateString()}</td>
+                <td>${book.daysOverdue} days</td>
+                <td>₱${book.lateFee.toFixed(2)}</td>
+            </tr>`;
+        });
+
+        html += '</tbody></table>';
+        document.getElementById('overdueBooksList').innerHTML = html;
+        document.getElementById('overdueDetailsModal').style.display = 'flex';
+    }
+
+    function closeOverdueDetails() {
+        document.getElementById('overdueDetailsModal').style.display = 'none';
+    }
+
+</script>

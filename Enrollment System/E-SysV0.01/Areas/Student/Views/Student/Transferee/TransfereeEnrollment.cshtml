@@ -1,0 +1,1311 @@
+﻿@model E_SysV0._01.Models.TransfereeEnrollmentViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    Layout = "~/Views/Shared/ESys_KioskLayout.cshtml";
+    ViewData["Title"] = "Transferee On-site Enrollment";
+
+    var modalTitle = TempData["ModalTitle"] as string;
+    var modalBody = TempData["ModalBody"] as string;
+    var modalVariant = (TempData["ModalVariant"] as string ?? "info").ToLowerInvariant();
+    bool showModal = !string.IsNullOrWhiteSpace(modalTitle);
+    var variant = modalVariant == "danger" ? "danger" : modalVariant;
+    var headerClass = $"bg-{variant} text-white";
+    var alertClass = $"alert alert-{variant} mb-0";
+
+    bool isClosed = (ViewBag.EnrollmentClosed as bool?) == true;
+    string closesAtIso = ViewBag.ClosesAtUtc as string;
+    bool transfereeBlocked = (ViewBag.TransfereeBlocked as bool?) == true;
+    string transfereeBlockedMsg = (ViewBag.TransfereeBlockedMsg as string) ?? "";
+    string semEndsAtIso = ViewBag.SemesterEndsAtUtc as string;
+
+    bool semOpen = ViewBag.IsSecondSemesterOpen == true;
+
+    var currentYear = DateTime.Now.Year;
+    var prevYears = new List<string>();
+    for (int i = 0; i < 6; i++)
+    {
+        prevYears.Add($"{currentYear - i - 1}-{currentYear - i}");
+    }
+}
+
+<style>
+    :root {
+        --esys-primary: #066B99;
+        --esys-primary-600: #055a82;
+        --esys-error: #dc3545;
+        --esys-surface: #ffffff;
+        --esys-muted: #6c757d;
+        --esys-soft: #f4fbff;
+        --esys-radius: 12px;
+        --esys-input-border: #e6eef5;
+        --esys-card-shadow: 0 8px 28px rgba(6,107,153,0.06);
+    }
+
+    /* Card wrapper */
+    .esys-card {
+        background: linear-gradient(180deg, rgba(250,252,253,0.9), rgba(245,250,252,0.98));
+        border: 1px solid rgba(6,107,153,0.06);
+        border-radius: var(--esys-radius);
+        box-shadow: var(--esys-card-shadow);
+    }
+
+    .esys-header {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        padding: 1rem 1.25rem;
+        border-radius: calc(var(--esys-radius) - 4px);
+        background: linear-gradient(90deg, var(--esys-primary), var(--esys-primary-600));
+        color: white;
+    }
+
+        .esys-header h4 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+    .esys-chip {
+        display: inline-block;
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        padding: .25rem .6rem;
+        border-radius: 999px;
+        font-size: .85rem;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        margin: .5rem 0;
+        color: var(--esys-primary-600);
+        font-weight: 600;
+    }
+
+    .section-sub {
+        color: var(--esys-muted);
+        margin-bottom: .5rem;
+    }
+
+    /* Modern inputs */
+    .form-control, .form-select {
+        background: var(--esys-surface);
+        border: 1px solid var(--esys-input-border);
+        padding: .6rem .8rem;
+        border-radius: 8px;
+        transition: box-shadow .12s ease, border-color .12s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--esys-primary);
+            box-shadow: 0 8px 24px rgba(6,107,153,0.06);
+        }
+
+    label.form-label {
+        font-size: .9rem;
+        color: #222831;
+        margin-bottom: .35rem;
+        display: block;
+    }
+
+    .required-asterisk::after {
+        content: " *";
+        color: var(--esys-error);
+        font-weight: 700;
+    }
+
+    input.input-validation-error, select.input-validation-error, textarea.input-validation-error {
+        border-color: var(--esys-error) !important;
+        box-shadow: 0 0 0 .08rem rgba(220,53,69,0.12);
+    }
+
+    .field-validation-error, .validation-summary-errors {
+        color: var(--esys-error);
+        font-size: .9rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem 1.25rem;
+        width: 100%;
+    }
+
+    @@media (min-width: 992px) {
+        .span-2-lg {
+            grid-column: span 2;
+        }
+    }
+
+    .section-card {
+        background: var(--esys-soft);
+        border-radius: 10px;
+        padding: .9rem;
+        border: 1px solid rgba(6,107,153,0.03);
+        margin-bottom: .75rem;
+    }
+
+    .esys-btn {
+        background-color: var(--esys-primary);
+        border-color: var(--esys-primary);
+        color: #fff;
+        padding: .6rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(6,107,153,0.06);
+    }
+
+        .esys-btn:hover {
+            background-color: var(--esys-primary-600);
+            border-color: var(--esys-primary-600);
+        }
+
+    .btn-outline-danger {
+        border-radius: 10px;
+        padding: .55rem .9rem;
+    }
+
+    .mirror-disabled {
+        opacity: .65;
+        pointer-events: none;
+        filter: grayscale(.06);
+    }
+
+    .enrollment-status {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        padding: .6rem .75rem;
+        border-radius: 10px;
+        background: rgba(6,107,153,0.04);
+        border: 1px solid rgba(6,107,153,0.06);
+    }
+
+    .text-note {
+        font-size: .88rem;
+        color: var(--esys-muted);
+    }
+</style>
+
+<div class="esys-card p-3 my-3">
+    <div class="esys-header mb-3">
+        <img src="~/images/student-icon-white.svg" asp-append-version="true" alt="Student Icon" width="36" />
+        <div>
+            <h4>Transferee Enrollment Form</h4>
+            <div class="esys-chip">Application</div>
+        </div>
+        <div class="ms-auto text-end">
+            <small class="text-white opacity-85">Complete all required fields</small>
+        </div>
+    </div>
+
+    <div class="enrollment-status mb-3" role="status" aria-live="polite">
+        <div>
+            <strong id="enrollmentStatusText">@(transfereeBlocked? transfereeBlockedMsg : (!semOpen ? "Transferee enrollment is available only when 2nd Semester enrollment is open." : (isClosed ? "Enrollment is currently closed." : "Enrollment is open.")))</strong>
+            <div class="text-note"><span id="enrollmentCountdown" class="fw-bold ms-2"></span> <span id="enrollmentClosesAt" class="ms-2 text-muted"></span></div>
+        </div>
+    </div>
+
+
+    <form id="transfereeForm" asp-action="TransfereeEnrollment" method="post" class="mt-2" novalidate>
+        @Html.AntiForgeryToken()
+        <div id="validationSummary" asp-validation-summary="ModelOnly" class="alert alert-danger d-none" role="alert"></div>
+
+        <fieldset @(semOpen && !transfereeBlocked && !isClosed ? "" : "disabled")>
+
+            <div class="section-card">
+
+
+                <h5 class="mb-0 section-title">1.1 Basic Information</h5>
+                <p class="section-sub">Provide correct details. Transferee enrollment allowed up to 2nd Year when 2nd Semester is open.</p>
+
+                <div>
+                    <button id="btnAutoFillTransferee" type="button" class="btn btn-sm btn-secondary" title="Auto-fill form for testing">Auto-fill (testing)</button>
+                </div>
+
+                <h6 class="mb-2">Personal Details</h6>
+                <div class="form-grid">
+                    <div>
+                        <label asp-for="StudentPersonal.LastName" class="form-label required-asterisk">Last Name</label>
+                        <input asp-for="StudentPersonal.LastName" class="form-control" required />
+                        <span asp-validation-for="StudentPersonal.LastName" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentPersonal.FirstName" class="form-label required-asterisk">First Name</label>
+                        <input asp-for="StudentPersonal.FirstName" class="form-control" required />
+                        <span asp-validation-for="StudentPersonal.FirstName" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentPersonal.MiddleName" class="form-label required-asterisk">Middle Name</label>
+                        <input asp-for="StudentPersonal.MiddleName" class="form-control" placeholder="Type N/A if not applicable" required />
+                        <small class="text-note">Type "N/A" if not applicable.</small>
+                        <span asp-validation-for="StudentPersonal.MiddleName" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentPersonal.Extension" class="form-label">Extension</label>
+                        <input asp-for="StudentPersonal.Extension" class="form-control" />
+                        <small class="text-note">Leave blank if none.</small>
+                        <span asp-validation-for="StudentPersonal.Extension" class="field-validation-error small"></span>
+                    </div>
+                </div>
+                <div class="form grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+
+                    <div>
+                        <label asp-for="StudentPersonal.Sex" class="form-label required-asterisk">Sex</label>
+                        <select asp-for="StudentPersonal.Sex" class="form-select" required>
+                            <option value="" disabled selected hidden>-- Select Sex --</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                        <span asp-validation-for="StudentPersonal.Sex" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentPersonal.ContactNumber" class="form-label required-asterisk">Contact Number</label>
+                        <input asp-for="StudentPersonal.ContactNumber"
+                               type="tel"
+                               inputmode="numeric"
+                               maxlength="11"
+                               class="form-control"
+                               placeholder="09xxxxxxxxx"
+                               required
+                               pattern="^09[0-9]{9}$"
+                               oninput="
+                            this.value = this.value.replace(/\D/g,'').slice(0,11);
+                            if (!this.value.startsWith('09')) {
+                                this.value = '09' + this.value.replace(/^0+/, '').slice(0,9);
+                            }
+                       " />
+                        <span asp-validation-for="StudentPersonal.ContactNumber" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentPersonal.EmailAddress" class="form-label required-asterisk">Email Address</label>
+                        <input asp-for="StudentPersonal.EmailAddress" type="email" class="form-control" required />
+                        <span asp-validation-for="StudentPersonal.EmailAddress" class="field-validation-error small"></span>
+                    </div>
+                </div>
+
+                <hr />
+
+
+                <h6 class="mb-2">Address</h6>
+
+                <div class="form-grid">
+                    <div>
+                        <label asp-for="StudentAddress.HouseStreet" class="form-label required-asterisk">House Street</label>
+                        <input asp-for="StudentAddress.HouseStreet" class="form-control" placeholder="House No. and Street" required />
+                        <span asp-validation-for="StudentAddress.HouseStreet" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentAddress.City" class="form-label required-asterisk">City</label>
+                        <select asp-for="StudentAddress.City" class="form-select city" onchange="updateBarangays(this)" required>
+                            <option value="">--Select City--</option>
+                        </select>
+                        <span asp-validation-for="StudentAddress.City" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentAddress.Barangay" class="form-label required-asterisk">Barangay</label>
+                        <select asp-for="StudentAddress.Barangay" class="form-select barangay" onchange="updatePostalID(this)" required>
+                            <option value="">--Select Barangay--</option>
+                        </select>
+                        <span asp-validation-for="StudentAddress.Barangay" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="StudentAddress.PostalCode" class="form-label required-asterisk">Postal Code</label>
+                        <input asp-for="StudentAddress.PostalCode" class="form-control postal" placeholder="Postal Code" type="tel" inputmode="numeric" maxlength="4" required oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                        <span asp-validation-for="StudentAddress.PostalCode" class="field-validation-error small"></span>
+                    </div>
+                </div>
+
+                <hr />
+
+
+                <h6 class="mb-2">Academic Information</h6>
+
+                <div class="form-grid">
+                    <div class="span-2-lg">
+                        <label asp-for="Academic.Program" class="form-label required-asterisk">Program</label>
+                        <select asp-for="Academic.Program" class="form-select" asp-items="ViewBag.ProgramOptions" required>
+                            <option value="" disabled selected>-- Select Program --</option>
+                        </select>
+                        <span asp-validation-for="Academic.Program" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Academic.YearLevel" class="form-label required-asterisk">Year Level</label>
+                        <select asp-for="Academic.YearLevel" class="form-select" required title="Transferee enrollment allowed only up to 2nd Year">
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year" disabled>3rd Year (Not available for transferees)</option>
+                            <option value="4th Year" disabled>4th Year (Not available for transferees)</option>
+                        </select>
+                        <small class="text-note">Only 1st and 2nd Year are selectable for Transferees.</small>
+                        <span asp-validation-for="Academic.YearLevel" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Academic.Semester" class="form-label required-asterisk">Semester</label>
+                        <input asp-for="Academic.Semester" class="form-control" readonly />
+                        <span asp-validation-for="Academic.Semester" class="field-validation-error small"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Academic.AcademicYear" class="form-label required-asterisk">Academic Year</label>
+                        <input asp-for="Academic.AcademicYear" class="form-control" readonly />
+                        <small class="text-note">This academic year is set by admin and cannot be changed here.</small>
+                        <span asp-validation-for="Academic.AcademicYear" class="field-validation-error small"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="section-card">
+                <h5 class="section-title">1.2 Previous School Attended</h5>
+                <p class="section-sub">Provide details of your previous educational institutions.</p>
+
+                <div class="mb-2">
+                    <h6 class="mb-2">Elementary School</h6>
+                    <div class="form-grid">
+                        <div>
+                            <label asp-for="ElementarySchool.SchoolName" class="form-label required-asterisk">School Name</label>
+                            <input asp-for="ElementarySchool.SchoolName" class="form-control" placeholder="School Name" required />
+                            <span asp-validation-for="ElementarySchool.SchoolName" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="ElementarySchool.SchoolType" class="form-label required-asterisk">School Type</label>
+                            <select asp-for="ElementarySchool.SchoolType" class="form-select" required>
+                                <option value="" disabled selected hidden>-- Select Type --</option>
+                                <option>Private</option>
+                                <option>Public</option>
+                            </select>
+                            <span asp-validation-for="ElementarySchool.SchoolType" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="ElementarySchool.YearGraduated" class="form-label">Year Graduated</label>
+                            <input asp-for="ElementarySchool.YearGraduated"
+                                   class="form-control"
+                                   placeholder="Year Graduated"
+                                   maxlength="4"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                            <span asp-validation-for="ElementarySchool.YearGraduated" class="field-validation-error small"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-grid mt-2">
+                        <div>
+                            <label asp-for="ElementaryAddress.City" class="form-label required-asterisk">City</label>
+                            <select asp-for="ElementaryAddress.City" class="form-select city" onchange="updateBarangays(this)" required>
+                                <option value="">--Select City--</option>
+                            </select>
+                            <span asp-validation-for="ElementaryAddress.City" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="ElementaryAddress.Barangay" class="form-label required-asterisk">Barangay</label>
+                            <select asp-for="ElementaryAddress.Barangay" class="form-select barangay" onchange="updatePostalID(this)" required>
+                                <option value="">--Select Barangay--</option>
+                            </select>
+                            <span asp-validation-for="ElementaryAddress.Barangay" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="ElementaryAddress.PostalCode" class="form-label required-asterisk">Postal Code</label>
+                            <input asp-for="ElementaryAddress.PostalCode" class="form-control postal" placeholder="Postal Code" type="tel" inputmode="numeric" maxlength="4" required oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                            <span asp-validation-for="ElementaryAddress.PostalCode" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="mb-2">
+                    <h6 class="mb-2">High School</h6>
+                    <div class="form-grid">
+                        <div>
+                            <label asp-for="HighSchool.SchoolName" class="form-label required-asterisk">School Name</label>
+                            <input asp-for="HighSchool.SchoolName" class="form-control" placeholder="School Name" required />
+                            <span asp-validation-for="HighSchool.SchoolName" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="HighSchool.SchoolType" class="form-label required-asterisk">School Type</label>
+                            <select asp-for="HighSchool.SchoolType" class="form-select" required>
+                                <option value="" disabled selected hidden>-- Select Type --</option>
+                                <option>Private</option>
+                                <option>Public</option>
+                            </select>
+                            <span asp-validation-for="HighSchool.SchoolType" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="HighSchool.YearGraduated" class="form-label">Year Graduated</label>
+                            <input asp-for="HighSchool.YearGraduated" 
+                                   class="form-control"
+                                   placeholder="Year Graduated"
+                                   maxlength="4"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                            <span asp-validation-for="HighSchool.YearGraduated" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-grid mt-2">
+                        <div>
+                            <label asp-for="HighSchoolAddress.City" class="form-label required-asterisk">City</label>
+                            <select asp-for="HighSchoolAddress.City" class="form-select city" onchange="updateBarangays(this)" required>
+                                <option value="">--Select City--</option>
+                            </select>
+                            <span asp-validation-for="HighSchoolAddress.City" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="HighSchoolAddress.Barangay" class="form-label required-asterisk">Barangay</label>
+                            <select asp-for="HighSchoolAddress.Barangay" class="form-select barangay" onchange="updatePostalID(this)">
+                                <option value="">--Select Barangay--</option>
+                            </select>
+                            <span asp-validation-for="HighSchoolAddress.Barangay" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="HighSchoolAddress.PostalCode" class="form-label required-asterisk">Postal Code</label>
+                            <input asp-for="HighSchoolAddress.PostalCode" class="form-control postal" placeholder="Postal Code" type="tel" inputmode="numeric" maxlength="4" required oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                            <span asp-validation-for="HighSchoolAddress.PostalCode" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="mb-2">
+                    <h6 class="mb-2">Senior High School</h6>
+                    <div class="form-grid">
+                        <div>
+                            <label asp-for="SeniorHigh.SchoolName" class="form-label required-asterisk">School Name</label>
+                            <input asp-for="SeniorHigh.SchoolName" class="form-control" placeholder="School Name" required />
+                            <span asp-validation-for="SeniorHigh.SchoolName" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="SeniorHigh.SchoolType" class="form-label required-asterisk">School Type</label>
+                            <select asp-for="SeniorHigh.SchoolType" class="form-select" required>
+                                <option value="" disabled selected hidden>-- Select Type --</option>
+                                <option>Private</option>
+                                <option>Public</option>
+                            </select>
+                            <span asp-validation-for="SeniorHigh.SchoolType" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="SeniorHigh.YearGraduated" class="form-label">Year Graduated</label>
+                            <input asp-for="SeniorHigh.YearGraduated"
+                                   class="form-control"
+                                   placeholder="Year Graduated"
+                                   maxlength="4"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                            <span asp-validation-for="SeniorHigh.YearGraduated" class="field-validation-error small"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="SeniorHigh.Strand" class="form-label required-asterisk">Strand</label>
+                            <select asp-for="SeniorHigh.Strand" class="form-select" required>
+                                <option value="" disabled selected hidden>-- Select Strand --</option>
+                                <option>ICT</option>
+                                <option>STEM</option>
+                                <option>ABM</option>
+                                <option>GAS</option>
+                                <option>HE</option>
+                                <option>HUMSS</option>
+                            </select>
+                            <span asp-validation-for="SeniorHigh.Strand" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-grid mt-2">
+                        <div>
+                            <label asp-for="SeniorHighAddress.City" class="form-label required-asterisk">City</label>
+                            <select asp-for="SeniorHighAddress.City" class="form-select city" onchange="updateBarangays(this)" required>
+                                <option value="">--Select City--</option>
+                            </select>
+                            <span asp-validation-for="SeniorHighAddress.City" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="SeniorHighAddress.Barangay" class="form-label required-asterisk">Barangay</label>
+                            <select asp-for="SeniorHighAddress.Barangay" class="form-select barangay" onchange="updatePostalID(this)">
+                                <option value="">--Select Barangay--</option>
+                            </select>
+                            <span asp-validation-for="SeniorHighAddress.Barangay" class="field-validation-error small"></span>
+                        </div>
+                        <div>
+                            <label asp-for="SeniorHighAddress.PostalCode" class="form-label required-asterisk">Postal Code</label>
+                            <input asp-for="SeniorHighAddress.PostalCode" class="form-control postal" placeholder="Postal Code" type="tel" inputmode="numeric" maxlength="4" required oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                            <span asp-validation-for="SeniorHighAddress.PostalCode" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="mb-2">
+                    <h6 class="mb-2">Previous College / University Attended</h6>
+
+                    <div class="form-grid">
+                        <div class="span-2-lg">
+                            <label asp-for="PreviousSchool.LastSchoolAttended" class="form-label required-asterisk">
+                                Last School Attended (Full University Name)
+                            </label>
+                            <input asp-for="PreviousSchool.LastSchoolAttended" class="form-control" required />
+                            <span asp-validation-for="PreviousSchool.LastSchoolAttended" class="field-validation-error small"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="PreviousSchool.CourseTaken" class="form-label">
+                                Course / Program Taken (if applicable)
+                            </label>
+                            <input asp-for="PreviousSchool.CourseTaken" class="form-control" />
+                            <span asp-validation-for="PreviousSchool.CourseTaken" class="field-validation-error small"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="PreviousSchool.LastAcademicYearAttended" class="form-label required-asterisk">
+                                Last Academic Year Attended
+                            </label>
+                            <select asp-for="PreviousSchool.LastAcademicYearAttended" class="form-select" required>
+                                <option value="">Select...</option>
+                                @foreach (var y in prevYears)
+                                {
+                                    <option value="@y">@y</option>
+                                }
+                            </select>
+                            <span asp-validation-for="PreviousSchool.LastAcademicYearAttended" class="field-validation-error small"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section-card mb-3">
+                <h5 class="mb-2 section-title">1.3 Parent / Guardian Information</h5>
+                <p class="section-sub">Contact details and relationship for the student's guardian.</p>
+
+                <strong class="d-block mb-2">Guardian's Personal Details</strong>
+
+                <div class="form-grid">
+                    <div>
+                        <label asp-for="GuardianPersonal.LastName" class="form-label required-asterisk">Last Name</label>
+                        <input asp-for="GuardianPersonal.LastName" class="form-control" required />
+                        <span asp-validation-for="GuardianPersonal.LastName" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianPersonal.FirstName" class="form-label required-asterisk">First Name</label>
+                        <input asp-for="GuardianPersonal.FirstName" class="form-control" required />
+                        <span asp-validation-for="GuardianPersonal.FirstName" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianPersonal.MiddleName" class="form-label">Middle Name</label>
+                        <input asp-for="GuardianPersonal.MiddleName" class="form-control" placeholder="Type N/A if not applicable" required />
+                        <small class="text-note">Type "N/A" if not applicable.</small>
+                        <span asp-validation-for="GuardianPersonal.MiddleName" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianPersonal.Extension" class="form-label">Extension</label>
+                        <input asp-for="GuardianPersonal.Extension" class="form-control" />
+                        <span asp-validation-for="GuardianPersonal.Extension" class="field-validation-error small"></span>
+                    </div>
+                </div>
+                <div class="form grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                    <div>
+                        <label asp-for="GuardianPersonal.ContactNumber" class="form-label required-asterisk">Contact Number</label>
+                        <input asp-for="GuardianPersonal.ContactNumber"
+                               class="form-control"
+                               placeholder="Contact Number"
+                               type="tel"
+                               inputmode="numeric"
+                               maxlength="11"
+                               pattern="^09[0-9]{9}$"
+                               required
+                               oninput="
+                            this.value = this.value.replace(/\D/g,'').slice(0,11);
+                            if (!this.value.startsWith('09')) {
+                                this.value = '09' + this.value.replace(/^0+/, '').slice(0,9);
+                            }
+                       " />
+                        <span asp-validation-for="GuardianPersonal.ContactNumber" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianPersonal.Relationship" class="form-label required-asterisk">Relationship</label>
+                        <input asp-for="GuardianPersonal.Relationship" class="form-control" placeholder="Relationship" required />
+                        <span asp-validation-for="GuardianPersonal.Relationship" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianPersonal.Sex" class="form-label mb-1 required-asterisk">Sex</label>
+                        <select asp-for="GuardianPersonal.Sex" class="form-select" required>
+                            <option value="" disabled selected hidden>-- Select Sex --</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                        <span asp-validation-for="GuardianPersonal.Sex" class="field-validation-error small"></span>
+                    </div>
+                </div>
+                <hr />
+                <strong class="d-block mb-2">Guardian's Address</strong>
+
+                <div class="form-check my-2">
+                    <input class="form-check-input" type="checkbox" id="sameAddressCheckbox" />
+                    <label class="form-check-label" for="sameAddressCheckbox">Same as Student Address</label>
+                </div>
+
+                <div class="form-grid mt-1 mb-3">
+                    <div>
+                        <label asp-for="GuardianAddress.HouseStreet" class="form-label required-asterisk">House Street</label>
+                        <input asp-for="GuardianAddress.HouseStreet" class="form-control" placeholder="House No. and Street" required />
+                        <span asp-validation-for="GuardianAddress.HouseStreet" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianAddress.City" class="form-label required-asterisk">City</label>
+                        <select asp-for="GuardianAddress.City" class="form-select city" onchange="updateBarangays(this)" required>
+                            <option value="">--Select City--</option>
+                        </select>
+                        <span asp-validation-for="GuardianAddress.City" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianAddress.Barangay" class="form-label required-asterisk">Barangay</label>
+                        <select asp-for="GuardianAddress.Barangay" class="form-select barangay" onchange="updatePostalID(this)">
+                            <option value="">--Select Barangay--</option>
+                        </select>
+                        <span asp-validation-for="GuardianAddress.Barangay" class="field-validation-error small"></span>
+                    </div>
+                    <div>
+                        <label asp-for="GuardianAddress.PostalCode" class="form-label required-asterisk">Postal Code</label>
+                        <input asp-for="GuardianAddress.PostalCode" class="form-control postal" placeholder="Postal Code" type="tel" inputmode="numeric" maxlength="4" required oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                        <span asp-validation-for="GuardianAddress.PostalCode" class="field-validation-error small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 mt-3">
+                <button id="btnSubmit" type="submit" class="esys-btn">Submit</button>
+                <button id="btnClearAll" type="button" class="btn btn-outline-danger ms-auto">Clear all</button>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+
+<datalist id="barangays-list"></datalist>
+
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header @headerClass" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+                <h5 class="modal-title">@modalTitle</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrWhiteSpace(modalBody))
+                {
+                    <div class="@alertClass">@modalBody</div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Unhide server-side validation summary (including duplicate-check messages)
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                const sum = document.getElementById('validationSummary') || document.querySelector('[asp-validation-summary]');
+                if (!sum) return;
+                const text = (sum.textContent || '').trim();
+                const ul = sum.querySelector && sum.querySelector('ul');
+                const hasItems = (ul && ul.children && ul.children.length > 0);
+                if (text.length > 0 || hasItems) {
+                    sum.classList.remove('d-none');
+                    sum.setAttribute('role', 'alert');
+                    sum.setAttribute('aria-live', 'polite');
+                    // bring into view for accessibility
+                    try { sum.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { /* ignore */ }
+                }
+            } catch (e) { console.warn('validation summary unhide failed', e); }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sameAddressCheckbox = document.getElementById('sameAddressCheckbox');
+            if (!sameAddressCheckbox) return;
+            const form = document.getElementById('transfereeForm');
+
+            // utility: create or update a hidden mirror for a visible element (so it will be submitted)
+            function ensureHiddenMirror(visibleEl) {
+                if (!visibleEl || !visibleEl.name) return null;
+                const hidId = '__mirror_' + visibleEl.name.replace(/[^a-z0-9\-_]/gi, '_');
+                let hidden = document.getElementById(hidId);
+                if (!hidden) {
+                    hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.id = hidId;
+                    hidden.name = visibleEl.name;
+                    form.appendChild(hidden);
+                }
+                hidden.value = visibleEl.value ?? '';
+                return hidden;
+            }
+
+            function removeHiddenMirror(visibleEl) {
+                if (!visibleEl || !visibleEl.name) return;
+                const hidId = '__mirror_' + visibleEl.name.replace(/[^a-z0-9\-_]/gi, '_');
+                const hidden = document.getElementById(hidId);
+                if (hidden) hidden.remove();
+            }
+
+            const studentSelectors = {
+                house: 'input[name="StudentAddress.HouseStreet"]',
+                city: 'select[name="StudentAddress.City"]',
+                barangay: 'select[name="StudentAddress.Barangay"]',
+                postal: 'input[name="StudentAddress.PostalCode"]'
+            };
+            const guardianSelectors = {
+                house: 'input[name="GuardianAddress.HouseStreet"]',
+                city: 'select[name="GuardianAddress.City"]',
+                barangay: 'select[name="GuardianAddress.Barangay"]',
+                postal: 'input[name="GuardianAddress.PostalCode"]'
+            };
+
+            // Lookup elements
+            function els(map) {
+                return {
+                    house: document.querySelector(map.house),
+                    city: document.querySelector(map.city),
+                    barangay: document.querySelector(map.barangay),
+                    postal: document.querySelector(map.postal)
+                };
+            }
+
+            const student = els(studentSelectors);
+            const guardian = els(guardianSelectors);
+
+
+                    function copyStudentToGuardian() {
+            if (!student.house || !guardian.house) return;
+
+            const setMirror = el => ensureHiddenMirror(el);
+
+            guardian.house.value = student.house.value || '';
+            setMirror(guardian.house);
+            try { guardian.house.disabled = true; } catch (e) { guardian.house.readOnly = true; }
+
+            if (student.city && guardian.city) {
+                guardian.city.value = student.city.value || '';
+                if (typeof updateBarangays === 'function') updateBarangays(guardian.city);
+
+                const tryAssignBarangay = (attempts = 0) => {
+                    const hasOptions = guardian.barangay && guardian.barangay.options && guardian.barangay.options.length > 1;
+                    if (student.barangay && guardian.barangay && (hasOptions || attempts >= 10)) {
+                        guardian.barangay.value = student.barangay.value || '';
+                        setMirror(guardian.barangay);
+                        setMirror(guardian.city);
+                        try { guardian.city.disabled = true; guardian.barangay.disabled = true; } catch (e) {}
+                        return;
+                    }
+                    setTimeout(() => tryAssignBarangay(attempts + 1), 50);
+                };
+                tryAssignBarangay();
+
+                guardian.city.setAttribute('aria-disabled', 'true');
+                guardian.city.classList.add('mirror-disabled');
+            }
+
+            if (student.postal && guardian.postal) {
+                guardian.postal.value = student.postal.value || '';
+                setMirror(guardian.postal);
+                try { guardian.postal.disabled = true; } catch (e) { guardian.postal.readOnly = true; }
+            }
+        }
+
+        function restoreGuardianEditable() {
+            Object.values(guardianSelectors).forEach(sel => {
+                const el = document.querySelector(sel);
+                if (!el) return;
+                removeHiddenMirror(el);
+                try { el.disabled = false; } catch (e) { el.readOnly = false; }
+                el.removeAttribute('aria-disabled');
+                el.classList.remove('mirror-disabled');
+            });
+        }
+
+        function removeAllMirrors(formEl) {
+            if (!formEl) return;
+            formEl.querySelectorAll('input[id^="__mirror_"]').forEach(h => h.remove());
+        }
+
+
+            // keep mirrors updated if student fields change while checkbox is checked
+            function wireStudentChangeHandlers() {
+                Object.values(studentSelectors).forEach(sel => {
+                    const s = document.querySelector(sel);
+                    if (!s) return;
+                    s.addEventListener('input', () => {
+                        if (!sameAddressCheckbox.checked) return;
+                        // re-copy the changed field(s)
+                        copyStudentToGuardian();
+                    });
+                    // also listen to change for selects
+                    s.addEventListener('change', () => {
+                        if (!sameAddressCheckbox.checked) return;
+                        copyStudentToGuardian();
+                    });
+                });
+            }
+
+            // initial wiring
+            wireStudentChangeHandlers();
+
+            // checkbox handler
+            sameAddressCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    copyStudentToGuardian();
+                } else {
+                    restoreGuardianEditable();
+                }
+            });
+
+            // ensure mirrors exist right before submit (in case user didn't interact after checking)
+            form && form.addEventListener('submit', () => {
+                if (sameAddressCheckbox.checked) copyStudentToGuardian();
+            });
+        });
+    </script>
+
+    @if (showModal)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var modalEl = document.getElementById('feedbackModal');
+                if (modalEl) {
+                    var modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+                }
+            });
+        </script>
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('transfereeForm');
+            const btnAuto = document.getElementById('btnAutoFillTransferee');
+            if (!form || !btnAuto) return;
+
+            function setInput(selector, value) {
+                const el = form.querySelector(selector);
+                if (!el) return;
+                el.value = value;
+                el.dispatchEvent(new Event('input', { bubbles: true }));
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            function setSelect(selector, value, matchByText = false) {
+                const el = form.querySelector(selector);
+                if (!el) return;
+                // try match by value then by visible text
+                let opt = Array.from(el.options).find(o => o.value === value);
+                if (!opt && matchByText) opt = Array.from(el.options).find(o => (o.text || '').trim() === value);
+                if (!opt && value) {
+                    opt = document.createElement('option');
+                    opt.value = value;
+                    opt.text = value;
+                    el.appendChild(opt);
+                }
+                if (opt) {
+                    el.value = opt.value;
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }
+
+            function isAddressDataLoaded() {
+                try {
+                    return (typeof addressData !== 'undefined' && Object.keys(addressData).length > 0)
+                        || (window.addressData && Object.keys(window.addressData).length > 0);
+                } catch (e) { return false; }
+            }
+            function waitForAddressData(timeout = 1500, interval = 60) {
+                return new Promise(resolve => {
+                    if (isAddressDataLoaded()) return resolve(true);
+                    const start = Date.now();
+                    const timer = setInterval(() => {
+                        if (isAddressDataLoaded()) { clearInterval(timer); return resolve(true); }
+                        if (Date.now() - start > timeout) { clearInterval(timer); return resolve(false); }
+                    }, interval);
+                });
+            }
+
+            // set city/barangay and attempt to populate postal via existing page functions or addressData
+            async function setCityAndBarangay(citySelector, barangaySelector, cityValue, barangayValue, postalSelector) {
+                const citySel = form.querySelector(citySelector);
+                const barangaySel = form.querySelector(barangaySelector);
+                const postalSel = postalSelector ? form.querySelector(postalSelector) : null;
+                if (!citySel) return;
+
+                setSelect(citySelector, cityValue, true);
+                await waitForAddressData();
+
+                if (typeof updateBarangays === 'function') {
+                    try { updateBarangays(citySel); } catch (e) { /* ignore */ }
+                }
+
+                const trySet = (attempt = 0) => {
+                    if (!barangaySel) {
+                        if (postalSel) {
+                            const ad = (typeof addressData !== 'undefined' ? addressData : window.addressData);
+                            const city = citySel.value;
+                            if (ad && ad[city]) {
+                                const match = ad[city].find(b => b.name === barangayValue);
+                                if (match && match.postalCode) postalSel.value = match.postalCode;
+                            }
+                        }
+                        return;
+                    }
+
+                    const hasOptions = barangaySel.options && barangaySel.options.length > 1;
+                    if (hasOptions || attempt >= 10) {
+                        let opt = Array.from(barangaySel.options).find(o => o.value === barangayValue || (o.text || '').trim() === barangayValue);
+                        if (!opt && barangayValue) {
+                            opt = document.createElement('option');
+                            opt.value = barangayValue;
+                            opt.text = barangayValue;
+                            barangaySel.appendChild(opt);
+                        }
+                        if (opt) {
+                            barangaySel.value = opt.value;
+                            barangaySel.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+
+                        if (typeof updatePostalID === 'function' && barangaySel) {
+                            try { updatePostalID(barangaySel); } catch (e) { /* ignore */ }
+                        }
+
+                        if (postalSel) {
+                            const ad = (typeof addressData !== 'undefined' ? addressData : window.addressData);
+                            const city = citySel.value;
+                            const barangayName = barangaySel ? barangaySel.value : barangayValue;
+                            if (ad && ad[city]) {
+                                const match = ad[city].find(b => b.name === barangayName);
+                                if (match && match.postalCode) {
+                                    postalSel.value = match.postalCode;
+                                    postalSel.dispatchEvent(new Event('input', { bubbles: true }));
+                                    postalSel.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            }
+                        }
+                        return;
+                    }
+                    setTimeout(() => trySet(attempt + 1), 60);
+                };
+                trySet();
+            }
+
+            function pickRealCityBarangay() {
+                try {
+                    const ad = (typeof addressData !== 'undefined' ? addressData : window.addressData);
+                    if (ad && Object.keys(ad).length > 0) {
+                        const cities = Object.keys(ad);
+                        const city = cities[0];
+                        const barangays = ad[city];
+                        if (Array.isArray(barangays) && barangays.length > 0) return { city, barangay: barangays[0].name };
+                    }
+                } catch (e) { /* ignore */ }
+                return { city: 'Test City', barangay: 'Test Barangay' };
+            }
+
+            btnAuto.addEventListener('click', async function () {
+                // Keep student's first/last/middle name and email EMPTY (per request)
+
+                // Student personal (other)
+                setInput('input[name="StudentPersonal.Extension"]', '');
+                setSelect('select[name="StudentPersonal.Sex"]', 'Male', true);
+                setInput('input[name="StudentPersonal.ContactNumber"]', '09123456789');
+
+                // Student address
+                setInput('input[name="StudentAddress.HouseStreet"]', '123 Auto St.');
+                const picked = pickRealCityBarangay();
+                await setCityAndBarangay('select[name="StudentAddress.City"]', 'select[name="StudentAddress.Barangay"]', picked.city, picked.barangay, 'input[name="StudentAddress.PostalCode"]');
+
+                // Previous School Attended (elementary/high/senior) - auto fill names/types/years and addresses
+                // Elementary
+                setInput('input[name="ElementarySchool.SchoolName"]', 'Auto Elementary School');
+                setSelect('select[name="ElementarySchool.SchoolType"]', 'Public', true);
+                setInput('input[name="ElementarySchool.YearGraduated"]', '2016-2017');
+                await setCityAndBarangay('select[name="ElementaryAddress.City"]', 'select[name="ElementaryAddress.Barangay"]', picked.city, picked.barangay, 'input[name="ElementaryAddress.PostalCode"]');
+
+                // High School
+                setInput('input[name="HighSchool.SchoolName"]', 'Auto High School');
+                setSelect('select[name="HighSchool.SchoolType"]', 'Public', true);
+                setInput('input[name="HighSchool.YearGraduated"]', '2018-2019');
+                await setCityAndBarangay('select[name="HighSchoolAddress.City"]', 'select[name="HighSchoolAddress.Barangay"]', picked.city, picked.barangay, 'input[name="HighSchoolAddress.PostalCode"]');
+
+                // Senior High
+                setInput('input[name="SeniorHigh.SchoolName"]', 'Auto Senior High');
+                setSelect('select[name="SeniorHigh.SchoolType"]', 'Private', true);
+                setInput('input[name="SeniorHigh.YearGraduated"]', '2019-2020');
+                setSelect('select[name="SeniorHigh.Strand"]', 'ICT', true);
+                await setCityAndBarangay('select[name="SeniorHighAddress.City"]', 'select[name="SeniorHighAddress.Barangay"]', picked.city, picked.barangay, 'input[name="SeniorHighAddress.PostalCode"]');
+
+                // Emergency contact (guardian) — fill per request (allowed)
+                setInput('input[name="GuardianPersonal.LastName"]', 'GuardianLast');
+                setInput('input[name="GuardianPersonal.FirstName"]', 'GuardianFirst');
+                setInput('input[name="GuardianPersonal.MiddleName"]', 'G');
+                setInput('input[name="GuardianPersonal.Extension"]', '');
+                setInput('input[name="GuardianPersonal.ContactNumber"]', '09987654321');
+                setInput('input[name="GuardianPersonal.Relationship"]', 'Parent');
+                setSelect('select[name="GuardianPersonal.Sex"]', 'Female', true);
+
+                // Guardian address
+                // ensure same-address is unchecked so guardian fields will be submitted
+                const sameChk = document.getElementById('sameAddressCheckbox');
+                if (sameChk && sameChk.checked) { sameChk.checked = false; sameChk.dispatchEvent(new Event('change', { bubbles: true })); }
+                await setCityAndBarangay('select[name="GuardianAddress.City"]', 'select[name="GuardianAddress.Barangay"]', picked.city, picked.barangay, 'input[name="GuardianAddress.PostalCode"]');
+                setInput('input[name="GuardianAddress.HouseStreet"]', '456 Guardian Ave');
+
+                // Enrollment / Academic
+                setSelect('select[name="Academic.Program"]', (function(){ const el=form.querySelector('select[name="Academic.Program"]'); return (el && el.options && el.options.length>1) ? el.options[1].value : (el? el.options[0]?.value : 'BSIT'); })(), false);
+                setSelect('select[name="Academic.YearLevel"]', '1st Year', true);
+                // Academic.Semester and Academic.AcademicYear are readonly — leave server values as-is.
+
+                // Previous School Details section (final)
+                setInput('input[name="PreviousSchool.LastSchoolAttended"]', 'Auto Previous University');
+                setInput('input[name="PreviousSchool.CourseTaken"]', 'BS Computer Science');
+                // choose a valid LastAcademicYearAttended option (first non-empty)
+                const yearSel = form.querySelector('select[name="PreviousSchool.LastAcademicYearAttended"]');
+                if (yearSel) {
+                    const opt = Array.from(yearSel.options).find(o => (o.value || '').trim().length > 0);
+                    if (opt) { yearSel.value = opt.value; yearSel.dispatchEvent(new Event('change', { bubbles: true })); }
+                }
+
+                // Visual feedback
+                btnAuto.textContent = 'Auto-filled';
+                setTimeout(() => btnAuto.textContent = 'Auto-fill (testing)', 1200);
+            });
+        });
+    </script>
+    <script>
+        (function () {
+            const isClosed = @((isClosed ? "true" : "false"));
+            const closesAtIso = '@(closesAtIso ?? "")';
+            const transfereeBlocked = @((transfereeBlocked ? "true" : "false"));
+            const transfereeBlockedMsg = '@(transfereeBlockedMsg ?? "")';
+            const semOpen = @((semOpen ? "true" : "false"));
+
+            const tz = 'Asia/Singapore';
+            const statusText = document.getElementById('enrollmentStatusText');
+            const countdownEl = document.getElementById('enrollmentCountdown');
+            const closesAtEl = document.getElementById('enrollmentClosesAt');
+            const form = document.getElementById('transfereeForm');
+            const submitBtn = document.getElementById('btnSubmit');
+            const clearBtn = document.getElementById('btnClearAll');
+
+            function setClosedUI(msg) {
+                statusText.textContent = msg || 'Enrollment is currently closed.';
+                countdownEl.textContent = '';
+                if (form) {
+                    form.querySelectorAll('input, select, textarea, button').forEach(el => el.disabled = true);
+                }
+            }
+
+            if (!semOpen) {
+                setClosedUI('Transferee enrollment is available only when 2nd Semester enrollment is open.');
+            } else if (transfereeBlocked) {
+                setClosedUI(transfereeBlockedMsg);
+            } else if (isClosed) {
+                setClosedUI();
+            } else {
+                if (!closesAtIso) {
+                    statusText.textContent = 'Enrollment is open.';
+                    closesAtEl.textContent = '(No end time set)';
+                } else {
+                    const closesAt = new Date(closesAtIso);
+                    const fmt = new Intl.DateTimeFormat('en-SG', {
+                        timeZone: tz,
+                        year: 'numeric', month: '2-digit', day: '2-digit',
+                        hour: '2-digit', minute: '2-digit', second: '2-digit',
+                        hour12: false
+                    });
+                    closesAtEl.textContent = 'Closes at: ' + fmt.format(closesAt) + ' (UTC+08:00)';
+
+                    function tick() {
+                        const now = new Date();
+                        const ms = closesAt.getTime() - now.getTime();
+                        if (ms <= 0) {
+                            setClosedUI();
+                            clearInterval(timer);
+                            return;
+                        }
+                        const totalSeconds = Math.floor(ms / 1000);
+                        const days = Math.floor(totalSeconds / 86400);
+                        const hours = Math.floor((totalSeconds % 86400) / 3600);
+                        const minutes = Math.floor((totalSeconds % 3600) / 60);
+                        const seconds = totalSeconds % 60;
+                        countdownEl.textContent = `Time remaining: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                    }
+                    tick();
+                    const timer = setInterval(tick, 1000);
+                }
+            }
+
+            // Clear all (except Academic YearLevel, Semester, AcademicYear)
+            if (clearBtn && form) {
+                const excludedIds = new Set([
+                    'Academic_YearLevel',
+                    'Academic_Semester',
+                    'Academic_AcademicYear'
+                ]);
+                clearBtn.addEventListener('click', () => {
+                    const elements = Array.from(form.querySelectorAll('input, select, textarea'));
+                    for (const el of elements) {
+                        if (excludedIds.has(el.id)) continue;
+                        if (el.type === 'hidden' || el.disabled) continue;
+
+                        if (el.tagName === 'SELECT') {
+                            el.selectedIndex = 0;
+                        } else if (el.type === 'checkbox' || el.type === 'radio') {
+                            el.checked = false;
+                        } else {
+                            el.value = '';
+                        }
+                        el.classList.remove('input-validation-error');
+                    }
+                    form.querySelectorAll('.field-validation-error, [data-valmsg-for]').forEach(v => v.textContent = '');
+                    const summary = form.querySelector('[asp-validation-summary], .validation-summary-errors, #validationSummary');
+                    if (summary) summary.textContent = '';
+                });
+            }
+        })();
+
+        // Address Functions
+        let addressData = {}
+
+        fetch('/data/cities.json')
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to load cities.json')
+            return response.json()
+          })
+          .then(data => {
+            addressData = data
+            populateCities()
+          })
+          .catch(err => console.error(err))
+
+        function populateCities() {
+          const citySelects = document.querySelectorAll('.city')
+          citySelects.forEach(cs => {
+            cs.innerHTML = '<option value="">-- Select City --</option>'
+            for (const city in addressData) {
+              const option = document.createElement('option')
+              option.value = city
+              option.textContent = city
+              cs.appendChild(option)
+            }
+          })
+
+          // clear datalist until a city is selected
+          const datalist = document.getElementById('barangays-list')
+          if (datalist) datalist.innerHTML = ''
+        }
+
+        function updateBarangays(cityEl) {
+          if (!cityEl) return
+          const formGrid = cityEl.closest('.form-grid')
+          const barangaySelect = formGrid ? formGrid.querySelector('.barangay') : null
+          const postalInput = formGrid ? formGrid.querySelector('.postal') : null
+
+          if (barangaySelect) {
+            barangaySelect.innerHTML = '<option value="">-- Select Barangay --</option>'
+          }
+          if (postalInput) postalInput.value = ''
+
+          const city = cityEl.value
+          if (city && Array.isArray(addressData[city])) {
+            addressData[city].forEach(item => {
+              if (barangaySelect) {
+                const option = document.createElement('option')
+                option.value = item.name
+                option.textContent = item.name
+                barangaySelect.appendChild(option)
+              }
+            })
+
+            // Update shared datalist for any inputs using it (e.g., Guardian barangay input)
+            const datalist = document.getElementById('barangays-list')
+            if (datalist) {
+              datalist.innerHTML = ''
+              addressData[city].forEach(item => {
+                const opt = document.createElement('option')
+                opt.value = item.name
+                datalist.appendChild(opt)
+              })
+            }
+          }
+        }
+
+        function updatePostalID(barangayEl) {
+          if (!barangayEl) return
+          const formGrid = barangayEl.closest('.form-grid')
+          const citySelect = formGrid ? formGrid.querySelector('.city') : null
+          const postalInput = formGrid ? formGrid.querySelector('.postal') : null
+          const city = citySelect ? citySelect.value : null
+          const barangayName = barangayEl.value
+
+          if (postalInput) {
+            if (city && barangayName && Array.isArray(addressData[city])) {
+              const match = addressData[city].find(b => b.name === barangayName)
+              postalInput.value = match ? match.postalCode : ''
+            } else {
+              postalInput.value = ''
+            }
+          }
+        }
+                   document.addEventListener('DOMContentLoaded', function () {
+            const sameAddressCheckbox = document.getElementById('sameAddressCheckbox');
+
+            if (sameAddressCheckbox) {
+                sameAddressCheckbox.addEventListener('change', function () {
+                    const isChecked = this.checked;
+
+                    const studentAddress = {
+                        house: document.querySelector('input[name="StudentAddress.HouseStreet"]'),
+                        city: document.querySelector('select[name="StudentAddress.City"]'),
+                        barangay: document.querySelector('select[name="StudentAddress.Barangay"]'),
+                        postal: document.querySelector('input[name="StudentAddress.PostalCode"]')
+                    };
+
+                    const guardianAddress = {
+                        house: document.querySelector('input[name="GuardianAddress.HouseStreet"]'),
+                        city: document.querySelector('select[name="GuardianAddress.City"]'),
+                        barangay: document.querySelector('select[name="GuardianAddress.Barangay"]'),
+                        postal: document.querySelector('input[name="GuardianAddress.PostalCode"]')
+                    };
+
+                    if (isChecked) {
+                        guardianAddress.house.value = studentAddress.house.value;
+                        guardianAddress.city.value = studentAddress.city.value;
+                        if (typeof updateBarangays === 'function') updateBarangays(guardianAddress.city);
+                        guardianAddress.barangay.value = studentAddress.barangay.value;
+                        guardianAddress.postal.value = studentAddress.postal.value;
+                        Object.values(guardianAddress).forEach(el => el.disabled = true);
+                    } else {
+                        Object.values(guardianAddress).forEach(el => {
+                            el.value = '';
+                            el.disabled = false;
+                        });
+                    }
+                });
+            }
+        });
+
+    </script>
+}

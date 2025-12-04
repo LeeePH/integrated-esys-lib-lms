@@ -1,0 +1,118 @@
+﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background: #fff;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+    }
+
+.inbox-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 30px auto;
+    font-family: Arial, sans-serif;
+}
+
+.inbox-header {
+    display: flex;
+    align-items: center;
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.inbox-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+}
+
+.inbox-title {
+    color: #8F2809;
+    font-size: 42px;
+}
+
+.inbox-count {
+    margin-left: 12px;
+    color: #8F2809;
+    font-weight: bold;
+    font-size: 42px;
+}
+
+.inbox-separator {
+    border: none;
+    border-top: 3px solid #111;
+    margin: 15px 0 25px 0;
+    width: 100%;
+}
+
+.notif-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notif-card {
+    display: flex; /* left & right side */
+    align-items: center;
+    justify-content: flex-start;
+    background: #F2F8E6; /* bagong color */
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    padding: 20px;
+}
+
+.notif-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 150px;
+}
+
+.library-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 6px;
+}
+
+.library-text {
+    font-size: 20px;
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+}
+
+.notif-right {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.notif-title {
+    color: #000;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.notif-message {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+}

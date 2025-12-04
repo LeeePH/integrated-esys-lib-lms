@@ -1,0 +1,670 @@
+﻿@import url('/css/admindb/admindb.css');
+@import url('/css/shared/AdminBottomBar.css');
+
+/* ==========================================================
+   Root Variables & Base Settings
+   ========================================================== */
+:root {
+    --bottom-h: 64px; /* Height of the bottom bar */
+    --accent: #006b99; /* Main accent color */
+    --card-default-bg: #fcf7ec; /* Default background for cards */
+    --card-default-text: #243a73; /* Default text color for cards */
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ==========================================================
+   Page Base Styles
+   ========================================================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #eef2f7;
+    color: #0b213a;
+}
+
+.page {
+    min-height: 100vh;
+    padding-bottom: calc(var(--bottom-h) + 20px);
+}
+
+/* ==========================================================
+   Left Panel: Assessment Info
+   ========================================================== */
+.assessment-info {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 25%;
+    height: calc(100vh - 145px);
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 160px rgba(16, 24, 40, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Inputs & Textareas */
+.input,
+.textarea {
+    width: 93%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 24, 40, 0.06);
+    background: #fff;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* ==========================================================
+   Buttons & Actions
+   ========================================================== */
+.bottom-actions {
+    margin-top: 14px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+    box-shadow: 0 6px 12px rgba(16, 24, 40, 0.06);
+}
+
+    .btn.primary {
+        background: var(--accent);
+        color: #fff;
+    }
+
+.icon-btn {
+    padding: 8px 10px;
+    margin-left: 6px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+}
+
+/* Back Button */
+.back-button {
+    margin-top: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+    .back-button:hover {
+        background: #00577c;
+    }
+
+/* ==========================================================
+   Right Panel: Assessment Container
+   ========================================================== */
+.assessment-container {
+    margin-left: 31.2%;
+    padding: 28px;
+    min-height: calc(100vh - 120px);
+    background: transparent;
+    border-radius: 14px;
+    width: 64%;
+}
+
+/* Sticky Top Bar Inside Container */
+.assessment-top {
+    position: sticky;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+    backdrop-filter: blur(4px);
+}
+
+    .assessment-top .left-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .assessment-top .right-stats {
+        font-weight: 700;
+        color: var(--accent);
+        margin-right: 10px;
+    }
+
+/* ==========================================================
+   Draft Area (Paper-like Section)
+   ========================================================== */
+.assessment-draft {
+    margin-top: 18px;
+    padding: 28px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+    min-height: 60vh;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    border: 1px solid rgba(16, 24, 40, 0.04);
+}
+
+.empty-placeholder {
+    color: rgba(0, 0, 0, 0.45);
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* ==========================================================
+   Test & Question Blocks
+   ========================================================== */
+
+/* Test Card */
+.test {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(12, 18, 30, 0.03);
+    border: 1px solid rgba(16, 24, 40, 0.06);
+}
+
+/* Test Header */
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.test-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--accent);
+}
+
+.test-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Add Question Button */
+.add-q-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(16, 24, 40, 0.06);
+    transition: background 0.2s;
+}
+
+    .add-q-btn:hover {
+        background: #0f1e36;
+    }
+
+/* Remove Test Button */
+.remove-test {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+    color: #c0392b;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(16, 24, 40, 0.05);
+}
+
+    .remove-test i {
+        font-size: 14px;
+    }
+
+    .remove-test:hover {
+        background: rgba(192, 57, 43, 0.1);
+    }
+
+/* Question Card */
+.question {
+    width: 87%;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+/* Question Number */
+.q-num {
+    min-width: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+}
+
+/* Question Body */
+.q-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Question Textarea */
+.q-text {
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    background: #fefefe;
+    color: #0b213a;
+    font-size: 14px;
+    resize: vertical;
+}
+
+    .q-text:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+/* Question Controls Row */
+.q-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Points Input */
+.question-points {
+    width: 40px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    background: #fefefe;
+    color: #0b213a;
+    text-align: right;
+}
+
+    .question-points:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+/* Remove Question Button */
+.remove-question {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+    color: #c0392b;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+    .remove-question i {
+        font-size: 14px;
+    }
+
+    .remove-question:hover {
+        background: rgba(192, 57, 43, 0.1);
+    }
+
+/* Question Type Dropdown */
+.q-type {
+    width: 150px;
+}
+
+    .q-type .dropdown-selected {
+        background: #fff;
+        border: 2px solid rgba(16, 24, 40, 0.12);
+        border-radius: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: #243a73;
+    }
+
+    .q-type .dropdown-option:hover {
+        background: rgba(24, 43, 92, 0.08);
+    }
+
+/* Type-specific questions */
+.type-specific {
+    padding: 12px 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ==========================================================
+   Question Type-Specific Styling
+   ========================================================== */
+
+/* Identification */
+.id-answer {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    background: #fefefe;
+    color: #0b213a;
+}
+
+    .id-answer:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+/* Multiple Choice */
+.choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.choice-row {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border: 1px solid rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    background: #fff;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+    .choice-row:hover {
+        border-color: var(--accent);
+    }
+
+.choice-letter {
+    font-weight: 700;
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+.choice-input {
+    width: 96.5%;
+    padding: 6px 8px;
+    border: 1px solid rgba(16, 24, 40, 0.06);
+    border-radius: 6px;
+    background: #fefefe;
+    color: #0b213a;
+}
+
+    .choice-input:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+.choice-radio {
+    cursor: pointer;
+    transform: scale(1.1);
+    accent-color: var(--accent);
+    justify-self: center;
+    margin-bottom: 4px;
+}
+
+/* True or False */
+.tf-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+    .tf-wrapper label {
+        font-weight: 500;
+        font-size: 14px;
+        color: #0b213a;
+    }
+
+.tf-dropdown {
+    width: 150px;
+}
+
+    .tf-dropdown .dropdown-selected {
+        background: #fff;
+        border: 2px solid rgba(16, 24, 40, 0.12);
+        border-radius: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: #243a73;
+    }
+
+    .tf-dropdown .dropdown-options {
+        background: #fff;
+        border: 2px solid rgba(16, 24, 40, 0.12);
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(10, 20, 40, 0.08);
+    }
+
+    .tf-dropdown .dropdown-option:hover {
+        background: rgba(24, 43, 92, 0.08);
+    }
+
+/* Enumeration */
+.enum-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .enum-control label {
+        font-weight: 500;
+        color: #0b213a;
+    }
+
+.enum-count {
+    width: 30px;
+    height: 20px;
+    padding-left: 15px;
+    text-align: center;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    background: #fefefe;
+    color: #0b213a;
+}
+
+.enum-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.enum-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    border-radius: 6px;
+    background: #fefefe;
+    color: #0b213a;
+}
+
+/* Essay */
+.essay-box {
+    min-height: 100px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    background: #fefefe;
+    color: #0b213a;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+    .essay-box:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+/* Small Icon Buttons */
+.icon-small {
+    background: #fff;
+    border: 2px solid rgba(16, 24, 40, 0.06);
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Remove Button */
+.remove-btn {
+    background: transparent;
+    color: #c0392b;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* ==========================================================
+   Responsive Adjustments
+   ========================================================== */
+@media (max-width: 1000px) {
+    .assessment-info {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-bottom: 16px;
+        left: 0;
+        top: 0;
+    }
+
+    .assessment-container {
+        margin-left: 0;
+        width: 100%;
+        padding: 18px;
+    }
+
+    .assessment-top {
+        position: sticky;
+        top: 0;
+    }
+}
+
+/* ==========================================================
+   Toast Notifications
+   ========================================================== */
+.toast {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+    font-size: 0.95rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+/* ==========================================================
+   Custom Dropdown Styles
+   ========================================================== */
+.custom-dropdown {
+    position: relative;
+    width: 200px;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.dropdown-selected {
+    background: #fff;
+    border: 2px solid rgba(16, 24, 40, 0.12);
+    border-radius: 10px;
+    padding: 10px 36px 10px 12px;
+    color: #243a73;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(16, 24, 40, 0.05);
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%23182b5c' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+}
+
+    .dropdown-selected:hover {
+        border-color: var(--accent);
+    }
+
+.dropdown-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 2px solid rgba(16, 24, 40, 0.12);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(10, 20, 40, 0.08);
+    display: none;
+    z-index: 100;
+}
+
+.dropdown-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+    .dropdown-option:hover {
+        background: rgba(24, 43, 92, 0.08);
+    }
+
+.custom-dropdown.open .dropdown-options {
+    display: block;
+}
+
+/* Hide scrollbars for all elements */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+    *::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }

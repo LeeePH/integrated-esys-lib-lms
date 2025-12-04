@@ -1,0 +1,622 @@
+﻿@model E_SysV0._01.Models.SubjectSelection2ndYearViewModel
+@{
+    ViewData["Title"] = "Select 2nd Year Subjects";
+
+    // ✅ NEW: Get retake opportunities from ViewBag
+    var retakeOpportunities = ViewBag.RetakeOpportunities as List<E_SysV0._01.Models.SubjectRetakeHelper.RetakeOpportunity>
+        ?? new List<E_SysV0._01.Models.SubjectRetakeHelper.RetakeOpportunity>();
+
+    var eligibleRetakes = retakeOpportunities.Where(r => r.IsEligible).ToList();
+    var ineligibleRetakes = retakeOpportunities.Where(r => !r.IsEligible).ToList();
+
+    var pageTitle = "Select Subjects — 2nd Year 1st Semester";
+}
+
+<style>
+    .performance-metric {
+        padding: 1rem;
+    }
+
+    .metric-value {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .metric-label {
+        color: #6c757d;
+        font-size: 0.875rem;
+    }
+
+    .subject-checkbox {
+        cursor: pointer;
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .table-secondary {
+        opacity: 0.6;
+    }
+
+    .card {
+        border-radius: 0.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+    }
+
+    #submitBtn:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    /* ✅ NEW: Retake section styling */
+    .retake-section {
+        background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+        border-left: 4px solid #dc3545;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .retake-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+        .retake-badge.failed {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .retake-badge.available {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .retake-badge.blocked {
+            background-color: #6c757d;
+            color: white;
+        }
+
+    .subject-card {
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+    }
+
+        .subject-card:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+        }
+
+        .subject-card.retake-subject {
+            border-left: 4px solid #dc3545;
+            background-color: #fff9f9;
+        }
+
+        .subject-card.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+            background-color: #f8f9fa;
+        }
+
+    .prerequisite-info {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+
+    .unit-summary {
+        position: sticky;
+        top: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 1rem;
+    }
+
+    .unit-breakdown {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .unit-breakdown:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+    .unit-warning {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-clipboard-check me-2"></i>
+                @pageTitle
+            </h4>
+        </div>
+
+        <div class="card-body">
+            <!-- Alert: Irregular Status -->
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Irregular Enrollment:</strong> You have failed or not completed some 1st Year subjects.
+                Please select only the subjects you are eligible to enroll in for 2nd Year 1st Semester.
+            </div>
+
+            <!-- Performance Summary -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        Your 1st Year Performance
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="performance-metric">
+                                <div class="metric-value text-success">@Model.PassedSubjectsCount</div>
+                                <div class="metric-label">Subjects Passed</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="performance-metric">
+                                <div class="metric-value text-danger">@Model.FailedSubjectsCount</div>
+                                <div class="metric-label">Subjects Failed</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="performance-metric">
+                                <div class="metric-value text-primary">@Model.EligibleSubjectsCount</div>
+                                <div class="metric-label">Eligible for 2nd Year</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Remarks -->
+                    <div class="mt-3">
+                        <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#remarksDetails">
+                            <i class="fas fa-list me-1"></i> View Detailed Remarks
+                        </button>
+                        <div class="collapse mt-3" id="remarksDetails">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Subject Code</th>
+                                            <th>Subject Title</th>
+                                            <th>Semester</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var remark in Model.FirstYearRemarks.OrderBy(r => r.Key))
+                                        {
+                                            var badgeClass = remark.Value.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                                            remark.Value.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                                            "bg-warning text-dark";
+
+                                            <tr>
+                                                <td><strong>@remark.Key</strong></td>
+                                                <td>@(Model.SubjectTitles.GetValueOrDefault(remark.Key, remark.Key))</td>
+                                                <td>@(Model.SubjectSemesters.GetValueOrDefault(remark.Key, "N/A"))</td>
+                                                <td>
+                                                    <span class="badge @badgeClass">@remark.Value.ToUpper()</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection Form -->
+            <form id="subjectSelectionForm" asp-area="Student" asp-controller="StudentAccount" asp-action="Submit2ndYearEnrollmentWithSubjects" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="studentUsername" value="@Model.StudentUsername" />
+
+                <div class="row gx-3">
+                    <div class="col-lg-8">
+
+                        @* ✅ NEW: Retake Opportunities Section *@
+                        @if (eligibleRetakes.Any() || ineligibleRetakes.Any())
+                        {
+                            <div class="retake-section mb-4">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-redo-alt me-2"></i>
+                                    Retake Opportunities
+                                </h5>
+                                <p class="small text-muted mb-3">
+                                    The following subjects from 1st Year are available for retake. Retake subjects count toward your total unit load.
+                                </p>
+
+                                @if (eligibleRetakes.Any())
+                                {
+                                    <div class="list-group mb-3">
+                                        @foreach (var retake in eligibleRetakes)
+                                        {
+                                            var retakeEligibility = Model.EligibilityStatus.ContainsKey(retake.Code)
+                                            ? Model.EligibilityStatus[retake.Code]
+                                            : "Can enroll (Retake)";
+
+                                            <label class="list-group-item list-group-item-action d-flex align-items-start subject-card retake-subject">
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input subject-checkbox retake-checkbox"
+                                                           type="checkbox"
+                                                           name="selectedSubjects"
+                                                           value="@retake.Code"
+                                                           id="retake_@retake.Code"
+                                                           data-units="@retake.Units"
+                                                           data-is-retake="true">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <strong>@retake.Code</strong> — @retake.Title
+                                                            <span class="retake-badge failed ms-2">
+                                                                <i class="fas fa-times-circle"></i> Failed
+                                                            </span>
+                                                            <span class="retake-badge available ms-1">
+                                                                <i class="fas fa-redo"></i> Retake Available
+                                                            </span>
+                                                        </div>
+                                                        <span class="badge bg-primary">@retake.Units units</span>
+                                                    </div>
+                                                    @if (!string.IsNullOrWhiteSpace(retake.PreRequisite))
+                                                    {
+                                                        <div class="prerequisite-info">
+                                                            <i class="fas fa-info-circle"></i>
+                                                            Prerequisites: @retake.PreRequisite
+                                                        </div>
+                                                    }
+                                                    <div class="prerequisite-info text-success">
+                                                        <i class="fas fa-check-circle"></i> @retakeEligibility
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        }
+                                    </div>
+                                }
+
+                                @if (ineligibleRetakes.Any())
+                                {
+                                    <details class="mb-3">
+                                        <summary class="text-muted" style="cursor: pointer;">
+                                            <i class="fas fa-exclamation-triangle me-1"></i>
+                                            @ineligibleRetakes.Count subject(s) not available for retake this semester
+                                        </summary>
+                                        <div class="list-group mt-2">
+                                            @foreach (var retake in ineligibleRetakes)
+                                            {
+                                                <div class="list-group-item subject-card disabled">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div>
+                                                            <strong>@retake.Code</strong> — @retake.Title
+                                                            <span class="retake-badge blocked ms-2">
+                                                                <i class="fas fa-ban"></i> Not Available
+                                                            </span>
+                                                        </div>
+                                                        <span class="badge bg-secondary">@retake.Units units</span>
+                                                    </div>
+                                                    <div class="prerequisite-info text-danger">
+                                                        <i class="fas fa-times-circle"></i> @retake.IneligibilityReason
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </details>
+                                }
+                            </div>
+                        }
+
+                        <!-- Regular Subjects Section -->
+                        <h5 class="mb-3">
+                            <i class="fas fa-book me-2"></i>
+                            Regular Subjects (2nd Year 1st Semester)
+                        </h5>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Instructions:</strong> Check the subjects you want to enroll in.
+                            You can only select subjects marked as <span class="badge bg-success">ELIGIBLE</span>.
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="width: 60px;">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="selectAllEligible">
+                                                <label class="form-check-label" for="selectAllEligible">
+                                                    All
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th>Subject Code</th>
+                                        <th>Subject Title</th>
+                                        <th>Units</th>
+                                        <th>Prerequisites</th>
+                                        <th>Eligibility Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var subject in Model.AvailableSubjects)
+                                    {
+                                        var isEligible = Model.EligibilityStatus.TryGetValue(subject.Code, out var status) &&
+                                        status.StartsWith("Can enroll", StringComparison.OrdinalIgnoreCase);
+
+                                        var eligibilityBadge = isEligible ? "bg-success" : "bg-danger";
+                                        var eligibilityIcon = isEligible ? "fa-check-circle" : "fa-times-circle";
+                                        var rowClass = isEligible ? "" : "table-secondary";
+
+                                        <tr class="@rowClass">
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input subject-checkbox regular-checkbox"
+                                                           type="checkbox"
+                                                           name="selectedSubjects"
+                                                           value="@subject.Code"
+                                                           id="subject_@subject.Code"
+                                                           data-eligible="@isEligible.ToString().ToLower()"
+                                                           data-units="@subject.Units"
+                                                           data-is-retake="false"
+                                                           @(isEligible ? "" : "disabled")>
+                                                </div>
+                                            </td>
+                                            <td><strong>@subject.Code</strong></td>
+                                            <td>@subject.Title</td>
+                                            <td>@subject.Units</td>
+                                            <td>
+                                                @if (!string.IsNullOrWhiteSpace(subject.PreRequisite))
+                                                {
+                                                    <small class="text-muted">@subject.PreRequisite</small>
+                                                }
+                                                else
+                                                {
+                                                    <small class="text-muted">None</small>
+                                                }
+                                            </td>
+                                            <td>
+                                                <span class="badge @eligibilityBadge">
+                                                    <i class="fas @eligibilityIcon me-1"></i>
+                                                    @(isEligible ? "ELIGIBLE" : "NOT ELIGIBLE")
+                                                </span>
+                                                @if (!isEligible && Model.EligibilityStatus.ContainsKey(subject.Code))
+                                                {
+                                                    <br>
+                                                    <small class="text-muted">@Model.EligibilityStatus[subject.Code]</small>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    @* Sidebar: Unit Summary *@
+                    <div class="col-lg-4">
+                        <div class="unit-summary">
+                            <h6 class="mb-3">
+                                <i class="fas fa-calculator me-2"></i>
+                                Unit Load Summary
+                            </h6>
+
+                            <div class="unit-breakdown">
+                                <span class="text-muted">Regular Subjects:</span>
+                                <span id="regularUnitsDisplay" class="badge bg-info">0 units</span>
+                            </div>
+
+                            <div class="unit-breakdown">
+                                <span class="text-muted">Retake Subjects:</span>
+                                <span id="retakeUnitsDisplay" class="badge bg-warning">0 units</span>
+                            </div>
+
+                            <div class="unit-breakdown">
+                                <span>Total Units:</span>
+                                <span id="totalUnitsDisplay" class="badge bg-primary">0 units</span>
+                            </div>
+
+                            <div id="unitWarning" class="unit-warning d-none">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Unit Load Exceeds Maximum!</strong>
+                                <p class="mb-0 small mt-1">You have selected <span id="warningUnits"></span> units. The recommended maximum is @Model.MaxUnits units. Admin approval may be required.</p>
+                            </div>
+
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary w-100" id="submitBtn" disabled>
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Submit Enrollment
+                                </button>
+                            </div>
+
+                            <div class="alert alert-info mt-3 small">
+                                <i class="fas fa-info-circle me-1"></i>
+                                <strong>Note:</strong> Retake subjects count toward your total unit load and are marked for admin review.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Help Section -->
+            <div class="card mt-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-question-circle me-2"></i>Need Help?
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li>Only subjects marked as <span class="badge bg-success">ELIGIBLE</span> can be selected.</li>
+                        <li>Subjects are ineligible if you have not passed their prerequisites.</li>
+                        <li>Failed 1st Year subjects are available for retake if offered in the current semester.</li>
+                        <li>You must select at least one subject to submit your enrollment.</li>
+                        <li>Contact the registrar if you believe there's an error in your eligibility.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="mt-4">
+                <a href="@Url.Action("StudentDashboard", "StudentAccount", new { area = "Student" })" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        (function () {
+            'use strict';
+
+            console.log('[SubjectSelection2ndYear] Initializing...');
+
+            const form = document.getElementById('subjectSelectionForm');
+            const checkboxes = document.querySelectorAll('.subject-checkbox');
+            const selectAllBtn = document.getElementById('selectAllEligible');
+            const submitBtn = document.getElementById('submitBtn');
+            const regularUnitsDisplay = document.getElementById('regularUnitsDisplay');
+            const retakeUnitsDisplay = document.getElementById('retakeUnitsDisplay');
+            const totalUnitsDisplay = document.getElementById('totalUnitsDisplay');
+            const warningContainer = document.getElementById('unitWarning');
+            const warningUnits = document.getElementById('warningUnits');
+
+            const MAX_UNITS = @Model.MaxUnits;
+
+            if (!form || checkboxes.length === 0) {
+                console.error('[SubjectSelection2ndYear] Required elements not found');
+                return;
+            }
+
+            // Update selection summary
+            function updateSummary() {
+                let regularUnits = 0;
+                let retakeUnits = 0;
+                let selectedCount = 0;
+
+                checkboxes.forEach(cb => {
+                    if (cb.checked && cb.dataset.eligible !== 'false') {
+                        selectedCount++;
+                        const units = parseInt(cb.dataset.units) || 0;
+                        const isRetake = cb.dataset.isRetake === 'true';
+
+                        if (isRetake) {
+                            retakeUnits += units;
+                        } else {
+                            regularUnits += units;
+                        }
+                    }
+                });
+
+                const totalUnits = regularUnits + retakeUnits;
+
+                regularUnitsDisplay.textContent = `${regularUnits} units`;
+                retakeUnitsDisplay.textContent = `${retakeUnits} units`;
+                totalUnitsDisplay.textContent = `${totalUnits} units`;
+
+                // Show warning if exceeds maximum
+                if (totalUnits > MAX_UNITS) {
+                    warningContainer.classList.remove('d-none');
+                    warningUnits.textContent = totalUnits;
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-warning');
+                } else {
+                    warningContainer.classList.add('d-none');
+                    submitBtn.classList.remove('btn-warning');
+                    submitBtn.classList.add('btn-primary');
+                }
+
+                // Enable/disable submit button
+                submitBtn.disabled = selectedCount === 0;
+
+                console.log(`[SubjectSelection2ndYear] Selected: ${selectedCount}, Regular: ${regularUnits}, Retake: ${retakeUnits}, Total: ${totalUnits}`);
+            }
+
+            // Select all eligible subjects
+            selectAllBtn.addEventListener('change', function () {
+                const isChecked = this.checked;
+
+                checkboxes.forEach(cb => {
+                    if (cb.dataset.eligible === 'true' || cb.dataset.isRetake === 'true') {
+                        cb.checked = isChecked;
+                    }
+                });
+
+                updateSummary();
+            });
+
+            // Update summary when individual checkbox changes
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateSummary);
+            });
+
+            // Form submission validation
+            form.addEventListener('submit', function (e) {
+                const selected = Array.from(checkboxes).filter(cb => cb.checked);
+
+                if (selected.length === 0) {
+                    e.preventDefault();
+                    alert('⚠️ Please select at least one subject before submitting.');
+                    return false;
+                }
+
+                const totalUnits = parseInt(totalUnitsDisplay.textContent) || 0;
+                const subjectList = selected.map(cb => cb.value).join(', ');
+
+                // ✅ FIX: Only prevent default if user cancels confirmation
+                const confirmed = confirm(
+                    `📋 Confirm 2nd Year Enrollment\n\n` +
+                    `Selected Subjects: ${selected.length}\n` +
+                    `Total Units: ${totalUnits}\n\n` +
+                    `Subjects: ${subjectList}\n\n` +
+                    `Click OK to submit your enrollment request.`
+                );
+
+                if (!confirmed) {
+                    e.preventDefault();
+                    console.log('[SubjectSelection2ndYear] Submission cancelled by user');
+                    return false;
+                }
+
+                // Show loading state (form will submit naturally)
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Submitting...';
+
+                console.log('[SubjectSelection2ndYear] Form submitting...');
+                // ✅ Don't call form.submit() - let it submit naturally
+            });
+
+            // Initial summary update
+            updateSummary();
+
+            console.log('[SubjectSelection2ndYear] Initialized successfully');
+        })();
+    </script>
+}

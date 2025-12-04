@@ -1,0 +1,239 @@
+﻿    @model SystemLibrary.ViewModels.InventoryReportViewModel
+@{
+    ViewBag.Title = "Inventory Status";
+    ViewBag.ActiveTab = "inventory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/inventory.css" />
+
+<main class="content">
+    <header>
+        <h1>Reports and Analytics</h1>
+        <div class="filter">
+            <select id="reportFilter" onchange="filterByDateRange(this.value)">
+                <option value="30" selected="@(Model.DaysRange == 30)">Last 30 Days</option>
+                <option value="60" selected="@(Model.DaysRange == 60)">Last 60 Days</option>
+                <option value="90" selected="@(Model.DaysRange == 90)">Last 90 Days</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="tabs">
+        @await Html.PartialAsync("_ReportTabs")
+    </section>
+
+    <section class="report-card">
+        <div class="report-header">
+            <h2>Inventory Status</h2>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="stats">
+            <div class="stat blue clickable-stat" data-type="totalbooks">
+                <h3>@Model.TotalBooks</h3>
+                <p>Total Books</p>
+            </div>
+            <div class="stat green clickable-stat" data-type="totalavailable">
+                <h3>@Model.TotalAvailable</h3>
+                <p>Available</p>
+            </div>
+            <div class="stat yellow clickable-stat" data-type="totalborrowed">
+                <h3>@Model.TotalBorrowed</h3>
+                <p>Borrowed</p>
+            </div>
+            <div class="stat red clickable-stat" data-type="totalreserved">
+                <h3>@Model.TotalReserved</h3>
+                <p>Reserved</p>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            @if (Model.Categories.Any())
+            {
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total Books</th>
+                                <th>Available</th>
+                                <th>Borrowed</th>
+                                <th>Reserved</th>
+                                <th>Utilization</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var cat in Model.Categories)
+                        {
+                                    <tr>
+                                        <td>@cat.Category</td>
+                                        <td>@cat.TotalBooks</td>
+                                        <td>@cat.Available</td>
+                                        <td>@cat.Borrowed</td>
+                                        <td>@cat.Reserved</td>
+                                        <td>
+                                            <div class="progress-bar">
+                                                <div class="progress" style="width:@cat.Utilization%;"></div>
+                                                <span>@cat.Utilization%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        }
+                        </tbody>
+                    </table>
+            }
+            else
+            {
+                    <div class="empty-state">
+                        <p>No inventory data available</p>
+                    </div>
+            }
+        </div>
+
+        <!-- Detailed Data Section -->
+        <div id="detailedDataSection" class="detailed-data-section" style="display: none;">
+            <div class="detailed-data-header">
+                <h3 id="detailedDataTitle">Detailed Data</h3>
+                <button id="closeDetailedData" class="close-btn">&times;</button>
+            </div>
+            <div class="detailed-data-content">
+                <div id="detailedDataTable" class="table-responsive">
+                    <!-- Data will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+        <script>
+            function filterByDateRange(days) {
+                window.location.href = '@Url.Action("Inventory", "Admin")?daysRange=' + days;
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const activeTab = document.querySelector('[data-tab="inventory"]');
+                if (activeTab) activeTab.classList.add("active");
+
+                // Handle stat card clicks
+                const statCards = document.querySelectorAll('.clickable-stat');
+                const detailedDataSection = document.getElementById('detailedDataSection');
+                const detailedDataTitle = document.getElementById('detailedDataTitle');
+                const detailedDataTable = document.getElementById('detailedDataTable');
+                const closeDetailedData = document.getElementById('closeDetailedData');
+
+                statCards.forEach(card => {
+                    card.addEventListener('click', function() {
+                        const dataType = this.getAttribute('data-type');
+                        loadDetailedData(dataType);
+                    });
+                });
+
+                closeDetailedData.addEventListener('click', function() {
+                    detailedDataSection.style.display = 'none';
+                });
+
+                async function loadDetailedData(type) {
+                    try {
+                        const response = await fetch(`@Url.Action("GetDetailedInventoryData", "Admin")?type=${type}&daysRange=@Model.DaysRange`);
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            displayDetailedData(result.data, type);
+                        } else {
+                            alert('Error loading detailed data: ' + result.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Error loading detailed data');
+                    }
+                }
+
+                function displayDetailedData(data, type) {
+                    const title = data.type;
+                    const items = data.data;
+                    
+                    // Show detailed data section below the table
+                    detailedDataTitle.textContent = title;
+                    detailedDataTable.innerHTML = createTable(items, type);
+                    detailedDataSection.style.display = 'block';
+                    
+                    // Scroll to the detailed data section
+                    detailedDataSection.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                function createTable(items, type) {
+                    if (!items || items.length === 0) {
+                        return '<p>No data available for the selected period.</p>';
+                    }
+
+                    let table = '<table class="table table-striped table-hover">';
+                    
+                    // Create header based on type
+                    if (type === 'totalbooks') {
+                        table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Total Copies</th><th>Available</th><th>Borrowed</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                    } else if (type === 'totalavailable') {
+                        table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Available Copies</th><th>Total Copies</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                    } else if (type === 'totalborrowed') {
+                        table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Borrowed Copies</th><th>Total Copies</th><th>Available</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                    } else if (type === 'totalreserved') {
+                        table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Book Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Reservation Date</th><th>Status</th><th>Copy ID</th></tr></thead>';
+                    }
+                    
+                    table += '<tbody>';
+                    
+                    items.forEach(item => {
+                        table += '<tr>';
+                        if (type === 'totalbooks') {
+                            table += `<td>${item.title || 'N/A'}</td>`;
+                            table += `<td>${item.author || 'N/A'}</td>`;
+                            table += `<td>${item.subject || 'N/A'}</td>`;
+                            table += `<td>${item.isbn || 'N/A'}</td>`;
+                            table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                            table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                            table += `<td><span class="badge badge-warning">${item.borrowedCopies || 0}</span></td>`;
+                            table += `<td>${item.publisher || 'N/A'}</td>`;
+                            table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                            table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                        } else if (type === 'totalavailable') {
+                            table += `<td>${item.title || 'N/A'}</td>`;
+                            table += `<td>${item.author || 'N/A'}</td>`;
+                            table += `<td>${item.subject || 'N/A'}</td>`;
+                            table += `<td>${item.isbn || 'N/A'}</td>`;
+                            table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                            table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                            table += `<td>${item.publisher || 'N/A'}</td>`;
+                            table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                            table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                        } else if (type === 'totalborrowed') {
+                            table += `<td>${item.title || 'N/A'}</td>`;
+                            table += `<td>${item.author || 'N/A'}</td>`;
+                            table += `<td>${item.subject || 'N/A'}</td>`;
+                            table += `<td>${item.isbn || 'N/A'}</td>`;
+                            table += `<td><span class="badge badge-warning">${item.borrowedCopies || 0}</span></td>`;
+                            table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                            table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                            table += `<td>${item.publisher || 'N/A'}</td>`;
+                            table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                            table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                        } else if (type === 'totalreserved') {
+                            table += `<td>${item.studentName || 'N/A'}</td>`;
+                            table += `<td>${item.studentNumber || 'N/A'}</td>`;
+                            table += `<td>${item.bookTitle || 'N/A'}</td>`;
+                            table += `<td>${item.bookAuthor || 'N/A'}</td>`;
+                            table += `<td>${item.subject || 'N/A'}</td>`;
+                            table += `<td>${item.isbn || 'N/A'}</td>`;
+                            table += `<td>${item.reservationDate || 'N/A'}</td>`;
+                            table += `<td><span class="badge badge-info">${item.status || 'N/A'}</span></td>`;
+                            table += `<td>${item.copyIdentifier || 'N/A'}</td>`;
+                        }
+                        table += '</tr>';
+                    });
+                    
+                    table += '</tbody></table>';
+                    return table;
+                }
+            });
+        </script>
+}

@@ -1,0 +1,234 @@
+﻿    @model SystemLibrary.ViewModels.BorrowingReportViewModel
+@{
+    ViewBag.Title = "Borrowing Trend - Reports and Analytics";
+    ViewBag.ActiveTab = "borrow";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/Report.css" />
+
+<main class="content">
+    <header>
+        <h1>Reports and Analytics</h1>
+        <div class="filter">
+            <select id="dateRangeFilter" onchange="filterByDateRange(this.value)">
+                <option value="30" selected="@(Model.DaysRange == 30)">Last 30 Days</option>
+                <option value="60" selected="@(Model.DaysRange == 60)">Last 60 Days</option>
+                <option value="90" selected="@(Model.DaysRange == 90)">Last 90 Days</option>
+                <option value="365" selected="@(Model.DaysRange == 365)">Last 12 Months</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="tabs">
+        @await Html.PartialAsync("_ReportTabs")
+    </section>
+
+    <section class="report-card">
+        <h2>Borrowing Trend</h2>
+        <div class="stats">
+            <div class="stat blue clickable-stat" data-type="totalborrowing">
+                <h3>@Model.TotalBorrowing</h3>
+                <p>Total Borrowing</p>
+            </div>
+            <div class="stat green clickable-stat" data-type="totalreturns">
+                <h3>@Model.TotalReturns</h3>
+                <p>Total Return</p>
+            </div>
+            <div class="stat yellow clickable-stat" data-type="currentlyborrowed">
+                <h3>@Model.CurrentlyBorrowed</h3>
+                <p>Currently Borrowed</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3>Monthly Borrowing vs Returns</h3>
+            <div class="chart-scroll">
+                <canvas id="borrowChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Data Section -->
+        <div id="detailedDataSection" class="detailed-data-section" style="display: none;">
+            <div class="detailed-data-header">
+                <h3 id="detailedDataTitle">Detailed Data</h3>
+                <button id="closeDetailedData" class="close-btn">&times;</button>
+            </div>
+            <div class="detailed-data-content">
+                <div id="detailedDataTable" class="table-responsive">
+                    <!-- Data will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dynamic data from server
+        const monthlyData = @Html.Raw(Json.Serialize(Model.MonthlyData));
+
+        const labels = monthlyData.map(d => d.month);
+        const borrowedData = monthlyData.map(d => d.totalBorrowed);
+        const returnedData = monthlyData.map(d => d.totalReturned);
+
+        const ctx = document.getElementById("borrowChart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Total Borrowed",
+                        data: borrowedData,
+                        backgroundColor: "#22b573",
+                        borderRadius: 20,
+                        barPercentage: 0.6,
+                    },
+                    {
+                        label: "Total Returned",
+                        data: returnedData,
+                        backgroundColor: "#4285f4",
+                        borderRadius: 20,
+                        barPercentage: 0.6,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: "top" },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' books';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: false },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+                },
+            },
+        });
+
+        function filterByDateRange(days) {
+            window.location.href = '@Url.Action("Borrowing", "Admin")?daysRange=' + days;
+        }
+
+        // Handle stat card clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const statCards = document.querySelectorAll('.clickable-stat');
+            const detailedDataSection = document.getElementById('detailedDataSection');
+            const detailedDataTitle = document.getElementById('detailedDataTitle');
+            const detailedDataTable = document.getElementById('detailedDataTable');
+            const closeDetailedData = document.getElementById('closeDetailedData');
+
+            statCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const dataType = this.getAttribute('data-type');
+                    loadDetailedData(dataType);
+                });
+            });
+
+            closeDetailedData.addEventListener('click', function() {
+                detailedDataSection.style.display = 'none';
+            });
+
+            async function loadDetailedData(type) {
+                try {
+                    const response = await fetch(`@Url.Action("GetDetailedBorrowingData", "Admin")?type=${type}&daysRange=@Model.DaysRange`);
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        displayDetailedData(result.data, type);
+                    } else {
+                        alert('Error loading detailed data: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error loading detailed data');
+                }
+            }
+
+            function displayDetailedData(data, type) {
+                const title = data.type;
+                const items = data.data;
+                
+                // Show detailed data section below the chart
+                detailedDataTitle.textContent = title;
+                detailedDataTable.innerHTML = createTable(items, type);
+                detailedDataSection.style.display = 'block';
+                
+                // Scroll to the detailed data section
+                detailedDataSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function createTable(items, type) {
+                if (!items || items.length === 0) {
+                    return '<p>No data available for the selected period.</p>';
+                }
+
+                let table = '<table class="table table-striped table-hover">';
+                
+                // Create header based on type
+                if (type === 'totalborrowing') {
+                    table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Book Title</th><th>Author</th><th>Borrow Date</th><th>Due Date</th><th>Status</th><th>Copy ID</th></tr></thead>';
+                } else if (type === 'totalreturns') {
+                    table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Book Title</th><th>Author</th><th>Return Date</th><th>Condition</th><th>Remarks</th><th>Copy ID</th></tr></thead>';
+                } else if (type === 'currentlyborrowed') {
+                    table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Book Title</th><th>Author</th><th>Borrow Date</th><th>Due Date</th><th>Days Overdue</th><th>Copy ID</th></tr></thead>';
+                }
+                
+                table += '<tbody>';
+                
+                items.forEach(item => {
+                    table += '<tr>';
+                    if (type === 'totalborrowing') {
+                        table += `<td>${item.studentName || 'N/A'}</td>`;
+                        table += `<td>${item.studentNumber || 'N/A'}</td>`;
+                        table += `<td>${item.bookTitle || 'N/A'}</td>`;
+                        table += `<td>${item.bookAuthor || 'N/A'}</td>`;
+                        table += `<td>${item.borrowDate || 'N/A'}</td>`;
+                        table += `<td>${item.dueDate || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-info">${item.status || 'N/A'}</span></td>`;
+                        table += `<td>${item.copyIdentifier || 'N/A'}</td>`;
+                    } else if (type === 'totalreturns') {
+                        table += `<td>${item.studentName || 'N/A'}</td>`;
+                        table += `<td>${item.studentNumber || 'N/A'}</td>`;
+                        table += `<td>${item.bookTitle || 'N/A'}</td>`;
+                        table += `<td>${item.bookAuthor || 'N/A'}</td>`;
+                        table += `<td>${item.returnDate || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-success">${item.condition || 'N/A'}</span></td>`;
+                        table += `<td>${item.remarks || 'N/A'}</td>`;
+                        table += `<td>${item.copyIdentifier || 'N/A'}</td>`;
+                    } else if (type === 'currentlyborrowed') {
+                        table += `<td>${item.studentName || 'N/A'}</td>`;
+                        table += `<td>${item.studentNumber || 'N/A'}</td>`;
+                        table += `<td>${item.bookTitle || 'N/A'}</td>`;
+                        table += `<td>${item.bookAuthor || 'N/A'}</td>`;
+                        table += `<td>${item.borrowDate || 'N/A'}</td>`;
+                        table += `<td>${item.dueDate || 'N/A'}</td>`;
+                        table += `<td><span class="badge ${item.daysOverdue > 0 ? 'badge-danger' : 'badge-success'}">${item.daysOverdue || 0}</span></td>`;
+                        table += `<td>${item.copyIdentifier || 'N/A'}</td>`;
+                    }
+                    table += '</tr>';
+                });
+                
+                table += '</tbody></table>';
+                return table;
+            }
+        });
+    </script>
+    }

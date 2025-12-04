@@ -1,0 +1,662 @@
+﻿/* === GLOBAL STYLING === */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 70px;
+    color: #222;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(1.05);
+    }
+
+.content {
+    width: 100%;
+    padding: 0px 40px 0px 90px;
+    margin-top: -50px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    header h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #8b2f00;
+        margin-bottom: 20px;
+        color: #8b2f00;
+    }
+
+    .add-user {
+        background: #004b70;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+        .add-user:hover {
+            background: #006c99;
+        }
+
+    .tabs {
+        margin: 25px 0;
+    }
+
+        .tabs button {
+            border: none;
+            background: #e7ecf1;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+            .tabs button.active {
+                background: #004b70;
+                color: white;
+            }
+
+    .user-list {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px 20px;
+    }
+
+    .user-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .user-card:last-child {
+            border-bottom: none;
+        }
+
+    .user-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+        .avatar.admin {
+            background: #7a42fc;
+        }
+
+        .avatar.librarian {
+            background: #f4a623;
+        }
+
+    .name-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .name-row h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+    .user-left p {
+        margin: 3px 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .created {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .role {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .admin-role {
+        background: #e3d1ff;
+        color: #7a42fc;
+    }
+
+    .librarian-role {
+        background: #ffe4b2;
+        color: #b36b00;
+    }
+
+.user-right {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+   
+    .user-right .actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        grid-gap: 10px; 
+    }
+
+        .user-right .actions button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: 0.3s ease;
+        }
+
+
+    .status {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+        .status.active {
+            color: #00a32a;
+        }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+    }
+
+        .actions button {
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            width: 130px;
+        }
+
+        .actions .update {
+            background: #e7e7e7;
+        }
+
+        .actions .deactivate {
+            background: #f8d7da;
+            color: #b10000;
+        }
+
+        .actions .delete {
+            background: #ff3b30;
+            color: white;
+        }
+
+            .actions .delete:hover {
+                background: #d92a22;
+            }
+
+    /* Student Avatar */
+    .avatar.student {
+        background: #d8d8d8;
+        color: #555;
+    }
+
+    /* Student Role */
+    .student-role {
+        background: #e5f3ff;
+        color: #005a84;
+    }
+
+    /* Status Styles */
+    .status.active {
+        color: #00a32a;
+    }
+
+    .status.restricted {
+        color: red;
+    }
+
+    /* Action Buttons */
+    .actions .update {
+        background: #e6e6e6;
+        color: #000;
+    }
+
+    .actions .unrestrict {
+        background: #9ef2b0;
+        color: #006b1c;
+    }
+
+    .actions .restrict {
+        background: #f5b4b4;
+        color: #8c0000;
+    }
+
+    .actions .delete {
+        background: #ff3b30;
+        color: white;
+    }
+
+        .actions .delete:hover {
+            background: #d92a22;
+        }
+
+
+    /* Modal overlay (hidden by default) */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0; /* top:0; left:0; right:0; bottom:0; */
+        background: rgba(0,0,0,0.42);
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+
+    .modal {
+        background: #fff;
+        border-radius: 10px;
+        width: 380px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        overflow: hidden;
+        animation: modalIn .22s ease;
+    }
+
+    @keyframes modalIn {
+        from {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-header {
+        background: #004b70;
+        color: #fff;
+        padding: 12px 16px;
+        font-weight: 700;
+    }
+
+    .modal-body {
+        padding: 16px;
+    }
+
+        .modal-body label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .modal-body input, .modal-body select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+
+    .modal-footer {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 16px 20px;
+    }
+
+    .cancel-btn {
+        background: #bfbfbf;
+        color: #222;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .save-btn {
+        background: #004b70;
+        color: #fff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    /* Success Modal */
+    .success-modal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 380px;
+        padding: 50px 30px 40px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        position: relative;
+        animation: modalIn 0.25s ease;
+    }
+
+    /* Check image */
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        margin-bottom: 24px;
+    }
+
+    /* Success text */
+    .success-text {
+        font-size: 22px;
+        font-weight: 700;
+        color: #005a84;
+        margin-bottom: 26px;
+    }
+
+    /* Done button */
+    .done-btn {
+        background: #005a84;
+        color: #ffffff;
+        border: none;
+        padding: 10px 32px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+        .done-btn:hover {
+            background: #0074ad;
+        }
+
+    /* small accessibility helpers */
+    .sr-only {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        border: 0;
+    }
+
+    /* Change Password Modal */
+    .change-password-modal {
+        width: 420px;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        animation: modalIn 0.25s ease;
+    }
+
+        /* Header layout for change password modal */
+        .change-password-modal .modal-header {
+            background: #005a84;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: 700;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+        }
+
+        .change-password-modal .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    .lock-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .change-password-modal .modal-body {
+        padding: 20px;
+    }
+
+    .change-password-modal label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Close (X) button */
+    .close-btn {
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+    }
+
+        .close-btn:hover {
+            color: #cce7f3;
+        }
+
+    .change-password-modal input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+
+    .change-password-modal .modal-footer {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;
+    }
+
+    /* Popup Overlay */
+    .popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    /* Popup Card */
+    .popup-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px 40px;
+        text-align: center;
+        width: 320px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    /* Icons */
+    .popup-icon {
+        width: 60px;
+        margin-bottom: 20px;
+    }
+
+    /* Text */
+    .popup-card p {
+        font-size: 16px;
+        color: #d10000;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    .popup-card .highlight {
+        font-weight: 800;
+    }
+
+    /* Buttons */
+    .popup-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+        .popup-buttons .btn {
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .popup-buttons .cancel {
+            background: #c0c0c0;
+            color: white;
+        }
+
+        .popup-buttons .confirm {
+            background: #d10000;
+            color: white;
+        }
+
+        .popup-buttons .btn:hover {
+            opacity: 0.9;
+        }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    #unrestrictPopup .popup-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px 40px;
+        text-align: center;
+        width: 320px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    #unrestrictPopup p {
+        font-size: 16px;
+        color: #005a84; /* same blue as change password modal */
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    #unrestrictPopup .highlight {
+        color: #005a84;
+        font-weight: 800;
+    }
+
+    #unrestrictPopup .popup-buttons .btn.cancel {
+        background: #bfbfbf;
+        color: #fff;
+    }
+
+    #unrestrictPopup .popup-buttons .btn.confirm {
+        background: #005a84; /* main blue color */
+        color: white;
+    }
+
+        #unrestrictPopup .popup-buttons .btn.confirm:hover {
+            background: #0074ad;
+        }
+
+    /* Unrestricted Success Popup */
+    #unrestrictedSuccessPopup .popup-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 40px 50px;
+        text-align: center;
+        color: #005a84;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        width: 280px;
+        animation: fadeIn 0.3s ease;
+    }
+
+    #unrestrictedSuccessPopup .popup-message {
+        font-size: 18px;
+        font-weight: 600;
+        color: #005a84;
+        margin-bottom: 25px;
+    }
+
+    #unrestrictedSuccessPopup .highlight-text {
+        color: #005a84;
+        font-weight: 700;
+    }
+
+    #unrestrictedSuccessPopup .btn.done-btn {
+        background: #005a84;
+        color: #fff;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        transition: background 0.2s ease;
+    }
+
+        #unrestrictedSuccessPopup .btn.done-btn:hover {
+            background: #0074ad;
+        }

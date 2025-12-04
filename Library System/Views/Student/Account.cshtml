@@ -1,0 +1,249 @@
+﻿@model SystemLibrary.ViewModels.StudentAccountViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Account";
+}
+<link rel="stylesheet" href="~/css/student/acts.css" />
+
+@if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+        </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+        </div>
+}
+
+<div class="account-dashboard">
+    <!-- Account Info -->
+    <section class="account-section">
+        <h2 class="student-name">@Model.FullName</h2>
+        <form asp-action="UpdateAccount" method="post" class="account-form" id="accountForm">
+            @Html.AntiForgeryToken()
+
+            <label>Email</label>
+            <input type="email" name="Email" value="@Model.Email" readonly />
+
+            <label>Contact Number</label>
+            <input type="text" name="ContactNumber" value="@Model.ContactNumber" readonly />
+
+            <label>Student No.</label>
+            <input type="text" name="StudentNumber" value="@Model.StudentNumber" readonly />
+
+            <hr class="divider" />
+
+            <div id="passwordFields" style="display: none;">
+                <label>New Password</label>
+                <input type="password" name="NewPassword" id="newPassword" minlength="6" required />
+                <span asp-validation-for="@(new UpdateAccountViewModel().NewPassword)" class="text-danger"></span>
+
+                <label>Confirm Password</label>
+                <input type="password" name="ConfirmPassword" id="confirmPassword" required />
+                <span asp-validation-for="@(new UpdateAccountViewModel().ConfirmPassword)" class="text-danger"></span>
+
+                <button type="submit" class="btn-save">SAVE</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Penalty Section -->
+    <aside class="penalty-section">
+        <div class="penalty-header">
+            <img src="~/images/warning.png" alt="Warning" class="penalty-icon" />
+            <h2>PENALTY INFORMATION</h2>
+        </div>
+
+        <div class="penalty-summary-cards">
+            <div class="penalty-summary-card @(Model.UnpaidPenalties > 0 ? "unpaid" : "")">
+                <div class="card-icon unpaid">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="card-content">
+                    <p class="card-label">Unpaid Amount</p>
+                    <p class="card-amount">₱ @Model.UnpaidPenalties.ToString("N2")</p>
+                </div>
+            </div>
+            <div class="penalty-summary-card @(Model.OverdueBooksCount > 0 ? "unpaid" : "")">
+                <div class="card-icon unpaid">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="card-content">
+                    <p class="card-label">Overdue Books</p>
+                    <p class="card-amount">@Model.OverdueBooksCount</p>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.PenaltyHistory != null && Model.PenaltyHistory.Any())
+        {
+                <div class="penalty-history-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i> Penalty History
+                    </h3>
+
+                    <div class="penalty-records">
+                    @foreach (var penalty in Model.PenaltyHistory.Take(5))
+                    {
+                                <div class="penalty-record @(penalty.IsPaid ? "paid" : "unpaid")">
+                                    <div class="record-header">
+                                        <div class="record-book">
+                                            <i class="fas fa-book"></i>
+                                            <strong>@penalty.BookTitle</strong>
+                                        </div>
+                                        <span class="status-badge status-@penalty.StatusClass">
+                                    @penalty.StatusText
+                                        </span>
+                                    </div>
+                                    <div class="record-body">
+                                        <div class="record-info">
+                                            <i class="fas fa-info-circle"></i>
+                                            <span>@penalty.Reason</span>
+                                        </div>
+                                        <div class="record-footer">
+                                            <span class="record-date">
+                                                <i class="far fa-calendar"></i>
+                                        @penalty.CreatedAt.ToString("MMM dd, yyyy")
+                                            </span>
+                                            <span class="record-amount">₱ @penalty.PenaltyAmount.ToString("N2")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                    }
+                    </div>
+
+                @if (Model.PenaltyHistory.Count > 5)
+                {
+                            <p class="view-more">
+                                <i class="fas fa-ellipsis-h"></i>
+                                +@(Model.PenaltyHistory.Count - 5) more penalties
+                            </p>
+                }
+                </div>
+
+            @if (Model.UnpaidPenalties > 0)
+            {
+                        <div class="payment-notice">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div>
+                                <strong>Payment Required</strong>
+                                <p>Please settle ₱@Model.UnpaidPenalties.ToString("N2") at the library counter.</p>
+                            </div>
+                        </div>
+            }
+        }
+        else
+        {
+                <div class="no-penalty-card">
+                    <i class="fas fa-check-circle"></i>
+                    <p class="no-penalty-text">No penalties on record</p>
+                    <p class="no-penalty-subtext">Keep up the good work!</p>
+                </div>
+        }
+    </aside>
+</div>
+
+<!-- ✅ Confirmation Modal -->
+<div class="password-modal-overlay" id="passwordModal">
+    <div class="password-modal">
+        <div class="password-modal-icon">
+            <svg viewBox="0 0 100 100" fill="none">
+                <rect x="20" y="45" width="60" height="40" rx="4" fill="#0066a1" />
+                <path d="M30 45V35C30 24.5 38.5 16 49 16C59.5 16 68 24.5 68 35V45" stroke="#0066a1" stroke-width="6" stroke-linecap="round" />
+                <circle cx="42" cy="62" r="3" fill="white" />
+                <circle cx="50" cy="62" r="3" fill="white" />
+                <circle cx="58" cy="62" r="3" fill="white" />
+                <circle cx="66" cy="62" r="3" fill="white" />
+            </svg>
+        </div>
+        <div class="password-modal-text">
+            Are you sure you want to change your password?
+        </div>
+        <div class="password-modal-buttons">
+            <button type="button" class="password-modal-btn password-modal-btn-no" id="modalNoBtn">NO</button>
+            <button type="button" class="password-modal-btn password-modal-btn-yes" id="modalYesBtn">YES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Success Modal -->
+<div class="password-modal-overlay" id="successModal">
+    <div class="password-modal">
+        <div class="password-modal-icon">
+            <svg viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="35" fill="#00b894" />
+                <path d="M35 50L45 60L65 40" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <div class="password-modal-text">Password Changed!</div>
+        <div class="password-modal-subtitle">Your password has been changed successfully</div>
+        <div class="password-modal-buttons">
+            <button type="button" class="password-modal-btn password-modal-btn-done" id="modalDoneBtn">DONE</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            document.getElementById('changePasswordBtn').addEventListener('click', function() {
+                const passwordFields = document.getElementById('passwordFields');
+                passwordFields.style.display = passwordFields.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.getElementById('accountForm').addEventListener('submit', function(e) {
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword && confirmPassword) {
+                    e.preventDefault();
+
+                    if (newPassword !== confirmPassword) {
+                        alert('Passwords do not match!');
+                        return false;
+                    }
+
+                    if (newPassword.length < 6) {
+                        alert('Password must be at least 6 characters long!');
+                        return false;
+                    }
+
+                    document.getElementById('passwordModal').classList.add('active');
+                }
+            });
+
+            document.getElementById('modalNoBtn').addEventListener('click', () => {
+                document.getElementById('passwordModal').classList.remove('active');
+            });
+
+            document.getElementById('modalYesBtn').addEventListener('click', () => {
+                document.getElementById('passwordModal').classList.remove('active');
+                document.getElementById('accountForm').submit();
+            });
+
+            document.getElementById('modalDoneBtn').addEventListener('click', () => {
+                document.getElementById('successModal').classList.remove('active');
+                window.location.reload();
+            });
+
+            document.getElementById('passwordModal').addEventListener('click', e => {
+                if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+            });
+
+            document.getElementById('successModal').addEventListener('click', e => {
+                if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+            });
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                            window.addEventListener('DOMContentLoaded', function() {
+                                document.getElementById('successModal').classList.add('active');
+                            });
+            </text>
+        }
+        </script>
+}

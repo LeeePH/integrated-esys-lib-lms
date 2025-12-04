@@ -1,0 +1,533 @@
+﻿@model SystemLibrary.ViewModels.ReportViewModel
+@{
+    ViewData["Title"] = "Reports and Analytics";
+}
+
+<link rel="stylesheet" href="~/css/report.css" />
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Library System</h1>
+    <a href="#" class="text-decoration-none">Log Out</a>
+</div>
+
+<div class="row">
+    <!-- Main Content -->
+    <div class="col-md-9">
+        <div class="bg-light p-4" style="border-radius: 5px; min-height: 500px;">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="text-danger mb-0">Reports and Analytics</h3>
+                <div>
+                    <a href="@Url.Action("ExportReportPdf", new { timeRange = Model.TimeRange })" class="btn btn-outline-danger btn-sm me-2">
+                        <i class="fas fa-file-pdf"></i> Export PDF
+                    </a>
+                    <a href="@Url.Action("ExportReportExcel", new { timeRange = Model.TimeRange })" class="btn btn-outline-success btn-sm me-2">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </a>
+                    <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                </div>
+            </div>
+
+            <!-- Time Range Filter -->
+            <div class="mb-4">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn @(Model.TimeRange == "Last30Days" ? "btn-primary" : "btn-outline-primary") btn-sm"
+                            onclick="changeTimeRange('Last30Days')">
+                        <i class="fas fa-calendar-day"></i> Last 30 Days
+                    </button>
+                    <button type="button" class="btn @(Model.TimeRange == "Last90Days" ? "btn-primary" : "btn-outline-primary") btn-sm"
+                            onclick="changeTimeRange('Last90Days')">
+                        <i class="fas fa-calendar-week"></i> Last 90 Days
+                    </button>
+                    <button type="button" class="btn @(Model.TimeRange == "LastYear" ? "btn-primary" : "btn-outline-primary") btn-sm"
+                            onclick="changeTimeRange('LastYear')">
+                        <i class="fas fa-calendar-alt"></i> Last Year
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success/Error Messages -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs mb-4" id="reportTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="borrowing-tab" data-bs-toggle="tab" data-bs-target="#borrowing" type="button" role="tab">
+                        <i class="fas fa-chart-line me-2"></i>Borrowing Trend
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="overdue-tab" data-bs-toggle="tab" data-bs-target="#overdue" type="button" role="tab">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Overdue Accounts
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="inventory-tab" data-bs-toggle="tab" data-bs-target="#inventory" type="button" role="tab">
+                        <i class="fas fa-boxes me-2"></i>Inventory Status
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="student-tab" data-bs-toggle="tab" data-bs-target="#student" type="button" role="tab">
+                        <i class="fas fa-users me-2"></i>Student Activity
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="reportTabContent">
+
+                <!-- BORROWING TREND TAB -->
+                <div class="tab-pane fade show active" id="borrowing" role="tabpanel">
+                    <h5 class="text-danger mb-3"><i class="fas fa-chart-bar"></i> Borrowing Trend</h5>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button class="btn btn-outline-danger btn-sm" onclick="exportBorrowingPdf()"><i class="fas fa-file-pdf"></i> Export as PDF</button>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center border-0 shadow-sm" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <div class="card-body text-white">
+                                    <h2 class="mb-0">@Model.BorrowingTrend.TotalBorrowing</h2>
+                                    <p class="mb-0">Total Borrowing</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center border-0 shadow-sm" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <div class="card-body text-white">
+                                    <h2 class="mb-0">@Model.BorrowingTrend.TotalReturn</h2>
+                                    <p class="mb-0">Total Return</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center border-0 shadow-sm" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                <div class="card-body text-white">
+                                    <h2 class="mb-0">@Model.BorrowingTrend.CurrentlyBorrowed</h2>
+                                    <p class="mb-0">Currently Borrowed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Chart -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title">Monthly Borrowing vs Returns</h6>
+                            <canvas id="borrowingChart" height="80"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OVERDUE ACCOUNTS TAB -->
+                <div class="tab-pane fade" id="overdue" role="tabpanel">
+                    <h5 class="text-danger mb-3"><i class="fas fa-exclamation-triangle"></i> Overdue Accounts</h5>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <button class="btn btn-outline-danger btn-sm" onclick="exportOverduePdf()"><i class="fas fa-file-pdf"></i> Export as PDF</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-danger">
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Book Title</th>
+                                    <th>Due Date</th>
+                                    <th>Days Overdue</th>
+                                    <th>Late Fees</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.OverdueAccounts != null && Model.OverdueAccounts.Any())
+                                {
+                                    @foreach (var account in Model.OverdueAccounts)
+                                    {
+                                        <tr>
+                                            <td><i class="fas fa-user-circle"></i> @account.UserId.Substring(0, 10)...</td>
+                                            <td>@account.UserName</td>
+                                            <td><i class="fas fa-book"></i> @account.BookTitle</td>
+                                            <td>@account.DueDate.ToString("MM/dd/yyyy")</td>
+                                            <td>
+                                                <span class="badge bg-danger">
+                                                    @account.DaysOverdue day(s)
+                                                </span>
+                                            </td>
+                                            <td class="fw-bold text-danger">₱@account.LateFees.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                    <tr class="table-warning">
+                                        <td colspan="5" class="text-end fw-bold">Total Late Fees:</td>
+                                        <td class="fw-bold text-danger">₱@Model.OverdueAccounts.Sum(a => a.LateFees).ToString("N2")</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">
+                                            <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                                            <p class="text-muted">No overdue accounts</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- INVENTORY STATUS TAB -->
+                <div class="tab-pane fade show active" id="inventory" role="tabpanel">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="text-danger mb-0"><i class="fas fa-boxes"></i> Inventory Status</h5>
+                        <button class="btn btn-danger btn-sm" onclick="exportInventoryPdf()">
+                            <i class="fas fa-file-pdf me-2"></i>Export as PDF
+                        </button>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center border-0 shadow-sm">
+                                <div class="card-body">
+                                    <i class="fas fa-book fa-2x text-primary mb-2"></i>
+                                    <h3 class="mb-0">@Model.InventoryStatus.TotalBooks</h3>
+                                    <small class="text-muted">Total Books</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-0 shadow-sm">
+                                <div class="card-body">
+                                    <i class="fas fa-layer-group fa-2x text-info mb-2"></i>
+                                    <h3 class="mb-0">@Model.InventoryStatus.TotalCopies</h3>
+                                    <small class="text-muted">Total Copies</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-0 shadow-sm">
+                                <div class="card-body">
+                                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                                    <h3 class="mb-0">@Model.InventoryStatus.AvailableCopies</h3>
+                                    <small class="text-muted">Available Copies</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center border-0 shadow-sm">
+                                <div class="card-body">
+                                    <i class="fas fa-book-reader fa-2x text-warning mb-2"></i>
+                                    <h3 class="mb-0">@Model.InventoryStatus.BorrowedCopies</h3>
+                                    <small class="text-muted">Borrowed Copies</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Low Stock Books -->
+                        @if (Model.InventoryStatus.LowStockBooks != null && Model.InventoryStatus.LowStockBooks.Any())
+                        {
+                            <div class="list-group list-group-flush">
+                                @foreach (var book in Model.InventoryStatus.LowStockBooks)
+                                {
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">@book.Title</h6>
+                                                <small class="text-muted">@book.Author</small>
+                                            </div>
+                                            <span class="badge bg-warning">@book.AvailableCopies left</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <!-- Most Borrowed Books -->
+                        @if (Model.InventoryStatus.MostBorrowedBooks != null && Model.InventoryStatus.MostBorrowedBooks.Any())
+                        {
+                            <div class="list-group list-group-flush">
+                                @foreach (var book in Model.InventoryStatus.MostBorrowedBooks)
+                                {
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">@book.Title</h6>
+                                                <small class="text-muted">@book.Author</small>
+                                            </div>
+                                            <span class="badge bg-success">@book.BorrowCount times</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <!-- STUDENT ACTIVITY TAB -->
+                        <div class="tab-pane fade" id="student" role="tabpanel">
+                            <h5 class="text-danger mb-3"><i class="fas fa-users"></i> Student Activity</h5>
+                            <div class="mb-3 d-flex justify-content-end">
+                                <button class="btn btn-outline-danger btn-sm" onclick="exportStudentActivityPdf()"><i class="fas fa-file-pdf"></i> Export as PDF</button>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Total Borrowings</th>
+                                            <th>Current Borrowings</th>
+                                            <th>Overdue Books</th>
+                                            <th>Total Late Fees</th>
+                                            <th>Last Activity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.StudentActivity != null && Model.StudentActivity.Any())
+                                        {
+                                            @foreach (var student in Model.StudentActivity)
+                                            {
+                                                <tr>
+                                                    <td><i class="fas fa-user-circle"></i> @student.UserId.Substring(0, 10)...</td>
+                                                    <td>@student.UserName</td>
+                                                    <td><i class="fas fa-envelope"></i> @student.Email</td>
+                                                    <td><span class="badge bg-primary">@student.TotalBorrowings</span></td>
+                                                    <td><span class="badge bg-info">@student.CurrentBorrowings</span></td>
+                                                    <td>
+                                                        @if (student.OverdueBooks > 0)
+                                                        {
+                                                            <span class="badge bg-danger">@student.OverdueBooks</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-success">0</span>
+                                                        }
+                                                    </td>
+                                                    <td class="@(student.TotalLateFees > 0 ? "text-danger fw-bold" : "")">
+                                                        ₱@student.TotalLateFees.ToString("N2")
+                                                    </td>
+                                                    <td>@student.LastActivity.ToString("MM/dd/yyyy")</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="8" class="text-center py-4">
+                                                    <i class="fas fa-users-slash fa-2x mb-2 text-muted"></i>
+                                                    <p class="text-muted">No student activity in this period</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script>
+            // Borrowing Trend Chart
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctx = document.getElementById('borrowingChart');
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [@Html.Raw(string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => $"'{m.Month}'")))],
+                            datasets: [{
+                                label: 'Borrowed',
+                                data: [@string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => m.Borrowed))],
+                                backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }, {
+                                label: 'Returned',
+                                data: [@string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => m.Returned))],
+                                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 100
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            function changeTimeRange(range) {
+                window.location.href = '@Url.Action("Reports")?timeRange=' + range;
+            }
+
+            // Auto-dismiss alerts
+            setTimeout(function() {
+                document.querySelectorAll('.alert').forEach(function(alert) {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 5000);
+
+            // Export helpers (client-side print to PDF)
+            function openPrintWindow(title, html) {
+                const w = window.open('', '_blank');
+                if (!w) return;
+                w.document.write(`<!doctype html><html><head><title>${title}</title>
+                    <style>
+                        body{font-family: Arial, sans-serif; padding:20px;}
+                        h1{margin:0 0 10px 0;}
+                        h2{margin:20px 0 10px 0;}
+                        table{width:100%; border-collapse: collapse;}
+                        th,td{border:1px solid #ddd; padding:8px; font-size:12px;}
+                        th{background:#f5f5f5; text-align:left;}
+                        .kpi{display:flex; gap:12px;}
+                        .kpi .card{border:1px solid #eee; padding:12px; border-radius:6px;}
+                        .muted{color:#666; font-size:12px}
+                    </style>
+                </head><body>${html}</body></html>`);
+                w.document.close();
+                w.focus();
+                w.print();
+            }
+
+            function exportBorrowingPdf() {
+                const months = [@Html.Raw(string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => $"'{m.Month}'")))];
+                const borrowed = [@string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => m.Borrowed))];
+                const returned = [@string.Join(",", Model.BorrowingTrend.MonthlyData.Select(m => m.Returned))];
+                const html = `
+                    <h1>Borrowing Trend</h1>
+                    <div class="muted">Time Range: @Model.TimeRange</div>
+                    <div class="kpi">
+                      <div class="card"><div>Total Borrowing</div><h2>@Model.BorrowingTrend.TotalBorrowing</h2></div>
+                      <div class="card"><div>Total Return</div><h2>@Model.BorrowingTrend.TotalReturn</h2></div>
+                      <div class="card"><div>Currently Borrowed</div><h2>@Model.BorrowingTrend.CurrentlyBorrowed</h2></div>
+                    </div>
+                    <h2>Monthly Borrowing vs Returns</h2>
+                    <table><thead><tr><th>Month</th><th>Borrowed</th><th>Returned</th></tr></thead>
+                    <tbody>${months.map((m,i)=>`<tr><td>${m.replace(/'/g,'')}</td><td>${borrowed[i]}</td><td>${returned[i]}</td></tr>`).join('')}</tbody></table>
+                `;
+                openPrintWindow('Borrowing Trend', html);
+            }
+
+            function exportOverduePdf() {
+                const rows = Array.from(document.querySelectorAll('#overdue table tbody tr'))
+                    .map(tr => Array.from(tr.children).map(td => td.innerText));
+                const bodyRows = rows
+                    .filter(r => r.length >= 6)
+                    .map(r => `<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`)
+                    .join('');
+                const html = `
+                    <h1>Overdue Accounts</h1>
+                    <div class="muted">Time Range: @Model.TimeRange</div>
+                    <table><thead><tr>
+                        <th>Student ID</th><th>Student Name</th><th>Book Title</th><th>Due Date</th><th>Days Overdue</th><th>Late Fees</th>
+                    </tr></thead><tbody>${bodyRows}</tbody></table>`;
+                openPrintWindow('Overdue Accounts', html);
+            }
+
+            function exportInventoryPdf() {
+                const html = `
+                    <h1>Inventory Status</h1>
+                    <div class="muted">Time Range: @Model.TimeRange</div>
+                    <div class="kpi">
+                      <div class="card"><div>Total Books</div><h2>@Model.InventoryStatus.TotalBooks</h2></div>
+                      <div class="card"><div>Total Copies</div><h2>@Model.InventoryStatus.TotalCopies</h2></div>
+                      <div class="card"><div>Available Copies</div><h2>@Model.InventoryStatus.AvailableCopies</h2></div>
+                      <div class="card"><div>Borrowed Copies</div><h2>@Model.InventoryStatus.BorrowedCopies</h2></div>
+                    </div>
+                    <h2>Low Stock Books</h2>
+                    <table><thead><tr><th>Title</th><th>Author</th><th>Available</th></tr></thead>
+                    <tbody>
+                    @if (Model.InventoryStatus.LowStockBooks != null){
+                        @foreach (var b in Model.InventoryStatus.LowStockBooks){<text><tr><td>@b.Title</td><td>@b.Author</td><td>@b.AvailableCopies</td></tr></text>}
+                    }
+                    </tbody></table>
+                    <h2>Most Borrowed Books</h2>
+                    <table><thead><tr><th>Title</th><th>Author</th><th>Borrow Count</th></tr></thead>
+                    <tbody>
+                    @if (Model.InventoryStatus.MostBorrowedBooks != null){
+                        @foreach (var b in Model.InventoryStatus.MostBorrowedBooks){<text><tr><td>@b.Title</td><td>@b.Author</td><td>@b.BorrowCount</td></tr></text>}
+                    }
+                    </tbody></table>
+                `;
+                openPrintWindow('Inventory Status', html);
+            }
+
+            function exportStudentActivityPdf() {
+                const header = `<tr><th>Student ID</th><th>Name</th><th>Email</th><th>Total Borrowings</th><th>Current Borrowings</th><th>Overdue Books</th><th>Total Late Fees</th><th>Last Activity</th></tr>`;
+                const rows = `@if (Model.StudentActivity != null){@foreach (var s in Model.StudentActivity){<text><tr>
+                    <td>@s.UserId.Substring(0,10)...</td><td>@s.UserName</td><td>@s.Email</td><td>@s.TotalBorrowings</td><td>@s.CurrentBorrowings</td><td>@s.OverdueBooks</td><td>₱@s.TotalLateFees.ToString("N2")</td><td>@s.LastActivity.ToString("MM/dd/yyyy")</td>
+                </tr></text>}}`;
+                const html = `<h1>Student Activity</h1><div class="muted">Time Range: @Model.TimeRange</div><table><thead>${header}</thead><tbody>${rows}</tbody></table>`;
+                openPrintWindow('Student Activity', html);
+            }
+        </script>
+
+        <style>
+            .card {
+                transition: transform 0.2s;
+            }
+
+                .card:hover {
+                    transform: translateY(-5px);
+                }
+
+            .list-group-item {
+                border-left: none;
+                border-right: none;
+            }
+
+                .list-group-item:first-child {
+                    border-top: none;
+                }
+
+            .nav-tabs .nav-link {
+                color: #495057;
+            }
+
+                .nav-tabs .nav-link.active {
+                    color: #0d6efd;
+                    font-weight: 600;
+                }
+        </style>

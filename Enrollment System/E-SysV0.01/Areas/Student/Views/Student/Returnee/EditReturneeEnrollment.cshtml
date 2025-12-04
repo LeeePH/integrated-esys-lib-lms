@@ -1,0 +1,141 @@
+﻿@{
+    Layout = "~/Views/Shared/ESys_KioskLayout.cshtml";
+    ViewData["Title"] = "Edit Rejected Enrollment";
+}
+
+<style>
+    .container-narrow {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    .required-asterisk::after {
+        content: " *";
+        color: #dc3545;
+    }
+
+    /* Basic styling for errors in a static context */
+    .field-validation-error, .validation-summary-errors {
+        color: #dc3545;
+    }
+
+    .field-validation-valid {
+        display: none;
+    }
+</style>
+
+<div class="container-narrow">
+    <div class="d-flex w-100 rounded-2 p-2" style="background-color: #066B99;">
+        <img src="~/images/student-icon-white.svg" alt="Student Icon" width="30" />
+        <h4 class="text-white ms-2">Edit & Resubmit Returnee Enrollment Application</h4>
+    </div>
+
+    <h6 class="text-muted mt-3">Update your information below and resubmit.</h6>
+
+    <form action="#" method="post" enctype="application/x-www-form-urlencoded" novalidate>
+
+        <h4 class="mt-3">Basic Information</h4>
+        <p>Please provide your correct information. This will be used for your enrollment.</p>
+        <hr />
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Student - Personal Details</legend>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Last Name</label>
+                    <input id="Student_LastName" name="Student.LastName" value="" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">First Name</label>
+                    <input id="Student_FirstName" name="Student.FirstName" value="" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Middle Name</label>
+                    <input id="Student_MiddleName"
+                           name="Student.MiddleName"
+                           value=""
+                           class="form-control"
+                           placeholder="Type N/A if not applicable"
+                           required />
+                    <small class="text-secondary">Type "N/A" if not applicable.</small>
+                </div>
+
+        </fieldset>
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Academic Information</legend>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label required-asterisk">Student ID</label>
+                    <input id="StudentAcademic_StudentID" name="StudentAcademic.StudentID" value="" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label required-asterisk">Course Last Enrolled</label>
+                    <select id="StudentAcademic_CourseLastEnrolled" name="StudentAcademic.CourseLastEnrolled" class="form-select" required>
+                        <option value="" selected disabled hidden>-- Select Course --</option>
+                 
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label required-asterisk">Course Applying For Re-admission</label>
+                    <select id="StudentAcademic_CourseApplyingFor" name="StudentAcademic.CourseApplyingFor" class="form-select" required>
+                        <option value="" selected disabled hidden>-- Select Course --</option>
+                      
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 mt-1">
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Program/Course (Read-only)</label>
+                    <input id="Academic_Program" name="Academic.Program" value="BSIT - Information Technology (Placeholder)" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Year Level (Read-only)</label>
+                    <input id="Academic_YearLevel" name="Academic.YearLevel" value="3rd Year (Placeholder)" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Semester (Read-only)</label>
+                    <input id="Academic_Semester" name="Academic.Semester" value="2nd Semester (Placeholder)" class="form-control" readonly />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Absence & Shifting Details</legend>
+            <div class="mb-3">
+                <label for="StudentDetails_EnrolledInOtherUniversity" class="form-label required-asterisk">
+                    Have you enrolled in other universities during the period of AWOL/LOA?
+                    <small class="text-secondary">(If Yes, specify)</small>
+                </label>
+                <textarea id="StudentDetails_EnrolledInOtherUniversity" name="StudentDetails.EnrolledInOtherUniversity"
+                          class="form-control" rows="2"
+                          placeholder="Specify the university name and duration, or enter 'No'."
+                          required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="StudentDetails_ReasonForStopping" class="form-label required-asterisk">Reason why you stopped before</label>
+                <textarea id="StudentDetails_ReasonForStopping" name="StudentDetails.ReasonForStopping"
+                          class="form-control" rows="3"
+                          placeholder="Please clearly state your reason for stopping enrollment."
+                          required></textarea>
+            </div>
+            <div class="mb-0">
+                <label for="StudentDetails_ReasonForShifting" class="form-label">
+                    If you are applying to shift to another course, reason/s for transfer
+                </label>
+                <textarea id="StudentDetails_ReasonForShifting" name="StudentDetails.ReasonForShifting"
+                          class="form-control" rows="3"
+                          placeholder="Explain your reasons for shifting courses. Leave blank if not shifting."></textarea>
+            </div>
+        </fieldset>
+
+        <p class="pt-2 text-secondary mb-3">
+            Click resubmit to send your updated application.
+        </p>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn text-white" style="background-color: #066B99;">Resubmit</button>
+        </div>
+    </form>
+</div>
+

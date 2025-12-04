@@ -1,0 +1,833 @@
+@model List<SystemLibrary.Models.User>
+@{
+    ViewBag.Title = "User Management";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/Admin/Usermanage.css" />
+</head>
+<body>
+    <main class="content">
+        <header>
+            <h1>User Management</h1>
+            <div class="header-actions">
+                @* <button class="view-mac-btn" onclick="viewMACData()">📊 View MOCK data</button> *@
+                <button class="add-user" onclick="openAddUserModal()">+ Add New User</button>
+            </div>
+        </header>
+
+        <section class="tabs">
+            <button class="active" onclick="location.href='@Url.Action("UserSettings", "Admin")'">
+                Library Staff
+            </button>
+            <button onclick="location.href='@Url.Action("UserSettingsStudent", "Admin")'">
+                Student Accounts
+            </button>
+        </section>
+
+        <section class="user-list">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var user in Model)
+                {
+                            <div class="user-card">
+                                <div class="user-left">
+                                    <div class="avatar @user.Role">
+                                        <i class="icon">@(user.Role == "admin" ? "👤" : "👥")</i>
+                                    </div>
+                                    <div>
+                                        <div class="name-row">
+                                            <h3>@(user.FullName != null ? user.FullName.ToUpper() : "[NO NAME]")</h3>
+                                            <span class="role @(user.Role)-role">@user.Role.ToUpper()</span>
+                                        </div>
+                                        <p>@user.Username</p>
+                                        <p class="created">Created: @user.CreatedAt.ToString("M/d/yyyy")</p>
+                                    </div>
+                                </div>
+
+                                <div class="user-right">
+                                    <span class="statuses @(user.IsActive ? "active" : "inactive")">
+                                        ● @(user.IsActive ? "ACTIVE" : "INACTIVE")
+                                    </span>
+                                    <div class="actions">
+                                        <button class="update" data-user-id="@user._id">Update password</button>
+                                @if (user.IsActive)
+                                {
+                                                <button class="deactivate" data-user-id="@user._id">Deactivate User</button>
+                                }
+                                else
+                                {
+                                                <button class="activate" data-user-id="@user._id">Activate User</button>
+                                }
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                }
+            }
+            else
+            {
+                    <p>No library staff found.</p>
+            }
+        </section>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">ADD USER</div>
+            <div class="modal-body">
+                <!-- Data Lookup Section -->
+                <div class="mac-lookup-section">
+                    <h3>🔍 Data Lookup</h3>
+                    <div class="lookup-controls">
+                        <div class="lookup-group">
+                            <label>Lookup Type:</label>
+                            <select id="lookupType" onchange="toggleLookupFields()">
+                                <option value="">Select lookup type</option>
+                                <option value="staff">Staff by Employee ID</option>
+                                <option value="manual">Manual Entry</option>
+                            </select>
+                        </div>
+                        
+                    <div id="staffLookupGroup" class="lookup-group" style="display: none;">
+                            <label>Employee ID (for reference only)</label>
+                            <div class="lookup-input-group">
+                                <input type="text" id="employeeId" placeholder="Enter Employee ID (e.g., EMP-001)">
+                                <button type="button" onclick="lookupStaff()" class="lookup-btn">📊 View Data</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="lookupResult" class="lookup-result" style="display: none;">
+                        <!-- Lookup results will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Manual Entry Section -->
+                <div id="manualEntrySection" class="manual-entry-section">
+                    <h3>📝 Manual Entry</h3>
+                    <label>Email</label>
+                    <input type="text" id="email" placeholder="Enter email address">
+
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="Enter full name">
+
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter username">
+
+                    <label>Password</label>
+                    <input type="password" id="password">
+
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword">
+
+                    <label>Select Role</label>
+                    <select id="role">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="LIBRARIAN">LIBRARIAN</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeAddUserModal()">Cancel</button>
+                <button class="save-btn" onclick="addUser()">+ Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal (After Adding User) -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/bluecheck.png" alt="Success" class="success-icon">
+            <div class="success-text">New User Added!</div>
+            <button class="done-btn" onclick="closeSuccessModal()">DONE</button>
+        </div>
+    </div>
+
+    <!-- RESET Password Modal - NO OLD PASSWORD -->
+    <div id="changePasswordModal" class="modal-overlay">
+        <div class="modal change-password-modal">
+            <div class="modal-header">
+                <div class="header-left">
+                    <img src="~/images/lock.png" alt="Lock Icon" class="lock-icon">
+                    <h2>Reset Password</h2>
+                </div>
+                <button class="close-btn" onclick="closeChangePasswordModal()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="currentUserId">
+
+                <label>Enter new password:</label>
+                <input type="password" id="newPassword">
+
+                <label>Confirm new password:</label>
+                <input type="password" id="confirmNewPassword">
+            </div>
+
+            <div class="modal-footer">
+                <button class="done-btn" onclick="confirmPasswordUpdate()">DONE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Reset Modal -->
+    <div id="confirmUpdateModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/lock.png" alt="Confirm Icon" class="success-icon">
+            <div class="success-text">Are you sure you want to reset this user's password?</div>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="cancel-btn" onclick="closeConfirmUpdateModal()">Cancel</button>
+                <button class="done-btn" onclick="resetPassword()">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Updated Modal -->
+    <div id="passwordUpdatedModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/lock.png" alt="Success" class="success-icon">
+            <div class="success-text">Password Updated!</div>
+            <button class="done-btn" onclick="closePasswordUpdatedModal()">DONE</button>
+        </div>
+    </div>
+
+    <!-- Deactivate Popup -->
+    <div id="deactivatePopup" class="popup-overlay">
+        <div class="popup-card">
+            <img src="~/images/deactivate.png" alt="Deactivate Icon" class="popup-icon">
+            <p>Are you sure you want to <span class="highlight">DEACTIVATE</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('deactivatePopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('deactivate')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activate Popup -->
+    <div id="activatePopup" class="popup-overlay">
+        <div class="popup-card">
+            <img src="~/images/deactivate.png" alt="Activate Icon" class="popup-icon">
+            <p>Are you sure you want to <span class="highlight">ACTIVATE</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('activatePopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('activate')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Popup -->
+    <div id="deletePopup" class="popup-overlay">
+        <div class="popup-card">
+            <img src="~/images/trashbin.png" alt="Delete Icon" class="popup-icon">
+            <p>Are you sure you want to <span class="highlight">DELETE</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('deletePopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('delete')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-card">
+            <p id="successMessage" class="success-only-text">User has been successfully updated.</p>
+            <div class="popup-buttons">
+                <button class="btn confirm" onclick="closeSuccessPopupAndReload()">DONE</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+@section Scripts {
+        <script>
+            let currentUserId = null;
+            let tempNewPassword = '';
+            let tempConfirmNewPassword = '';
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelector(".add-user").addEventListener("click", openAddUserModal);
+
+                document.querySelectorAll(".update").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openChangePasswordModal();
+                    });
+                });
+
+                document.querySelectorAll(".deactivate").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('deactivate');
+                    });
+                });
+
+                document.querySelectorAll(".activate").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('activate');
+                    });
+                });
+
+                document.querySelectorAll(".delete").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('delete');
+                    });
+                });
+            });
+
+            // ADD USER
+            function openAddUserModal() {
+                document.getElementById("addUserModal").style.display = "flex";
+            }
+
+            function closeAddUserModal() {
+                document.getElementById("addUserModal").style.display = "none";
+                document.getElementById("email").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+                document.getElementById("confirmPassword").value = "";
+                document.getElementById("employeeId").value = "";
+                document.getElementById("lookupType").value = "";
+                document.getElementById("staffLookupGroup").style.display = "none";
+                document.getElementById("lookupResult").style.display = "none";
+                document.getElementById("manualEntrySection").style.display = "block";
+            }
+
+            function toggleLookupFields() {
+                const lookupType = document.getElementById("lookupType").value;
+                const staffLookupGroup = document.getElementById("staffLookupGroup");
+                const manualEntrySection = document.getElementById("manualEntrySection");
+                const lookupResult = document.getElementById("lookupResult");
+
+                // Hide all sections first
+                staffLookupGroup.style.display = "none";
+                lookupResult.style.display = "none";
+
+                if (lookupType === "staff") {
+                    staffLookupGroup.style.display = "block";
+                    manualEntrySection.style.display = "none";
+                } else if (lookupType === "manual") {
+                    manualEntrySection.style.display = "block";
+                } else {
+                    manualEntrySection.style.display = "block";
+                }
+            }
+
+            async function lookupStaff() {
+                const employeeId = document.getElementById("employeeId").value.trim();
+                
+                if (!employeeId) {
+                    alert("Please enter an Employee ID");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`@Url.Action("LookupStaff", "Admin")?employeeId=${encodeURIComponent(employeeId)}`);
+                    const result = await response.json();
+
+                    const lookupResult = document.getElementById("lookupResult");
+                    
+                    if (result.success && result.data) {
+                        lookupResult.innerHTML = `
+                            <div class="lookup-success">
+                                <h4>✅ Data Found from Enrollment System</h4>
+                                <div class="staff-info">
+                                    <p><strong>Username:</strong> ${result.data.username || 'N/A'}</p>
+                                    <p><strong>Email:</strong> ${result.data.email || 'N/A'}</p>
+                                    <p><strong>Type:</strong> ${result.data.type || 'N/A'}</p>
+                                    <p><strong>First Login:</strong> ${result.data.firstLogin ? 'Yes' : 'No'}</p>
+                                </div>
+                                <div class="auto-fill-section">
+                                    <p>This information is read-only. Staff accounts must still be created manually using the form on the right.</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        lookupResult.innerHTML = `
+                            <div class="lookup-error">
+                                <h4>ℹ️ Enrollment Data</h4>
+                                <p>${result.message || "Staff lookup from enrollment system is not available. Staff accounts should be created manually."}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    lookupResult.style.display = "block";
+                } catch (error) {
+                    alert("Error looking up staff: " + error.message);
+                }
+            }
+
+            async function addUser() {
+                const email = document.getElementById("email").value;
+                const name = document.getElementById("name").value;
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+                const role = document.getElementById("role").value;
+
+                if (!email || !name || !username || !password || !confirmPassword) {
+                    alert("Please fill in all fields");
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match");
+                    return;
+                }
+
+                if (password.length < 6) {
+                    alert("Password must be at least 6 characters");
+                    return;
+                }
+
+                try {
+                    const response = await fetch('@Url.Action("AddUser", "Admin")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            Name: name,
+                            Username: username,
+                            Email: email,
+                            Password: password,
+                            ConfirmPassword: confirmPassword,
+                            Role: role
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        closeAddUserModal();
+                        document.getElementById("successModal").style.display = "flex";
+                    } else {
+                        alert(result.message || "Failed to add user");
+                    }
+                } catch (error) {
+                    alert("An error occurred");
+                    console.error(error);
+                }
+            }
+
+            function closeSuccessModal() {
+                document.getElementById("successModal").style.display = "none";
+                location.reload();
+            }
+
+            // RESET PASSWORD (NO OLD PASSWORD NEEDED)
+            function openChangePasswordModal() {
+                document.getElementById("currentUserId").value = currentUserId;
+                document.getElementById("changePasswordModal").style.display = "flex";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+            }
+
+            function closeChangePasswordModal() {
+                document.getElementById("changePasswordModal").style.display = "none";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+
+            function confirmPasswordUpdate() {
+                const newPassword = document.getElementById("newPassword").value;
+                const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+
+                if (!newPassword || !confirmNewPassword) {
+                    alert("Please fill in all fields");
+                    return;
+                }
+
+                if (newPassword !== confirmNewPassword) {
+                    alert("Passwords do not match");
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert("Password must be at least 6 characters");
+                    return;
+                }
+
+                tempNewPassword = newPassword;
+                tempConfirmNewPassword = confirmNewPassword;
+
+                document.getElementById("changePasswordModal").style.display = "none";
+                document.getElementById("confirmUpdateModal").style.display = "flex";
+            }
+
+            function closeConfirmUpdateModal() {
+                document.getElementById("confirmUpdateModal").style.display = "none";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+
+            async function resetPassword() {
+                const userId = document.getElementById("currentUserId").value;
+
+                try {
+                    const response = await fetch('@Url.Action("AdminResetPassword", "Admin")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            UserId: userId,
+                            NewPassword: tempNewPassword,
+                            ConfirmNewPassword: tempConfirmNewPassword
+                        })
+                    });
+
+                    const result = await response.json();
+                    closeConfirmUpdateModal();
+
+                    if (result.success) {
+                        document.getElementById("passwordUpdatedModal").style.display = "flex";
+                    } else {
+                        alert(result.message || "Failed to reset password");
+                    }
+                } catch (error) {
+                    alert("An error occurred");
+                    console.error(error);
+                }
+            }
+
+            function closePasswordUpdatedModal() {
+                document.getElementById("passwordUpdatedModal").style.display = "none";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+
+            // DEACTIVATE / ACTIVATE / DELETE
+            function openPopup(type) {
+                if (type === 'deactivate') {
+                    document.getElementById('deactivatePopup').style.display = 'flex';
+                } else if (type === 'activate') {
+                    document.getElementById('activatePopup').style.display = 'flex';
+                } else if (type === 'delete') {
+                    document.getElementById('deletePopup').style.display = 'flex';
+                }
+            }
+
+            function closePopup(id) {
+                document.getElementById(id).style.display = 'none';
+            }
+
+            async function confirmAction(action) {
+                closePopup(action + 'Popup');
+
+                let endpoint = '';
+                let successMsg = '';
+
+                if (action === 'deactivate') {
+                    endpoint = '@Url.Action("DeactivateUser", "Admin")';
+                    successMsg = 'User has been DEACTIVATED successfully';
+                } else if (action === 'activate') {
+                    endpoint = '@Url.Action("ActivateUser", "Admin")';
+                    successMsg = 'User has been ACTIVATED successfully';
+                } else if (action === 'delete') {
+                    endpoint = '@Url.Action("DeleteUser", "Admin")';
+                    successMsg = 'User has been DELETED successfully';
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append('userId', currentUserId);
+
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        document.getElementById('successMessage').textContent = successMsg;
+                        document.getElementById('successPopup').style.display = 'flex';
+                    } else {
+                        alert(result.message || 'Failed to perform action');
+                    }
+                } catch (error) {
+                    alert('An error occurred');
+                    console.error(error);
+                }
+            }
+
+            function closeSuccessPopupAndReload() {
+                closePopup('successPopup');
+                location.reload();
+            }
+
+            function viewMACData() {
+                window.open('@Url.Action("Index", "MOCKData")', '_blank');
+            }
+        </script>
+    @Html.AntiForgeryToken()
+}
+
+<style>
+    /* Header Actions */
+    .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .view-mac-btn {
+        background: #17a2b8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .view-mac-btn:hover {
+        background: #138496;
+        transform: translateY(-1px);
+    }
+
+    /* MOCK data Lookup Styles */
+    .mac-lookup-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mac-lookup-section h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .lookup-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .lookup-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .lookup-group label {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 14px;
+    }
+
+    .lookup-input-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .lookup-input-group input {
+        flex: 1;
+        padding: 10px 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .lookup-input-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .lookup-btn {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .lookup-btn:hover {
+        background: #5a6fd8;
+        transform: translateY(-1px);
+    }
+
+    .lookup-result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .lookup-success {
+        background: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+
+    .lookup-error {
+        background: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+
+    .lookup-success h4,
+    .lookup-error h4 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .staff-info {
+        margin-bottom: 15px;
+    }
+
+    .staff-info p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .auto-fill-section {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .auto-fill-section h5 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .auto-fill-section label {
+        display: block;
+        margin: 10px 0 5px 0;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 13px;
+    }
+
+    .auto-fill-section input,
+    .auto-fill-section select {
+        width: 100%;
+        padding: 8px 10px;
+        border: 2px solid #e9ecef;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .auto-fill-section input:focus,
+    .auto-fill-section select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    }
+
+    .create-from-mac-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 10px;
+        transition: all 0.3s;
+    }
+
+    .create-from-mac-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    .manual-entry-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+    }
+
+    .manual-entry-section h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .manual-entry-section label {
+        display: block;
+        margin: 10px 0 5px 0;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 14px;
+    }
+
+    .manual-entry-section input,
+    .manual-entry-section select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .manual-entry-section input:focus,
+    .manual-entry-section select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .lookup-input-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .lookup-btn {
+            width: 100%;
+        }
+
+        .mac-lookup-section,
+        .manual-entry-section {
+            padding: 15px;
+        }
+    }
+
+    /* Fix Add User Modal Height - Prevent Screen Overlap */
+    #addUserModal .modal {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    #addUserModal .modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+</style>
+

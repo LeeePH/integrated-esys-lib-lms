@@ -1,0 +1,1381 @@
+﻿@model E_SysV0._01.Models.AdminDashboardViewModel
+@using E_SysV0._01.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "Admin Settings";
+    var es = Model.EnrollmentSettings;
+    var isOpen = es?.IsOpen == true;
+    var closes = es?.ClosesAtUtc;
+    var opened = es?.OpenedAtUtc;
+    var caps = es?.ProgramCapacities ?? new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+    var programOptions = ProgramCatalog.GetSelectList();
+    var enrolled = Model.ProgramEnrolledCounts ?? new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
+    var currentSem = es?.Semester ?? "1st Semester";
+    var sem1Active = string.Equals(currentSem, "1st Semester", StringComparison.OrdinalIgnoreCase);
+    var sem2Active = string.Equals(currentSem, "2nd Semester", StringComparison.OrdinalIgnoreCase);
+
+    var s1Start = es?.Semester1StartedAtUtc;
+    var s1End = es?.Semester1EndsAtUtc;
+    var s1PlanSecs = es?.Semester1PlannedDurationSeconds ?? 0;
+    var s1PlanMonths = es?.Semester1PlannedMonths ?? 0;
+
+    var s2Start = es?.Semester2StartedAtUtc;
+    var s2End = es?.Semester2EndsAtUtc;
+    var s2PlanSecs = es?.Semester2PlannedDurationSeconds ?? 0;
+    var s2PlanMonths = es?.Semester2PlannedMonths ?? 0;
+
+    string Disabled(bool enabled) => enabled ? "" : "disabled";
+}
+<style>
+    /* === Global Modal Overlay Fix === */
+    .modal-overlay {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000; /* Higher than other modals */
+        backdrop-filter: blur(2px);
+    }
+
+        /* Hide modals when "hidden" class is applied */
+        .modal-overlay.hidden {
+            display: none !important;
+        }
+
+    /* === Modal Card Centering === */
+    .modal-card {
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 500px;
+        animation: fadeInUp 0.25s ease-out;
+    }
+
+    /* Smooth modal entrance animation */
+    keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Header / Footer layout */
+    .modal-header,
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #e5e7eb;
+    }
+
+    /* Modal body */
+    .modal-body {
+        padding: 1rem 1.25rem;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+</style>
+<section id="settings">
+
+
+    <div class="review-section-title">
+        <h4 class="ms-1">Enrollment Settings</h4>
+    </div>
+
+    <div class="mt-3">
+        <h5 class="section-spaced mb-2">Overview</h5>
+        <div class="data-grid mb-3">
+            <div class="data-item">
+                <div class="data-label">Active Semester</div>
+                <div class="data-value">@currentSem</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Academic Year</div>
+                <div class="data-value">@es?.AcademicYear ?? "-"</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Enrollment Status</div>
+                <div class="data-value">@((isOpen ? "Open" : "Closed"))</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Enrollment Opened</div>
+                <div class="data-value">@(opened?.ToString("yyyy-MM-dd HH:mm 'UTC'") ?? "-")</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Enrollment Closes</div>
+                <div class="data-value">@(closes?.ToString("yyyy-MM-dd HH:mm 'UTC'") ?? "(no auto-close)")</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">1st Sem</div>
+                <div class="data-value">
+                    @(s1Start.HasValue ? $"Start: {s1Start.Value:yyyy-MM-dd HH:mm} UTC" : "Not started")
+                    <div class="small text-muted">
+                        @(s1End.HasValue
+                                                ? $"Ends: {s1End.Value:yyyy-MM-dd HH:mm} UTC"
+                                                : (s1PlanMonths + s1PlanSecs > 0
+                                                ? $"Planned: {(s1PlanMonths > 0 ? s1PlanMonths + " mo " : "")}{TimeSpan.FromSeconds(Math.Max(0, s1PlanSecs)):d\\:hh\\:mm\\:ss}"
+                                                : "(no plan)"))
+                    </div>
+                </div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">2nd Sem</div>
+                <div class="data-value">
+                    @(s2Start.HasValue ? $"Start: {s2Start.Value:yyyy-MM-dd HH:mm} UTC" : "Not started")
+                    <div class="small text-muted">
+                        @(s2End.HasValue
+                                                ? $"Ends: {s2End.Value:yyyy-MM-dd HH:mm} UTC"
+                                                : (s2PlanMonths + s2PlanSecs > 0
+                                                ? $"Planned: {(s2PlanMonths > 0 ? s2PlanMonths + " mo " : "")}{TimeSpan.FromSeconds(Math.Max(0, s2PlanSecs)):d\\:hh\\:mm\\:ss}"
+                                                : "(no plan)"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5 class="section-spaced">Academic Year</h5>
+    <div class="subcard subcard-compact mb-2">
+        <form asp-area="Admin" asp-controller="Admin" asp-action="UpdateAcademicYear" method="post" class="row g-3 g-slight align-items-end">
+            @Html.AntiForgeryToken()
+
+            <div class="col-12">
+                @{
+                    var ayCurrent = (Model.EnrollmentSettings?.AcademicYear ?? "").Trim();
+                    var startYear = System.DateTime.UtcNow.Year - 1;
+                    var years = Enumerable.Range(0, 10).Select(offset => $"{startYear + offset}-{startYear + offset + 1}");
+                }
+                <label class="form-label mb-1 small text-uppercase text-muted fw-semibold">Academic Year</label>
+                <div style="max-width: 260px;">
+                    <select name="academicYear" class="form-select select-modern">
+                        @foreach (var ay in years)
+                        {
+                            if (string.Equals(ay, ayCurrent, StringComparison.OrdinalIgnoreCase))
+                            {
+                                <option value="@ay" selected>@ay</option>
+                            }
+                            else
+                            {
+                                <option value="@ay">@ay</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-secondary btn-elevated" type="submit">
+                    <i class="fas fa-save me-1"></i> Save Academic Year
+                </button>
+            </div>
+        </form>
+    </div>
+    <h5 class="section-spaced">Configure Semester Cycle</h5>
+    <div class="d-flex gap-2 mb-2">
+        <form asp-area="Admin" asp-controller="EnrollmentCycle" asp-action="ResetSemesterCycle" method="post" onsubmit="return confirm('Reset the cycle now? This will stop enrollment and clear semester plans.');">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="fas fa-rotate-left me-1"></i> Reset Cycle
+            </button>
+        </form>
+    </div>
+
+    <div class="row g-3">
+        <!-- 1st Semester Config -->
+        <div class="col-12 col-lg-6">
+            <div class="subcard subcard-compact @(sem1Active ? "" : "muted")">
+                <h6 class="mb-2">1st Semester</h6>
+                <form asp-area="Admin" asp-controller="EnrollmentCycle" asp-action="SetSemesterCycle" method="post" class="row g-3 g-slight align-items-end">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="semester" value="1st Semester" />
+
+                    <div class="col-12">
+                        <label class="form-label small text-uppercase text-muted fw-semibold">Enrollment Duration</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollDays" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Days</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollHours" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Hours</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollMinutes" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Minutes</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollSeconds" min="0" class="form-control input-modern" value="0" style="width:120px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Seconds</div>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <label class="form-label small text-uppercase text-muted fw-semibold">Semester Duration</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semMonths" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Months</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semDays" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Days</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semHours" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Hours</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semMinutes" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Minutes</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semSeconds" min="0" class="form-control input-modern" value="0" style="width:120px;" @Disabled(sem1Active) />
+                        <div class="small text-muted">Seconds</div>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-elevated" type="submit" @(sem1Active ? "" : "disabled")>
+                            <i class="fas fa-save me-1"></i> Confirm 1st Semester Cycle
+                        </button>
+                    </div>
+
+                    <div class="col-12 small text-muted">
+                        <div><strong>Status:</strong> @(sem1Active ? "Active" : "Inactive")</div>
+                        <div id="sem1Countdown" class="fw-bold small"></div>
+                        <div id="sem1EndsAt" class="text-muted small"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 2nd Semester Config -->
+        <div class="col-12 col-lg-6">
+            <div class="subcard subcard-compact @(sem2Active ? "" : "muted")">
+                <h6 class="mb-2">2nd Semester</h6>
+                <form asp-area="Admin" asp-controller="EnrollmentCycle" asp-action="SetSemesterCycle" method="post" class="row g-3 g-slight align-items-end">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="semester" value="2nd Semester" />
+
+                    <div class="col-12">
+                        <label class="form-label small text-uppercase text-muted fw-semibold">Enrollment Duration</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollDays" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Days</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollHours" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Hours</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollMinutes" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Minutes</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="enrollSeconds" min="0" class="form-control input-modern" value="0" style="width:120px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Seconds</div>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <label class="form-label small text-uppercase text-muted fw-semibold">Semester Duration</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semMonths" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Months</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semDays" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Days</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semHours" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Hours</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semMinutes" min="0" class="form-control input-modern" value="0" style="width:110px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Minutes</div>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="semSeconds" min="0" class="form-control input-modern" value="0" style="width:120px;" @Disabled(sem2Active) />
+                        <div class="small text-muted">Seconds</div>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-elevated" type="submit" @(sem2Active ? "" : "disabled")>
+                            <i class="fas fa-save me-1"></i> Confirm 2nd Semester Cycle
+                        </button>
+                    </div>
+
+                    <div class="col-12 small text-muted">
+                        <div><strong>Status:</strong> @(sem2Active ? "Active" : "Inactive")</div>
+                        <div id="sem2Countdown" class="fw-bold small"></div>
+                        <div id="sem2EndsAt" class="text-muted small"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <h5 class="section-spaced">Program Capacity</h5>
+    <div class="subcard subcard-compact mb-2">
+
+        <div class="data-grid mt-3">
+            @foreach (var p in ProgramCatalog.All.OrderBy(x => x.Code))
+            {
+                var code = p.Code;
+                caps.TryGetValue(code, out var cap);
+                enrolled.TryGetValue(code, out var current);
+                var isUnlimited = cap == 0;
+                var isFull = !isUnlimited && current >= cap;
+
+                <div class="data-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="data-label">Program</div>
+                            <div class="data-value">@code</div>
+                            <div class="small text-muted">@p.Display</div>
+                        </div>
+                        <span class="badge @(isFull ? "bg-danger" : (isUnlimited ? "bg-secondary" : "bg-success"))">
+                            @(isFull ? "Full" : (isUnlimited ? "Unlimited" : "Limited"))
+                        </span>
+                    </div>
+                    <div class="mt-2 small text-muted">
+                        <strong>Capacity:</strong> @(isUnlimited ? "Unlimited" : cap) |
+                        <strong>Enrolled:</strong> @current
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-3 flex-wrap">
+                        <div class="d-flex align-items-center gap-2">
+                            <form asp-area="Admin" asp-controller="Admin" asp-action="UpdateProgramCapacity" method="post" class="d-flex align-items-center gap-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="program" value="@code" />
+                                <input type="number" name="capacity" min="0" class="form-control input-modern w-auto" value="@(isUnlimited ? 0 : cap)" />
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fas fa-save me-1"></i> Update
+                                </button>
+                            </form>
+
+                            <form asp-area="Admin" asp-controller="Admin" asp-action="RemoveProgramCapacity" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="program" value="@code" />
+                                <button type="submit" class="btn btn-outline-danger px-4">
+                                    <i class="fas fa-trash me-1"></i> Remove
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+    <h5 class="section-spaced d-flex align-items-center gap-2 mb-2">
+        <span>Maintenance</span>
+    </h5>
+    <div class="subcard">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="small text-muted">Dangerous operations. Use with caution.</div>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-danger btn-elevated" id="btnDropCollections"><i class="fas fa-database me-1"></i> Drop Collections</button>
+                <button type="button" class="btn btn-warning btn-elevated" id="btnDropAndReseed"><i class="fas fa-recycle me-1"></i> Drop & Reseed</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="resetConfirmModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+            <div class="modal-header">
+                <h5 id="resetModalTitle" class="mb-0"><i class="fas fa-triangle-exclamation text-danger me-2"></i> Confirm Maintenance</h5>
+                <button type="button" class="btn btn-icon btn-soft" id="resetModalClose" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0" id="resetModalText">This will drop all MongoDB collections. This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <form id="resetForm" asp-area="Admin" asp-controller="Admin" asp-action="ResetDatabase" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="seed" id="resetSeed" value="false" />
+                    <button type="button" class="btn btn-secondary btn-elevated" id="resetCancel">Cancel</button>
+                    <button type="submit" class="btn btn-danger btn-elevated" id="resetConfirm"><i class="fas fa-trash-alt me-1"></i> Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@if (TempData["Error"] != null)
+{
+        <div class="alert alert-danger mt-3 mb-0">@TempData["Error"]</div>
+}
+@if (TempData["Info"] != null)
+{
+        <div class="alert alert-warning mt-3 mb-0">@TempData["Info"]</div>
+}
+    <!-- ========================= NEW SECTION: Manage Documents ========================= -->
+    <section id="manage-documents" class="mt-5">
+        <div class="subcard mb-4 shadow-sm border-0">
+            <div class="subcard-header d-flex justify-content-between align-items-center border-bottom pb-2">
+                <h5 class="mb-0 fw-semibold text-dark">Manage Documents</h5>
+                <button type="button" class="btn btn-primary btn-sm px-3" data-bs-toggle="modal" data-bs-target="#manageDocsModal">
+                    <i class="fas fa-file-alt me-1"></i> Open Modal
+                </button>
+            </div>
+
+            <div class="subcard-body pt-3">
+                <p class="text-muted mb-0">
+                    This section allows administrators to manage uploaded or required student documents.
+                </p>
+            </div>
+        </div>
+
+
+
+        <!-- 📄 Manage Required Documents Bootstrap Modal -->
+        <div class="modal fade" id="manageDocsModal" tabindex="-1" aria-labelledby="manageDocsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content rounded-4 shadow-lg">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manageDocsModalLabel">
+                            <i class="fas fa-file-alt me-2 text-primary"></i> Manage Required Documents
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Add New Document -->
+                        <div class="mb-4 p-3 bg-light rounded-3 border">
+                            <h6 class="fw-bold mb-3">Add New Document</h6>
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-4">
+                                    <label for="new-doc-name" class="form-label">Document Name</label>
+                                    <input type="text" id="new-doc-name" class="form-control" placeholder="e.g. Birth Certificate">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Required For</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="newRequiredFor" value="all" id="reqAll" checked onclick="toggleAllCheckboxes(this, 'newRequiredFor')">
+                                            <label class="form-check-label fw-bold text-primary" for="reqAll">ALL</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="newRequiredFor" value="freshmen" id="reqFreshmen" onclick="handleSpecificCheckboxChange('newRequiredFor')">
+                                            <label class="form-check-label" for="reqFreshmen">Freshmen</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="newRequiredFor" value="transferee" id="reqTransferee" onclick="handleSpecificCheckboxChange('newRequiredFor')">
+                                            <label class="form-check-label" for="reqTransferee">Transferee</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="newRequiredFor" value="shifter" id="reqShifter" onclick="handleSpecificCheckboxChange('newRequiredFor')">
+                                            <label class="form-check-label" for="reqShifter">Shifter</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="newRequiredFor" value="returnee" id="reqReturnee" onclick="handleSpecificCheckboxChange('newRequiredFor')">
+                                            <label class="form-check-label" for="reqReturnee">Returnee</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="add-doc-button" class="btn btn-success w-100 fw-bold" onclick="addDocument()">
+                                        <i class="fas fa-plus me-1"></i> Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Existing Documents Table -->
+                        <h6 class="fw-bold mb-3">Current Required Documents</h6>
+                        <div class="table-responsive border rounded-3">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Document</th>
+                                        <th>Required For</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documents-table-body">
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">Loading documents...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📄 Add Document Confirmation Modal -->
+        <div class="modal fade" id="confirmAddModal" tabindex="-1" aria-labelledby="confirmAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-question-circle text-primary me-2"></i> Confirm Document Addition</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to add this new document?</p>
+                        <ul class="list-unstyled mb-0">
+                            <li>Document Name: <strong id="addNamePlaceholder"></strong></li>
+                            <li>Required For: <strong id="addRequiredForPlaceholder"></strong></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success fw-bold" onclick="executeAdd()">
+                            <i class="fas fa-check me-1"></i> Yes, Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📄 Update Document Modal -->
+        <div class="modal fade" id="updateDocModal" tabindex="-1" aria-labelledby="updateDocModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-edit text-warning me-2"></i> Edit Required Document</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="update-doc-id">
+                        <p class="text-muted small">Document ID: <strong id="update-doc-display-id"></strong></p>
+                        <div class="mb-3">
+                            <label for="update-doc-name" class="form-label">Document Name</label>
+                            <input type="text" id="update-doc-name" class="form-control" placeholder="e.g. Birth Certificate">
+                        </div>
+                        <div>
+                            <label class="form-label">Required For</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="updateRequiredFor" value="all" id="updateAll" onclick="toggleAllCheckboxes(this, 'updateRequiredFor')">
+                                    <label class="form-check-label fw-bold text-warning" for="updateAll">ALL</label>
+                                </div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="updateRequiredFor" value="freshmen" id="updateFreshmen" onclick="handleSpecificCheckboxChange('updateRequiredFor')"><label class="form-check-label" for="updateFreshmen">Freshmen</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="updateRequiredFor" value="transferee" id="updateTransferee" onclick="handleSpecificCheckboxChange('updateRequiredFor')"><label class="form-check-label" for="updateTransferee">Transferee</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="updateRequiredFor" value="shifter" id="updateShifter" onclick="handleSpecificCheckboxChange('updateRequiredFor')"><label class="form-check-label" for="updateShifter">Shifter</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" name="updateRequiredFor" value="returnee" id="updateReturnee" onclick="handleSpecificCheckboxChange('updateRequiredFor')"><label class="form-check-label" for="updateReturnee">Returnee</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button id="execute-update-button" class="btn btn-warning fw-bold" onclick="executeUpdate()">
+                            <i class="fas fa-save me-1"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📄 Delete Confirmation Modal -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle me-2"></i> Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete <strong id="docNamePlaceholder"></strong>?</p>
+                        <input type="hidden" id="docIdToDelete">
+                        <p class="text-danger small mb-0">This action cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button class="btn btn-danger fw-bold" onclick="executeDelete()">
+                            <i class="fas fa-trash me-1"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================= END NEW SECTION ========================= -->
+    <!-- === Modal Styles and Scripts === -->
+    <style>
+        .subcard {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .subcard-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 0.75rem 1.25rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+
+        .subcard-body {
+            padding: 1.25rem;
+        }
+
+        .alert-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 3000;
+            padding: 12px 18px;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+            animation: fadeSlide 0.3s ease-in-out;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+        }
+        /* ===== Centered Notification Styling ===== */
+        .toast-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px 28px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            min-width: 280px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* ===== Top-Centered Toast Notification ===== */
+        .toast-message {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px 28px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            min-width: 280px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+            .toast-message.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .toast-message.success {
+                border-left: 5px solid #16a34a;
+                color: #16a34a;
+            }
+
+            .toast-message.danger {
+                border-left: 5px solid #dc2626;
+                color: #dc2626;
+            }
+
+            .toast-message.info {
+                border-left: 5px solid #2563eb;
+                color: #2563eb;
+            }
+
+        .toast-content i {
+            font-size: 1.2rem;
+        }
+    </style>
+
+    <script>
+        const baseUrl = '/managedocs';
+        let allDocuments = [];
+
+        // =========================================================
+        // Fetch and Display Documents
+        // =========================================================
+        async function fetchDocuments() {
+            try {
+                const res = await fetch(`${baseUrl}/GetRequiredDocuments`);
+                if (!res.ok) throw new Error('Failed to fetch documents');
+                const data = await res.json();
+
+                allDocuments = data; // store globally
+                const tbody = document.getElementById('documents-table-body');
+                tbody.innerHTML = '';
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">No documents found</td>
+                        </tr>`;
+                    return;
+                }
+
+                data.forEach((doc, i) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${doc.documentId ?? i + 1}</td>
+                        <td>${doc.documentName}</td>
+                        <td>${(doc.requiredFor || []).join(', ') || 'N/A'}</td>
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-sm me-1"
+                                onclick="openUpdateModal('${doc.id}', '${doc.documentName}', '${(doc.requiredFor || []).join(',')}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm"
+                                onclick="openDeleteModal('${doc.id}', '${doc.documentName}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>`;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error(err);
+                const tbody = document.getElementById('documents-table-body');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-danger text-center py-4">
+                            Error: ${err.message}
+                        </td>
+                    </tr>`;
+            }
+        }
+                // =========================================================
+        // Checkbox Logic for "Add New Document" (Same as Update Modal)
+        // =========================================================
+        document.addEventListener('change', e => {
+            if (!e.target.matches("input[name='newRequiredFor']")) return;
+
+            const checkboxes = [...document.querySelectorAll("input[name='newRequiredFor']")];
+            const allCheckbox = checkboxes.find(cb => cb.value.toLowerCase() === 'all');
+            const otherCheckboxes = checkboxes.filter(cb => cb !== allCheckbox);
+
+            if (e.target === allCheckbox) {
+                // If "All" was clicked → set all to match its state
+                checkboxes.forEach(cb => cb.checked = allCheckbox.checked);
+            } else {
+                // If any specific checkbox was clicked → uncheck "All" if not all are checked
+                const allSpecificChecked = otherCheckboxes.every(cb => cb.checked);
+                if (allSpecificChecked) {
+                    allCheckbox.checked = true;
+                } else {
+                    allCheckbox.checked = false;
+                }
+            }
+        });
+
+
+        // =========================================================
+        // Add Document
+        // =========================================================
+        function addDocument() {
+            const name = document.getElementById('new-doc-name').value.trim();
+            if (!name) return showNotification('Please enter a document name.', 'danger');
+
+            const requiredFor = getCheckedValues('newRequiredFor');
+            document.getElementById('addNamePlaceholder').textContent = name;
+            document.getElementById('addRequiredForPlaceholder').textContent = requiredFor.join(', ') || 'N/A';
+            new bootstrap.Modal(document.getElementById('confirmAddModal')).show();
+        }
+
+        async function executeAdd() {
+            const name = document.getElementById('new-doc-name').value.trim();
+            const requiredFor = getCheckedValues('newRequiredFor');
+
+            try {
+                const res = await fetch(`${baseUrl}/AddRequiredDocument`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ documentName: name, requiredFor })
+                });
+                const result = await res.json();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('confirmAddModal'));
+                if (modal) modal.hide();
+
+                if (res.ok) {
+                    showNotification(result.message || 'Document added successfully!', 'success');
+                    document.getElementById('new-doc-name').value = '';
+                    fetchDocuments();
+                } else {
+                    showNotification(result.message || 'Error adding document.', 'danger');
+                }
+            } catch (err) {
+                showNotification('Error adding document: ' + err.message, 'danger');
+            }
+        }
+
+             // =========================================================
+        // Update Document
+        // =========================================================
+        function openUpdateModal(id, name, reqList) {
+            document.getElementById('update-doc-id').value = id;
+            document.getElementById('update-doc-display-id').textContent = id;
+            document.getElementById('update-doc-name').value = name;
+
+            const selected = reqList ? reqList.split(',') : [];
+            document.querySelectorAll("input[name='updateRequiredFor']").forEach(cb => {
+                cb.checked = selected.includes(cb.value);
+            });
+
+            new bootstrap.Modal(document.getElementById('updateDocModal')).show();
+        }
+
+            // =========================================================
+        // Checkbox Logic (All / Specific Relationship)
+        // =========================================================
+        document.addEventListener('change', e => {
+            if (!e.target.matches("input[name='updateRequiredFor']")) return;
+
+            const checkboxes = [...document.querySelectorAll("input[name='updateRequiredFor']")];
+            const allCheckbox = checkboxes.find(cb => cb.value.toLowerCase() === 'all');
+            const otherCheckboxes = checkboxes.filter(cb => cb !== allCheckbox);
+
+            if (e.target === allCheckbox) {
+                // If "All" was clicked → uncheck all others
+                if (allCheckbox.checked) {
+                    otherCheckboxes.forEach(cb => cb.checked = false);
+                }
+            } else {
+                // If any specific checkbox is checked → uncheck "All"
+                if (e.target.checked) {
+                    allCheckbox.checked = false;
+                }
+
+                // If all specific checkboxes are checked → auto check "All" and uncheck others
+                const allSpecificChecked = otherCheckboxes.every(cb => cb.checked);
+                if (allSpecificChecked) {
+                    allCheckbox.checked = true;
+                    otherCheckboxes.forEach(cb => cb.checked = false);
+                }
+            }
+        });
+
+
+        // =========================================================
+        // Execute Update
+        // =========================================================
+        async function executeUpdate() {
+            const id = document.getElementById('update-doc-id').value;
+            const name = document.getElementById('update-doc-name').value.trim();
+            const requiredFor = getCheckedValues('updateRequiredFor');
+
+            try {
+                const res = await fetch(`${baseUrl}/UpdateRequiredDocument?id=${id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ documentName: name, requiredFor })
+                });
+                const result = await res.json();
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('updateDocModal'));
+                if (modal) modal.hide();
+
+                if (res.ok) {
+                    showNotification(result.message || 'Document updated successfully!', 'success');
+                    fetchDocuments();
+                } else {
+                    showNotification(result.message || 'Update failed.', 'danger');
+                }
+            } catch (err) {
+                showNotification('Error updating document: ' + err.message, 'danger');
+            }
+        }
+
+
+        // =========================================================
+        // Delete Document
+        // =========================================================
+        function openDeleteModal(id, name) {
+            document.getElementById('docIdToDelete').value = id;
+            document.getElementById('docNamePlaceholder').textContent = name;
+            new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+        }
+
+        async function executeDelete() {
+            const id = document.getElementById('docIdToDelete').value;
+            try {
+                const res = await fetch(`${baseUrl}/DeleteRequiredDocument?id=${id}`, { method: 'DELETE' });
+                const result = await res.json();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+                if (modal) modal.hide();
+
+                if (result.success || res.ok) {
+                    showNotification('Document deleted successfully.', 'success');
+                    fetchDocuments();
+                } else {
+                    showNotification(result.message || 'Failed to delete document.', 'danger');
+                }
+            } catch (err) {
+                console.error('Error deleting document:', err);
+                showNotification('An error occurred while deleting the document.', 'danger');
+            }
+        }
+
+        // =========================================================
+        // Helper Functions
+        // =========================================================
+        function getCheckedValues(name) {
+            return Array.from(document.querySelectorAll(`input[name='${name}']:checked`)).map(cb => cb.value);
+        }
+
+        function showNotification(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+            alert.role = 'alert';
+            alert.style.zIndex = '9999';
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.body.appendChild(alert);
+            setTimeout(() => {
+                const alertInstance = bootstrap.Alert.getOrCreateInstance(alert);
+                alertInstance.close();
+            }, 3000);
+        }
+
+        // =========================================================
+        // Init
+        // =========================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDocuments();
+        });
+              // =========================================================
+        // Top-Centered Notification (Professional Toast)
+        // =========================================================
+        function showNotification(message, type = 'success') {
+            // Remove existing toast if any
+            const existing = document.getElementById('custom-toast');
+            if (existing) existing.remove();
+
+            // Create toast container
+            const toast = document.createElement('div');
+            toast.id = 'custom-toast';
+            toast.className = `toast-message ${type}`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'danger' ? 'fa-times-circle' : 'fa-info-circle'} me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+
+            // Animate fade in
+            setTimeout(() => toast.classList.add('show'), 50);
+
+            // Auto remove after 3s
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+
+    </script>
+
+
+
+
+
+@section Scripts {
+        <script>
+            (function () { const modal = document.getElementById('resetConfirmModal'); const btnDrop = document.getElementById('btnDropCollections'); const btnReseed = document.getElementById('btnDropAndReseed'); const seedInput = document.getElementById('resetSeed'); const txt = document.getElementById('resetModalText'); const closeBtn = document.getElementById('resetModalClose'); const cancelBtn = document.getElementById('resetCancel');
+                           function openModal(seed) {
+                               seedInput.value = seed ? 'true' : 'false';
+                               txt.textContent = seed
+                                   ? 'This will drop all MongoDB collections and reseed base data. This action cannot be undone.'
+                                   : 'This will drop all MongoDB collections. This action cannot be undone.';
+                               modal.setAttribute('aria-hidden', 'false');
+                               document.body.classList.add('modal-open');
+                           }
+                           function closeModal() {
+                               modal.setAttribute('aria-hidden', 'true');
+                               document.body.classList.remove('modal-open');
+                           }
+
+                           btnDrop?.addEventListener('click', () => openModal(false));
+                           btnReseed?.addEventListener('click', () => openModal(true));
+                           closeBtn?.addEventListener('click', closeModal);
+                           cancelBtn?.addEventListener('click', closeModal);
+                           modal?.addEventListener('click', (e) => {
+                               if (e.target === modal) closeModal();
+                           });
+                           document.addEventListener('keydown', (e) => {
+                               if (e.key === 'Escape') closeModal();
+                           });
+                       })();
+        </script>
+
+        <script>
+
+            (function () {
+                // Admin-side enrollment countdown (UTC+08:00 Asia/Singapore), same logic as student alert
+                const tz = 'Asia/Singapore';
+                const isOpen = @(isOpen ? "true" : "false");
+                const closesAtIso = '@(closes?.ToString("o") ?? "")';
+
+                const statusText = document.getElementById('adminEnrollmentStatusText');
+                const countdownEl = document.getElementById('adminEnrollmentCountdown');
+                const closesAtEl = document.getElementById('adminEnrollmentClosesAt');
+
+                if (!statusText || !countdownEl || !closesAtEl) return;
+
+                if (!isOpen) {
+                    statusText.textContent = 'Enrollment is currently closed.';
+                    countdownEl.textContent = '';
+                    closesAtEl.textContent = '';
+                    return;
+                }
+
+                if (!closesAtIso) {
+                    statusText.textContent = 'Enrollment is open.';
+                    countdownEl.textContent = '';
+                    closesAtEl.textContent = '(No end time set)';
+                    return;
+                }
+
+                const closesAt = new Date(closesAtIso);
+                const fmt = new Intl.DateTimeFormat('en-SG', {
+                    timeZone: tz,
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                });
+                closesAtEl.textContent = 'Closes at: ' + fmt.format(closesAt) + ' (UTC+08:00)';
+
+                function tick() {
+                    const now = new Date();
+                    const ms = closesAt.getTime() - now.getTime();
+                    if (ms <= 0) {
+                        statusText.textContent = 'Enrollment is currently closed.';
+                        countdownEl.textContent = '';
+                        return;
+                    }
+                    const totalSeconds = Math.floor(ms / 1000);
+                    const days = Math.floor(totalSeconds / 86400);
+                    const hours = Math.floor((totalSeconds % 86400) / 3600);
+                    const minutes = Math.floor((totalSeconds % 3600) / 60);
+                    const seconds = totalSeconds % 60;
+                    countdownEl.textContent = `Time remaining: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+                tick();
+                setInterval(tick, 1000);
+            })();
+        </script>
+
+        <script>
+            (function () {
+                // Semester countdowns (UTC+08:00 Asia/Singapore)
+                const tz = 'Asia/Singapore';
+                const s1EndIso = '@(s1End?.ToString("o") ?? "")';
+                const s2EndIso = '@(s2End?.ToString("o") ?? "")';
+
+                const s1Countdown = document.getElementById('sem1Countdown');
+                const s2Countdown = document.getElementById('sem2Countdown');
+                const s1EndsAt = document.getElementById('sem1EndsAt');
+                const s2EndsAt = document.getElementById('sem2EndsAt');
+
+                const fmt = new Intl.DateTimeFormat('en-SG', {
+                    timeZone: tz,
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: false
+                });
+
+                function setup(endIso, endsAtEl, countdownEl) {
+                    if (!endsAtEl || !countdownEl) return;
+                    if (!endIso) {
+                        endsAtEl.textContent = '(No end time set)';
+                        countdownEl.textContent = '';
+                        return;
+                    }
+                    const end = new Date(endIso);
+                    endsAtEl.textContent = 'Ends at: ' + fmt.format(end) + ' (UTC+08:00)';
+
+                    function tick() {
+                        const ms = end.getTime() - Date.now();
+                        if (ms <= 0) {
+                            countdownEl.textContent = 'Ended';
+                            return;
+                        }
+                        const total = Math.floor(ms / 1000);
+                        const d = Math.floor(total / 86400);
+                        const h = Math.floor((total % 86400) / 3600);
+                        const m = Math.floor((total % 3600) / 60);
+                        const s = total % 60;
+                        countdownEl.textContent = `Time remaining: ${d}d ${h}h ${m}m ${s}s`;
+                    }
+                    tick();
+                    setInterval(tick, 1000);
+                }
+
+                setup(s1EndIso, s1EndsAt, s1Countdown);
+                setup(s2EndIso, s2EndsAt, s2Countdown);
+            })();
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js" integrity="sha512-RjK4vW1TQ8r2mZ0Z8x+J0Q2N3YOmylVb+Nq1qL5k8oK1xspI+eM8fN1eQXkYkYxj5LZK4tJp5Xqf7f0gE0qvQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            (function () {
+                try {
+                    const connection = new signalR.HubConnectionBuilder()
+                        .withUrl('/hubs/admin')
+                        .withAutomaticReconnect()
+                        .build();
+
+                    connection.on('EnrollmentSettingsChanged', function () {
+                        // Reload to reflect counters, badges, disabled states, and countdowns
+                        location.reload();
+                    });
+
+                    connection.start().catch(err => console.warn('SignalR start failed', err));
+                } catch (e) {
+                    console.warn('SignalR unavailable', e);
+                }
+            })();
+        </script>
+}
+    <!-- === Document Management Modal === -->
+    <div id="documentsModal" class="modal-overlay hidden" aria-hidden="true">
+        <div class="modal-card max-w-4xl" role="dialog" aria-modal="true" aria-labelledby="documentsModalTitle">
+            <div class="modal-header">
+                <h5 id="documentsModalTitle" class="mb-0">
+                    <i class="fas fa-file-alt text-primary me-2"></i> Document Management
+                </h5>
+                <button type="button" class="btn btn-icon btn-soft" onclick="hideDocumentsModal()" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-2">
+                        <input id="new-doc-name" class="form-control input-modern" placeholder="New Document Name" />
+                        <button class="btn btn-success" onclick="addDocument()"><i class="fas fa-plus me-1"></i>Add</button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border rounded-lg">
+                    <table class="table-auto w-full text-sm">
+                        <thead class="bg-gray-100 text-gray-700">
+                            <tr>
+                                <th class="px-4 py-2 text-left">ID</th>
+                                <th class="px-4 py-2 text-left">Document Name</th>
+                                <th class="px-4 py-2 text-left">Required For</th>
+                                <th class="px-4 py-2 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documents-table-body">
+                            <tr><td colspan="4" class="px-4 py-4 text-center text-gray-400">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Confirm Add Modal === -->
+    <div id="confirmAddModal" class="modal-overlay hidden">
+        <div class="modal-card max-w-md">
+            <div class="modal-header">
+                <h5 class="mb-0"><i class="fas fa-circle-check text-success me-2"></i> Confirm Add</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to add this new document?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideConfirmAddModal()">Cancel</button>
+                <button class="btn btn-success" onclick="executeAdd()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Update Modal === -->
+    <div id="updateDocModal" class="modal-overlay hidden">
+        <div class="modal-card max-w-md">
+            <div class="modal-header">
+                <h5 class="mb-0"><i class="fas fa-edit text-warning me-2"></i> Update Document</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="update-doc-id" />
+                <div class="mb-2">
+                    <label class="form-label">Document Name</label>
+                    <input id="update-doc-name" class="form-control input-modern" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Required For</label>
+                    <div id="update-required-for-options"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideUpdateDocModal()">Cancel</button>
+                <button class="btn btn-warning" onclick="executeUpdate()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Confirm Delete Modal === -->
+    <div id="confirmDeleteModal" class="modal-overlay hidden">
+        <div class="modal-card max-w-md">
+            <div class="modal-header">
+                <h5 class="mb-0"><i class="fas fa-trash-alt text-danger me-2"></i> Confirm Delete</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="docIdToDelete" />
+                <p>Are you sure you want to delete this document?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideConfirmDeleteModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="executeDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === Document Management Logic ===
+        const API_BASE = '/admin/document';
+        let allDocuments = [];
+
+        function showDocumentsModal() {
+          document.getElementById('documentsModal').classList.remove('hidden');
+          fetchDocuments();
+        }
+        function hideDocumentsModal() {
+          document.getElementById('documentsModal').classList.add('hidden');
+        }
+
+        function showConfirmAddModal(name, requiredFor){
+          document.getElementById('confirmAddModal').classList.remove('hidden');
+        }
+        function hideConfirmAddModal(){
+          document.getElementById('confirmAddModal').classList.add('hidden');
+        }
+
+        function showUpdateDocModal(id){
+          const doc = allDocuments.find(x=>x.id===id);
+          if(!doc) return;
+          document.getElementById('update-doc-id').value=id;
+          document.getElementById('update-doc-name').value=doc.documentName;
+          document.getElementById('updateDocModal').classList.remove('hidden');
+        }
+        function hideUpdateDocModal(){
+          document.getElementById('updateDocModal').classList.add('hidden');
+        }
+
+        function showConfirmDeleteModal(id, name){
+          document.getElementById('docIdToDelete').value=id;
+          document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+        function hideConfirmDeleteModal(){
+          document.getElementById('confirmDeleteModal').classList.add('hidden');
+        }
+
+        // === CRUD Operations ===
+        async function fetchDocuments(){
+          const tbody=document.getElementById('documents-table-body');
+          tbody.innerHTML='<tr><td colspan="4" class="px-4 py-4 text-center text-gray-400">Loading...</td></tr>';
+          try{
+            const res=await fetch(`${API_BASE}/fetch`);
+            const data=await res.json();
+            allDocuments=data.documents||[];
+            if(allDocuments.length===0){
+              tbody.innerHTML='<tr><td colspan="4" class="px-4 py-4 text-center text-gray-400">No documents found.</td></tr>';
+              return;
+            }
+            tbody.innerHTML=allDocuments.map(d=>`
+              <tr class="hover:bg-gray-50 transition">
+                <td class="px-4 py-2">${d.documentId}</td>
+                <td class="px-4 py-2">${d.documentName}</td>
+                <td class="px-4 py-2">${Array.isArray(d.requiredFor)?d.requiredFor.join(', '):d.requiredFor}</td>
+                <td class="px-4 py-2 text-center">
+                  <button class="btn btn-sm btn-outline-warning me-1" onclick="showUpdateDocModal(${d.id})"><i class="fas fa-edit"></i></button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="showConfirmDeleteModal(${d.id}, '${d.documentName}')"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>`).join('');
+          }catch(e){
+            console.error(e);
+            tbody.innerHTML='<tr><td colspan="4" class="px-4 py-4 text-center text-red-500">Error fetching documents.</td></tr>';
+          }
+        }
+
+        async function executeAdd(){
+          const name=document.getElementById('new-doc-name').value.trim();
+          if(!name)return alert('Enter a document name');
+          hideConfirmAddModal();
+          try{
+            const res=await fetch(`${API_BASE}/add`,{
+              method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({documentName:name,requiredFor:['all']})
+            });
+            const data=await res.json();
+            if(data.success){fetchDocuments();alert('Document added');}
+            else alert(data.message||'Failed');
+          }catch(e){console.error(e);}
+        }
+
+        async function executeUpdate(){
+          const id=document.getElementById('update-doc-id').value;
+          const name=document.getElementById('update-doc-name').value.trim();
+          hideUpdateDocModal();
+          try{
+            const res=await fetch(`${API_BASE}/update/${id}`,{
+              method:'PUT',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({documentName:name})
+            });
+            const data=await res.json();
+            if(data.success){fetchDocuments();alert('Updated');}
+          }catch(e){console.error(e);}
+        }
+
+        async function executeDelete(){
+          const id=document.getElementById('docIdToDelete').value;
+          hideConfirmDeleteModal();
+          try{
+            const res=await fetch(`${API_BASE}/delete/${id}`,{method:'DELETE'});
+            const data=await res.json();
+            if(data.success){fetchDocuments();alert('Deleted');}
+          }catch(e){console.error(e);}
+        }
+
+        window.addEventListener('DOMContentLoaded',()=>fetchDocuments());
+    </script>

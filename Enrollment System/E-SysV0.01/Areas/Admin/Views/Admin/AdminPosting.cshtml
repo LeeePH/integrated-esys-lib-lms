@@ -1,0 +1,195 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "Admin Posting";
+}
+<style>
+    /* --- Fix for button hover/disabled look --- */
+    .btn:not(:disabled):not(.disabled):hover,
+    .btn:not(:disabled):not(.disabled):focus {
+        opacity: 1 !important;
+        filter: brightness(0.95);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-outline-secondary:not(:disabled):not(.disabled):hover {
+        background-color: #f8f9fa !important;
+        color: #212529 !important;
+        border-color: #adb5bd !important;
+    }
+
+    .btn-outline-secondary:disabled,
+    .btn-outline-secondary.disabled {
+        opacity: 0.6;
+        background-color: transparent;
+        color: #adb5bd;
+    }
+
+    /* Make sure active/focused state looks normal */
+    .btn:active,
+    .btn:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.3);
+    }
+
+  
+</style>
+<div class="card">
+
+    @if (TempData["Info"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["Info"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex flex-column mb-3">
+        <h2 class="mb-1">
+            <i class="fas fa-bullhorn"></i> Admin Posting
+        </h2>
+        <p class="text-muted mb-0">Create and publish announcements for students</p>
+    </div>
+
+    <div class="subcard p-4">
+        <h4 class="card-title mb-4">
+            <i class="fas fa-paper-plane me-2"></i> Create New Announcement
+        </h4>
+
+        <form method="post" action="@Url.Action("AdminPosting", "Admin", new { area = "Admin" })" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3 fw-bold">
+                <label for="AnnouncementTitle" class="form-label">Announcement Title</label>
+                <input type="text" class="form-control input-modern" id="AnnouncementTitle" name="Title"
+                       placeholder="Input Title Here..." required />
+            </div>
+
+            <div class="mb-3">
+                <label for="AnnouncementContent" class="form-label fw-bold">Content</label>
+                <textarea class="form-control input-modern" id="AnnouncementContent" name="Content" rows="8"
+                          placeholder="Input Content Here..." required></textarea>
+                <div id="contentHelp" class="form-text mt-2">
+                    Tip: Use line breaks to create separate paragraphs
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="AnnouncementImageFile" class="form-label fw-bold">
+                    <i class="far fa-image me-1 fw-bold"></i> Upload Image (Optional)
+                </label>
+                <input type="file" class="input-modern-file" id="AnnouncementImageFile" name="AnnouncementImageFile"
+                       accept="image/*" />
+                <div class="form-text">
+                    Select an image file to include in the announcement.
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start gap-3 pt-3 border-top">
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#previewModal">
+                    <i class="far fa-eye me-2"></i> Show Preview
+                </button>
+                <button type="submit" class="btn btn-primary" style="background-color: #006B99; border-color: #006B99;">
+                    <i class="fas fa-paper-plane me-2"></i> Post Announcement
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Announcement Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <img id="previewImage" class="img-fluid rounded-3"
+                             style="width: 100%; height: auto; object-fit: cover; display: none;"
+                             alt="Announcement Image">
+                        <div id="imagePlaceholder" class="border p-5 text-center text-muted" style="height: 100%; display: none;">
+                            No Image Uploaded
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-3 mb-lg-0">
+                        <h4 id="previewTitle" class="mb-3"></h4>
+                        <p id="previewContent" class="text-secondary"></p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const imageInput = document.getElementById('AnnouncementImageFile');
+        const previewImage = document.getElementById('previewImage');
+        const imagePlaceholder = document.getElementById('imagePlaceholder'); // New element
+
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                const reader = new FileReader();
+
+                if (previewImage.src && previewImage.src.startsWith('blob:')) {
+                    URL.revokeObjectURL(previewImage.src);
+                }
+
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '';
+            }
+        });
+
+        document.getElementById('previewModal').addEventListener('show.bs.modal', function (event) {
+            var title = document.getElementById('AnnouncementTitle').value;
+            var content = document.getElementById('AnnouncementContent').value.replace(/\n/g, '<br><br>');
+
+            document.getElementById('previewTitle').innerText = title;
+            document.getElementById('previewContent').innerHTML = content;
+
+            // Logic to control the display of the image or the placeholder
+            if (previewImage.src && previewImage.src !== window.location.href) {
+                previewImage.style.display = 'block';
+                imagePlaceholder.style.display = 'none'; // Hide placeholder
+            } else {
+                previewImage.style.display = 'none';
+                // Only show the placeholder if there's no image
+                imagePlaceholder.style.display = 'block';
+            }
+        });
+
+                setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(a => {
+                const bsAlert = new bootstrap.Alert(a);
+                bsAlert.close();
+            });
+        }, 4000); // auto close after 4 seconds
+    </script>
+}
+
+

@@ -1,0 +1,426 @@
+﻿/* GENERAL */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background: #fff;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+    }
+
+.borrow-container {
+    padding: 20px 40px;
+    color: #1a202c;
+}
+
+.borrow-header h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #8b2f00;
+    margin-bottom: 20px;
+}
+
+.borrow-search {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.borrow-box {
+    background: #f9fafb;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex: 1 1 48%;
+}
+
+    .borrow-box h3 {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+.search-input {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+    .search-input input {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-input button {
+        background-color: #006B99;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        height: 38px;
+        transition: background 0.2s;
+    }
+
+        .search-input button:hover {
+            background: #003a70;
+        }
+
+/* STUDENT / BOOK CARD */
+.borrow-card {
+    background: #f9fafb;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex: 1 1 48%;
+}
+
+.borrow-student {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .borrow-student img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+.borrow-info {
+    flex-grow: 1;
+}
+
+    .borrow-info h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 3px;
+    }
+
+.status {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+    .status.good {
+        background: #24c26a;
+    }
+
+    .status.penalty {
+        background: #f59e0b;
+    }
+
+    .status.restricted {
+        background: #ef4444;
+    }
+
+    .status.limit {
+        background: #8b5cf6;
+    }
+
+    .status.available {
+        background: #38c172;
+    }
+
+.book-dates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    text-align: center;
+}
+
+.date-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+    display: block;
+    text-align: center;
+}
+
+.date-value {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.95rem;
+    display: block;
+    text-align: center;
+}
+
+.icons {
+    width: 25px;
+    height: 25px;
+}
+
+/* TRANSACTION HISTORY */
+.borrow-transaction {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+    .borrow-transaction h3 {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+.borrow-history {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+    .history-item h4 {
+        color: #004b8d;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .history-item p {
+        font-size: 14px;
+    }
+
+/* STATUS MESSAGE */
+.borrow-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .borrow-status.success {
+        background: #c7f9cc;
+        color: #107c2f;
+    }
+
+    .borrow-status.error {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .borrow-status img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+
+/* BUTTON */
+.borrow-process {
+    text-align: right;
+    margin-top: 15px;
+}
+
+    .borrow-process button {
+        background: #05A648;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+        .borrow-process button:hover {
+            background: #1da55a;
+        }
+
+        .borrow-process button:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+/* === FIXED POPUP STYLES === */
+.action-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* VERY HIGH - above everything */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* === Popup Box === */
+.popup-content {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 320px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+    z-index: 100000; /* Even higher than overlay */
+    /* REMOVED problematic transform and opacity that caused freeze */
+}
+
+    /* === Blue Shadow Glow for Confirmation / Success === */
+    .popup-content.confirm,
+    .popup-content.success {
+        box-shadow: 0 0 25px 6px rgba(0, 107, 153, 0.35);
+        animation: softGlowBlue 3s infinite ease-in-out;
+    }
+
+    /* === Error Popup === */
+    .popup-content.error {
+        box-shadow: 0 0 25px 6px rgba(220, 38, 38, 0.35);
+    }
+
+/* === Popup Icon === */
+.popup-icon {
+    margin-bottom: 15px;
+}
+
+    .popup-icon img {
+        width: 70px;
+        height: 70px;
+    }
+
+/* === Text Styling === */
+.popup-content h2 {
+    color: #006B99;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+}
+
+.popup-content p {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* === Buttons === */
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.popup-no,
+.popup-yes,
+.popup-done {
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 1rem;
+}
+
+    .popup-no:hover,
+    .popup-yes:hover,
+    .popup-done:hover {
+        transform: scale(1.05);
+    }
+
+/* Blue Buttons (Yes, Done) */
+.popup-yes,
+.popup-done {
+    background: #006B99;
+}
+
+    .popup-yes:hover,
+    .popup-done:hover {
+        background: #005580;
+    }
+
+/* Gray Button (No) */
+.popup-no {
+    background: #6b7280;
+}
+
+    .popup-no:hover {
+        background: #4b5563;
+    }
+
+/* === Glow Animation === */
+@keyframes softGlowBlue {
+    0%, 100% {
+        box-shadow: 0 0 25px 6px rgba(0, 107, 153, 0.35);
+    }
+
+    50% {
+        box-shadow: 0 0 35px 10px rgba(0, 107, 153, 0.45);
+    }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .borrow-search {
+        flex-direction: column;
+    }
+
+    .borrow-box {
+        flex: 1 1 100%;
+    }
+
+    .book-dates-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .borrow-history {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .popup-content {
+        width: 90%;
+        max-width: 320px;
+    }
+}

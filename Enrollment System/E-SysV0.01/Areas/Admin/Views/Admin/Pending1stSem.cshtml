@@ -1,0 +1,71 @@
+﻿@model E_SysV0._01.Models.EnrollmentListViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="card">
+    <h2 class="mb-3">@Model.Title (@Model.Items.Count)</h2>
+    @Html.Partial("~/Areas/Admin/Views/Admin/_ListFilters.cshtml")
+
+    @if (Model.Items.Count == 0)
+    {
+        <div class="alert alert-info">No pending 1st semester enrollments.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Program</th>
+                        <th>Type</th>
+                        <th>Year Level</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var req in Model.Items)
+                    {
+                        var yearLevel = req.ExtraFields?.GetValueOrDefault("Academic.YearLevel", "1st Year") ?? "1st Year";
+                        var is2ndYear = req.Type != null && req.Type.Contains("2nd Year", StringComparison.OrdinalIgnoreCase);
+
+                        <tr>
+                            <td>@req.FullName</td>
+                            <td>@req.Email</td>
+                            <td>
+                                <span class="badge bg-primary">@(req.Program ?? "BSIT")</span>
+                            </td>
+                            <td>
+                                @if (is2ndYear)
+                                {
+                                    <span class="badge bg-gradient-primary">
+                                        <i class="fas fa-graduation-cap me-1"></i>
+                                        @req.Type
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@(req.Type ?? "Freshmen")</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge bg-info text-dark">@yearLevel</span>
+                            </td>
+                            <td>@req.SubmittedAt.ToString("MMM dd, yyyy")</td>
+                            <td class="d-flex gap-2">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="@Url.Action("RequestDetails", "Admin", new { area = "Admin", id = req.Id })">
+                                    <i class="bi bi-eye"></i> Review
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

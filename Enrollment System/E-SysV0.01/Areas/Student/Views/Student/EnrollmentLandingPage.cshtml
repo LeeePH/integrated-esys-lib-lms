@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Enrollment";
+    Layout = "~/Views/Shared/ESys_EnrollmentLayout.cshtml";
+}
+<section class="hero-banner">
+    <!-- Back Button -->
+    <a href="@Url.Action("DashboardPage", "Landing", new { area = "Student" })" class="btn back-button">
+        <img src="~/images/arrow-left.svg" alt="Alternate Text" width="25" />
+    </a>
+
+    <!-- University Header Inside Hero -->
+    <div class="university-header">
+        <img src="~/images/logo.svg" alt="University Logo" class="university-logo">
+        <div class="university-info">
+            <h2 class="university-name">State University</h2>
+            <p class="university-subtitle">State University</p>
+        </div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+        <div class="hero-left">
+            <h1 class="system-title">ONLINE<br>ENROLLMENT<br>SYSTEM</h1>
+        </div>
+        <div class="hero-right">
+            <p class="hero-tagline">Future starts here.</p>
+        </div>
+    </div>
+
+    <!-- Background Image -->
+    <img src="~/images/hero-image.svg" alt="Library background" class="hero-background">
+</section>
+
+<!-- Main Content Container -->
+<div class="content-wrapper">
+    <!-- Enroll Now Section -->
+    <section class="enroll-section">
+        <div class="enroll-content">
+            <h2 class="enroll-title">ENROLL NOW!</h2>
+            <p class="enroll-subtitle">Freshmen & Late Officially Open for  University of Academic Year 2025-2026</p>
+            <a href="@Url.Action("StudentDashboard", "StudentAccount", new { area = "Student" })" class="btn-enroll text-decoration-none">Enroll Now</a>
+        </div>
+        <div class="enroll-image">
+            <img src="~/images/background-img1.svg" alt="Happy students" class="students-image">
+        </div>
+    </section>
+
+    <!-- Process of Enrollment -->
+    <section class="process-section">
+        <h2 class="section-heading">Process of Enrollment</h2>
+        <p class="process-intro">
+            Each student classification is provided with a dedicated enrollment form to ensure that specific requirements,
+            status conditions, and Subject procedures are accurately addressed. Enrollment includes:
+        </p>
+
+        <div class="student-types">
+            <p>
+                <strong>Regular Students</strong> – students whose course loads (SPH) from the required curriculum sequence
+                has fit simple academic standing or subject availability.
+            </p>
+            <p>
+                <strong>Irregulars</strong> – students whose course loads do not necessarily attended subjects according
+                to the required sequence due to a reason from one to two-year differences.
+            </p>
+            <p><strong>Shifters</strong> – students who’s course is changed from their current program sequence.</p>
+            <p>
+                <strong>Returnees</strong> – students who plans to return and proceeded their student status by means of
+                endorsement form with their passed subjects and accreditation of the subjects available.
+            </p>
+            <p><strong>Transferees</strong> – students whose course loads got credited from their previous enrollment institution.</p>
+        </div>
+    </section>
+</div>
+
+
+<style>
+    /* Hover effect for Login button */
+    .btn-login:hover,
+    .btn:hover {
+        background-color: #055C86 !important; 
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+</style>

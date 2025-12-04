@@ -1,0 +1,232 @@
+@model List<SystemLibrary.Models.Reservation>
+@{
+    ViewData["Title"] = "Return Management";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/lib/borrowing.css" />
+
+<div class="borrow-container">
+    <!-- HEADER -->
+    <div class="borrow-header">
+        <h1>Return Management</h1>
+    </div>
+
+    <!-- SEARCH BOXES -->
+    <div class="borrow-search">
+        <!-- STUDENT SEARCH -->
+        <div class="borrow-box">
+            <h3>STUDENT ID / STUDENT NUMBER</h3>
+            <div class="search-input">
+                <input type="text" id="studentIdInput" placeholder="Enter Student ID or Number..." />
+                <button onclick="searchStudent()">Search</button>
+            </div>
+
+            <div class="borrow-card" id="studentCard" style="display: none;">
+                <div class="borrow-student">
+                    <img src="~/images/studentlogo.png" alt="Student" />
+                    <div class="borrow-info">
+                        <h4 id="studentName">-</h4>
+                        <p id="studentDetails">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK SEARCH -->
+        <div class="borrow-box">
+            <h3>BOOK ID / BOOK TITLE</h3>
+            <div class="search-input">
+                <input type="text" id="bookIdInput" placeholder="Enter Book ID or Title..." />
+                <button onclick="searchBook()">Search</button>
+            </div>
+
+            <div class="borrow-card" id="bookCard" style="display: none;">
+                <div class="borrow-book">
+                    <img id="bookImage" src="~/images/booklogo.png" alt="Book" />
+                    <div class="borrow-info">
+                        <h4 id="bookTitle">-</h4>
+                        <p id="bookDetails">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BORROWED BOOKS TABLE -->
+    <div class="borrow-table">
+        <h3>BORROWED BOOKS</h3>
+        <div class="table-container">
+            <table id="borrowedBooksTable">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Days Overdue</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="borrowedBooksBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentStudent = null;
+    let currentBook = null;
+
+    // Search student function
+    async function searchStudent() {
+        const studentId = document.getElementById('studentIdInput').value.trim();
+        if (!studentId) {
+            alert('Please enter a student ID or number');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/Admin/SearchStudent?studentId=${encodeURIComponent(studentId)}`);
+            const result = await response.json();
+            
+            if (result.success) {
+                currentStudent = result.data;
+                document.getElementById('studentName').textContent = result.data.name;
+                document.getElementById('studentDetails').textContent = `${result.data.studentNumber} | ${result.data.course}`;
+                document.getElementById('studentCard').style.display = 'block';
+                loadBorrowedBooks();
+            } else {
+                alert('Student not found');
+                document.getElementById('studentCard').style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to search student');
+        }
+    }
+
+    // Search book function
+    async function searchBook() {
+        const bookId = document.getElementById('bookIdInput').value.trim();
+        if (!bookId) {
+            alert('Please enter a book ID or title');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/Admin/SearchBook?bookId=${encodeURIComponent(bookId)}`);
+            const result = await response.json();
+            
+            if (result.success) {
+                currentBook = result.data;
+                document.getElementById('bookTitle').textContent = result.data.Title;
+                document.getElementById('bookDetails').textContent = `${result.data.Author} | ${result.data.ISBN}`;
+                document.getElementById('bookImage').src = result.data.imageUrl || '/images/booklogo.png';
+                document.getElementById('bookCard').style.display = 'block';
+            } else {
+                alert('Book not found');
+                document.getElementById('bookCard').style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to search book');
+        }
+    }
+
+    // Load borrowed books for current student
+    async function loadBorrowedBooks() {
+        if (!currentStudent) return;
+
+        try {
+            const response = await fetch(`/Admin/GetBorrowedReservations?userId=${currentStudent.id}`);
+            const result = await response.json();
+            
+            if (result.success) {
+                displayBorrowedBooks(result.data);
+            } else {
+                console.error('Failed to load borrowed books:', result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to load borrowed books');
+        }
+    }
+
+    // Display borrowed books in table
+    function displayBorrowedBooks(books) {
+        const tbody = document.getElementById('borrowedBooksBody');
+        tbody.innerHTML = '';
+
+        books.forEach(book => {
+            const row = document.createElement('tr');
+            const daysOverdue = book.daysOverdue || 0;
+            const overdueClass = daysOverdue > 0 ? 'overdue' : '';
+            
+            row.innerHTML = `
+                <td>${book.bookTitle}</td>
+                <td>${new Date(book.borrowDate).toLocaleDateString()}</td>
+                <td>${new Date(book.dueDate).toLocaleDateString()}</td>
+                <td class="${overdueClass}">${daysOverdue}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="processReturn('${book.reservationId}')">
+                        Process Return
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // Process return function
+    async function processReturn(reservationId) {
+        if (!currentStudent) {
+            alert('Please select a student first');
+            return;
+        }
+
+        // Show return form or modal
+        const condition = prompt('Enter book condition (Good, Damaged, Lost):');
+        if (!condition) return;
+
+        const remarks = prompt('Enter remarks (optional):') || '';
+
+        try {
+            const response = await fetch('/Admin/ProcessReturnTransaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reservationId: reservationId,
+                    userId: currentStudent.id,
+                    bookId: currentBook?.BookId || '',
+                    bookTitle: currentBook?.Title || '',
+                    borrowDate: new Date().toISOString(),
+                    dueDate: new Date().toISOString(),
+                    daysLate: 0,
+                    lateFees: 0,
+                    bookCondition: condition,
+                    damageType: condition === 'Damaged' ? 'Minor' : '',
+                    damagePenalty: condition === 'Damaged' ? 100 : 0,
+                    penaltyAmount: condition === 'Lost' ? 2000 : 0,
+                    totalPenalty: condition === 'Lost' ? 2000 : 0,
+                    remarks: remarks
+                })
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Return processed successfully');
+                loadBorrowedBooks(); // Refresh the list
+            } else {
+                alert('Failed to process return: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to process return');
+        }
+    }
+</script>

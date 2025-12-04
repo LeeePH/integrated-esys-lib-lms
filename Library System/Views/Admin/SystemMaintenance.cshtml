@@ -1,0 +1,144 @@
+﻿@model List<SystemLibrary.Models.BackupMetadata>
+@{
+    ViewBag.Title = "System Maintenance";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Maintenance</title>
+    <link rel="stylesheet" href="~/css/Admin/Maintenances.css" />
+</head>
+<body>
+    <main class="content">
+        <!-- Header -->
+        <header>
+            <h1>System Maintenance</h1>
+        </header>
+
+        <!-- Tabs below the header -->
+        <div class="tabs">
+            <button class="active">Database</button>
+            <button onclick="location.href='@Url.Action("LogAudit", "Admin")'">Log Audit</button>
+            <button onclick="location.href='@Url.Action("BookCondition", "Admin")'">Book Condition</button>
+            <button onclick="location.href='@Url.Action("UnrestrictRequests", "Admin")'">Unrestrict Requests</button>
+        </div>
+
+        <!-- Success/Error Messages -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div style="padding: 15px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin: 10px 0;">
+                ✅ @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div style="padding: 15px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 5px; margin: 10px 0;">
+                ❌ @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <!-- Main section -->
+        <section class="maintenance-section">
+            <!-- Left: Create Backup -->
+            <div class="backup-card">
+                <h2>Create Backup</h2>
+                <p>Generate Database Backup</p>
+                @if (ViewBag.LatestBackup != null)
+                {
+                    <p class="last-backup">Last Backup: @ViewBag.LatestBackup.CreatedAt.ToLocalTime().ToString("M/d/yyyy | h:mm tt")</p>
+                }
+                else
+                {
+                    <p class="last-backup">No backups created yet</p>
+                }
+                <form method="post" action="@Url.Action("CreateBackup", "Admin")" onsubmit="return confirm('Create a new backup? This may take a few moments.');">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-blue">Create Backup</button>
+                </form>
+            </div>
+
+            <!-- Right: Restore Backup -->
+            <div class="restore-card">
+                <h2>Restore Database</h2>
+                <p>Restore from a previous Backup</p>
+                <form method="post" action="@Url.Action("RestoreBackup", "Admin")" onsubmit="return confirm('⚠️ WARNING: This will replace ALL current data with the selected backup. Are you absolutely sure?');">
+                    @Html.AntiForgeryToken()
+                    <select name="backupId" required>
+                        <option value="">Select Backup to Restore</option>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var backup in Model.Where(b => b.Status == "Success"))
+                            {
+                                <option value="@backup._id">@backup.BackupName - @backup.CreatedAt.ToLocalTime().ToString("M/d/yyyy h:mm tt")</option>
+                            }
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-orange">Restore Database</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Backup History -->
+        <section class="history-section">
+            <h3>BACKUP HISTORY</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Backup File</th>
+                        <th>Date Created</th>
+                        <th>Size</th>
+                        <th>Created By</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var backup in Model)
+                        {
+                            <tr>
+                                <td>@backup.BackupName</td>
+                                <td>@backup.CreatedAt.ToLocalTime().ToString("M/d/yyyy | h:mm tt")</td>
+                                <td>@backup.FileSizeFormatted</td>
+                                <td>@backup.CreatedBy</td>
+                                <td>
+                                    <span style="color: @(backup.Status == "Success" ? "#28a745" : "#dc3545"); font-weight: bold;">
+                                        @backup.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("DownloadBackup", "Admin", new { backupId = backup._id })" class="btn-download" title="Download" style="margin-right: 10px;">
+                                        📥 Download
+                                    </a>
+                                    <form method="post" action="@Url.Action("DeleteBackup", "Admin")" style="display: inline;" onsubmit="return confirm('Delete this backup?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="backupId" value="@backup._id" />
+                                        <button type="submit" class="btn-delete" title="Delete" style="background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; margin-top: 15px;">
+                                            🗑️ Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 30px; color: #666;">
+                                📋 No backups found. Create your first backup to get started.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+
+

@@ -1,0 +1,905 @@
+@model List<SystemLibrary.Models.Book>
+@{
+    ViewData["Title"] = "Catalog Management";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/catalogs.css" />
+
+<!-- Success/Error Messages -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+    </div>
+}
+
+<div class="catalog-container">
+    <h1 class="catalog-title">Catalog Management</h1>
+
+    <!-- HEADER -->
+    <div class="catalog-header">
+        <div class="catalog-searchbar">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search..." class="catalog-search-input" onkeyup="searchBooks()" />
+                <img src="~/images/searchicon.png" alt="Search" class="search-icon" />
+            </div>
+
+            <button class="catalog-filter-btn" onclick="toggleFilter()">
+                <img src="~/images/filler.png" alt="Filter" class="filter-icon" />
+            </button>
+
+            <select id="statusFilter" class="catalog-dropdown" onchange="filterBooks()">
+                <option value="">All</option>
+                <option value="available">Available</option>
+                <option value="unavailable">Borrowed</option>
+            </select>
+        </div>
+
+        <button class="catalog-add-btn" onclick="showAddBookModal()">
+            <img src="~/images/plusmark.png" alt="Add" class="add-icon" />
+            Add New Book
+        </button>
+        
+        
+        
+    </div>
+
+    <!-- Filter Panel -->
+    <div id="filterPanel" class="filter-panel" style="display: none;">
+        <select id="subjectFilter" onchange="filterBooks()">
+            <option value="">All Subjects</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Literature">Literature</option>
+            <option value="History">History</option>
+            <option value="Philosophy">Philosophy</option>
+            <option value="Business">Business</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <!-- TABLE -->
+    <div class="catalog-table-wrapper">
+        <table class="catalog-table">
+            <thead>
+                <tr>
+                    <th>Book Details</th>
+                    <th>Location</th>
+                    <th>Availability</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var book in Model)
+                    {
+                        <tr class="book-row" data-subject="@book.Subject" data-status="@(book.IsAvailable ? "available" : "unavailable")">
+                            <td>
+                                <div class="catalog-bookinfo">
+                                    <div class="catalog-booktitle">
+                                        <img src="~/images/bookmark.png" alt="Book" class="mark-icon" />
+                                        <strong>@book.Title</strong>
+                                    </div>
+                                    <p>@book.Author</p>
+                                    <p>ISBN: @book.ISBN</p>
+                                    <p>@book.Subject</p>
+                                </div>
+                            </td>
+                            <td>IT - 001 - A3</td>
+                            <td>
+                                <div class="availability-container">
+                                    <strong>@book.AvailableCopies / @book.TotalCopies</strong>
+                                    @if (book.CopyManagementEnabled)
+                                    {
+                                        <button class="copy-details-btn" onclick="showCopyDetails('@book._id')" title="View Individual Copy Details">
+                                            <i class="fas fa-list"></i> View Copies
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @if (!book.IsActive)
+                                {
+                                    <span class="catalog-status catalog-status-unavailable">Inactive</span>
+                                }
+                                else if (book.IsAvailable)
+                                {
+                                    <span class="catalog-status catalog-status-available">Available - @book.AvailableCopies</span>
+                                }
+                                else
+                                {
+                                    <span class="catalog-status catalog-status-unavailable">Not Available</span>
+                                }
+                            </td>
+                            <td>
+                                <button class ="catalog-update-btn" onclick="showEditBookModal(
+            '@book._id',
+            '@book.Title',
+            '@book.Author',
+            '@book.ISBN',
+            '@book.Publisher',
+            '@book.ClassificationNo',
+            '@book.Subject',
+         '@book.PublicationDate',
+             '@book.Restrictions',
+            '@book.Image',
+            @book.TotalCopies,
+            @book.BorrowedCopies,
+            '@book.CreatedAt',
+            @book.IsActive.ToString().ToLower(),
+            @book.IsReferenceOnly.ToString().ToLower()
+
+        )">
+                                    UPDATE
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <p>No books in catalog</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+ 
+
+<!-- ADD BOOK MODAL -->
+<div class="addbook-modal" id="addBookModal">
+    <div class="addbook-content">
+        <div class="addbook-header">ADD BOOK</div>
+        <div class="addbook-body">
+            <!-- MOCK data Lookup Section -->
+            <div class="mac-lookup-section" style="background:#f8f9fa; border-radius:8px; padding:12px; border:1px solid #e9ecef; margin-bottom:12px;">
+                <h3 style="margin:0 0 10px 0; font-size:14px;">🔍 MOCK data Lookup</h3>
+                <div class="lookup-controls" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="lookup-group" style="display:flex; gap:8px; align-items:center;">
+                        <select id="macLookupType" style="padding:8px; border:2px solid #e9ecef; border-radius:6px;">
+                            <option value="isbn">Lookup by ISBN</option>
+                            <option value="author">Lookup by Author</option>
+                        </select>
+                        <input type="text" id="macLookupValue" placeholder="Enter ISBN or Author" class="catalog-search-input" style="flex:1 1 auto;" />
+                        <button type="button" class="catalog-add-btn" onclick="lookupMacForBook()">Lookup</button>
+                    </div>
+                    <div id="macLookupResult" class="lookup-result" style="display:none; padding:10px; border:1px solid #e9ecef; border-radius:6px; background:#fff;"></div>
+                    
+                </div>
+            </div>
+            <form asp-controller="Admin" asp-action="AddBook" method="post" enctype="multipart/form-data" onsubmit="return validateAddForm()">
+                @Html.AntiForgeryToken()
+
+                
+
+                <!-- Title -->
+                <label>Title *</label>
+                <input type="text" name="Title" id="addTitle" placeholder="Book Title..." required>
+
+                <!-- Author -->
+                <label>Author *</label>
+                <input type="text" name="Author" id="addAuthor" placeholder="Book Author..." required>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <!-- ISBN -->
+                        <label>ISBN</label>
+                        <input type="text" name="ISBN" id="addISBN" placeholder="978-0134685991">
+                    </div>
+                    <div class="addbook-col">
+                        <!-- Subject -->
+                        <label>Subject *</label>
+                        <select name="Subject" id="addSubject" required>
+                            <option value="">Select Subject</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Literature">Literature</option>
+                            <option value="History">History</option>
+                            <option value="Philosophy">Philosophy</option>
+                            <option value="Business">Business</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <!-- Publisher -->
+                        <label>Publisher</label>
+                        <input type="text" name="Publisher" id="addPublisher" placeholder="Publisher Name...">
+                    </div>
+                    <div class="addbook-col">
+                        <!-- Publication Date -->
+                        <label>Publication Date</label>
+                        <input type="date" name="PublicationDate" id="addPublicationDate">
+                    </div>
+                </div>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <!-- Classification Number -->
+                        <label>Classification No.</label>
+                        <input type="text" name="ClassificationNo" id="addClassificationNo" placeholder="IT-001-A3">
+                    </div>
+                    <div class="addbook-col">
+                        <!-- Quantity / Total Copies -->
+                        <label>Quantity *</label>
+                        <input type="number" name="TotalCopies" id="addQuantity" min="1" value="1" required>
+                    </div>
+                </div>
+
+                <!-- Restrictions -->
+                <label>Restrictions (optional)</label>
+                <textarea name="Restrictions" id="addRestrictions" placeholder="Optional restrictions..."></textarea>
+
+                <!-- Image Upload -->
+                <label>Image</label>
+                <div class="addbook-image-box" onclick="document.getElementById('addBookImage').click()">
+                    <span id="addImageText">Click to Upload Image</span>
+                    <img id="addImagePreview" src="" alt="" style="display:none; max-width: 100%; max-height: 150px; margin-top: 10px;">
+                </div>
+                <input type="file" id="addBookImage" name="bookImage" accept="image/*" style="display:none;" onchange="previewImage(this, 'add')">
+
+                <!-- Buttons -->
+                <div class="addbook-buttons">
+                    <button type="button" class="addbook-cancel" onclick="closeAddBookModal()">Cancel</button>
+                    <button type="submit" class="addbook-save">+ Save Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- UPDATE BOOK MODAL -->
+<div class="addbook-modal" id="updateBookModal">
+    <div class="addbook-content">
+        <div class="addbook-header">UPDATE BOOK</div>
+        <div class="addbook-body">
+            <div id="updateInfoCard" class="info-card" style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-bottom: 1rem; display: none;">
+                <p><strong>Available Copies:</strong> <span id="updateAvailableCopies"></span></p>
+                <p><strong>Borrowed Copies:</strong> <span id="updateBorrowedCopies"></span></p>
+                <div id="updateBorrowWarning" class="alert-warning" style="display: none; background: #fff3cd; border: 1px solid #ffc107; padding: 0.75rem; border-radius: 4px; margin-top: 0.5rem;">
+                    ⚠️ This book has borrowed copies. Be careful when reducing total copies.
+                </div>
+            </div>
+
+            <form id="updateBookForm" asp-controller="Admin" asp-action="EditBook" method="post" enctype="multipart/form-data" onsubmit="return validateUpdateForm()">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" id="updateBookId" />
+                <input type="hidden" name="_id" id="update_Id" />
+                <input type="hidden" id="updateCurrentImage" name="Image" />
+
+                <label>Title *</label>
+                <input type="text" name="Title" id="updateTitle" placeholder="Book Title..." required>
+
+                <label>Author *</label>
+                <input type="text" name="Author" id="updateAuthor" placeholder="Book Author..." required>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <label>ISBN</label>
+                        <input type="text" name="ISBN" id="updateISBN" placeholder="978-0134685991">
+                    </div>
+                    <div class="addbook-col">
+                        <label>Subject *</label>
+                        <select name="Subject" id="updateSubject" required>
+                            <option value="">Select Subject</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Literature">Literature</option>
+                            <option value="History">History</option>
+                            <option value="Philosophy">Philosophy</option>
+                            <option value="Business">Business</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <label>Publisher</label>
+                        <input type="text" name="Publisher" id="updatePublisher" placeholder="Publisher Name...">
+                    </div>
+                    <div class="addbook-col">
+                        <label>Publication Date</label>
+                        <input type="date" name="PublicationDate" id="updatePublicationDate">
+                    </div>
+                </div>
+
+                <div class="addbook-row">
+                    <div class="addbook-col">
+                        <label>Classification No.</label>
+                        <input type="text" name="ClassificationNo" id="updateClassificationNo" placeholder="IT-001-A3">
+                    </div>
+                    <div class="addbook-col">
+                        <label>Quantity *</label>
+                        <input type="number" name="TotalCopies" id="updateQuantity" min="1" value="1" required onchange="updateAvailablePreview(); updateCopyPreview()">
+                        <small id="minCopiesWarning" style="color: #666; font-size: 0.85rem;"></small>
+                        <div id="availablePreview" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
+                    </div>
+                </div>
+
+                <!-- Copy Management Section for Update -->
+                <div class="copy-management-section">
+                    <div class="copy-management-header">
+                        <h4>📚 Copy Management</h4>
+                        <label class="copy-toggle">
+                            <input type="checkbox" id="updateEnableCopyManagement" name="CopyManagementEnabled" onchange="toggleUpdateCopyManagement()">
+                            Enable Individual Copy Tracking
+                        </label>
+                    </div>
+                    
+                    <div id="updateCopyManagementOptions" style="display: none;">
+                        <div class="addbook-row">
+                            <div class="addbook-col">
+                                <label>Copy ID Prefix</label>
+                                <input type="text" name="CopyPrefix" id="updateCopyPrefix" placeholder="SDS" value="SDS" maxlength="4" onchange="updateCopyPreview()">
+                                <small>Prefix for copy IDs (e.g., SDS-0232)</small>
+                            </div>
+                            <div class="addbook-col">
+                                <label>Starting Copy Number</label>
+                                <input type="number" name="NextCopyNumber" id="updateNextCopyNumber" min="1" value="1" onchange="updateCopyPreview()">
+                                <small>First copy number (e.g., 1 for SDS-0001)</small>
+                            </div>
+                        </div>
+                        
+                        <div class="copy-preview">
+                            <strong>Preview Copy IDs:</strong>
+                            <div id="updateCopyIdPreview" class="copy-id-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <label>Restrictions (optional)</label>
+                <textarea name="Restrictions" id="updateRestrictions"></textarea>
+
+                <!-- Reference Only -->
+                <div class="status-toggle-section">
+                    <label>Reference Only</label>
+                    <div class="toggle-switch">
+                        <input type="hidden" name="IsReferenceOnly" value="false">
+                        <input type="checkbox" id="updateIsReferenceOnly" name="IsReferenceOnly" value="true">
+                        <label for="updateIsReferenceOnly" class="toggle-label">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text">For Reference (non-borrowable)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Active/Inactive Status Toggle -->
+                <div class="status-toggle-section">
+                    <label>Book Status</label>
+                    <div class="toggle-switch">
+                        <input type="hidden" name="IsActive" value="false">
+                        <input type="checkbox" id="updateIsActive" name="IsActive" value="true" checked>
+                        <label for="updateIsActive" class="toggle-label">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text" id="updateStatusText">Active</span>
+                        </label>
+                    </div>
+                    <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 5px;">
+                        Inactive books will not be available for borrowing
+                    </small>
+                </div>
+
+                <label>Image</label>
+                <div class="addbook-image-box" onclick="document.getElementById('updateBookImage').click()">
+                    <span id="updateImageText">Click to Change Image</span>
+                    <img id="updateImagePreview" src="" alt="" style="display:none; max-width: 100%; max-height: 150px; margin-top: 10px;">
+                </div>
+                <input type="file" id="updateBookImage" name="bookImage" accept="image/*" style="display:none;" onchange="previewImage(this, 'update')">
+
+                <div class="addbook-buttons">
+                    <button type="button" class="addbook-cancel" onclick="closeUpdateBookModal()">Cancel</button>
+                    <button type="submit" class="addbook-save" id="updateBookButton">Update Book</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SUCCESS UPDATE BOOK POPUP -->
+<div class="action-popup" id="bookUpdatedPopup">
+    <div class="popup-content success">
+        <div class="popup-icon">
+            <img src="~/images/bluecheck.png" alt="Success" />
+        </div>
+        <h2>Book Updated!</h2>
+        <p>Book has been updated</p>
+        <button class="popup-done" onclick="closePopup('bookUpdatedPopup')">DONE</button>
+    </div>
+</div>
+
+<!-- SUCCESS UPDATE BOOK POPUP -->
+<div class="action-popup" id="bookUpdatedPopup">
+    <div class="popup-content success">
+        <div class="popup-icon">
+            <img src="~/images/bluecheck.png" alt="Success" />
+        </div>
+        <h2>Book Updated!</h2>
+        <p>Book has been updated</p>
+        <button class="popup-done" onclick="closePopup('bookUpdatedPopup')">DONE</button>
+    </div>
+</div>
+
+<!-- CONFIRM DELETE POPUP -->
+<div class="action-popup" id="confirmDeletePopup">
+    <div class="popup-content delete">
+        <div class="popup-icon">
+            <img src="~/images/trashbin.png" alt="Delete" />
+        </div>
+        <h2>Are you sure you want to <strong>DELETE</strong> this book?</h2>
+        <p id="deleteBookTitle" style="margin: 1rem 0; color: #666;"></p>
+        <div class="popup-buttons">
+            <button class="popup-no" onclick="closePopup('confirmDeletePopup')">NO</button>
+            <button class="popup-yes" id="confirmDeleteBtn" onclick="executeDelete()">YES</button>
+        </div>
+    </div>
+</div>
+
+<!-- SUCCESS DELETE POPUP -->
+<div class="action-popup" id="bookDeletedPopup">
+    <div class="popup-content delete">
+        <div class="popup-icon">
+            <img src="~/images/trashbin.png" alt="Success" />
+        </div>
+        <h2>Book has been <strong>DELETED</strong> successfully</h2>
+        <button class="popup-done" onclick="closePopup('bookDeletedPopup')">DONE</button>
+    </div>
+</div>
+
+<form id="deleteBookForm" asp-controller="Admin" asp-action="DeleteBook" method="post" style="display: none;">
+    <input type="hidden" id="deleteBookId" name="id" />
+</form>
+
+<script>
+    let currentDeleteId = null;
+
+    // Search functionality
+    function searchBooks() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('.book-row');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(input) ? '' : 'none';
+        });
+    }
+
+    // Filter functionality
+    function toggleFilter() {
+        const panel = document.getElementById('filterPanel');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function filterBooks() {
+        const subjectFilter = document.getElementById('subjectFilter').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+        const rows = document.querySelectorAll('.book-row');
+
+        rows.forEach(row => {
+            const subject = row.dataset.subject;
+            const status = row.dataset.status;
+
+            const subjectMatch = !subjectFilter || subject === subjectFilter;
+            const statusMatch = !statusFilter || status === statusFilter;
+
+            row.style.display = subjectMatch && statusMatch ? '' : 'none';
+        });
+    }
+
+    // Add Book Modal
+    function showAddBookModal() {
+        document.getElementById('addBookModal').style.display = 'flex';
+        document.getElementById('addImagePreview').style.display = 'none';
+        document.getElementById('addImageText').style.display = 'block';
+        document.getElementById('addImageText').textContent = 'Click to Upload Image';
+        document.getElementById('addBookImage').value = '';
+    }
+
+    function closeAddBookModal() {
+        document.getElementById('addBookModal').style.display = 'none';
+        document.querySelector('#addBookModal form').reset();
+    }
+
+    function showEditBookModal(
+        id,
+        title,
+        author,
+        isbn,
+        publisher,
+        classification_no,
+        subject,
+        publicationDate,
+        restrictions,
+        image,
+        totalCopies,
+        borrowedCopies,
+        createdAt,
+        isActive,
+        isReferenceOnly
+    ) {
+        document.getElementById('updateBookId').value = id;
+        document.getElementById('update_Id').value = id;
+
+        document.getElementById('updateTitle').value = title;
+        document.getElementById('updateAuthor').value = author;
+        document.getElementById('updateISBN').value = isbn;
+        document.getElementById('updatePublisher').value = publisher || '';
+        document.getElementById('updateClassificationNo').value = classification_no || '';
+
+        const subjectDropdown = document.getElementById('updateSubject');
+        for (const option of subjectDropdown.options) {
+            if (option.value.toLowerCase() === (subject || '').toLowerCase()) {
+                subjectDropdown.value = option.value;
+                break;
+            }
+        }
+
+        document.getElementById('updatePublicationDate').value = publicationDate
+            ? publicationDate.split('T')[0]
+            : '';
+
+        document.getElementById('updateRestrictions').value = restrictions || '';
+
+        const currentImageInput = document.getElementById('updateCurrentImage');
+        currentImageInput.value = image || '';
+        const imageText = document.getElementById('updateImageText');
+        const imagePreview = document.getElementById('updateImagePreview');
+        if (image) {
+            imageText.textContent = image.split('/').pop();
+            imageText.style.display = 'block';
+            imagePreview.style.display = 'none';
+        } else {
+            imageText.textContent = 'Click to Change Image';
+            imageText.style.display = 'block';
+            imagePreview.style.display = 'none';
+        }
+
+        document.getElementById('updateBookImage').value = '';
+
+        document.getElementById('updateQuantity').value = totalCopies;
+        document.getElementById('updateQuantity').min = borrowedCopies;
+
+        const availableCopies = totalCopies - borrowedCopies;
+        document.getElementById('updateAvailableCopies').textContent = availableCopies;
+        document.getElementById('updateBorrowedCopies').textContent = borrowedCopies;
+
+        document.getElementById('minCopiesWarning').textContent = `Minimum: ${borrowedCopies} (due to borrowed copies)`;
+
+        if (borrowedCopies > 0) {
+            document.getElementById('updateInfoCard').style.display = 'block';
+            document.getElementById('updateBorrowWarning').style.display = 'block';
+        } else {
+            document.getElementById('updateInfoCard').style.display = 'none';
+            document.getElementById('updateBorrowWarning').style.display = 'none';
+        }
+
+        // Set IsActive checkbox
+        const isActiveCheckbox = document.getElementById('updateIsActive');
+        isActiveCheckbox.checked = (isActive === 'true' || isActive === true);
+        document.getElementById('updateStatusText').textContent = isActiveCheckbox.checked ? 'Active' : 'Inactive';
+
+        // Set IsReferenceOnly checkbox
+        const isReferenceCheckbox = document.getElementById('updateIsReferenceOnly');
+        isReferenceCheckbox.checked = (isReferenceOnly === 'true' || isReferenceOnly === true);
+
+        updateAvailablePreview();
+        document.getElementById('updateBookForm').action = `/Admin/EditBook/${id}`;
+        document.getElementById('updateBookModal').style.display = 'flex';
+    }
+
+    function closeUpdateBookModal() {
+        document.getElementById('updateBookModal').style.display = 'none';
+    }
+
+    
+
+    
+
+    
+
+    function updateAvailablePreview() {
+        const totalInput = document.getElementById('updateQuantity');
+        const borrowedSpan = document.getElementById('updateBorrowedCopies');
+        const preview = document.getElementById('availablePreview');
+
+        if (totalInput && borrowedSpan && totalInput.value) {
+            const newTotal = parseInt(totalInput.value);
+            const borrowed = parseInt(borrowedSpan.textContent);
+            const newAvailable = newTotal - borrowed;
+
+            if (newTotal >= borrowed) {
+                preview.innerHTML = `ℹ️ New available copies will be: ${newAvailable}`;
+                preview.style.color = '#17a2b8';
+            } else {
+                preview.innerHTML = `⚠️ Error: Total copies cannot be less than borrowed copies (${borrowed})`;
+                preview.style.color = '#dc3545';
+            }
+        }
+    }
+
+    // Delete functionality
+    function confirmDelete(bookId, bookTitle, borrowedCopies) {
+        if (borrowedCopies > 0) {
+            alert('Cannot delete book with active borrows');
+            return;
+        }
+        currentDeleteId = bookId;
+        document.getElementById('deleteBookTitle').textContent = bookTitle;
+        document.getElementById('confirmDeletePopup').style.display = 'flex';
+    }
+
+    function executeDelete() {
+        if (currentDeleteId) {
+            document.getElementById('deleteBookId').value = currentDeleteId;
+            document.getElementById('deleteBookForm').submit();
+        }
+    }
+
+    function previewImage(input, type) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const fileName = file.name;
+            const textId = type === 'add' ? 'addImageText' : 'updateImageText';
+            const previewId = type === 'add' ? 'addImagePreview' : 'updateImagePreview';
+            document.getElementById(textId).textContent = fileName;
+            document.getElementById(textId).style.display = 'block';
+            document.getElementById(previewId).style.display = 'none';
+         }
+    }
+
+    function validateAddForm() { return true; }
+
+    async function lookupMacForBook() {
+        const type = document.getElementById('macLookupType').value;
+        const val = document.getElementById('macLookupValue').value.trim();
+        const resultBox = document.getElementById('macLookupResult');
+        if (!val) {
+            alert('Please enter a value');
+            return;
+        }
+        try {
+            let url = '';
+            if (type === 'isbn') {
+                url = `/Admin/LookupMacBookByIsbn?isbn=${encodeURIComponent(val)}`;
+            } else {
+                url = `/Admin/LookupMacBooksByAuthor?authorName=${encodeURIComponent(val)}`;
+            }
+            const res = await fetch(url);
+            const json = await res.json();
+            if (!json.success) {
+                resultBox.style.display = 'block';
+                resultBox.innerHTML = `<div class='lookup-error'>${json.message}</div>`;
+                return;
+            }
+            if (type === 'isbn') {
+                const b = json.data;
+                // Auto-fill fields
+                document.getElementById('addTitle').value = b.title || '';
+                document.getElementById('addAuthor').value = b.author || '';
+                document.getElementById('addISBN').value = b.isbn || '';
+                document.getElementById('addPublisher').value = b.publisher || '';
+                if (b.publication_date) document.getElementById('addPublicationDate').value = (b.publication_date || '').split('T')[0] || '';
+                // Fill optional fields (leave image and quantity untouched)
+                const classificationInput = document.getElementById('addClassificationNo');
+                if (classificationInput) classificationInput.value = b.classification_no || '';
+                const restrictionsInput = document.getElementById('addRestrictions');
+                if (restrictionsInput) restrictionsInput.value = '';
+                const subjectDropdown = document.getElementById('addSubject');
+                let matched = false;
+                for (const option of subjectDropdown.options) {
+                    if (option.value.toLowerCase() === (b.subject || '').toLowerCase()) {
+                        subjectDropdown.value = option.value;
+                        matched = true;
+                        break;
+                    }
+                }
+                if (!matched && subjectDropdown.options.length) {
+                    // fallback to Other if present
+                    const other = Array.from(subjectDropdown.options).find(o => o.value.toLowerCase() === 'other');
+                    subjectDropdown.value = other ? other.value : subjectDropdown.options[0].value;
+                }
+                resultBox.style.display = 'block';
+                resultBox.innerHTML = `<div class='lookup-success'>✅ Found: ${b.title} by ${b.author}</div>`;
+            } else {
+                const books = json.data;
+                resultBox.style.display = 'block';
+                resultBox.innerHTML = `<div style='max-height:200px; overflow:auto;'>` +
+                    books.map(x => `
+                        <div style='display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid #eee;'>
+                            <div style='flex:1 1 auto;'>${x.title} <small>(${x.isbn})</small></div>
+                            <button type='button' class='catalog-add-btn' onclick='applyMacBookFromList(${JSON.stringify("" ).replace("\"","\"")})' style='display:none'></button>
+                            <button type='button' class='catalog-add-btn' onclick='selectMacBook("${x.title?.replace(/"/g, '&quot;')}", "${x.author?.replace(/"/g, '&quot;')}", "${x.isbn}", "${(x.publisher||"").replace(/"/g, '&quot;')}", "${(x.subject||"").replace(/"/g, '&quot;')}", "${x.publication_date||""}")'>Use</button>
+                        </div>
+                    `).join('') +
+                    `</div>`;
+            }
+        } catch (e) {
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<div class='lookup-error'>Error: ${e.message}</div>`;
+        }
+    }
+
+    function selectMacBook(title, author, isbn, publisher, subject, publicationDate) {
+        document.getElementById('addTitle').value = title || '';
+        document.getElementById('addAuthor').value = author || '';
+        document.getElementById('addISBN').value = isbn || '';
+        document.getElementById('addPublisher').value = publisher || '';
+        if (publicationDate) document.getElementById('addPublicationDate').value = (publicationDate || '').split('T')[0] || '';
+        const classificationInput = document.getElementById('addClassificationNo');
+        if (classificationInput) classificationInput.value = '';
+        const restrictionsInput = document.getElementById('addRestrictions');
+        if (restrictionsInput) restrictionsInput.value = '';
+        const subjectDropdown = document.getElementById('addSubject');
+        let matched = false;
+        for (const option of subjectDropdown.options) {
+            if (option.value.toLowerCase() === (subject || '').toLowerCase()) {
+                subjectDropdown.value = option.value;
+                matched = true;
+                break;
+            }
+        }
+        if (!matched && subjectDropdown.options.length) {
+            const other = Array.from(subjectDropdown.options).find(o => o.value.toLowerCase() === 'other');
+            subjectDropdown.value = other ? other.value : subjectDropdown.options[0].value;
+        }
+        document.getElementById('macLookupResult').style.display = 'none';
+    }
+
+    function validateUpdateForm() {
+        const totalCopies = parseInt(document.getElementById('updateQuantity').value);
+        const borrowedCopies = parseInt(document.getElementById('updateBorrowedCopies').textContent);
+        if (totalCopies < borrowedCopies) {
+            alert(`Total copies cannot be less than borrowed copies (${borrowedCopies})`);
+            return false;
+        }
+        return true;
+    }
+
+    function closePopup(popupId) {
+        document.getElementById(popupId).style.display = 'none';
+        if (popupId === 'bookSavedPopup' || popupId === 'bookUpdatedPopup' || popupId === 'bookDeletedPopup') {
+            location.reload();
+        }
+    }
+
+    window.onclick = function(event) {
+        const addModal = document.getElementById('addBookModal');
+        const updateModal = document.getElementById('updateBookModal');
+        if (event.target == addModal) closeAddBookModal();
+        if (event.target == updateModal) closeUpdateBookModal();
+    }
+
+    setTimeout(function() {
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 300);
+        });
+    }, 5000);
+
+    // ✅ FIXED: Show success popups AFTER DOM is ready
+    document.addEventListener("DOMContentLoaded", function() {
+    @if (TempData["BookAdded"] != null)
+    {
+        <text>document.getElementById('bookSavedPopup').style.display = 'flex';</text>
+    }
+    @if (TempData["BookUpdated"] != null)
+    {
+        <text>document.getElementById('bookUpdatedPopup').style.display = 'flex';</text>
+    }
+    @if (TempData["BookDeleted"] != null)
+    {
+        <text>document.getElementById('bookDeletedPopup').style.display = 'flex';</text>
+    }
+
+    // Add event listener for IsActive checkbox to update status text
+    const updateIsActiveCheckbox = document.getElementById('updateIsActive');
+    if (updateIsActiveCheckbox) {
+        updateIsActiveCheckbox.addEventListener('change', function() {
+            const statusText = document.getElementById('updateStatusText');
+            if (statusText) {
+                statusText.textContent = this.checked ? 'Active' : 'Inactive';
+            }
+        });
+    }
+    });
+</script>
+
+<style>
+    /* Alert styles */
+    .alert {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        position: relative;
+        transition: opacity 0.3s ease;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+
+    .btn-close {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 2rem;
+        color: #999;
+    }
+
+    /* Filter panel */
+    .filter-panel {
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+        .filter-panel select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+    /* Disabled button */
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+

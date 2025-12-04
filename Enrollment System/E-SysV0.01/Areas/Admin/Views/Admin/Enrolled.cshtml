@@ -1,0 +1,130 @@
+﻿@model E_SysV0._01.Models.EnrollmentListViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="card">
+    <h2 class="mb-3">@Model.Title (@Model.Items.Count)</h2>
+    @Html.Partial("~/Areas/Admin/Views/Admin/_ListFilters.cshtml")
+
+    @if (Model.Items.Count == 0)
+    {
+        <div class="alert alert-info">No enrolled students yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Program</th>
+                        <th>Type</th>
+                        <th>Year Level</th>
+                        <th>Semester</th>
+                        <th>Enrolled Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var req in Model.Items)
+                    {
+                        var yearLevel = req.ExtraFields?.GetValueOrDefault("Academic.YearLevel", "1st Year") ?? "1st Year";
+                        var is2ndYear = yearLevel.Contains("2nd Year", StringComparison.OrdinalIgnoreCase);
+                        var isSophomore = req.Type != null && req.Type.Contains("Sophomore", StringComparison.OrdinalIgnoreCase);
+
+                        <tr>
+                            <td>@req.FullName</td>
+                            <td>@req.Email</td>
+                            <td>
+                                <span class="badge bg-primary">@(req.Program ?? "BSIT")</span>
+                            </td>
+                            <td>
+                                @if (isSophomore || is2ndYear)
+                                {
+                                    <span class="badge bg-secondary">
+                                       
+                                        @req.Type
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@(req.Type ?? "Freshmen")</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge bg-@(is2ndYear || isSophomore ? "success" : "info") text-@(is2ndYear || isSophomore ? "white" : "dark")">
+                                    @yearLevel
+                                </span>
+                            </td>
+                            <td>@(req.LastUpdatedAt?.ToString("MMM dd, yyyy") ?? req.SubmittedAt.ToString("MMM dd, yyyy"))</td>
+                            <td class="d-flex gap-2">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="@Url.Action("EnrolledDetails", "Admin", new { area = "Admin", id = req.Id })">
+                                    <i class="fas fa-edit me-1"></i> Details
+                                </a>
+
+                            
+                           
+                           
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        onclick="showRegistrationModal('@req.Id')">
+                                    <i class="bi bi-file-earmark-text"></i> Reg. Slip
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        async function showRegistrationModal(reqId) {
+            const url = `@Url.Action("RegistrationSlip", "Admin", new { area = "Admin" })?id=${encodeURIComponent(reqId)}`;
+
+            let resp, html;
+            try {
+                resp = await fetch(url, { method: 'GET' });
+                html = await resp.text();
+            } catch {
+                alert('Failed to load registration slip.');
+                return;
+            }
+
+            if (!resp.ok) {
+                alert(html || 'Failed to generate registration slip.');
+                return;
+            }
+
+            const containerId = 'registrationModalContainer';
+            let host = document.getElementById(containerId);
+            if (!host) {
+                host = document.createElement('div');
+                host.id = containerId;
+                document.body.appendChild(host);
+            }
+            host.innerHTML = html;
+
+            host.querySelectorAll('script').forEach(old => {
+                const s = document.createElement('script');
+                if (old.src) s.src = old.src; else s.textContent = old.textContent || '';
+                document.body.appendChild(s);
+                old.remove();
+            });
+
+            const modalEl = document.getElementById('registrationModal');
+            if (!modalEl) { alert('Registration slip could not be displayed.'); return; }
+
+            const modal = new bootstrap.Modal(modalEl, { backdrop: 'static' });
+            modalEl.addEventListener('hidden.bs.modal', () => { host.innerHTML = ''; }, { once: true });
+            modal.show();
+        }
+    </script>
+}

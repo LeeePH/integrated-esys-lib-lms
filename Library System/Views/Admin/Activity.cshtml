@@ -1,0 +1,325 @@
+﻿@model SystemLibrary.ViewModels.StudentActivityReportViewModel
+@{
+    ViewBag.Title = "Reports and Analytics - Student Activity";
+    ViewBag.ActiveTab = "activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/lib/StyleSheet1.css" />
+
+<main class="content">
+    <!-- ===== Header ===== -->
+    <header> <h1>Reports and Analytics</h1> 
+        <div class="filter"> 
+            <select id="activityFilter" onchange="changeTimeRange(this.value)"> 
+                <option value="30" selected="@(Model.DaysRange == 30)">Last 30 Days</option> 
+                <option value="60" selected="@(Model.DaysRange == 60)">Last 60 Days</option> 
+                <option value="90" selected="@(Model.DaysRange == 90)">Last 90 Days</option> 
+                <option value="365" selected="@(Model.DaysRange == 365)">Last Year</option> 
+            </select> 
+         </div> 
+            </header>
+
+    <!-- ===== Tabs ===== -->
+    <section class="tabs">
+        @await Html.PartialAsync("_ReportTabs")
+    </section>
+
+    <!-- ===== Student Activity Report Card ===== -->
+    <section class="report-card">
+
+        <!-- Report Header -->
+        <div class="report-header">
+            <h2>Student Activity - Last @Model.DaysRange Days</h2>
+            @if (!string.IsNullOrEmpty(Model.PeakBorrowingMonth))
+            {
+                    <span class="peak-indicator">
+                        📈 Peak: @Model.PeakBorrowingMonth (@Model.PeakBorrowingCount borrowings)
+                    </span>
+            }
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats">
+            <div class="stat blue">
+                <h3>@Model.ActiveBorrowers</h3>
+                <p>Active Borrowers</p>
+            </div>
+            <div class="stat green">
+                <h3>@Model.AverageBooksPerStudent</h3>
+                <p>Avg Books/Student</p>
+            </div>
+            <div class="stat purple">
+                <h3>@Model.AverageLoanDays</h3>
+                <p>Avg Loan Days</p>
+            </div>
+            <div class="stat orange">
+                <h3>@Model.TotalBorrowings</h3>
+                <p>Total Borrowings</p>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-container">
+            <canvas id="studentActivityChart"></canvas>
+        </div>
+
+        <!-- ===== Most Borrowed Books ===== -->
+        <div class="activity-section">
+            <h3 class="section-title">Most Borrowed Books</h3>
+
+            @if (Model.MostBorrowedBooks.Any())
+            {
+                    <div class="activity-card">
+                        <table class="activity-table">
+                            <tbody>
+                            @foreach (var book in Model.MostBorrowedBooks)
+                            {
+                                        <tr>
+                                            <td>
+                                                <strong>@book.Title</strong><br>
+                                                <span>by @book.Author</span><br>
+                                                <small class="unique-students">@book.UniqueStudents unique students</small>
+                                            </td>
+                                            <td class="activity-bar">
+                                                <div class="progress-bar">
+                                                    <div class="progress" style="width: @book.Percentage%"></div>
+                                                </div>
+                                                <span>@book.BorrowCount</span>
+                                            </td>
+                                        </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+            }
+            else
+            {
+                    <p class="no-data">No borrowing data available for this period.</p>
+            }
+        </div>
+
+        <!-- ===== Most Active Students ===== -->
+        <div class="activity-section">
+            <h3 class="section-title">Most Active Students</h3>
+
+            @if (Model.MostActiveStudents.Any())
+            {
+                    <div class="activity-card">
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Student Number</th>
+                                    <th>Total Borrowings</th>
+                                    <th>Current Books</th>
+                                    <th>Avg Loan Days</th>
+                                    <th>Last Activity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var student in Model.MostActiveStudents)
+                            {
+                                        <tr>
+                                            <td><strong>@student.StudentName</strong></td>
+                                            <td>@student.StudentNumber</td>
+                                            <td><span class="badge badge-primary">@student.TotalBorrowings</span></td>
+                                            <td><span class="badge badge-info">@student.CurrentBorrowings</span></td>
+                                            <td>@student.AverageLoanDays.ToString("F1") days</td>
+                                            <td>@student.LastBorrowDate.ToString("MMM dd, yyyy")</td>
+                                        </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+            }
+            else
+            {
+                    <p class="no-data">No student activity found.</p>
+            }
+        </div>
+
+
+        <!-- ===== Top Borrowing Courses ===== -->
+        <div class="activity-section">
+            <h3 class="section-title">Top Borrowing Courses</h3>
+
+            <div class="top-courses-layout">
+                <!-- LEFT: TABLE -->
+                <div class="courses-table">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Course</th>
+                                <th>Total Borrowings</th>
+                                <th>Total Returned</th>
+                                <th>Total Overdue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var course in Model.CourseSummary
+                                                       .OrderByDescending(c => c.TotalBorrowings)
+                                                       .Select((c, i) => new { c, i }))
+                            {
+                                    <tr>
+                                        <td>@(course.i + 1)</td>
+                                        <td><strong>@course.c.Course</strong></td>
+                                        <td><span class="badge badge-primary">@course.c.TotalBorrowings</span></td>
+                                        <td><span class="badge badge-info">@course.c.TotalReturned</span></td>
+                                        <td><span class="badge badge-info">@course.c.TotalOverdue</span></td>
+                                    </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- RIGHT: PIE CHART -->
+                <div class="courses-chart">
+                    <canvas id="coursePieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+
+        @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Activate Student Activity tab
+                const activeTab = document.querySelector('[data-tab="student-activity"]');
+                if (activeTab) activeTab.classList.add("active");
+
+                // Chart.js Visualization with Dynamic Data
+                const ctx = document.getElementById("studentActivityChart");
+                if (!ctx) return;
+
+                const months = [@Html.Raw(string.Join(",", Model.MonthlyActivity.Select(m => $"'{m.Month}'")))];
+                const borrowedData = [@string.Join(",", Model.MonthlyActivity.Select(m => m.BooksBorrowed))];
+                const returnedData = [@string.Join(",", Model.MonthlyActivity.Select(m => m.BooksReturned))];
+                const activeStudentsData = [@string.Join(",", Model.MonthlyActivity.Select(m => m.ActiveStudents))];
+
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: months,
+                        datasets: [
+                            {
+                                label: "Books Borrowed",
+                                data: borrowedData,
+                                backgroundColor: "#007bff",
+                                borderRadius: 6,
+                                barThickness: 18
+                            },
+                            {
+                                label: "Books Returned",
+                                data: returnedData,
+                                backgroundColor: "#28a745",
+                                borderRadius: 6,
+                                barThickness: 18
+                            },
+                            {
+                                label: "Active Students",
+                                data: activeStudentsData,
+                                backgroundColor: "#6f42c1",
+                                borderColor: "#6f42c1",
+                                borderWidth: 2,
+                                type: "line",
+                                tension: 0.4,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 50 },
+                                grid: { color: "#eee" }
+                            },
+                            x: { grid: { display: false } }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: "top"
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    footer: function (context) {
+                                        if (context[0].dataset.label === "Active Students") {
+                                            return "Unique students in this month";
+                                        }
+                                        return "";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Change time range
+            function changeTimeRange(days) {
+                window.location.href = `@Url.Action("Activity", "Admin")?daysRange=${days}`;
+            }
+
+                            // PIE CHART for Top Borrowing Courses
+                    const courseCtx = document.getElementById("coursePieChart");
+                    if (courseCtx) {
+                        const courseLabels = [@Html.Raw(string.Join(",", Model.CourseSummary.Select(c => $"'{c.Course}'")))];
+                        const borrowCounts = [@string.Join(",", Model.CourseSummary.Select(c => c.TotalBorrowings))];
+
+                        new Chart(courseCtx, {
+                            type: "pie",
+                            data: {
+                                labels: courseLabels,
+                                datasets: [{
+                                    data: borrowCounts,
+                                    backgroundColor: [
+                                        "#007bff", "#28a745", "#ffc107", "#dc3545", "#6f42c1", "#17a2b8"
+                                    ],
+                                    borderWidth: 1,
+                                    hoverOffset: 8
+                                }]
+                            },
+                            options: {
+                                plugins: {
+                                    legend: {
+                                        position: "right",
+                                        labels: {
+                                            boxWidth: 14,
+                                            padding: 15
+                                        }
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: "Borrowings Distribution by Course",
+                                        font: { size: 16, weight: "bold" },
+                                        padding: { top: 10, bottom: 10 }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                let total = context.chart._metasets[0].total;
+                                                let value = context.parsed;
+                                                let percentage = ((value / total) * 100).toFixed(1);
+                                                return `${context.label}: ${value} (${percentage}%)`;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+
+
+        </script>
+}
+
+

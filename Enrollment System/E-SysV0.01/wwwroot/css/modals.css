@@ -1,0 +1,450 @@
+/**
+ * ============================================
+ * ENHANCED MODAL STYLES
+ * ============================================
+ * Optimized CSS for modal components with:
+ * - Better animations
+ * - Responsive design
+ * - Accessibility improvements
+ * - Performance optimizations
+ * ============================================
+ */
+
+/* ============================================
+   MODAL OVERLAY ENHANCEMENTS
+   ============================================ */
+.modal {
+    --bs-modal-zindex: 1055;
+    --bs-modal-width: 500px;
+    --bs-modal-padding: 1rem;
+    --bs-modal-margin: 0.5rem;
+    --bs-modal-color: #000;
+    --bs-modal-bg: #fff;
+    --bs-modal-border-color: #dee2e6;
+    --bs-modal-border-radius: 0.5rem;
+    --bs-modal-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --bs-modal-inner-border-radius: calc(0.5rem - 1px);
+    --bs-modal-header-padding-x: 1rem;
+    --bs-modal-header-padding-y: 1rem;
+    --bs-modal-header-padding: 1rem 1rem;
+    --bs-modal-header-border-color: #dee2e6;
+    --bs-modal-header-border-width: 1px;
+    --bs-modal-title-line-height: 1.5;
+    --bs-modal-footer-gap: 0.5rem;
+    --bs-modal-footer-bg: #f8f9fa;
+    --bs-modal-footer-border-color: #dee2e6;
+    --bs-modal-footer-border-width: 1px;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
+}
+
+/* ============================================
+   MODAL ANIMATIONS
+   ============================================ */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal-dialog {
+    margin: 1.75rem auto;
+    max-width: var(--bs-modal-width);
+    position: relative;
+    width: auto;
+}
+
+/* ============================================
+   ENROLLMENT MODAL STYLES
+   ============================================ */
+.enrollment-modal .modal-content {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.enrollment-modal .modal-header {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    padding: 1.5rem;
+}
+
+.enrollment-modal .modal-body {
+    padding: 2rem;
+    background: #f8f9fa;
+}
+
+.enrollment-modal .list-group-numbered {
+    counter-reset: section;
+}
+
+.enrollment-modal .list-group-numbered > li {
+    counter-increment: section;
+    position: relative;
+    padding-left: 2.5rem;
+    border: none;
+    background: transparent;
+}
+
+.enrollment-modal .list-group-numbered > li::before {
+    content: counter(section);
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    background: #28a745;
+    color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* ============================================
+   APPLICATION MODAL STYLES
+   ============================================ */
+.application-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.application-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--bs-primary);
+}
+
+.application-card.border-primary:hover {
+    border-color: var(--bs-primary);
+    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.2);
+}
+
+.application-card.border-success:hover {
+    border-color: var(--bs-success);
+    box-shadow: 0 10px 25px rgba(25, 135, 84, 0.2);
+}
+
+.application-card .card-body {
+    transition: all 0.3s ease;
+}
+
+.application-card:hover .card-body {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+/* ============================================
+   LOGIN MODAL STYLES
+   ============================================ */
+.login-modal .modal-content {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal .modal-header {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border: none;
+    padding: 2rem 1.5rem;
+}
+
+.login-modal .modal-body {
+    padding: 2rem;
+    background: #fff;
+}
+
+.login-modal .form-control {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-modal .form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.login-modal .btn {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-modal .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   PASSWORD RECOVERY MODAL STYLES
+   ============================================ */
+.password-recovery-modal .modal-content {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.password-recovery-modal .modal-header {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    border: none;
+    padding: 1.5rem;
+}
+
+.password-recovery-modal .modal-body {
+    padding: 2rem;
+    background: #fff;
+}
+
+/* ============================================
+   OTP MODAL STYLES
+   ============================================ */
+.otp-input {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 2px solid #e9ecef;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.otp-input:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    transform: scale(1.05);
+}
+
+.otp-input.filled {
+    border-color: var(--bs-success);
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+/* ============================================
+   PASSWORD REQUIREMENTS STYLES
+   ============================================ */
+.password-requirements {
+    background: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+
+.password-requirements .list-unstyled li {
+    padding: 0.25rem 0;
+    transition: all 0.3s ease;
+}
+
+.password-requirements .list-unstyled li i {
+    transition: all 0.3s ease;
+}
+
+.password-requirements .list-unstyled li.valid {
+    color: var(--bs-success);
+}
+
+.password-requirements .list-unstyled li.valid i {
+    color: var(--bs-success);
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading .spinner-border {
+    width: 1rem;
+    height: 1rem;
+}
+
+.btn-loading .btn-text {
+    opacity: 0.7;
+}
+
+/* ============================================
+   ALERT STYLES
+   ============================================ */
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    animation: slideInDown 0.3s ease;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d1edff, #b3d9ff);
+    color: #0c5460;
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+    
+    .modal-content {
+        border-radius: 0.5rem;
+    }
+    
+    .application-card {
+        margin-bottom: 1rem;
+    }
+    
+    .otp-input {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.25rem;
+    }
+    
+    .login-modal .modal-body,
+    .password-recovery-modal .modal-body {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.25rem;
+        max-width: calc(100% - 0.5rem);
+    }
+    
+    .otp-input {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+    
+    .enrollment-modal .modal-body {
+        padding: 1rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+.modal:focus {
+    outline: none;
+}
+
+.modal-dialog:focus {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+.btn:focus {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .modal {
+        position: static !important;
+        display: block !important;
+        background: white !important;
+    }
+    
+    .modal-dialog {
+        max-width: none !important;
+        margin: 0 !important;
+    }
+    
+    .modal-content {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+    
+    .btn-close,
+    .modal-footer {
+        display: none !important;
+    }
+}
+
