@@ -13779,6 +13779,88 @@
       ]
     },
     {
+      "Route": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.5bgoihlltj.png",
+      "AssetFile": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1614833"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 04 Dec 2025 08:48:46 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5bgoihlltj"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png"
+        }
+      ]
+    },
+    {
+      "Route": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "AssetFile": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1614833"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 04 Dec 2025 08:48:46 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U="
+        }
+      ]
+    },
+    {
       "Route": "uploads/books/1fe45adb-cbc4-4c76-97a8-56f4725db99a.gl6jfi97kn.png",
       "AssetFile": "uploads/books/1fe45adb-cbc4-4c76-97a8-56f4725db99a.png",
       "Selectors": [],

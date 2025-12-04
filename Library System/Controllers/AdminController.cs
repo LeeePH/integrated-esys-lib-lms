@@ -6,11 +6,13 @@ using SystemLibrary.Models;
 using SystemLibrary.ViewModels;
 using System.Text;
 using MongoDB.Bson;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace SystemLibrary.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class AdminController : Controller
+    public class AdminController : Controller   
     {
         private readonly IReservationService _reservationService;
         private readonly IBookService _bookService;
@@ -33,6 +35,7 @@ namespace SystemLibrary.Controllers
         // private readonly IMOCKDataService _MOCKDataService;
 		private readonly IBookImportService _bookImportService;
         private readonly IEnrollmentSystemService _enrollmentSystemService;
+        private readonly Cloudinary _cloudinary;
 
 
         public AdminController(
@@ -55,7 +58,8 @@ namespace SystemLibrary.Controllers
             IEmailService emailService,
 			// IMOCKDataService MOCKDataService, // Removed - now using enrollment system integration
 			IBookImportService bookImportService,
-            IEnrollmentSystemService enrollmentSystemService)
+            IEnrollmentSystemService enrollmentSystemService,
+            Cloudinary cloudinary)
         {
             _reservationService = reservationService;
             _bookService = bookService;
@@ -77,6 +81,7 @@ namespace SystemLibrary.Controllers
             // _MOCKDataService = MOCKDataService; // Removed
 			_bookImportService = bookImportService;
             _enrollmentSystemService = enrollmentSystemService;
+            _cloudinary = cloudinary;
 
 
 
@@ -1151,7 +1156,7 @@ namespace SystemLibrary.Controllers
             return RedirectToAction("Dashboard");
         }
 
-        // Helper method to save book image
+        // Helper method to save book image (Cloudinary)
         private async Task<string> SaveBookImageAsync(IFormFile imageFile)
         {
             try
@@ -1172,39 +1177,30 @@ namespace SystemLibrary.Controllers
                     return null;
                 }
 
-                // Get upload path from configuration or use default
-                var uploadPath = _configuration["FileUpload:UploadPath"];
-                string uploadsFolder;
-                
-                if (!string.IsNullOrEmpty(uploadPath) && Path.IsPathRooted(uploadPath))
+                if (_cloudinary == null)
                 {
-                    // Use configured absolute path (e.g., network drive: \\server\shared\uploads\books)
-                    uploadsFolder = Path.Combine(uploadPath, "books");
-                }
-                else
-                {
-                    // Use relative path within wwwroot (default behavior)
-                    uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "books");
-                }
-                
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
+                    TempData["ErrorMessage"] = "Image service is not configured.";
+                    return null;
                 }
 
-                // Generate unique filename
-                var uniqueFileName = $"{Guid.NewGuid()}{extension}";
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                await using var stream = imageFile.OpenReadStream();
 
-                // Save file
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                var uploadParams = new ImageUploadParams
                 {
-                    await imageFile.CopyToAsync(fileStream);
+                    File = new FileDescription(imageFile.FileName, stream),
+                    Folder = "library-books"
+                };
+
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    // Store the Cloudinary URL in the database
+                    return uploadResult.SecureUrl?.ToString() ?? uploadResult.Url?.ToString();
                 }
 
-                // Return relative path for database (always use /uploads/books/ path)
-                // The actual file is stored in uploadsFolder, but we return a relative URL path
-                return $"/uploads/books/{uniqueFileName}";
+                TempData["ErrorMessage"] = "Failed to upload image to Cloudinary.";
+                return null;
             }
             catch (Exception ex)
             {

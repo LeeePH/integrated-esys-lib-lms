@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0TaDNVBgRHwqoY+bwtBHqXirWCjFfD/lF/cOGo1AtRw=",
+  "Hash": "OHmqfQs7UdgoPGmY/yjvOJVeL/0GYt4etH07cZoVR9c=",
   "Source": "SystemLibrary",
   "BasePath": "_content/SystemLibrary",
   "Mode": "Default",
@@ -3564,6 +3564,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\books\\1288ac23-c11e-49d5-9de3-cebfe7609234.png"
+    },
+    {
+      "Identity": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "SourceId": "SystemLibrary",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\",
+      "BasePath": "_content/SystemLibrary",
+      "RelativePath": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5bgoihlltj",
+      "Integrity": "kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png"
     },
     {
       "Identity": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1fe45adb-cbc4-4c76-97a8-56f4725db99a.png",
@@ -17842,6 +17863,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-6gmIpvgg8Gke5OfnBNPdsz80ZLkS3I4nSZ8iM1vUSFA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.5bgoihlltj.png",
+      "AssetFile": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1614833"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 04 Dec 2025 08:48:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5bgoihlltj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/books/1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "AssetFile": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1614833"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 04 Dec 2025 08:48:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-kS7EQkAuSlFJqgk5OcmoR0qpQqZGIIZlexGvRMTSF3U="
         }
       ]
     },

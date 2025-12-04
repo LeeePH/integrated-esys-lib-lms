@@ -791,3 +791,5 @@ C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\Sys
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
 C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.sourcelink.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Newtonsoft.Json.dll

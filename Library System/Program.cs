@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MongoDB.Driver;
 using SystemLibrary.Services;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,6 +89,15 @@ builder.Services.AddSingleton<AdminUserSeeder>();
 builder.Services.AddSingleton<IEnrollmentSystemService, EnrollmentSystemService>();
 // MOCK data service removed - now using enrollment system integration
 // builder.Services.AddSingleton<IMOCKDataService, MOCKDataService>();
+
+// Register Cloudinary (for book image storage)
+var cloudName = builder.Configuration["Cloudinary:CloudName"];
+var cloudApiKey = builder.Configuration["Cloudinary:ApiKey"];
+var cloudApiSecret = builder.Configuration["Cloudinary:ApiSecret"];
+if (!string.IsNullOrEmpty(cloudName) && !string.IsNullOrEmpty(cloudApiKey) && !string.IsNullOrEmpty(cloudApiSecret))
+{
+    builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, cloudApiKey, cloudApiSecret)));
+}
 
 // Background services
 builder.Services.AddHostedService<SystemLibrary.Services.ReservationQueueProcessorService>();
