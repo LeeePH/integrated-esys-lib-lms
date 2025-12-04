@@ -51,6 +51,23 @@
         <p>No classes found.</p>
     }
 
+    <!-- Library Search Card -->
+    <article class="class-card" onclick="window.location.href='@Url.Action("Search", "Library")'" style="cursor: pointer;">
+        <div class="class-left has-bg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="class-name">Library</div>
+            <div class="class-section">Search & Reserve Books</div>
+        </div>
+        <div class="class-right">
+            <div class="instructor-profile-image" style="background: #667eea;">
+                <i class="fa-solid fa-book" style="color: white; font-size: 24px;"></i>
+            </div>
+            <div>
+                <div class="instructor-profile-name">Library System</div>
+                <div class="instructor-role">Search Books</div>
+            </div>
+        </div>
+    </article>
+
     <button class="join-class-button" id="joinBtn" title="Join class" aria-haspopup="dialog" aria-controls="joinModal">
         <i class="fa-solid fa-plus"></i>
     </button>

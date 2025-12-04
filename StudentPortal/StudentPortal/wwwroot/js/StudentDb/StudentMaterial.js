@@ -81,7 +81,7 @@ function showToast(message) {
     setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// Library Modal
+// Library Modal - now backed by real Library System data via /Library/ApiSearch and /Library/ReserveBook
 const libraryBtn = document.getElementById('libraryBtn');
 const libraryBackdrop = document.getElementById('libraryBackdrop');
 const closeLibraryBtn = document.getElementById('closeLibraryBtn');
@@ -98,13 +98,9 @@ const reserveBackdrop = document.getElementById('reserveBackdrop');
 const reserveYesBtn = document.getElementById('reserveYesBtn');
 const reserveNoBtn = document.getElementById('reserveNoBtn');
 
-const books = [
-    { id: 1, title: 'Introduction to Algorithms', author: 'Thomas H. Cormen', category: 'Computer Science', description: 'A comprehensive introduction to modern algorithm design and analysis...' },
-    { id: 2, title: 'Clean Code', author: 'Robert C. Martin', category: 'Software Engineering', description: 'Guidelines and best practices for writing clean, maintainable, and testable code...' },
-    { id: 3, title: 'Database System Concepts', author: 'Abraham Silberschatz', category: 'Databases', description: 'Core concepts of relational databases, SQL, query optimization, and database design.' }
-];
-let filtered = books.slice();
-let selectedId = null;
+let books = [];
+let filtered = [];
+let selectedBookId = null;
 
 function renderList() {
     libraryListEl.innerHTML = '';
@@ -119,44 +115,70 @@ function renderList() {
         const li = document.createElement('li');
         li.dataset.id = String(book.id);
         li.setAttribute('role', 'option');
-        li.className = selectedId === book.id ? 'selected' : '';
-        li.innerHTML = '<div class="book-title">' + book.title + '</div><div class="book-category">Category: ' + book.category + '</div>';
+        li.className = selectedBookId === book.id ? 'selected' : '';
+        li.innerHTML = '<div class="book-title">' + (book.title || '') + '</div><div class="book-category">Subject: ' + (book.category || '') + '</div>';
         li.addEventListener('click', function() { selectBook(book.id); });
         libraryListEl.appendChild(li);
     });
 }
 
 function selectBook(id) {
-    const book = books.find(function(b) { return b.id === id; });
+    const book = books.find(function(b) { return String(b.id) === String(id); });
     if (!book) return;
-    selectedId = id;
+    selectedBookId = book.id;
     bookInfoDefault.hidden = true;
     bookDetail.hidden = false;
-    detailTitle.textContent = book.title;
-    detailAuthor.textContent = 'Author: ' + book.author;
-    detailCategory.textContent = book.category;
-    detailDescription.value = book.description;
+    detailTitle.textContent = book.title || '';
+    detailAuthor.textContent = book.author ? ('Author: ' + book.author) : '';
+    detailCategory.textContent = book.category || '';
+    detailDescription.value = book.description || '';
     reserveBtn.disabled = false;
 }
 
-function filterBooks(q) {
-    q = (q || '').trim().toLowerCase();
-    filtered = q ? books.filter(function(b) { return b.title.toLowerCase().includes(q) || b.category.toLowerCase().includes(q) || b.description.toLowerCase().includes(q); }) : books.slice();
-    if (selectedId && !filtered.find(function(b) { return b.id === selectedId; })) {
-        selectedId = null;
-        bookInfoDefault.hidden = false;
-        bookDetail.hidden = true;
-        reserveBtn.disabled = true;
+async function loadBooks(query) {
+    try {
+        const url = '/Library/ApiSearch?q=' + encodeURIComponent(query || '');
+        console.log('[StudentMaterial] Loading books from:', url);
+        const res = await fetch(url, { credentials: 'same-origin' });
+        const data = await res.json();
+        console.log('[StudentMaterial] API response:', data);
+        
+        if (!data || !data.success) {
+            console.warn('[StudentMaterial] API returned error:', data?.message || 'Unknown error');
+            books = [];
+            filtered = [];
+            renderList();
+            return;
+        }
+        books = data.books || [];
+        filtered = books.slice();
+        console.log(`[StudentMaterial] Loaded ${books.length} books`);
+        
+        if (selectedBookId && !filtered.find(function (b) { return String(b.id) === String(selectedBookId); })) {
+            selectedBookId = null;
+            bookInfoDefault.hidden = false;
+            bookDetail.hidden = true;
+            reserveBtn.disabled = true;
+        }
+        renderList();
+    } catch (err) {
+        console.error('[StudentMaterial] Error loading books:', err);
+        books = [];
+        filtered = [];
+        renderList();
     }
-    renderList();
+}
+
+function filterBooks(q) {
+    // Reload from server on each query for accurate search
+    loadBooks(q || '');
 }
 
 function openLibrary() {
     showToast('Opening Library…');
     setTimeout(function() {
         libraryBackdrop.hidden = false;
-        filtered = books.slice();
-        renderList();
+        loadBooks('');
         if (librarySearch) librarySearch.focus();
     }, 700);
 }
@@ -168,11 +190,28 @@ closeLibraryBtn && closeLibraryBtn.addEventListener('click', closeLibrary);
 libraryBackdrop && libraryBackdrop.addEventListener('click', function(e) { if (e.target === libraryBackdrop) closeLibrary(); });
 librarySearch && librarySearch.addEventListener('input', function(e) { filterBooks(e.target.value); });
 
-reserveBtn && reserveBtn.addEventListener('click', function() { if (!selectedId) return; reserveBackdrop.hidden = false; });
-reserveYesBtn && reserveYesBtn.addEventListener('click', function() {
+reserveBtn && reserveBtn.addEventListener('click', async function() {
+    if (!selectedBookId) return;
+    reserveBackdrop.hidden = false;
+});
+reserveYesBtn && reserveYesBtn.addEventListener('click', async function() {
     reserveBackdrop.hidden = true;
-    showToast('Redirecting to Library…');
-    setTimeout(function() { window.location.href = '/Library/ReserveSuccess'; }, 900);
+    if (!selectedBookId) return;
+    try {
+        const res = await fetch('/Library/ReserveBook', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'bookId=' + encodeURIComponent(selectedBookId),
+            credentials: 'same-origin'
+        });
+        const data = await res.json();
+        showToast(data && data.message ? data.message : 'Reservation request sent.');
+        if (data && data.success) {
+            reserveBtn.disabled = true;
+        }
+    } catch {
+        showToast('Error reserving book. Please try again.');
+    }
 });
 reserveNoBtn && reserveNoBtn.addEventListener('click', function() { reserveBackdrop.hidden = true; });
 reserveBackdrop && reserveBackdrop.addEventListener('click', function(e) { if (e.target === reserveBackdrop) reserveBackdrop.hidden = true; });

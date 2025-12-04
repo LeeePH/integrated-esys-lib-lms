@@ -405,17 +405,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================
-    // Library Modal (unchanged)
+    // Library Modal - now backed by Library System via /Library/ApiSearch and /Library/ReserveBook
     // ==========================================================
     (function libraryModule() {
 
-        const books = [
-            { id: 1, title: 'Introduction to Algorithms', author: 'Thomas H. Cormen', category: 'Computer Science', description: 'A comprehensive introduction to modern algorithm design and analysis...' },
-            { id: 2, title: 'Clean Code', author: 'Robert C. Martin', category: 'Software Engineering', description: 'Guidelines and best practices for writing clean, maintainable, and testable code...' },
-            { id: 3, title: 'Database System Concepts', author: 'Abraham Silberschatz', category: 'Databases', description: 'Core concepts of relational databases, SQL, query optimization, and database design.' }
-        ];
-
-        let filtered = [...books];
+        let books = [];
+        let filtered = [];
         let selectedId = null;
 
         function renderList() {
@@ -463,32 +458,51 @@ document.addEventListener('DOMContentLoaded', () => {
             reserveBtn.disabled = false;
         }
 
-        function filterBooks(query) {
-            query = query.trim().toLowerCase();
-            filtered = query
-                ? books.filter(b =>
-                    b.title.toLowerCase().includes(query) ||
-                    b.category.toLowerCase().includes(query) ||
-                    b.description.toLowerCase().includes(query))
-                : [...books];
+        async function loadBooks(query) {
+            try {
+                const url = '/Library/ApiSearch?q=' + encodeURIComponent(query || '');
+                console.log('[StudentTask] Loading books from:', url);
+                const res = await fetch(url, { credentials: 'same-origin' });
+                const data = await res.json();
+                console.log('[StudentTask] API response:', data);
+                
+                if (!data || !data.success) {
+                    console.warn('[StudentTask] API returned error:', data?.message || 'Unknown error');
+                    books = [];
+                    filtered = [];
+                    renderList();
+                    return;
+                }
+                books = data.books || [];
+                filtered = [...books];
+                console.log(`[StudentTask] Loaded ${books.length} books`);
 
-            if (selectedId && !filtered.find(b => b.id === selectedId)) {
-                selectedId = null;
-                bookInfoDefault.hidden = false;
-                bookDetail.hidden = true;
-                reserveBtn.disabled = true;
+                if (selectedId && !filtered.find(b => String(b.id) === String(selectedId))) {
+                    selectedId = null;
+                    bookInfoDefault.hidden = false;
+                    bookDetail.hidden = true;
+                    reserveBtn.disabled = true;
+                }
+
+                renderList();
+            } catch (err) {
+                console.error('[StudentTask] Error loading books:', err);
+                books = [];
+                filtered = [];
+                renderList();
             }
+        }
 
-            renderList();
+        function filterBooks(query) {
+            loadBooks(query || '');
         }
 
         function openLibrary() {
             showToast("Opening Library…", 900);
             setTimeout(() => {
                 libraryBackdrop.hidden = false;
-                filtered = [...books];
-                renderList();
-                librarySearch.focus();
+                loadBooks('');
+                librarySearch && librarySearch.focus();
             }, 700);
         }
 
@@ -516,10 +530,24 @@ document.addEventListener('DOMContentLoaded', () => {
             reserveBackdrop.hidden = false;
         });
 
-        reserveYesBtn?.addEventListener('click', () => {
+        reserveYesBtn?.addEventListener('click', async () => {
             reserveBackdrop.hidden = true;
-            showToast("Redirecting to Library…", 1200);
-            setTimeout(() => (window.location.href = '/Library/ReserveSuccess'), 900);
+            if (!selectedId) return;
+            try {
+                const res = await fetch('/Library/ReserveBook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'bookId=' + encodeURIComponent(selectedId),
+                    credentials: 'same-origin'
+                });
+                const data = await res.json();
+                showToast((data && data.message) || 'Reservation request sent.', 1500);
+                if (data && data.success) {
+                    reserveBtn.disabled = true;
+                }
+            } catch {
+                showToast('Error reserving book. Please try again.', 1500);
+            }
         });
 
         reserveNoBtn?.addEventListener('click', () => {

@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\librarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\librarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\services\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\services\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\library\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\library\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\shared\\_adminbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\shared\\_adminbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -198,7 +210,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -218,7 +230,46 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Library\\Search.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\Library\\Search.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Library\\Search.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\Library\\Search.cshtml",
+              "ViewState": "AgIAANMAAAAAAAAAAAAlwOoAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-03T23:29:58.278Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "LibraryController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\LibraryController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\LibraryController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\LibraryController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\LibraryController.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAhwE4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T23:29:40.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LibraryService.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Services\\LibraryService.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Services\\LibraryService.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Services\\LibraryService.cs",
+              "RelativeToolTip": "StudentPortal\\Services\\LibraryService.cs",
+              "ViewState": "AgIAAKYBAAAAAAAAAAAtwFkBAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T23:27:59.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "_AdminBottomBar.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
@@ -231,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "StudentDbController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentDbController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentDbController.cs",
@@ -243,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
@@ -255,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
@@ -267,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\Account\\Login.cshtml",
@@ -279,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
@@ -291,7 +342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
@@ -303,7 +354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "EnrollmentStudent.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\EnrollmentStudent.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Models\\EnrollmentStudent.cs",
@@ -315,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\appsettings.json",
               "RelativeDocumentMoniker": "StudentPortal\\appsettings.json",
@@ -327,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Models\\LoginViewModel.cs",
@@ -339,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "AdminManageGrades.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
@@ -351,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
@@ -363,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
@@ -375,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "AdminManageGradesController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageGradesController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminManageGradesController.cs",
@@ -387,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "AdminManageClassController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageClassController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminManageClassController.cs",
@@ -399,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "Anticheat.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
@@ -411,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
@@ -423,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "StudentAssessment.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
@@ -435,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "AdminAssessment.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
@@ -447,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
@@ -459,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "AdminAssessmentList.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
@@ -471,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "StudentAnswerAssessment.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
@@ -483,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "StudentTodo.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
@@ -495,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "StudentClass.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
@@ -507,7 +558,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "AdminAssessmentController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminAssessmentController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminAssessmentController.cs",
@@ -519,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "StudentMaterial.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
@@ -531,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "AdminClass.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
@@ -543,7 +594,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
@@ -555,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "StudentDb.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
@@ -567,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "StudentTask.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
@@ -579,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "AdminDb.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
@@ -591,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "StudentMaterial.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
@@ -603,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "AdminBottomBar.js",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
@@ -615,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
@@ -627,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "StudentDb.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
@@ -639,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
@@ -651,7 +702,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "AdminDb.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
@@ -663,7 +714,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
@@ -675,7 +726,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "StudentClassController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentClassController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentClassController.cs",
@@ -687,7 +738,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "UploadItem.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\AdminDb\\UploadItem.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Models\\AdminDb\\UploadItem.cs",
@@ -699,7 +750,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "StudentAnswerAssessmentController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
@@ -711,7 +762,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "StudentAnswerAssessmentModels.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
@@ -723,7 +774,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 46,
               "Title": "StudentMaterialController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentMaterialController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentMaterialController.cs",
@@ -735,7 +786,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 45,
               "Title": "StudentTaskController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentTaskController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentTaskController.cs",
@@ -747,7 +798,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 47,
               "Title": "StudentAssessmentController.cs",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAssessmentController.cs",
               "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentAssessmentController.cs",
@@ -759,7 +810,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 49,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
               "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
@@ -771,7 +822,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 48,
               "Title": "StudentAssessment.css",
               "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
               "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",

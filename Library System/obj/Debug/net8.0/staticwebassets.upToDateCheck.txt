@@ -165,7 +165,6 @@ wwwroot\uploads\books\01beeec5-9cce-46f1-84f4-d3e676bc9093.jpg
 wwwroot\uploads\books\0c1c9cbf-4de7-4756-9613-8a886fe581c0.png
 wwwroot\uploads\books\0e5db1f8-2262-418f-92df-d21b7a898b7d.png
 wwwroot\uploads\books\1288ac23-c11e-49d5-9de3-cebfe7609234.png
-wwwroot\uploads\books\1e6021c6-a762-4b18-9169-0b18ee882002.png
 wwwroot\uploads\books\1fe45adb-cbc4-4c76-97a8-56f4725db99a.png
 wwwroot\uploads\books\49c0f921-55bf-4f98-8df9-2e1ac408a401.png
 wwwroot\uploads\books\4d99ff23-ca7d-4949-a733-e6a623059957.png
@@ -176,7 +175,6 @@ wwwroot\uploads\books\7d502ef5-0eff-4c0c-abf0-0ffd2a2463b8.png
 wwwroot\uploads\books\7f8cb3a4-40ca-45b2-8356-30ac456ec79c.png
 wwwroot\uploads\books\8d9335f5-438e-480c-b6a9-84d7d9c4b83f.png
 wwwroot\uploads\books\9eb35f96-69f8-472d-bf4d-8d8c304ffcbe.png
-wwwroot\uploads\books\a65169f8-89b1-41e2-957b-b70ba0fb0bf8.png
 wwwroot\uploads\books\ad822fff-964f-4703-b1ca-37c319b60718.png
 wwwroot\uploads\books\bda91b30-b50d-4d2d-82aa-68224a8a85fc.png
 wwwroot\uploads\books\cfd06ae0-9671-4f02-bb54-d492d48d9ced.jpg
@@ -184,7 +182,7 @@ wwwroot\uploads\books\d1a0658c-df74-4cfe-b271-ca41f693bb68.png
 wwwroot\uploads\books\d20ef966-252d-4abd-a0e4-c401a59e179c.jpg
 wwwroot\uploads\books\d4fead2d-9146-4e56-9143-afddd819dd11.png
 wwwroot\uploads\books\e394cc23-ec07-4fe2-b1a6-a0c007cae228.png
-wwwroot\uploads\books\e950f9df-5162-457f-97a7-a34e71cb0d33.png
+wwwroot\uploads\books\1e6021c6-a762-4b18-9169-0b18ee882002.png
 wwwroot\uploads\books\eaf525b0-bbb6-4f9a-9943-e79cb40cb672.png
 wwwroot\uploads\books\f2f96e72-f9e8-442a-9bd1-0ffc247eb064.png
 wwwroot\uploads\books\fdfeed62-08e0-413e-b131-fdc4d2abd175.png

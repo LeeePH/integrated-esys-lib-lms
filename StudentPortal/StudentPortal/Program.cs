@@ -13,6 +13,7 @@ ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 // ✅ Register services
 builder.Services.AddSingleton<MongoDbService>();
 builder.Services.AddSingleton<EmailService>();
+builder.Services.AddSingleton<LibraryService>();
 
 // ✅ Add session support
 builder.Services.AddDistributedMemoryCache();
