@@ -1,0 +1,229 @@
+@model StudentPortal.Models.AdminTask.AdminTaskViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "LMS — Task (Admin)";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/AdminDb/admintask.css" asp-append-version="true" />
+</head>
+<body data-class-code="@Model.ClassCode" data-task-max="@Model.TaskMaxGrade">
+    <div class="page">
+        <main class="class-container">
+            <!-- LEFT: CLASS INFO -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="instructor-profile">
+                    <div class="instructor-profile-image">@Model.InstructorInitials</div>
+                    <div class="instructor-info">
+                        <div class="instructor-profile-name">@Model.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="recent-material">
+                    <h3>Recent Material</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-book-open-reader"></i> Week 1 Reading</li>
+                        <li><i class="fa-solid fa-book-open-reader"></i> Week 2 Lecture Slides</li>
+                        <li><i class="fa-solid fa-book-open-reader"></i> Week 3 Notes</li>
+                    </ul>
+                </div>
+
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT COLUMN (match student task stacked layout) -->
+            <div class="right-column-task">
+
+                <!-- RIGHT: TASK CONTAINER -->
+                <section class="task-container" id="taskContainer">
+                    <div class="task-scrollable">
+                        <h2 class="task-title" id="taskTitle" contenteditable="false">@Model.TaskTitle</h2>
+                        <p class="task-description" id="taskDescription" contenteditable="false">@Model.TaskDescription</p>
+
+                        <div class="attachments" id="attachmentList">
+                            @foreach (var a in Model.Attachments)
+                            {
+                                <div class="attachment-box">
+                                    <i class="fa-solid fa-file"></i> @a
+                                </div>
+                            }
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="task-bottom" id="taskBottom">
+                        <p class="posted-date" id="dateInfo">
+                            Posted: @Model.PostedDate.ToString("MMM d, yyyy")
+                            @if (Model.Deadline.HasValue)
+                            {
+                                <text>| Deadline: @Model.Deadline.Value.ToString("MMM d, yyyy")</text>
+                            }
+                        </p>
+                        <div class="edit-controls" id="editControls" hidden>
+                            <input type="file" id="replaceFileInput" accept="*/*" hidden />
+                            <button class="btn" id="replaceFileBtn" title="Replace attached file"><i class="fa-solid fa-file-arrow-up"></i> Replace File</button>
+                            <button class="btn save-btn" id="saveEditBtn">Save</button>
+                            <button class="btn cancel-btn" id="cancelEditBtn">Cancel</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BELOW: SUBMISSIONS (stacked under the task) -->
+                <section class="submitted-container" id="submittedContainer">
+                    <div class="submitted-top">
+                        <h3>Submissions</h3>
+                        <div class="submitted-controls">
+                            <input id="searchStudents" class="input search-input" placeholder="Search students...">
+                            <div class="submitted-count">
+                                Submitted: <span id="submittedCount">@Model.Submissions?.FindAll(s => s.Submitted).Count</span>/<span id="totalStudents">@Model.Submissions?.Count</span>
+                            </div>
+                            @{ var grades = Model.Submissions?.Select(s => { double v; return double.TryParse(s.Grade, out v) ? (double?)v : null; }).Where(v => v.HasValue).Select(v => v.Value).ToList() ?? new List<double>(); var gradeSum = grades.Sum(); var gradeCount = grades.Count; var gradeAvg = gradeCount > 0 ? gradeSum / gradeCount : 0; }
+                            <div class="submitted-count" style="margin-left:12px;">
+                                Total Grades: <span id="gradeSum">@gradeSum.ToString("0.##")</span>
+                                | Average: <span id="gradeAvg">@gradeAvg.ToString("0.##")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submitted-list" id="submittedList" role="table" aria-label="Submitted students">
+                        <div class="submitted-row header" role="row">
+                            <div class="col name-col">Student Name</div>
+                            <div class="col status-col">Completion Status</div>
+                        </div>
+
+                        @foreach (var s in Model.Submissions)
+                        {
+                            <div class="submitted-row" role="row" data-id="@s.Id">
+                                <div class="col name-col">@s.FullName</div>
+                                <div class="col status-col">
+                                    @if (s.Submitted)
+                                    {
+                                        <span class="status-pill submitted">Submitted (@s.SubmittedAt?.ToString("MMM d"))</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-pill missing">Missing</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </section>
+
+                <section class="public-comment-container" id="adminCommentContainer">
+                    <h3 class="public-comment-header">Comments</h3>
+                    <form id="adminCommentForm">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="taskId" value="@Model.TaskId" />
+                        <input type="hidden" name="classCode" value="@Model.ClassCode" />
+                    </form>
+                    <div class="public-comment-input">
+                        <textarea id="adminCommentText" placeholder="Add a comment..."></textarea>
+                        <button id="postAdminCommentBtn" class="post-comment-btn">Post</button>
+                    </div>
+                    <div class="public-comment-list" id="adminCommentList"></div>
+                </section>
+
+                <form id="adminGradeForm" style="display:none">
+                    @Html.AntiForgeryToken()
+                </form>
+
+                <!-- CHECK SUBMISSION MODAL -->
+                <div class="check-submission-modal" id="checkSubmissionModal">
+                    <div class="check-submission-content">
+                        <div class="check-header">
+                            <h3 id="modalStudentName">Student Name</h3>
+                            <div class="points-box">
+                                <input type="number" id="pointsEarned" min="0" max="@Model.TaskMaxGrade" placeholder="0"> /
+                                <span id="pointsMax">@Model.TaskMaxGrade</span>
+                            </div>
+                        </div>
+
+                        <div class="attachment-box-area" id="modalAttachments">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <div class="comment-display">
+                            <label>Private Comment</label>
+                            <div id="privateCommentDisplay" class="comment-box">No comment provided.</div>
+                        </div>
+
+                        <textarea id="remarks" class="input-area" placeholder="Remarks..."></textarea>
+
+                        <div class="modal-actions">
+                            <button class="btn save-grade">Save</button>
+                            <button class="btn cancel-grade" id="closeSubmissionModal">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> <!-- /.right-column -->
+
+            
+
+        </main>
+
+        <!-- ADMIN MAKE CHANGES BUTTON -->
+        <div class="make-changes-wrap">
+            <div class="make-changes-button" id="makeChangesButton" title="Make Changes">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <div class="admin-actions" id="adminActions" aria-hidden="true">
+                <div class="admin-action" data-action="edit">
+                    <span class="label">Edit</span>
+                    <button><i class="fa-solid fa-pen"></i></button>
+                </div>
+                <div class="admin-action" data-action="delete">
+                    <span class="label">Delete</span>
+                    <button><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE CONFIRMATION MODAL -->
+        <div class="delete-modal" id="deleteModal">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>Delete Task?</h3>
+                <p>This action <strong>cannot be undone</strong>. Are you sure you want to proceed?</p>
+                <div class="modal-buttons">
+                    <button class="btn confirm-delete" id="confirmDelete">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </button>
+                    <button class="btn cancel-delete" id="cancelDelete">
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOAST -->
+        <div id="toast" class="toast" aria-live="polite" role="status"></div>
+
+        <script src="~/js/AdminDb/admintask.js" asp-append-version="true"></script>
+        @{ 
+            ViewBag.ClassCode = Model.ClassCode;
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+
+    </div>
+
+</body>
+</html>

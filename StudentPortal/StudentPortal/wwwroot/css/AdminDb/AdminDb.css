@@ -1,0 +1,187 @@
+@import url('/css/StudentDb/StudentDb.css');
+@import url('/css/Shared/BottomBar.css');
+
+/* OVERRIDES FOR ADMIN */
+
+.create-class-button {
+    position: fixed;
+    right: 24px;
+    bottom: calc(var(--bottom-h) + 20px);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffffff, #f2f5ff);
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    border: 1px solid rgba(10, 20, 40, 0.06);
+    cursor: pointer;
+    z-index: 80;
+    transition: all 0.2s ease;
+}
+
+	.create-class-button.selected {
+		box-shadow: 0 10px 28px rgba(36, 58, 115, 0.18);
+		border: 1px solid rgba(36, 58, 115, 0.12);
+		transform: scale(1.06);
+	}
+
+		.create-class-button.selected i {
+			color: var(--accent);
+		}
+
+/* ADMIN MODAL STYLE */
+.modal {
+    width: 260px;
+    padding: 16px;
+    background: #f3f6fb;
+    color: #0b213a;
+    box-shadow: 0 10px 26px rgba(24, 43, 92, 0.18);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    bottom: 90px;
+    right: 110px;
+}
+
+
+	.modal h3 {
+		margin: 0;
+		font-size: 15px;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+
+	.modal input[type="text"] {
+		width: 210px;
+		height: 34px;
+		padding: 6px 10px;
+		border-radius: 8px;
+		border: 1px solid rgba(16, 24, 40, 0.08);
+		background: #fff;
+		color: #0b213a;
+		font-size: 13px;
+		transition: all 0.2s ease;
+		margin-bottom: 5px;
+	}
+
+		.modal input[type="text"]:focus {
+			border-color: var(--accent);
+			box-shadow: 0 0 0 2px rgba(24, 43, 92, 0.12);
+			outline: none;
+		}
+
+
+	.modal button {
+		width: 210px;
+		height: 36px;
+		border-radius: 8px;
+		background-color: var(--accent);
+		color: #fff;
+		border: none;
+		font-weight: 700;
+		cursor: pointer;
+		transition: background 0.2s ease, transform 0.2s ease;
+		margin-left: 25px;
+	}
+
+		.modal button:hover {
+			background: #12283e;
+			transform: translateY(-2px);
+		}
+
+
+
+/* ==========================================================
+     CUSTOM SELECT DROPDOWN
+     ========================================================== */
+
+.custom-select {
+	position: relative;
+	width: 230px;
+	font-size: 13px;
+	color: #0b213a;
+	user-select: none;
+	margin-bottom: 5px;
+}
+
+	.custom-select .selected {
+		background: #fff;
+		border: 1px solid rgba(16, 24, 40, 0.08);
+		border-radius: 8px;
+		padding: 6px 10px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		position: relative;
+	}
+
+		.custom-select .selected::after {
+			content: '';
+			position: absolute;
+			right: 12px;
+			top: 50%;
+			transform: translateY(-50%) rotate(45deg);
+			width: 6px;
+			height: 6px;
+			border-right: 2px solid var(--accent);
+			border-bottom: 2px solid var(--accent);
+			transition: transform 0.2s ease;
+		}
+
+	.custom-select.open .selected::after {
+		transform: translateY(-50%) rotate(-135deg);
+	}
+
+	.custom-select .options {
+		position: absolute;
+		top: 110%;
+		left: 0;
+		width: 100%;
+		background: #fff;
+		border: 1px solid rgba(16, 24, 40, 0.08);
+		border-radius: 8px;
+		box-shadow: 0 6px 20px rgba(24, 43, 92, 0.15);
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-5px);
+		transition: all 0.2s ease;
+		z-index: 10000;
+	}
+
+	.custom-select.open .options {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		z-index: 10001;
+	}
+
+	.custom-select .options div {
+		padding: 8px 10px;
+		cursor: pointer;
+		transition: background 0.2s ease;
+		z-index: 10002;
+	}
+
+		.custom-select .options div:hover {
+			background: #f3f6fb;
+			color: var(--accent);
+		}
+
+.modal button {
+	width: 210px;
+	height: 36px;
+	border-radius: 8px;
+	background-color: var(--accent);
+	color: #fff;
+	border: none;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+	.modal button:hover {
+		background: #12283e;
+		transform: translateY(-2px);
+	}

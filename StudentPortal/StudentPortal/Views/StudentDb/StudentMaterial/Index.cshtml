@@ -1,0 +1,159 @@
+@model StudentPortal.Models.StudentDb.StudentMaterialViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.SubjectName - Material</title>
+    <link rel="stylesheet" href="~/css/StudentDb/StudentMaterial.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/LibraryModal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="page">
+        <main class="class-container">
+            <!-- LEFT SECTION -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="instructor-profile">
+                    <div class="instructor-profile-image">@Model.InstructorInitials</div>
+                    <div class="instructor-info">
+                        <div class="instructor-profile-name">@Model.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="recent-material">
+                    <h3>Recent Material</h3>
+                    <ul>
+                        @foreach (var item in Model.RecentMaterials)
+                        {
+                            <li><i class="fa-solid fa-book-open-reader"></i> @item</li>
+                        }
+                    </ul>
+                </div>
+
+                <button class="back-button" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT SECTION WRAPPER -->
+            <div class="right-column-task">
+            <section class="task-container" id="taskContainer">
+                <div class="material-scrollable">
+                    <h2 class="task-title" id="materialName">@Model.MaterialTitle</h2>
+                    <p class="task-description" id="materialDescription">@Model.Description</p>
+
+                    <div class="attachments" id="attachmentList">
+                        @if (Model.Files?.Count > 0)
+                        {
+                            foreach (var f in Model.Files)
+                            {
+                                <div class="attachment-box">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span class="file-name">@f.FileName</span>
+                                    @if (!string.IsNullOrEmpty(f.FileUrl))
+                                    {
+                                        <a href="@f.FileUrl" target="_blank" class="download-btn">
+                                            <i class="fa-solid fa-download"></i>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="attachment-box">
+                                <i class="fa-solid fa-file"></i> No attachments
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="library-search" style="overflow: visible;">
+                    <button class="btn library-btn" id="libraryBtn" title="Search Library">
+                        <i class="fa-solid fa-book"></i>
+                    </button>
+                </div>
+
+                <div id="libraryBackdrop" class="backdrop" hidden aria-hidden="true" role="dialog" aria-labelledby="libraryTitle" aria-modal="true">
+                    <div class="library-modal book-surface" role="document">
+                        <button id="closeLibraryBtn" class="close-library" aria-label="Close library">&times;</button>
+                        <div class="library-body">
+                            <aside class="left-column">
+                                <div class="left-inner">
+                                    <div class="search-section">
+                                        <div class="search-container">
+                                            <input id="librarySearch" class="search-input" type="search" placeholder="Search books, categories..." aria-label="Search library" />
+                                            <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="book-list-section" role="listbox" aria-label="Library book list" tabindex="0">
+                                        <ul id="libraryList" class="book-list" tabindex="-1"></ul>
+                                    </div>
+                                </div>
+                            </aside>
+                            <div class="separator" aria-hidden="true"></div>
+                            <section class="right-column" aria-live="polite">
+                                <div class="right-inner">
+                                    <div id="bookInfoDefault" class="book-default">Select a book to view more information</div>
+                                    <div id="bookDetail" class="book-detail" hidden>
+                                        <h4 id="detailTitle" class="detail-title"></h4>
+                                        <div id="detailAuthor" class="detail-author"></div>
+                                        <div id="detailCategory" class="detail-category"></div>
+                                        <textarea id="detailDescription" class="detail-description" readonly></textarea>
+                                        <div class="book-action-row">
+                                            <button id="reserveBtn" class="btn reserve-btn" disabled>Reserve this book</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div id="reserveBackdrop" class="backdrop" hidden aria-hidden="true" role="dialog" aria-modal="true">
+                    <div class="reserve-modal">
+                        <p class="reserve-message">Go to library to reserve this book?</p>
+                        <div class="reserve-actions">
+                            <button id="reserveYesBtn" class="btn reserve-yes">Yes</button>
+                            <button id="reserveNoBtn" class="btn reserve-no">No</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIXED BOTTOM SECTION -->
+                <div class="task-bottom" id="materialBottom">
+                    <p class="posted-date" id="dateInfo">Posted: @Model.UploadDate.ToString("MMM d, yyyy")</p>
+                    <div class="edit-controls" id="editControls" hidden>
+                        <button class="btn save-btn" id="saveEditBtn">Save</button>
+                        <button class="btn cancel-btn" id="cancelEditBtn">Cancel</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="public-comment-container" id="publicCommentContainer">
+                <h3 class="public-comment-header">Class Comments</h3>
+                <div class="public-comment-input">
+                    <textarea id="publicCommentText" placeholder="Add a class comment..."></textarea>
+                    <button id="postPublicCommentBtn" class="post-comment-btn">Post</button>
+                </div>
+                <div class="public-comment-list" id="publicCommentList"></div>
+            </section>
+            </div>
+
+        </main>
+
+        @{ ViewBag.CurrentPage = "subjects"; }
+        @await Html.PartialAsync("_StudentBottomBar")
+
+        <div id="toast" class="toast"></div>
+        <form id="materialForm" style="display:none">@Html.AntiForgeryToken()<input type="hidden" name="contentId" value="@Model.MaterialId" /><input type="hidden" name="classCode" value="@Model.ClassCode" /></form>
+    </div>
+
+    <script src="~/js/StudentDb/StudentMaterial.js" asp-append-version="true"></script>
+</body>
+</html>

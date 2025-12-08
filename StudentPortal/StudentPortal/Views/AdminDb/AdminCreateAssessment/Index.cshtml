@@ -1,0 +1,72 @@
+﻿@model SIA_IPT.Models.AdminCreateAssessment.AdminCreateAssessmentViewModel
+@{
+    ViewData["Title"] = "Create Assessment (Admin)";
+    Layout = null; // optional if standalone UI
+    var toastMessage = TempData["ToastMessage"] as string;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/admindb/admincreateassessment.css" />
+</head>
+<body>
+    <div class="page">
+        <aside class="assessment-info">
+            <div>
+                <h2 style="margin-top:8px;">Create Assessment</h2>
+
+                <input asp-for="Title" id="assessmentName" class="input" placeholder="Enter assessment title" />
+                <textarea asp-for="Description" id="assessmentDesc" class="textarea" placeholder="Short instructions or description"></textarea>
+            </div>
+            <button class="back-button" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        </aside>
+
+        <main class="assessment-container">
+            <div class="assessment-top" id="assessmentTop">
+                <div class="left-controls">
+                    <button id="addTestBtn" class="btn">+ Add Test</button>
+                    <button id="saveDraftBtn" class="icon-btn" title="Save draft"><i class="fa-solid fa-floppy-disk"></i></button>
+                </div>
+                <div class="right-stats">
+                    <div class="total-points">Total Points: <span id="totalPoints">@Model.TotalPoints</span></div>
+                </div>
+            </div>
+
+            <div class="assessment-draft" id="assessmentDraft">
+                <div class="empty-placeholder">No tests yet — click <strong>+ Add Test</strong> to begin.</div>
+            </div>
+        </main>
+
+        <div class="bottom-bar">
+            <div class="user-profile" id="userProfile">
+                <div class="user-avatar">AD</div>
+                <div class="user-name">Admin</div>
+                <div class="user-popup" id="userPopup">Exit • Sign out</div>
+            </div>
+
+            <div class="menu-wrap">
+                <div class="menu-circle" id="menuCircle" title="Open menu">
+                    <div class="menu-grid"><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="radial-actions" id="radialActions">
+                    <button class="action home" data-page="admindb" data-label="Home"><i class="fa-solid fa-house"></i></button>
+                    <button class="action locked" data-page="locked" data-label="Locked" aria-label="Locked">
+                        <i class="fa-solid fa-lock"></i>
+                    </button>                    
+                    <button class="action assessment" data-page="adminassessmentlist" data-label="Assessment"><i class="fa-solid fa-clipboard-question"></i></button>
+                </div>
+            </div>
+            <div class="right-space"></div>
+        </div>
+
+        <div id="toast" class="toast" aria-live="polite" role="status">@toastMessage</div>
+    </div>
+
+    <script src="~/js/admindb/admincreateassessment.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+@model StudentPortal.Models.StudentDb.StudentTaskViewModel
+@{
+    ViewData["Title"] = $"{Model.SubjectName} — Task Page";
+    var toastMessage = TempData["ToastMessage"] as string;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/StudentDb/StudentTask.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="page">
+        <main class="class-container">
+
+            <!-- LEFT SECTION — SUBMIT PANEL -->
+            <section class="submit-container" id="submitContainer">
+                <div class="submit-container-top">
+                    <h2 class="submit-header">Your Work</h2>
+                    @if (!string.IsNullOrWhiteSpace(Model.Grade))
+                    {
+                        <div class="grade-indicator">Grade: @Model.Grade</div>
+                    }
+                    @if (Model.IsSubmitted)
+                    {
+                        <div class="status-card submitted">
+                            <div class="status-title">Submitted</div>
+                            <div class="status-meta">@Model.SubmittedAt?.ToString("MMM d, yyyy h:mm tt")</div>
+                            <div class="status-badge">Pending Instructor Review</div>
+                        </div>
+                    }
+                </div>
+                <div id="submissionForm" style="@(Model.IsSubmitted ? "display:none" : "")">
+                <form method="post" asp-action="SubmitTask" id="taskForm" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="taskId" value="@Model.TaskId" />
+                    <input type="hidden" name="classCode" value="@Model.ClassCode" />
+                    <input type="hidden" name="studentEmail" value="@Model.StudentEmail" />
+                    <div class="attachment-area">
+                        <label for="fileInput" class="attach-label">
+                            <i class="fa-solid fa-paperclip"></i> Attach
+                        </label>
+                        <input type="file" id="fileInput" name="file" hidden>
+                        <span id="fileName" class="file-name">Attach File</span>
+                        <div id="filePreview" class="file-preview"></div>
+                    </div>
+                    
+                    <input type="hidden" name="privateComment" id="hiddenComment" />
+
+                    <div class="submit-buttons">
+                        <button type="button" class="btn submit-btn" id="submitBtn">Submit</button>
+                        <button type="button" class="btn mark-done-btn" id="markDoneBtn">Mark as Done</button>
+                    </div>
+                </form>
+                </div>
+
+                <div class="attachment-list-btn private-comment" id="attachmentListBtn" role="button" tabindex="0" title="View attachments">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <div class="attachment-list-label">View attachments</div>
+                </div>
+
+                @if (Model.IsSubmitted)
+                {
+                    <div id="resubmissionSection">
+                        <button class="btn update-btn" id="resubmitBtn">Update Submission</button>
+                    </div>
+                }
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- ATTACHMENT LIST MODAL -->
+            <div class="comment-popup" id="attachmentListModal" aria-hidden="true" hidden>
+                <div class="comment-box">
+                    <!-- Close icon inside modal -->
+                    <button id="closeAttachmentList" aria-label="Close">&times;</button>
+
+                    <h3>Attachments</h3>
+                    <div id="attachmentListContent" style="max-height:260px; overflow:auto; display:flex; flex-direction:column; gap:8px; padding-right:4px;">
+                        <!-- populated via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMISSION CONFIRM MODAL -->
+            <div class="confirm-modal" id="submitConfirmModal" hidden aria-hidden="true">
+                <div class="confirm-box">
+                    <p>Submit your work?</p>
+                    <div class="confirm-actions">
+                        <button id="submitConfirmYes" class="btn yes">Yes</button>
+                        <button id="submitConfirmNo" class="btn no">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UNSUBMIT CONFIRM MODAL -->
+            <div class="confirm-modal" id="unsubmitConfirmModal" hidden aria-hidden="true">
+                <div class="confirm-box">
+                    <p>Are you sure you want to cancel submission?</p>
+                    <div class="confirm-actions">
+                        <button id="unsubmitYes" class="btn yes">Yes</button>
+                        <button id="unsubmitNo" class="btn no">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (task + public comments stacked) -->
+            <div class="right-column-task">
+
+                <!-- TASK CONTAINER -->
+                <section class="task-container" id="taskContainer">
+                    <div class="task-scrollable">
+                        <h2 class="task-title">@Model.TaskTitle</h2>
+                        <p class="task-description">@Model.Description</p>
+                        <div class="attachments" id="serverAttachments">
+                            @foreach (var file in Model.Attachments)
+                            {
+                                <div class="attachment-box">
+                                    <i class="fa-solid fa-file"></i> @file.FileName
+                                </div>
+                            }
+                        </div>
+
+                        <div class="library-search">
+                            <button class="btn library-btn" id="libraryBtn" title="Search Library">
+                                <i class="fa-solid fa-book"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TASK BOTTOM -->
+                    <div class="task-bottom" id="taskBottom">
+                        <p class="posted-date">
+                            Posted: @Model.PostedDate | Deadline: @Model.Deadline
+                        </p>
+                    </div>
+                </section>
+
+                <!-- PUBLIC COMMENT CONTAINER (STACKED UNDER TASK) -->
+                <section class="public-comment-container" id="publicCommentContainer">
+                    <h3 class="public-comment-header">Class Comments</h3>
+
+                    <!-- Input area for new comments -->
+                    <div class="public-comment-input">
+                        <textarea id="publicCommentText" placeholder="Add a class comment..."></textarea>
+                        <button id="postPublicCommentBtn" class="post-comment-btn">Post</button>
+                    </div>
+
+                    <!-- Comments list -->
+                    <div class="public-comment-list" id="publicCommentList"></div>
+                </section>
+
+
+
+            </div> <!-- /.right-column -->
+
+
+            <div class="confirm-modal" id="confirmModal" aria-hidden="true">
+                <div class="confirm-box">
+                    <p>Are you sure you want to mark this done without attaching your work?</p>
+                    <div class="confirm-actions">
+                        <button id="confirmYes" class="btn yes">Yes</button>
+                        <button id="confirmNo" class="btn no">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM BAR -->
+            <div class="bottom-bar">
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar">@Model.StudentInitials</div>
+                    <div class="user-name">@Model.StudentName</div>
+                    <div class="user-popup" id="userPopup">Exit • Sign out</div>
+                </div>
+
+                <div class="menu-wrap">
+                    <div class="menu-circle" id="menuCircle" title="Open menu" role="button" tabindex="0">
+                        <div class="menu-grid"><span></span><span></span><span></span><span></span></div>
+                    </div>
+
+                    <div class="radial-actions" id="radialActions">
+                        <button class="action home" data-page="home" data-label="Home"><i class="fa-solid fa-house"></i></button>
+                        <button class="action locked" data-page="locked" data-label="Locked" aria-label="Locked">
+                            <i class="fa-solid fa-lock"></i>
+                        </button>
+                        <button class="action todo" data-page="todo" data-label="To-Do"><i class="fa-solid fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="right-space"></div>
+            </div>
+
+            <!-- ===== Library Modal (Book style, header removed) ===== -->
+            <div id="libraryBackdrop" class="backdrop" hidden aria-hidden="true" role="dialog" aria-labelledby="libraryTitle" aria-modal="true">
+                <div class="library-modal book-surface" role="document">
+
+                    <!-- Close button repositioned to top-right -->
+                    <button id="closeLibraryBtn" class="close-library" aria-label="Close library">&times;</button>
+
+                    <div class="library-body">
+                        <!-- LEFT: Library List (50%) -->
+                        <aside class="left-column">
+                            <div class="left-inner">
+                                <div class="search-section" aria-hidden="false">
+                                    <div class="search-container">
+                                        <input id="librarySearch" class="search-input" type="search" placeholder="Search books, categories..." aria-label="Search library" />
+                                        <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                                <div class="book-list-section" role="listbox" aria-label="Library book list" tabindex="0">
+                                    <ul id="libraryList" class="book-list" tabindex="-1">
+                                        <!-- populated by JS -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <!-- MIDDLE SEPARATOR -->
+                        <div class="separator" aria-hidden="true"></div>
+
+                        <!-- RIGHT: Book Information (50%) -->
+                        <section class="right-column" aria-live="polite">
+                            <div class="right-inner">
+                                <div id="bookInfoDefault" class="book-default">Select a book to view more information</div>
+
+                                <div id="bookDetail" class="book-detail" hidden>
+                                    <h4 id="detailTitle" class="detail-title"></h4>
+
+                                    <!-- New Author Field -->
+                                    <div id="detailAuthor" class="detail-author" style="font-style: italic; color: #334155; margin-bottom: 4px;"></div>
+
+                                    <div id="detailCategory" class="detail-category" style="font-size: 0.85rem; font-style: italic; color: #64748b; margin-bottom: 8px;"></div>
+
+                                    <textarea id="detailDescription" class="detail-description" readonly></textarea>
+
+                                    <div class="book-action-row">
+                                        <button id="reserveBtn" class="btn reserve-btn" disabled>Reserve this book</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <!-- ===== End Library Modal ===== -->
+            <!-- ===== Reserve Confirmation Modal ===== -->
+            <div id="reserveBackdrop" class="backdrop" hidden aria-hidden="true" role="dialog" aria-modal="true">
+                <div class="reserve-modal">
+                    <p class="reserve-message">Go to library to reserve this book?</p>
+                    <div class="reserve-actions">
+                        <button id="reserveYesBtn" class="btn reserve-yes">Yes</button>
+                        <button id="reserveNoBtn" class="btn reserve-no">No</button>
+                    </div>
+                </div>
+            </div>
+
+
+        @{ ViewBag.CurrentPage = "todo"; }
+        @await Html.PartialAsync("_StudentBottomBar")
+
+        <div id="toast" class="toast">@toastMessage</div>
+    </div>
+
+    <script>
+        window.__submittedFileData = null;
+        @if (!string.IsNullOrWhiteSpace(Model.SubmittedFileName))
+        {
+            var sizeText = string.IsNullOrWhiteSpace(Model.SubmittedFileSize) ? "" : Model.SubmittedFileSize;
+            <text>window.__submittedFileData = { fileName: "@Model.SubmittedFileName", fileUrl: "@Model.SubmittedFileUrl", sizeText: "@sizeText" };</text>
+        }
+    </script>
+    <script src="~/js/StudentDb/StudentTask.js" asp-append-version="true"></script>
+</body>
+</html>
+

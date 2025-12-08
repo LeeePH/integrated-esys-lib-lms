@@ -1,0 +1,96 @@
+@model StudentPortal.Models.Studentdb.AdminDashboardViewModel
+@{
+    Layout = "_StudentLayout";
+    ViewData["Title"] = "Student Dashboard";
+    ViewBag.CurrentPage = "home";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/StudentDb/StudentDb.css" asp-append-version="true" />
+}
+
+<main class="classes-container" id="classContainer">
+    @if (Model.Classes != null && Model.Classes.Any())
+    {
+        @foreach (var c in Model.Classes)
+        {
+            var isPending = c.Status == "Pending";
+
+            <article class="class-card @(isPending ? "pending" : "active")"
+                     data-class-code="@c.ClassCode"
+                     @(isPending ? "" : "onclick=\"window.location.href='/StudentClass/" + c.ClassCode + "'\"")>
+                <div class="class-left has-bg"
+                     style="background-image:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1400&auto=format&fit=crop');"
+                     data-url="adminclass.html">
+                    <div class="class-name">@c.Title</div>
+                    <div class="class-section">@c.Section</div>
+                </div>
+
+                <div class="class-right">
+                    <div class="instructor-profile-image" aria-hidden="true">
+                        @((!string.IsNullOrEmpty(c.InstructorName)
+                                                        ? string.Join("", c.InstructorName.Split(' ').Select(x => x[0]))
+                                                        : ""))
+                    </div>
+                    <div>
+                        <div class="instructor-profile-name">@c.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="status-tag @(isPending ? "pending" : "approved")">
+                    @(isPending ? "Pending" : "Approved")
+                </div>
+            </article>
+        }
+    }
+    else
+    {
+        <p>No classes found.</p>
+    }
+
+    <!-- Library Search Card -->
+    <article class="class-card" onclick="window.location.href='@Url.Action("Search", "Library")'" style="cursor: pointer;">
+        <div class="class-left has-bg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="class-name">Library</div>
+            <div class="class-section">Search & Reserve Books</div>
+        </div>
+        <div class="class-right">
+            <div class="instructor-profile-image" style="background: #667eea;">
+                <i class="fa-solid fa-book" style="color: white; font-size: 24px;"></i>
+            </div>
+            <div>
+                <div class="instructor-profile-name">Library System</div>
+                <div class="instructor-role">Search Books</div>
+            </div>
+        </div>
+    </article>
+
+    <button class="join-class-button" id="joinBtn" title="Join class" aria-haspopup="dialog" aria-controls="joinModal">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+</main>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+        <h3 id="joinTitle">Join a Class</h3>
+        <input type="text" id="classCode" placeholder="Enter class code" />
+        <button id="requestJoin">REQUEST TO JOIN</button>
+    </div>
+</div>          
+
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+
+@section Scripts {
+    <script>
+        const routes = {
+            home: '@Url.Action("Index", "StudentDb")',
+            subjects: '@Url.Action("StudentClass", "StudentDb")',
+            todo: '@Url.Action("StudentTodo", "StudentDb")',
+            requestJoin: '@Url.Action("RequestJoin", "StudentDb")'
+        };
+    </script>
+    <script src="~/js/studentdb/studentdb.js" asp-append-version="true"></script>
+}

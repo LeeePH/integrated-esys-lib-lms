@@ -1,0 +1,781 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SystemLibrary.bundle.scp.css",
+      "PackagePath": "staticwebassets\\SystemLibrary.k66mx2xl85.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251016_090725.json",
+      "PackagePath": "staticwebassets\\backups\\library_backup_20251016_090725.json"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251018_181557.json",
+      "PackagePath": "staticwebassets\\backups\\library_backup_20251018_181557.json"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251021_120338.json",
+      "PackagePath": "staticwebassets\\backups\\library_backup_20251021_120338.json"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\BookCondition.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\BookCondition.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\LogAudit.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\LogAudit.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\Maintenances.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\Maintenances.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\UserManagements.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\UserManagements.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\Usermanage.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\Usermanage.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\bookConditions.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\bookConditions.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\BrowseBooks.css",
+      "PackagePath": "staticwebassets\\css\\BrowseBooks.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Dashboard.css",
+      "PackagePath": "staticwebassets\\css\\Dashboard.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Notifications.css",
+      "PackagePath": "staticwebassets\\css\\Notifications.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\ReportTabs.css",
+      "PackagePath": "staticwebassets\\css\\ReportTabs.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\activity.css",
+      "PackagePath": "staticwebassets\\css\\activity.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\catalogs.css",
+      "PackagePath": "staticwebassets\\css\\catalogs.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\dark-mode.css",
+      "PackagePath": "staticwebassets\\css\\dark-mode.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\inventory.css",
+      "PackagePath": "staticwebassets\\css\\inventory.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\inventorystats.css",
+      "PackagePath": "staticwebassets\\css\\inventorystats.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\StyleSheet.css",
+      "PackagePath": "staticwebassets\\css\\lib\\StyleSheet.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\StyleSheet1.css",
+      "PackagePath": "staticwebassets\\css\\lib\\StyleSheet1.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\activities.css",
+      "PackagePath": "staticwebassets\\css\\lib\\activities.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\borrowing.css",
+      "PackagePath": "staticwebassets\\css\\lib\\borrowing.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\libdashboard.css",
+      "PackagePath": "staticwebassets\\css\\lib\\libdashboard.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\lib\\librarydashboard.css",
+      "PackagePath": "staticwebassets\\css\\lib\\librarydashboard.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\overdue.css",
+      "PackagePath": "staticwebassets\\css\\overdue.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\report.css",
+      "PackagePath": "staticwebassets\\css\\report.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\reservation.css",
+      "PackagePath": "staticwebassets\\css\\reservation.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\reserved.css",
+      "PackagePath": "staticwebassets\\css\\reserved.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\return.css",
+      "PackagePath": "staticwebassets\\css\\return.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\studborrowing.css",
+      "PackagePath": "staticwebassets\\css\\studborrowing.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\Borrows.css",
+      "PackagePath": "staticwebassets\\css\\student\\Borrows.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\Search.css",
+      "PackagePath": "staticwebassets\\css\\student\\Search.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\acts.css",
+      "PackagePath": "staticwebassets\\css\\student\\acts.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\notified.css",
+      "PackagePath": "staticwebassets\\css\\student\\notified.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\notifs.css",
+      "PackagePath": "staticwebassets\\css\\student\\notifs.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\student.css",
+      "PackagePath": "staticwebassets\\css\\student\\student.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\students.css",
+      "PackagePath": "staticwebassets\\css\\student\\students.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\transaction.css",
+      "PackagePath": "staticwebassets\\css\\transaction.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\accounts.png",
+      "PackagePath": "staticwebassets\\images\\accounts.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\active.png",
+      "PackagePath": "staticwebassets\\images\\active.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\activeborrow.png",
+      "PackagePath": "staticwebassets\\images\\activeborrow.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\bglogin.png",
+      "PackagePath": "staticwebassets\\images\\bglogin.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\bluecheck.png",
+      "PackagePath": "staticwebassets\\images\\bluecheck.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\bookmark.png",
+      "PackagePath": "staticwebassets\\images\\bookmark.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\borrow.png",
+      "PackagePath": "staticwebassets\\images\\borrow.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\borrowcalendar.png",
+      "PackagePath": "staticwebassets\\images\\borrowcalendar.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\catalog.png",
+      "PackagePath": "staticwebassets\\images\\catalog.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\dashboard.png",
+      "PackagePath": "staticwebassets\\images\\dashboard.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\deactivate.png",
+      "PackagePath": "staticwebassets\\images\\deactivate.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\duedateblue.png",
+      "PackagePath": "staticwebassets\\images\\duedateblue.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\duedategray.png",
+      "PackagePath": "staticwebassets\\images\\duedategray.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\duedatewhite.png",
+      "PackagePath": "staticwebassets\\images\\duedatewhite.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\duedateyellow.png",
+      "PackagePath": "staticwebassets\\images\\duedateyellow.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\eligible.png",
+      "PackagePath": "staticwebassets\\images\\eligible.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\elip.png",
+      "PackagePath": "staticwebassets\\images\\elip.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\filler.png",
+      "PackagePath": "staticwebassets\\images\\filler.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\fillers.png",
+      "PackagePath": "staticwebassets\\images\\fillers.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\ghost.png",
+      "PackagePath": "staticwebassets\\images\\ghost.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\grayacc.png",
+      "PackagePath": "staticwebassets\\images\\grayacc.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\grayeligible.png",
+      "PackagePath": "staticwebassets\\images\\grayeligible.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\graywarning.png",
+      "PackagePath": "staticwebassets\\images\\graywarning.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\heart.png",
+      "PackagePath": "staticwebassets\\images\\heart.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\heavenphoto.png",
+      "PackagePath": "staticwebassets\\images\\heavenphoto.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\inbox.png",
+      "PackagePath": "staticwebassets\\images\\inbox.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\library.png",
+      "PackagePath": "staticwebassets\\images\\library.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\loanperiod.png",
+      "PackagePath": "staticwebassets\\images\\loanperiod.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\lock.png",
+      "PackagePath": "staticwebassets\\images\\lock.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\logout.png",
+      "PackagePath": "staticwebassets\\images\\logout.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\logouts.png",
+      "PackagePath": "staticwebassets\\images\\logouts.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\mainbg.png",
+      "PackagePath": "staticwebassets\\images\\mainbg.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\maintenance.png",
+      "PackagePath": "staticwebassets\\images\\maintenance.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\message.png",
+      "PackagePath": "staticwebassets\\images\\message.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\notif.png",
+      "PackagePath": "staticwebassets\\images\\notif.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\notifications.png",
+      "PackagePath": "staticwebassets\\images\\notifications.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\overdue.png",
+      "PackagePath": "staticwebassets\\images\\overdue.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\overduebooks.png",
+      "PackagePath": "staticwebassets\\images\\overduebooks.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\pendingreserve.png",
+      "PackagePath": "staticwebassets\\images\\pendingreserve.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\plus.png",
+      "PackagePath": "staticwebassets\\images\\plus.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\plusmark.png",
+      "PackagePath": "staticwebassets\\images\\plusmark.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\reco.png",
+      "PackagePath": "staticwebassets\\images\\reco.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\recophoto.png",
+      "PackagePath": "staticwebassets\\images\\recophoto.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\recophoto1.png",
+      "PackagePath": "staticwebassets\\images\\recophoto1.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\reports.png",
+      "PackagePath": "staticwebassets\\images\\reports.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\reservations.png",
+      "PackagePath": "staticwebassets\\images\\reservations.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\restrict.png",
+      "PackagePath": "staticwebassets\\images\\restrict.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\returnarrow.png",
+      "PackagePath": "staticwebassets\\images\\returnarrow.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\returns.png",
+      "PackagePath": "staticwebassets\\images\\returns.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\sample.png",
+      "PackagePath": "staticwebassets\\images\\sample.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\search.png",
+      "PackagePath": "staticwebassets\\images\\search.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\searchicon.png",
+      "PackagePath": "staticwebassets\\images\\searchicon.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\stborrow.png",
+      "PackagePath": "staticwebassets\\images\\stborrow.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\studentlogo.png",
+      "PackagePath": "staticwebassets\\images\\studentlogo.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\time.png",
+      "PackagePath": "staticwebassets\\images\\time.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\totalbooks.png",
+      "PackagePath": "staticwebassets\\images\\totalbooks.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\transactions.png",
+      "PackagePath": "staticwebassets\\images\\transactions.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\trashbin.png",
+      "PackagePath": "staticwebassets\\images\\trashbin.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\trend.png",
+      "PackagePath": "staticwebassets\\images\\trend.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\trendphoto.png",
+      "PackagePath": "staticwebassets\\images\\trendphoto.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\trendphoto1.png",
+      "PackagePath": "staticwebassets\\images\\trendphoto1.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\warning.png",
+      "PackagePath": "staticwebassets\\images\\warning.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\images\\wrong.png",
+      "PackagePath": "staticwebassets\\images\\wrong.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\js\\return-transaction.js",
+      "PackagePath": "staticwebassets\\js\\return-transaction.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\01beeec5-9cce-46f1-84f4-d3e676bc9093.jpg",
+      "PackagePath": "staticwebassets\\uploads\\books\\01beeec5-9cce-46f1-84f4-d3e676bc9093.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\0c1c9cbf-4de7-4756-9613-8a886fe581c0.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\0c1c9cbf-4de7-4756-9613-8a886fe581c0.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\0e5db1f8-2262-418f-92df-d21b7a898b7d.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\0e5db1f8-2262-418f-92df-d21b7a898b7d.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1288ac23-c11e-49d5-9de3-cebfe7609234.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\1288ac23-c11e-49d5-9de3-cebfe7609234.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\1e6021c6-a762-4b18-9169-0b18ee882002.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\1fe45adb-cbc4-4c76-97a8-56f4725db99a.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\1fe45adb-cbc4-4c76-97a8-56f4725db99a.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\49c0f921-55bf-4f98-8df9-2e1ac408a401.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\49c0f921-55bf-4f98-8df9-2e1ac408a401.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\4d99ff23-ca7d-4949-a733-e6a623059957.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\4d99ff23-ca7d-4949-a733-e6a623059957.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\6629322e-d1a0-4681-80bb-1190dd8f2bc1.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\6629322e-d1a0-4681-80bb-1190dd8f2bc1.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\71b4d3df-223c-4801-94bf-827527a31a5b.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\71b4d3df-223c-4801-94bf-827527a31a5b.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\7778eb89-9ef9-4474-88cb-3fe9134b0c91.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\7778eb89-9ef9-4474-88cb-3fe9134b0c91.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\7d502ef5-0eff-4c0c-abf0-0ffd2a2463b8.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\7d502ef5-0eff-4c0c-abf0-0ffd2a2463b8.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\7f8cb3a4-40ca-45b2-8356-30ac456ec79c.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\7f8cb3a4-40ca-45b2-8356-30ac456ec79c.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\8d9335f5-438e-480c-b6a9-84d7d9c4b83f.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\8d9335f5-438e-480c-b6a9-84d7d9c4b83f.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\9eb35f96-69f8-472d-bf4d-8d8c304ffcbe.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\9eb35f96-69f8-472d-bf4d-8d8c304ffcbe.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\ad822fff-964f-4703-b1ca-37c319b60718.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\ad822fff-964f-4703-b1ca-37c319b60718.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\bda91b30-b50d-4d2d-82aa-68224a8a85fc.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\bda91b30-b50d-4d2d-82aa-68224a8a85fc.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\cfd06ae0-9671-4f02-bb54-d492d48d9ced.jpg",
+      "PackagePath": "staticwebassets\\uploads\\books\\cfd06ae0-9671-4f02-bb54-d492d48d9ced.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\d1a0658c-df74-4cfe-b271-ca41f693bb68.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\d1a0658c-df74-4cfe-b271-ca41f693bb68.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\d20ef966-252d-4abd-a0e4-c401a59e179c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\books\\d20ef966-252d-4abd-a0e4-c401a59e179c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\d4fead2d-9146-4e56-9143-afddd819dd11.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\d4fead2d-9146-4e56-9143-afddd819dd11.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\e394cc23-ec07-4fe2-b1a6-a0c007cae228.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\e394cc23-ec07-4fe2-b1a6-a0c007cae228.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\eaf525b0-bbb6-4f9a-9943-e79cb40cb672.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\eaf525b0-bbb6-4f9a-9943-e79cb40cb672.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\f2f96e72-f9e8-442a-9bd1-0ffc247eb064.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\f2f96e72-f9e8-442a-9bd1-0ffc247eb064.png"
+    },
+    {
+      "Id": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\uploads\\books\\fdfeed62-08e0-413e-b131-fdc4d2abd175.png",
+      "PackagePath": "staticwebassets\\uploads\\books\\fdfeed62-08e0-413e-b131-fdc4d2abd175.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.SystemLibrary.props",
+      "PackagePath": "build\\SystemLibrary.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.SystemLibrary.props",
+      "PackagePath": "buildMultiTargeting\\SystemLibrary.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.SystemLibrary.props",
+      "PackagePath": "buildTransitive\\SystemLibrary.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,137 @@
+@model StudentPortal.Models.AdminClass.AdminClassViewModel
+@{
+    ViewData["Title"] = $"{Model.SubjectName} — Class Page (Admin)";
+    var toastMessage = TempData["ToastMessage"] as string;
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/AdminDb/AdminClass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+    <style>
+        /* ensure modals overlay bottom bar */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 12000;
+        }
+
+            .modal-backdrop[hidden="false"] {
+                display: flex;
+            }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <main class="class-container">
+            <!-- LEFT SECTION -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="recent-uploads">
+                    <h3>Recent Uploads</h3>
+                    <ul>
+                        @foreach (var u in Model.RecentUploads)
+                        {
+                            <li><i class="@u.IconClass"></i> @u.Title</li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="manage-buttons">
+                    <button class="manage-btn manage-class" data-target="@Url.Action("Index", "AdminManageClass", new { classCode = Model.ClassCode })">
+                        <i class="fa-solid fa-users"></i> Manage Class
+                    </button>
+                    <button class="manage-btn manage-grades" data-target="@Url.Action("Index", "AdminManageGrades", new { classCode = Model.ClassCode })">
+                        <i class="fa-solid fa-graduation-cap"></i> Manage Grades
+                    </button>
+                </div>
+
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT SECTION -->
+            <section class="class-content" id="classContent" data-class-id="@Model.ClassId">
+                <article class="content-card create-announcement" id="createAnnouncementCard" role="region" aria-label="Create announcement">
+                    <div class="content-left">
+                        <div class="content-info">
+                            <textarea id="announcementInput" placeholder="Create an announcement to your class" aria-label="Create announcement"></textarea>
+                        </div>
+                    </div>
+                    <div class="announcement-actions" hidden>
+                        <button class="btn announce" id="announceBtn">Announce</button>
+                    </div>
+                </article>
+
+                @foreach (var c in Model.Contents)
+                {
+                    <article class="content-card @c.Type" data-target="@c.TargetUrl">
+                        <div class="content-left">
+                            <i class="@c.IconClass"></i>
+                            <div class="content-info">
+                                <h4 class="content-title">@c.Title</h4>
+                                <p class="content-meta">@c.MetaText</p>
+                            </div>
+                        </div>
+                        @if ((c.Type == "task" || c.Type == "assessment") && c.HasUrgency)
+                        {
+                            <div class="content-right urgency @c.UrgencyColor"></div>
+                        }
+                    </article>
+                }
+            </section>
+        </main>
+
+        <!-- floating add-content button -->
+        <button class="add-content-button" id="addContentBtn" aria-haspopup="dialog" aria-controls="contentModal" title="Add content">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+
+        <!-- content radial -->
+        <div class="content-radial" id="contentRadial" aria-hidden="true">
+            <div class="content-tooltip">what would you like to upload?</div>
+
+            <button class="content-action material" data-type="material" data-label="Upload material?" aria-label="Upload material">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </button>
+
+            <button class="content-action task" data-type="task" data-label="Upload task?" aria-label="Upload task">
+                <i class="fa-solid fa-file-pen"></i>
+            </button>
+
+            <button class="content-action assessment" data-type="assessment" data-label="Upload assessment?" aria-label="Upload assessment">
+                <i class="fa-solid fa-circle-question"></i>
+            </button>
+        </div>
+
+        <!-- modal/backdrop used for creating content -->
+        <div class="modal-backdrop" id="modalBackdrop" hidden aria-hidden="true">
+            <div class="modal" id="contentModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <h3 id="modalTitle">Create Content</h3>
+                <div id="modalBody"><!-- dynamic form inserted here --></div>
+                <div class="modal-actions" id="modalActions">
+                    <button id="modalSubmit" class="btn">Create</button>
+                    <button id="modalCancel" class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div id="toast" class="toast">@toastMessage</div>
+        <script src="~/js/AdminDb/AdminClass.js" asp-append-version="true"></script>
+        @{ 
+            ViewBag.ClassCode = Model.ClassCode;
+            ViewBag.CurrentPage = "subjects";
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+    </div>
+</body>
+</html>

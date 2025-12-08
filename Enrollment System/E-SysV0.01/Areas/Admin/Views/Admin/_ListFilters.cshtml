@@ -1,0 +1,27 @@
+﻿@{
+    var action = (ViewBag.FilterAction as string) ?? ViewContext.RouteData.Values["action"]?.ToString() ?? "Dashboard";
+    var q = ViewBag.FilterQ as string ?? "";
+    var program = ViewBag.FilterProgram as string ?? "";
+}
+<form method="get" asp-area="Admin" asp-controller="Admin" asp-action="@action" class="row g-2 align-items-end mb-3">
+    <div class="col-auto">
+        <label class="form-label">Search</label>
+        <input type="text" name="q" class="form-control" value="@q" placeholder="Name or email" />
+    </div>
+    <div class="col-auto">
+        <label class="form-label">Program</label>
+        <select name="program" class="form-select">
+            <option value=""></option>
+            @foreach (var p in E_SysV0._01.Models.ProgramCatalog.All)
+            {
+                <option value="@p.Code" selected="@(string.Equals(program, p.Code, StringComparison.OrdinalIgnoreCase) ? "selected" : null)">@p.Code</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filter</button>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-secondary" href="@Url.Action(action, "Admin", new { area = "Admin" })">Clear</a>
+    </div>
+</form>

@@ -1,0 +1,103 @@
+@model StudentPortal.Models.AdminDb.AdminManageGradesViewModel
+@{
+    ViewData["Title"] = "Manage Grades — Import";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LMS — Manage Grades (Admin) — Import Grades</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/AdminDb/AdminManageGrades.css" />
+</head>
+
+<body data-class-code="@Model.ClassCode">
+    <div class="page">
+
+        <main class="import-grades-page">
+
+            <!-- Import Stage -->
+            <section class="import-stage" id="importStage">
+                <div class="top-bar">
+                </div>
+
+                <div class="import-card" id="importCard" role="region" aria-labelledby="importHeading">
+
+                    <h1 id="importHeading" class="import-title">Import Grades</h1>
+
+                    <!-- Initial import button -->
+                    <div class="import-center" id="importCenter">
+                        <button id="importBtn" class="primary-btn large">
+                            <i class="fa-solid fa-file-import"></i>
+                            <span>Import Grade</span>
+                        </button>
+
+                        <div class="muted-note">Supported formats: .xlsx, .xls, .csv</div>
+
+                        <input id="fileInput" type="file" accept=".xlsx,.xls,.csv" style="display:none" />
+                    </div>
+
+                    <!-- After file chosen -->
+                    <div id="fileControls" class="file-controls" hidden>
+                        <div class="controls-row">
+                            <div class="file-info">File: <strong id="fileName"></strong></div>
+
+                            <div class="search-wrap">
+                                <label class="sr-only" for="tableSearch">Search by Student_ID or Last_Name</label>
+                                <input id="tableSearch" class="input search-input" placeholder="Search by Student_ID or Last_Name">
+                            </div>
+
+                            <div class="controls-actions">
+                                <button id="clearFileBtn" class="secondary-btn">Remove file</button>
+                                <button id="importDbBtn" class="primary-btn" title="Import to database">
+                                    <i class="fa-solid fa-upload"></i> Import to Database
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-wrap" id="tableWrap" tabindex="0" aria-live="polite">
+                            <!-- table injected here -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        @{
+            ViewBag.Role = "Admin";
+            ViewBag.ClassCode = Model.ClassCode;
+            ViewBag.CurrentPage = "subjects";
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+
+        <!-- Toast -->
+        <div id="toast" class="toast" aria-live="polite" role="status"></div>
+
+        <!-- Modal -->
+        <div id="confirmModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="modal-panel">
+                <h2>Import to Database</h2>
+                <p id="confirmText">
+                    Are you sure you want to import <strong id="confirmCount">0</strong> records?
+                </p>
+                <div class="modal-actions">
+                    <button id="confirmNo" class="secondary-btn">No</button>
+                    <button id="confirmYes" class="primary-btn">Yes — Import</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="~/js/AdminDb/AdminManageGrades.js"></script>
+
+</body>
+</html>

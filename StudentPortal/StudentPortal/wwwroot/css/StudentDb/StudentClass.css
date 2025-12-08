@@ -1,0 +1,270 @@
+@import url('/css/Shared/BottomBar.css');
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    --left-w: 260px;
+    --gap: 32px;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* GLOBAL */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--card-text);
+}
+
+/* --- LAYOUT --- */
+.class-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 30px;
+    position: relative;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* LEFT SECTION (fixed sidebar) */
+.class-info {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 20%;
+    min-width: 260px; /* optional: prevent shrinking on small screens */
+    height: calc(100vh - 150px); /* stays within viewport */
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* prevents jumping scrollbars */
+}
+
+/* Prevent text scaling / layout shift */
+.subject-name,
+.subject-code,
+.class-code,
+.instructor-profile,
+.recent-uploads,
+.back-button {
+    flex-shrink: 0; /* prevents shrinking with viewport */
+}
+
+/* Subject info */
+.subject-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.subject-code,
+.class-code {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin: 4px 0;
+}
+
+/* Instructor Section */
+.instructor-profile {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.instructor-profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.instructor-profile-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.instructor-role {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Recent Uploads */
+.recent-uploads {
+    flex-grow: 1; /* takes remaining space without moving others */
+    overflow-y: auto; /* scrolls only inside this section */
+    margin-top: 10px;
+    padding-right: 4px;
+}
+
+    .recent-uploads h3 {
+        font-size: 0.95rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .recent-uploads ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recent-uploads li {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #1e293b;
+    }
+
+/* Back Button */
+.back-button {
+    margin-top: 16px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+    .back-button:hover {
+        background: #00577c;
+    }
+
+
+/* RIGHT SECTION (Scrollable Content) */
+.class-content {
+    margin-left: 27%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-bottom: 100px; /* spacing above bottom bar */
+}
+
+/* Content Card */
+.content-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+    padding: 16px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(16, 24, 40, 0.08);
+    }
+
+.content-left {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex: 1;
+    margin-left: 20px;
+}
+
+    .content-left i {
+        font-size: 1.4rem;
+        color: var(--accent);
+    }
+
+.content-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0b213a;
+    margin-bottom: 3px;
+}
+
+.content-meta {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+/* Urgency Flags */
+.urgency {
+    width: 12px;
+    border-radius: 10px;
+}
+
+    .urgency.green {
+        background: #22c55e;
+    }
+
+    .urgency.yellow {
+        background: #eab308;
+    }
+
+    .urgency.red {
+        background: #ef4444;
+    }
+
+/* Scrollbar Styling (for class-info) */
+.class-info::-webkit-scrollbar {
+    width: 6px;
+}
+
+.class-info::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+    .class-info::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+/* --- ANNOUNCEMENT CARD --- */
+.announcement {
+    background: #fef9ef; /* light warm tone to differentiate */
+}
+
+    .announcement i {
+        color: #d97706; /* darker gold/orange for icon */
+    }
+
+    .announcement .content-meta {
+        font-size: 0.9rem;
+        color: #854d0e;
+        font-weight: 500;
+        margin-top: 13px;
+    }
+
+/* Hide scrollbars for all elements */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+    *::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }

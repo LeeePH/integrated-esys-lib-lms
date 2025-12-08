@@ -1,0 +1,106 @@
+﻿@model StudentPortal.Models.RegisterViewModel
+@{
+    Layout = null;  
+    ViewData["Title"] = "Register - MySUQC";
+}
+    <title>@ViewData["Title"]</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Register.css" />
+
+<body>
+    <div class="login-container">
+        <div class="register-form">
+            <div class="logo-container">
+                <img src="@Url.Content("~/images/logo.png")" alt="SUQC Logo" class="register-logo" />
+            </div>
+
+            @using (Html.BeginForm("SendOtp", "Account", FormMethod.Post, new {Id = "SendOtpForm"}))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- STEP 1 -->
+                <div class="form-step active" id="step1">
+                    <h3>MySUQC</h3>
+                    <h4>Enter your email to continue</h4>
+                    <p>Log in to SUQCPortal with your MySUQC account. If you don't have one, you will be prompted to create one.</p>
+
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Email, new { id = "email", placeholder = " " })
+                        <label for="email">Email</label>
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:red;" })
+                    </div>
+
+                    <button type="button" id="continueEmail">Continue</button>
+                    <div class="register-links">
+                        <a href="@Url.Action("Login", "Account")">Already have an account?</a>
+                    </div>
+                </div>
+
+
+            <!-- STEP 2 -->
+                <div class="form-step" id="step2">
+                    <h3>Create a Password</h3>
+                    <h4>Choose a password to secure your account.</h4>
+
+                    <div class="input-group password-group">
+                        @Html.PasswordFor(m => m.Password, new { id = "password", placeholder = " " })
+                        <label for="password">Password</label>
+                        <i class="fa-regular fa-eye" id="togglePassword"></i>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:red;" })
+                    </div>
+
+                    <p class="password-note">Use at least 6 characters with one number or special character.</p>
+
+                    <button type="button" id="continuePassword">Continue</button>
+                    <button type="button" id="backToEmail">Back</button>
+                </div>
+            }
+            @using (Html.BeginForm("VerifyOtp", "Account", FormMethod.Post, new { Id = "VerifyOtp" }))
+            {
+                @Html.AntiForgeryToken()
+                <!-- STEP 3 -->
+                <div class="form-step" id="step3">
+                    <h3>Verify Your Email</h3>
+                    <p>We’ve sent a 6-digit code to your email. Enter it below to verify your account.</p>
+
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.OTP, new { id = "otp", maxlength = "6", placeholder = " " })
+                        <label for="otp">Enter OTP</label>
+                        @Html.ValidationMessageFor(m => m.OTP, "", new { @style = "color:red;" })
+                    </div>
+
+                    <button type="submit" name="step" value="verify" id="verifyOtp">Continue</button>
+                    <button type="button" id="backToPassword">Back</button>
+
+                    <!-- NEW: Resend OTP button -->
+                    <button type="button" id="resendOtp">Resend OTP</button>
+                    <p id="resendStatus" style="color:green;"></p>
+                </div>
+                <!-- STEP 4 -->
+                <div class="form-step" id="step4">
+                    <h3>Account Created!</h3>
+                    <p>Your MySUQC account has been successfully created. You can now log in to SUQCPortal.</p>
+                    <button type="button" onclick="window.location.href='@Url.Action("Login", "Account")'">Go to Login</button>
+                </div>
+
+    }
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <p>Confirm your email before creating your account:</p>
+            <p class="confirm-email" id="confirmEmailText"></p>
+            <button id="modalContinue">Continue</button>
+            <button id="modalBack">Go Back</button>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/register.js"></script>
+    
+</body>

@@ -1,0 +1,120 @@
+@model StudentPortal.Models.StudentDb.StudentClassViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Model.SubjectName — Student Class</title>
+    <link rel="stylesheet" href="~/css/StudentDb/StudentClass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="page">
+        <main class="class-container">
+            <!-- LEFT SECTION -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="instructor-profile">
+                    <div class="instructor-profile-image">@Model.InstructorInitials</div>
+                    <div class="instructor-info">
+                        <div class="instructor-profile-name">@Model.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="recent-uploads">
+                    <h3>Recent Uploads</h3>
+                    <ul>
+                        @foreach (var content in Model.Contents.Take(3))
+                        {
+                            <li>
+                                @if (content.Type == "material")
+                                {
+                                    <i class="fa-solid fa-book-open-reader"></i>
+                                }
+                                else if (content.Type == "task")
+                                {
+                                    <i class="fa-solid fa-file-pen"></i>
+                                }
+                                else if (content.Type == "assessment")
+                                {
+                                    <i class="fa-solid fa-circle-question"></i>
+                                }
+                                else if (content.Type == "announcement")
+                                {
+                                    <i class="fa-solid fa-bullhorn"></i>
+                                }
+                                @content.Title
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT SECTION -->
+            <section class="class-content" id="classContent">
+                @foreach (var content in Model.Contents)
+                {
+                    if (content.Type == "announcement")
+                    {
+                        <article class="content-card announcement" data-target="@content.TargetAction">
+                            <div class="content-left">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                <div class="content-info">
+                                    <h4 class="content-title">@content.Title</h4>
+                                    <p class="content-meta">@content.Meta</p>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                    else
+                    {
+                        <article class="content-card @content.Type" data-target="@content.TargetAction">
+                            <div class="content-left">
+                                @if (content.Type == "material")
+                                {
+                                    <i class="fa-solid fa-book-open-reader"></i>
+                                }
+                                else if (content.Type == "task")
+                                {
+                                    <i class="fa-solid fa-file-pen"></i>
+                                }
+                                else if (content.Type == "assessment")
+                                {
+                                    <i class="fa-solid fa-circle-question"></i>
+                                }
+                                <div class="content-info">
+                                    <h4 class="content-title">@content.Title</h4>
+                                    <p class="content-meta">@content.Meta</p>
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(content.Urgency))
+                            {
+                                <div class="content-right urgency @content.Urgency"></div>
+                            }
+                        </article>
+                    }
+                }
+            </section>
+        </main>
+
+        @{
+            ViewBag.CurrentPage = "subjects";
+        }
+        @await Html.PartialAsync("_StudentBottomBar")
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="~/js/StudentDb/StudentClass.js" asp-append-version="true"></script>
+</body>
+</html>

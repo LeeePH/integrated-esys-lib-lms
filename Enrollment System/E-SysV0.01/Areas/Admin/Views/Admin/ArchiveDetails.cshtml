@@ -1,0 +1,89 @@
+﻿@model E_SysV0._01.Models.EnrollmentArchive
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        <h2 class="mb-3">Archive Details</h2>
+        <div class="mb-3">
+            <a class="btn btn-secondary" href="@Url.Action("Archive", "Admin", new { area = "Admin" })"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3">Archived At</dt>
+            <dd class="col-sm-9">@Model.ArchivedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</dd>
+
+            <dt class="col-sm-3">Original Request Id</dt>
+            <dd class="col-sm-9">@Model.OriginalRequestId</dd>
+
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Program</dt>
+            <dd class="col-sm-9">@Model.Program</dd>
+
+            <dt class="col-sm-3">Academic Year</dt>
+            <dd class="col-sm-9">@Model.AcademicYear</dd>
+
+            <dt class="col-sm-3">Semester</dt>
+            <dd class="col-sm-9">@Model.Semester</dd>
+
+            <dt class="col-sm-3">Status at Archive</dt>
+            <dd class="col-sm-9"><span class="badge bg-secondary">@Model.StatusAtArchive</span></dd>
+
+            @if (!string.IsNullOrWhiteSpace(Model.Reason))
+            {
+                <dt class="col-sm-3">Reason</dt>
+                <dd class="col-sm-9">@Model.Reason</dd>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.Notes))
+            {
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Notes</dd>
+            }
+        </dl>
+
+        <h5 class="mt-4">Extra Fields</h5>
+        @if (Model.ExtraFields == null || Model.ExtraFields.Count == 0)
+        {
+            <div class="text-muted">None</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Key</th><th>Value</th></tr></thead>
+                    <tbody>
+                        @foreach (var kv in Model.ExtraFields.OrderBy(k => k.Key))
+                        {
+                            <tr><td>@kv.Key</td><td>@kv.Value</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <h5 class="mt-4">Document Flags</h5>
+        @if (Model.DocumentFlags == null || Model.DocumentFlags.Count == 0)
+        {
+            <div class="text-muted">None</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Document</th><th>Status</th></tr></thead>
+                    <tbody>
+                        @foreach (var kv in Model.DocumentFlags.OrderBy(k => k.Key))
+                        {
+                            <tr><td>@kv.Key</td><td>@kv.Value</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

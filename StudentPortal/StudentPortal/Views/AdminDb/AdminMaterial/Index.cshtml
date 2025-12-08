@@ -1,0 +1,160 @@
+@model StudentPortal.Models.AdminMaterial.AdminMaterialViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = $"LMS — Material Page (Admin)";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admindb/adminmaterial.css" asp-append-version="true" />
+</head>
+<body data-class-code="@Model.ClassCode">
+    <div class="page">
+        <main class="class-container">
+            <!-- LEFT SECTION -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="instructor-profile">
+                    <div class="instructor-profile-image">@Model.InstructorInitials</div>
+                    <div class="instructor-info">
+                        <div class="instructor-profile-name">@Model.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="recent-material">
+                    <h3>Recent Material</h3>
+                    <ul>
+                        @foreach (var item in Model.RecentMaterials)
+                        {
+                            <li><i class="fa-solid fa-book-open-reader"></i> @item</li>
+                        }
+                    </ul>
+                </div>
+
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT SECTION -->
+            <div class="right-column-task">
+            <section class="material-container" id="materialContainer" data-material-id="@Model.MaterialId">
+                <div class="material-scrollable">
+                    <h2 class="material-name" id="materialName" contenteditable="false">@Model.MaterialName</h2>
+                    <p class="material-description" id="materialDescription" contenteditable="false">
+                        @Model.MaterialDescription
+                    </p>
+
+                    <!-- ATTACHMENTS FROM DATABASE -->
+                    <div class="attachments-section">
+                        <h3>Attached Files</h3>
+                        <div class="attachments" id="attachmentList">
+                            @if (Model.Attachments.Any())
+                            {
+                                @foreach (var file in Model.Attachments)
+                                {
+                                    <div class="attachment-box" data-filename="@file">
+                                        <i class="fa-solid fa-file"></i>
+                                        <span class="attachment-name">@file</span>
+                                        <button class="download-btn" data-filename="@file" title="Download @file">
+                                            <i class="fa-solid fa-download"></i>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="no-files">No files attached to this material.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!-- FIXED BOTTOM SECTION -->
+                <div class="material-bottom" id="materialBottom">
+                    <p class="posted-date" id="dateInfo">Posted: @Model.PostedDate</p>
+                    <div class="edit-controls" id="editControls" hidden>
+                        <input type="file" id="replaceFileInput" accept="*/*" hidden />
+                        <button class="btn" id="replaceFileBtn" title="Replace attached file"><i class="fa-solid fa-file-arrow-up"></i> Replace File</button>
+                        <button class="btn save-btn" id="saveEditBtn">Save</button>
+                        <button class="btn cancel-btn" id="cancelEditBtn">Cancel</button>
+                    </div>
+                </div>
+            </section>
+            <section class="public-comment-container" id="adminCommentContainer">
+                <h3 class="public-comment-header">Comments</h3>
+                <form id="adminCommentForm">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="contentId" value="@Model.MaterialId" />
+                    <input type="hidden" name="classCode" value="@Model.ClassCode" />
+                </form>
+                <div class="public-comment-input">
+                    <textarea id="adminCommentText" placeholder="Add a comment..."></textarea>
+                    <button id="postAdminCommentBtn" class="post-comment-btn">Post</button>
+                </div>
+                <div class="public-comment-list" id="adminCommentList"></div>
+            </section>
+            </div>
+        </main>
+
+        <!-- ADMIN MAKE CHANGES BUTTON -->
+        <div class="make-changes-wrap">
+            <div class="make-changes-button" id="makeChangesButton" title="Make Changes">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <div class="admin-actions" id="adminActions">
+                <div class="admin-action" data-action="edit">
+                    <span class="label">Edit</span>
+                    <button><i class="fa-solid fa-pen"></i></button>
+                </div>
+                <div class="admin-action" data-action="delete">
+                    <span class="label">Delete</span>
+                    <button><i class="fa-solid fa-trash"></i></button>
+        </div>
+
+        
+    </div>
+        </div>
+
+        <!-- DELETE CONFIRMATION MODAL -->
+        <div class="delete-modal" id="deleteModal">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>Delete Material?</h3>
+                <p>This action <strong>cannot be undone</strong>. Are you sure you want to proceed?</p>
+                <div class="modal-buttons">
+                    <button class="btn confirm-delete" id="confirmDelete">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </button>
+                    <button class="btn cancel-delete" id="cancelDelete">
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="toast"></div>
+
+        <script src="~/js/admindb/adminmaterial.js" asp-append-version="true"></script>
+        @{ 
+            ViewBag.ClassCode = Model.ClassCode;
+            ViewBag.CurrentPage = "assessment";
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+
+    </div>
+</body>
+</html>

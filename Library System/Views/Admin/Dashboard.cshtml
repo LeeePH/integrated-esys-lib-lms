@@ -1,0 +1,725 @@
+﻿@model SystemLibrary.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Library Management System";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/lib/libdashboard.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Success/Error Messages -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
+    </div>
+}
+
+<div class="libdashboard-container">
+    <!-- HEADER -->
+    <div class="libdashboard-header">
+        <h1>Welcome back, Admin</h1>
+        <div class="libdashboard-date">
+            <img src="~/images/duedatewhite.png" alt="Calendar" />
+            <div>
+                <p class="day" id="day"></p>
+                <p class="full-date" id="full-date"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="libdashboard-cards">
+        <div class="libdashboard-card">
+            <img src="~/images/totalbooks.png" alt="Books" />
+            <div>
+                <p>Total Books</p>
+                <h2>@Model.TotalBooks.ToString("N0")</h2>
+            </div>
+        </div>
+        <div class="libdashboard-card actives">
+            <img src="~/images/activeborrow.png" alt="Active" />
+            <div>
+                <p>Active Borrowings</p>
+                <h2>@Model.ActiveBorrowings.ToString("N0")</h2>
+            </div>
+        </div>
+        <div class="libdashboard-card overdue">
+            <img src="~/images/overduebooks.png" alt="Overdue" />
+            <div>
+                <p>Total Return</p>
+                <h2>@Model.TotalReturns.ToString("N0")</h2>
+            </div>
+        </div>
+        <div class="libdashboard-card pending">
+            <img src="~/images/pendingreserve.png" alt="Pending" />
+            <div>
+                <p>Pending Reservation</p>
+                <h2>@Model.PendingReservations.ToString("N0")</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="libdashboard-lists">
+        <!-- LEFT SECTION - CHARTS -->
+        <div class="libdashboard-list">
+            <h2><img src="~/images/pendingreserve.png" class="icons" /> Library Statistics</h2>
+            <hr />
+            <div class="chart-container">
+                <canvas id="pieChart" width="120" height="120"></canvas>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #dc3545;"></span>
+                        <span>Over Due Accounts</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #ffc107;"></span>
+                        <span>Overdue Books</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #6f42c1;"></span>
+                        <span>Total Fees</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SECTION - PENDING RESERVATIONS -->
+        <div class="libdashboard-list">
+            <h2><img src="~/images/pendingreserve.png" class="icons" /> Pending Reservations</h2>
+            <hr />
+            <div class="libdashboard-scroll">
+                @if (Model.RecentReservations != null && Model.RecentReservations.Any())
+                {
+                    @foreach (var reservation in Model.RecentReservations)
+                    {
+                        var book = Model.Books?.FirstOrDefault(b => b._id.ToString() == reservation.BookId);
+                        <div class="libdashboard-item">
+                            <p>
+                                @{
+                                    MongoDB.Bson.ObjectId userObjectId;
+                                    StudentProfile student = null;
+                                    User user = null;
+
+                                    if (MongoDB.Bson.ObjectId.TryParse(reservation.UserId, out userObjectId))
+                                    {
+                                        student = Model.StudentProfiles?.FirstOrDefault(s => s.UserId == userObjectId);
+                                        user = Model.Users?.FirstOrDefault(u => u._id == userObjectId);
+                                    }
+                                }
+
+                                <strong>@(student?.FullName ?? user?.FullName ?? student?.StudentNumber ?? "Unknown Student")</strong><br>
+                                <span class="student-id">@(student?.StudentNumber ?? "Unknown")</span>
+                            </p>
+                            <p class="book-title">
+                                <img src="~/images/bookmark.png" />
+                                @(book?.Title ?? "Book ID: " + reservation.BookId.ToString().Substring(0, 8) + "...")
+                            </p>
+                            <a href="@Url.Action("Reservation", "Admin")" class="libdashboard-view-btn">
+                                View
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <p>No pending reservations</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- MONTHLY CHART SECTION -->
+    <div class="libdashboard-list monthly-chart-section">
+        <h2><img src="~/images/duedateyellow.png" class="icons" /> Monthly Borrowing vs Returns</h2>
+        <hr />
+        <div class="chart-container" style="height: 300px; position: relative;">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <!-- NEW ANALYTICS SECTIONS -->
+    <div class="analytics-grid">
+        <!-- Most Borrowed Books Pie Chart -->
+        <div class="libdashboard-list analytics-card">
+            <h2><img src="~/images/totalbooks.png" class="icons" /> Most Borrowed Books</h2>
+            <hr />
+            <div class="chart-container" style="height: 250px; position: relative;">
+                <canvas id="mostBorrowedBooksChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Most Active Students Table -->
+        <div class="libdashboard-list analytics-card">
+            <h2><img src="~/images/activeborrow.png" class="icons" /> Most Active Students</h2>
+            <hr />
+            <div class="analytics-table-container">
+                <table class="analytics-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Borrowed</th>
+                            <th>Returned</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.MostActiveStudents != null && Model.MostActiveStudents.Any())
+                        {
+                            @foreach (var student in Model.MostActiveStudents)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="student-info">
+                                            <strong>@student.FullName</strong>
+                                            <small>@student.StudentNumber</small>
+                                        </div>
+                                    </td>
+                                    <td>@student.Course</td>
+                                    <td><span class="badge borrow">@student.BorrowCount</span></td>
+                                    <td><span class="badge return">@student.ReturnCount</span></td>
+                                    <td><span class="badge total">@student.TotalActivity</span></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #999; padding: 2rem;">
+                                    No active students data available
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Top Courses/Programs Bar Chart -->
+        <div class="libdashboard-list analytics-card full-width">
+            <h2><img src="~/images/pendingreserve.png" class="icons" /> Top Courses/Programs</h2>
+            <hr />
+            <div class="chart-container" style="height: 300px; position: relative;">
+                <canvas id="topCoursesChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get today's date
+    const today = new Date();
+
+    // Options for formatting
+    const optionsDay = { weekday: 'long' };
+    const optionsFull = { year: 'numeric', month: 'long', day: 'numeric' };
+
+    // Set text content dynamically
+    document.getElementById('day').textContent = today.toLocaleDateString('en-US', optionsDay);
+    document.getElementById('full-date').textContent = today.toLocaleDateString('en-US', optionsFull);
+
+    // Pie Chart Data
+    const pieChartData = {
+        labels: ['Over Due Accounts', 'Overdue Books', 'Total Fees'],
+        datasets: [{
+            data: [@Model.PieChartData.OverDueAccounts, @Model.PieChartData.OverdueBooks, @Model.PieChartData.TotalFees],
+            backgroundColor: ['#dc3545', '#ffc107', '#6f42c1'],
+            borderWidth: 0
+        }]
+    };
+
+    // Bar Chart Data - using same approach as reports tab
+    const monthlyData = @Html.Raw(Json.Serialize(Model.MonthlyBorrowingVsReturns.MonthlyStats));
+
+    const labels = monthlyData.map(d => d.month);
+    const borrowedData = monthlyData.map(d => d.borrowings);
+    const returnedData = monthlyData.map(d => d.returns);
+
+    const barChartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Borrowings',
+            data: borrowedData,
+            backgroundColor: '#28a745',
+            borderWidth: 0
+        }, {
+            label: 'Returns',
+            data: returnedData,
+            backgroundColor: '#007bff',
+            borderWidth: 0
+        }]
+    };
+
+    // Debug: Log chart data
+    console.log('Monthly Data:', monthlyData);
+    console.log('Borrowed Data:', borrowedData);
+    console.log('Returned Data:', returnedData);
+    console.log('Chart Data:', barChartData);
+
+    // Initialize Pie Chart
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+        type: 'pie',
+        data: pieChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // Initialize Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    if (barCtx) {
+        new Chart(barCtx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: false,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        stacked: false,
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e0e0e0'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    } else {
+        console.error('Bar chart canvas not found');
+    }
+
+    // Most Borrowed Books Pie Chart
+    const mostBorrowedBooksData = @Html.Raw(Json.Serialize(Model.MostBorrowedBooks ?? new List<SystemLibrary.Models.MostBorrowedBook>()));
+    const mostBorrowedBooksChartData = {
+        labels: mostBorrowedBooksData.map(book => book.title || 'Unknown'),
+        datasets: [{
+            data: mostBorrowedBooksData.map(book => book.borrowCount || 0),
+            backgroundColor: [
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+            ],
+            borderWidth: 0
+        }]
+    };
+
+    const mostBorrowedBooksCtx = document.getElementById('mostBorrowedBooksChart').getContext('2d');
+    new Chart(mostBorrowedBooksCtx, {
+        type: 'pie',
+        data: mostBorrowedBooksChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 15,
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const book = mostBorrowedBooksData[context.dataIndex];
+                            return `${book.title}: ${book.borrowCount} borrowings`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Top Courses/Programs Bar Chart
+    const topCoursesData = @Html.Raw(Json.Serialize(Model.TopCoursePrograms ?? new List<SystemLibrary.Models.TopCourseProgram>()));
+    const topCoursesChartData = {
+        labels: topCoursesData.map(course => course.courseProgram || 'Unknown'),
+        datasets: [{
+            label: 'Total Borrowings',
+            data: topCoursesData.map(course => course.totalBorrowings || 0),
+            backgroundColor: '#28a745',
+            borderWidth: 0
+        }, {
+            label: 'Active Students',
+            data: topCoursesData.map(course => course.activeStudents || 0),
+            backgroundColor: '#007bff',
+            borderWidth: 0
+        }]
+    };
+
+    const topCoursesCtx = document.getElementById('topCoursesChart').getContext('2d');
+    new Chart(topCoursesCtx, {
+        type: 'bar',
+        data: topCoursesChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#e0e0e0'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+
+    // Auto-dismiss alerts after 5 seconds
+    setTimeout(function() {
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 300);
+        });
+    }, 5000);
+</script>
+
+<style>
+    /* === MONTHLY CHART SECTION === */
+    .monthly-chart-section {
+        margin-top: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+        .monthly-chart-section h2 {
+            color: #046a8f;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .monthly-chart-section .chart-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+        }
+</style>
+
+<style>
+    /* Alert styles */
+    .alert {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        position: relative;
+        transition: opacity 0.3s ease;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+
+    .btn-close {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+    /* Chart containers */
+    .chart-container {
+        position: relative;
+        height: 120px;
+        margin: 0.5rem 0;
+    }
+
+    /* Ensure page is scrollable */
+    .libdashboard-container {
+        min-height: auto;
+        overflow: visible;
+    }
+
+    .chart-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-top: -3rem;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+    }
+
+    .legend-color {
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+    }
+
+    /* Monthly chart section */
+    .monthly-chart-section {
+        grid-column: 1 / -1;
+        margin-top: 0.5rem;
+    }
+
+        .monthly-chart-section .chart-container {
+            height: 100px;
+        }
+
+    /* Empty state styling */
+    .empty-state {
+        text-align: center;
+        padding: 1rem;
+        color: #999;
+    }
+
+    /* Student ID styling */
+    .student-id {
+        color: #666;
+        font-size: 0.75rem;
+    }
+
+    /* Book title styling */
+    .book-title {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    /* Icons */
+    .icons {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Make lists more compact */
+    .libdashboard-list {
+        margin-bottom: 0.5rem;
+    }
+
+        .libdashboard-list h2 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .libdashboard-list hr {
+            margin: 0.25rem 0;
+        }
+
+    /* Make items more compact */
+    .libdashboard-item {
+        padding: 0.5rem;
+        margin-bottom: 0.25rem;
+        font-size: 1rem;
+    }
+
+        .libdashboard-item p {
+            font-size: 0.8rem;
+        }
+
+    .libdashboard-view-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* === ANALYTICS GRID === */
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .analytics-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+
+    .analytics-card.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .analytics-card h2 {
+        color: #046a8f;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .analytics-card hr {
+        margin: 0.5rem 0;
+        border: none;
+        border-top: 1px solid #e9ecef;
+    }
+
+    /* === ANALYTICS TABLE === */
+    .analytics-table-container {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .analytics-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }
+
+    .analytics-table th,
+    .analytics-table td {
+        padding: 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .analytics-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .analytics-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .student-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .student-info strong {
+        font-size: 0.8rem;
+        color: #333;
+    }
+
+    .student-info small {
+        font-size: 0.7rem;
+        color: #666;
+        margin-top: 0.1rem;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-align: center;
+        min-width: 2rem;
+    }
+
+    .badge.borrow {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .badge.return {
+        background: #cce5ff;
+        color: #004085;
+    }
+
+    .badge.total {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @@media (max-width: 768px) {
+        .analytics-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .analytics-card.full-width {
+            grid-column: 1;
+        }
+    }
+</style>

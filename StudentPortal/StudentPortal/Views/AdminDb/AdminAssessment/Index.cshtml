@@ -1,0 +1,178 @@
+@model SIA_IPT.Models.AdminAssessment.AdminAssessmentViewModel
+@{
+    ViewData["Title"] = "Admin Assessment";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/admindb/adminassessment.css" />
+<link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+
+<body data-class-code="@Model.ClassCode">
+    <div class="page">
+        <main class="class-container">
+
+            <!-- LEFT: CLASS INFO -->
+            <section class="class-info">
+                <h2 class="subject-name">@Model.SubjectName</h2>
+                <p class="subject-code">Subject Code: @Model.SubjectCode</p>
+                <p class="class-code">Class Code: @Model.ClassCode</p>
+
+                <div class="instructor-profile">
+                    <div class="instructor-profile-image">@Model.InstructorInitials</div>
+                    <div class="instructor-info">
+                        <div class="instructor-profile-name">@Model.InstructorName</div>
+                        <div class="instructor-role">Instructor</div>
+                    </div>
+                </div>
+
+                <div class="recent-material">
+                    <h3>Recent Material</h3>
+                    <ul>
+                        @foreach (var item in Model.RecentMaterials)
+                        {
+                            <li><i class="fa-solid fa-book-open-reader"></i> @item</li>
+                        }
+                    </ul>
+                </div>
+
+                <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </section>
+
+            <!-- RIGHT COLUMN -->
+            <div class="right-column">
+                <section class="assessment-container" id="assessmentContainer" data-assessment-id="@Model.AssessmentId">
+                    <div class="assessment-scrollable">
+                        <h2 class="assessment-title" id="assessmentTitle" contenteditable="false">@Model.AssessmentTitle</h2>
+                        <p class="assessment-description" id="assessmentDescription" contenteditable="false">@Model.AssessmentDescription</p>
+
+                        <div class="attachments" id="attachmentList">
+                            @foreach (var file in Model.Attachments)
+                            {
+                                <div class="attachment-box"><i class="fa-solid fa-file"></i> @file</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="assessment-bottom" id="assessmentBottom">
+                        <p class="posted-date" id="dateInfo">
+                            Posted: @Model.PostedDate | Deadline: @Model.Deadline
+                        </p>
+                    </div>
+                </section>
+
+                <!-- ANTI-CHEATING LOGS CONTAINER -->
+                <section class="anti-cheat-container">
+                    <!-- Top Section: Logs -->
+                    <div class="logs-top">
+                        <!-- Interaction Logs -->
+                        <div class="logs-category">
+                            <h3 class="category-header">Interaction</h3>
+                            <div class="log-boxes">
+                                <div class="log-box" data-log-type="copy">
+                                    <span class="log-type">Copy</span>
+                                    <span class="log-count" id="logCopy">@Model.LogCopy</span>
+                                </div>
+                                <div class="log-box" data-log-type="paste">
+                                    <span class="log-type">Paste</span>
+                                    <span class="log-count" id="logPaste">@Model.LogPaste</span>
+                                </div>
+                                <div class="log-box" data-log-type="inspect">
+                                    <span class="log-type">Inspect</span>
+                                    <span class="log-count" id="logInspect">@Model.LogInspect</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Omni-Focus Logs -->
+                        <div class="logs-category">
+                            <h3 class="category-header">Omni-Focus</h3>
+                            <div class="log-boxes">
+                                <div class="log-box" data-log-type="tabswitch">
+                                    <span class="log-type">Tab Switch</span>
+                                    <span class="log-count" id="logTabSwitch">@Model.LogTabSwitch</span>
+                                </div>
+                                <div class="log-box" data-log-type="openprograms">
+                                    <span class="log-type">Open Programs</span>
+                                    <span class="log-count" id="logOpenPrograms">@Model.LogOpenPrograms</span>
+                                </div>
+                                <div class="log-box" data-log-type="screenshare">
+                                    <span class="log-type">Screen Share</span>
+                                    <span class="log-count" id="logScreenShare">@Model.LogScreenShare</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Section: Assessment Validity -->
+                    <div class="logs-bottom">
+                        <div class="assessment-flag" id="assessmentFlag">Valid</div>
+                    </div>
+                </section>
+
+                <!-- ===================== LOG LIST MODALS ===================== -->
+                <!-- Template modal structure (re-used for all) -->
+                @foreach (var modal in new[] {
+                                "copy", "paste", "inspect",
+                                "tabswitch", "openprograms", "screenshare" })
+                {
+                    <div id="modal-@modal" class="loglist-modal">
+                        <div class="loglist-modal-content">
+                            <span class="loglist-modal-close" data-close="@modal">&times;</span>
+                            <h2 class="loglist-title" id="title-@modal"></h2>
+                            <div class="loglist-body" id="list-@modal">
+                                <!-- JS populates the activity list here -->
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </main>
+
+        <!-- ADMIN MAKE CHANGES BUTTON -->
+        <div class="make-changes-wrap">
+            <div class="make-changes-button" id="makeChangesButton" title="Make Changes">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <div class="admin-actions" id="adminActions" aria-hidden="true">
+                <div class="admin-action" data-action="edit">
+                    <span class="label">Edit</span>
+                    <button><i class="fa-solid fa-pen"></i></button>
+                </div>
+                <div class="admin-action" data-action="delete">
+                    <span class="label">Delete</span>
+                    <button><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE CONFIRMATION MODAL -->
+        <div class="delete-modal" id="deleteModal">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>Delete Task?</h3>
+                <p>This action <strong>cannot be undone</strong>. Are you sure you want to proceed?</p>
+                <div class="modal-buttons">
+                    <button class="btn confirm-delete" id="confirmDelete">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </button>
+                    <button class="btn cancel-delete" id="cancelDelete">
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="toast" class="toast" aria-live="polite" role="status"></div>
+
+        <script src="~/js/AdminDb/AdminAssessment.js" asp-append-version="true"></script>
+        @{
+            ViewBag.CurrentPage = "assessment";
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+
+    </div>
+</body>

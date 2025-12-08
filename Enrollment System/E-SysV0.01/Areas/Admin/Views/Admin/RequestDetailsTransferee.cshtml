@@ -1,0 +1,549 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@using E_SysV0._01.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "Transferee Request Details";
+
+    // Transferee required docs (matches AdminController)
+    string[] docKeys = new[] {
+        "Form138", "GoodMoral", "Diploma", "MedicalCertificate",
+        "CertificateOfIndigency", "BirthCertificate", "GuidanceClearance", "TranscriptOfRecords"
+    };
+
+    var docLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Form138"] = "Form 138",
+        ["GoodMoral"] = "Good Moral",
+        ["Diploma"] = "Diploma",
+        ["MedicalCertificate"] = "Medical Certificate",
+        ["CertificateOfIndigency"] = "Certificate of Indigency",
+        ["BirthCertificate"] = "Birth Certificate",
+        ["GuidanceClearance"] = "Guidance Clearance for Transfer",
+        ["TranscriptOfRecords"] = "Transcript of Records"
+    };
+
+    var extra = Model.ExtraFields ?? new Dictionary<string, string>();
+    string Get(string prefix, string name)
+    {
+        var key = string.IsNullOrEmpty(prefix) ? name : $"{prefix}.{name}";
+        return extra.TryGetValue(key, out var v) ? v : "";
+    }
+
+    var existingFlags = Model.DocumentFlags ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    var existingRemarks = ViewBag.ExistingSubjectRemarks as Dictionary<string, string> ?? new Dictionary<string, string>();
+    var existingSecond = ViewBag.ExistingSecondSemEligibility as Dictionary<string, string> ?? new Dictionary<string, string>();
+
+    // Prefer ViewBag.Prerequisites if present, otherwise fall back to the same prerequisite map used elsewhere.
+    var vbPrereq = ViewBag.Prerequisites as Dictionary<string, List<string>>;
+    var prereqMap = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+    if (vbPrereq != null && vbPrereq.Count > 0)
+    {
+        prereqMap = vbPrereq;
+    }
+    else
+    {
+        prereqMap = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["CC103"] = new List<string> { "CC101", "CC102" },
+            ["NSTP2"] = new List<string> { "NSTP1" },
+            ["PT101"] = new List<string> { "CC101", "CC102" },
+            ["PE2"] = new List<string> { "PE1" }
+        };
+    }
+
+    bool capKnown = ViewBag.ProgramCapacityProgram != null && ViewBag.ProgramCapacityLimit != null;
+    bool capFull = ViewBag.ProgramCapacityFull == true;
+    bool isSecondSemPending = string.Equals(Model.Status, "2nd Sem Pending", StringComparison.OrdinalIgnoreCase);
+
+    string displayType = Model.Type ?? "";
+    string displayStatus = Model.Status ?? "";
+    string submittedAt = Model.SubmittedAt.ToLocalTime().ToString("f");
+    string emergencyName = Model.EmergencyContactName ?? Get("", "EmergencyContactName");
+    string emergencyPhone = Model.EmergencyContactPhone ?? Get("", "EmergencyContactPhone");
+    var program = ViewBag.ProgramNormalized as string ?? (Model.Program ?? "BSIT");
+
+    string yearLevel = Get("Academic", "YearLevel");
+    string semester = Get("Academic", "Semester");
+    string academicYear = Get("Academic", "AcademicYear");
+
+    // Use the same remarks-editable policy as RequestDetails: allow admin editing here (TOR review)
+    bool remarksEditable = true;
+
+    // Subjects to render for previous (1st sem) - reuse model list
+    var previousSubjects = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+        ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear1stSem.Subjects
+        : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear1stSem.Subjects;
+
+    var secondSemSubjects = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+  ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear2ndSem.Subjects
+  : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear2ndSem.Subjects;
+    // Build canonical list for client JSON
+    var secondSemCanonical = secondSemSubjects
+        .Select(s => new
+        {
+            code = s.Code,
+            title = s.Title,
+            units = s.Units,
+            prereq = (string.IsNullOrWhiteSpace(s.PreRequisite) ? new string[0] : s.PreRequisite.Split(',').Select(x => x.Trim()).ToArray())
+        })
+        .ToList();
+}
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-1"></i>@err</div>
+}
+@if (TempData["Info"] is string info)
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i>@info</div>
+}
+
+<div id="requestDetailsTransfereeConfig"
+     data-request-id="@Model.Id"
+     data-program-full="@(capFull ? "true" : "false")"
+     data-registration-url="@Url.Action("RegistrationSlip", "Admin", new { area = "Admin" })"
+     data-dashboard-url="@Url.Action("Dashboard", "Admin", new { area = "Admin" })"
+     data-prerequisites='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(prereqMap))'
+     data-existing-remarks='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(existingRemarks))'
+     data-existing-eligibility='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(existingSecond))'
+     data-secondsem-subjects='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(secondSemCanonical))'
+     data-calc-url='@Url.Action("CalculateTransfereeEligibility", "Admin", new { area = "Admin" })'>
+</div>
+
+<div class="card">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h2 class="mb-1">Transferee Request - @Model.FullName</h2>
+            <div class="small text-muted">
+                <strong>Type:</strong> @displayType
+                &nbsp;&middot;&nbsp;
+                <strong>Status:</strong> <span class="badge bg-outline border text-secondary" style="font-weight:400;">@displayStatus</span>
+                &nbsp;&middot;&nbsp;
+                <strong>Submitted:</strong> @submittedAt
+            </div>
+        </div>
+    </div>
+
+    <p class="text-muted mb-3">Review transferee submission and flag documents / previous subjects.</p>
+
+    <div class="d-flex w-100 rounded-2 p-2 review-section-title">
+        <h4 class="ms-2">Transferee Enrollment Form (Review)</h4>
+    </div>
+
+    <div class="mt-3">
+        <h4 class="section-spaced">Basic Information</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Last Name</div><div class="data-value">@Get("Student", "LastName")</div></div>
+            <div class="data-item"><div class="data-label">First Name</div><div class="data-value">@Get("Student", "FirstName")</div></div>
+            <div class="data-item"><div class="data-label">Middle Name</div><div class="data-value">@Get("Student", "MiddleName")</div></div>
+            <div class="data-item"><div class="data-label">Suffix</div><div class="data-value">@Get("Student", "Extension")</div></div>
+        </div>
+
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Gender</div><div class="data-value">@Get("Student", "Sex")</div></div>
+            <div class="data-item"><div class="data-label">Contact Number</div><div class="data-value">@Get("Student", "ContactNumber")</div></div>
+            <div class="data-item"><div class="data-label">Email</div><div class="data-value">@Get("Student", "EmailAddress")</div></div>
+        </div>
+
+        <h4 class="section-spaced">Previous School Attended</h4>
+        <hr />
+
+        <h5 class="fw-bold mt-3">Elementary School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("ElementarySchool", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("ElementarySchool", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("ElementarySchool", "YearGraduated")</div></div>
+        </div>
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("ElementaryAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("ElementaryAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("ElementaryAddress", "PostalCode")</div></div>
+        </div>
+
+        <h5 class="fw-bold mt-3">High School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("HighSchool", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("HighSchool", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("HighSchool", "YearGraduated")</div></div>
+        </div>
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("HighSchoolAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("HighSchoolAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("HighSchoolAddress", "PostalCode")</div></div>
+        </div>
+
+        <h5 class="fw-bold mt-3">Senior High School</h5>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">School Name</div><div class="data-value">@Get("SeniorHigh", "SchoolName")</div></div>
+            <div class="data-item"><div class="data-label">School Type</div><div class="data-value">@Get("SeniorHigh", "SchoolType")</div></div>
+            <div class="data-item"><div class="data-label">Year Graduated</div><div class="data-value">@Get("SeniorHigh", "YearGraduated")</div></div>
+            <div class="data-item"><div class="data-label">Strand</div><div class="data-value">@Get("SeniorHigh", "Strand")</div></div>
+        </div>
+        <strong>Address</strong>
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">City</div><div class="data-value">@Get("SeniorHighAddress", "City")</div></div>
+            <div class="data-item"><div class="data-label">Barangay</div><div class="data-value">@Get("SeniorHighAddress", "Barangay")</div></div>
+            <div class="data-item"><div class="data-label">Postal Code</div><div class="data-value">@Get("SeniorHighAddress", "PostalCode")</div></div>
+        </div>
+
+        <h4 class="section-spaced">Emergency Contact Information</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Name</div><div class="data-value">@(string.IsNullOrWhiteSpace(emergencyName) ? "-" : emergencyName)</div></div>
+            <div class="data-item"><div class="data-label">Phone</div><div class="data-value">@(string.IsNullOrWhiteSpace(emergencyPhone) ? "-" : emergencyPhone)</div></div>
+            <div class="data-item"><div class="data-label">Gender</div><div class="data-value">@Get("Student", "Sex")</div></div>
+        </div>
+
+        <h4 class="section-spaced">Enrollment Info</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Program</div><div class="data-value">@(string.IsNullOrWhiteSpace(program) ? "-" : program)</div></div>
+            <div class="data-item"><div class="data-label">Year Level</div><div class="data-value">@(string.IsNullOrWhiteSpace(yearLevel) ? "-" : yearLevel)</div></div>
+            <div class="data-item"><div class="data-label">Semester</div><div class="data-value">@(string.IsNullOrWhiteSpace(semester) ? "-" : semester)</div></div>
+            <div class="data-item"><div class="data-label">Academic Year</div><div class="data-value">@(string.IsNullOrWhiteSpace(academicYear) ? "-" : academicYear)</div></div>
+        </div>
+
+        <h4 class="section-spaced">Previous School Details</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Last School Attended</div><div class="data-value">@Get("PreviousSchool", "LastSchoolAttended")</div></div>
+            <div class="data-item"><div class="data-label">Course Taken</div><div class="data-value">@Get("PreviousSchool", "CourseTaken")</div></div>
+            <div class="data-item"><div class="data-label">Last Academic Year Attended</div><div class="data-value">@Get("PreviousSchool", "LastAcademicYearAttended")</div></div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex align-items-center justify-content-between">
+        <h6 class="mt-4 mb-3">Document Flags (Transferee)</h6>
+        <div class="small text-muted">
+            <span class="me-3">
+                Legend:
+                <span class="badge bg-outline border text-secondary" style="font-weight:400;">unset</span>
+                <span class="badge bg-success">Submitted</span>
+                <span class="badge bg-warning text-dark">To be followed</span>
+                <span class="badge bg-dark">Ineligible</span>
+            </span>
+            <span id="flagProgressTransferee" class="badge bg-secondary">0/8 flagged</span>
+        </div>
+    </div>
+
+    <form id="frmUpdateFlags" asp-area="Admin" asp-controller="Admin" asp-action="UpdateDocumentFlags" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <div class="flag-grid mt-2 mb-3">
+            @for (int i = 0; i < docKeys.Length; i++)
+            {
+                var k = docKeys[i];
+                var current = existingFlags.TryGetValue(k, out var v) ? v : "";
+                var label = docLabels.TryGetValue(k, out var lbl) ? lbl : k;
+                <div class="flag-item @(current == "To be followed" || current == "Ineligible" ? "flag-item-warn" : "")">
+                    <div class="flag-header">
+                        <span class="flag-title">@label</span>
+                        @if (string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-success">Submitted</span>
+                        }
+                        else if (string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-warning text-dark">To be followed</span>
+                        }
+                        else if (string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge bg-dark">Ineligible</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-outline border text-secondary" style="font-weight:400;">unset</span>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <select name="flags[@k]" class="form-select transferee-flag" data-key="@k" style="max-width: 260px;">
+                            <option value=""></option>
+                            <option value="Submitted" selected="@(string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Submitted</option>
+                            <option value="To be followed" selected="@(string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">To be followed</option>
+                            <option value="Ineligible" selected="@(string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Ineligible</option>
+                        </select>
+                        <small class="text-muted">Choose status</small>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr />
+
+        <h5>1st Semester Subjects (for admin to flag Pass / Fail)</h5>
+        <p class="text-muted">Mark the applicant's previous subjects based on the TOR. These will be used to compute 2nd-sem eligibility.</p>
+
+        <!-- Subjects & Schedule Table design copied from RequestDetails.cshtml -->
+        <div class="mb-4">
+            <h6 class="mt-4 mb-3">Previous Subjects</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-striped align-middle" id="previousSubjectsTable">
+                    <thead>
+                        <tr>
+                            <th style="width:110px;">Code</th>
+                            <th>Title</th>
+                            <th style="width:70px;">Units</th>
+                            <th style="width:90px;">Day</th>
+                            <th style="width:140px;">Time</th>
+                            <th style="width:120px;">Room</th>
+                            <th style="width:200px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (previousSubjects != null && previousSubjects.Count > 0)
+                        {
+                            foreach (var subject in previousSubjects)
+                            {
+                                var code = subject.Code;
+                                var currentRemark = existingRemarks.ContainsKey(code) ? existingRemarks[code] : "ongoing";
+                                <tr>
+                                    <td>@subject.Code</td>
+                                    <td>@subject.Title</td>
+                                    <td>@subject.Units</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>
+                                        <div class="remarks-switch-container">
+                                            <div class="btn-group btn-group-sm remarks-switch" role="group" data-subject-code="@subject.Code">
+                                                <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]"
+                                                       id="fail_@subject.Code" value="fail" autocomplete="off"
+                                                       @(currentRemark == "fail" ? "checked" : "")
+                                                       @(remarksEditable ? "" : "disabled")>
+                                                <label class="btn btn-outline-danger" for="fail_@subject.Code">Fail</label>
+
+                                                <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]"
+                                                       id="ongoing_@subject.Code" value="ongoing" autocomplete="off"
+                                                       @(currentRemark == "ongoing" ? "checked" : "")
+                                                       @(remarksEditable ? "" : "disabled")>
+                                                <label class="btn btn-outline-warning" for="ongoing_@subject.Code">Ongoing</label>
+
+                                                <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]"
+                                                       id="pass_@subject.Code" value="pass" autocomplete="off"
+                                                       @(currentRemark == "pass" ? "checked" : "")
+                                                       @(remarksEditable ? "" : "disabled")>
+                                                <label class="btn btn-outline-success" for="pass_@subject.Code">Pass</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted">No previous subjects available</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5>2nd Semester Prerequisites & Eligibility Preview</h5>
+        <p class="text-muted">Prerequisite information for each 2nd-semester subject is shown below. Eligibility preview will be computed from the remarks you set above.</p>
+
+        <div class="table-responsive mb-3">
+            <table class="table table-sm table-striped" id="secondSemEligibilityTable">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th style="width:80px;">Units</th>
+                        <th style="width:300px;">Prerequisites</th>
+                        <th style="width:180px;">Eligibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in secondSemSubjects)
+                    {
+                        var code = s.Code;
+                        var initial = existingSecond.TryGetValue(code, out var v) ? v : "Pending evaluation";
+
+                        // ✅ FIX: Get prerequisites from the subject model directly
+                        var prereqString = s.PreRequisite ?? "";
+                        var prereqList = string.IsNullOrWhiteSpace(prereqString)
+                        ? new List<string>()
+                        : prereqString.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => p.Trim())
+                        .Where(p => !string.IsNullOrWhiteSpace(p))
+                        .ToList();
+
+                        <tr data-code="@code">
+                            <td>@s.Code</td>
+                            <td>@s.Title</td>
+                            <td>@s.Units</td>
+                            <td class="prereq-cell">
+                                @if (prereqList.Count == 0)
+                                {
+                                    <span class="text-muted">None</span>
+                                }
+                                else
+                                {
+                                    <span>@string.Join(", ", prereqList)</span>
+                                }
+                            </td>
+                            <td class="eligibility-text">
+                                <span class="badge @(initial != null && initial.StartsWith("Can enroll", StringComparison.OrdinalIgnoreCase) ? "bg-success" : "bg-danger")">
+                                    @initial
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex gap-2 mb-3">
+            <button id="btnCalculateAndSave" type="button" class="btn btn-outline-primary">
+                <i class="fas fa-calculator me-1"></i> Calculate & Save Eligibility
+            </button>
+        </div>
+
+        <div id="subjectRemarksData"></div>
+        <div class="form-check mb-0">
+            <input class="form-check-input" type="checkbox" value="true" id="chkReviewConfirmAction">
+            <label class="form-check-label" for="chkReviewConfirmAction">
+                I confirm I have reviewed the information above and has set Remarks on all subjects.
+            </label>
+        </div>
+    </form>
+
+    <hr />
+
+    <div class="action-toolbar card mt-5 mx-auto">
+        <div class="card-body d-flex align-items-center justify-content-center flex-wrap gap-3 text-center">
+            <!-- ✅ Review confirmation -->
+            <div class="d-flex align-items-center gap-2 justify-content-center">
+
+
+                <span class="hint small d-none d-md-inline">Accept/Hold require review.</span>
+            </div>
+
+            <!-- ✅ Action buttons -->
+            <div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">
+
+                <!-- Accept -->
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Accept"
+                      method="post" class="d-inline js-action-form" data-action="accept">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="false" />
+                    <button type="submit" class="btn btn-success" disabled title="Review first">
+                        <i class="fas fa-check"></i> Accept
+                    </button>
+                </form>
+
+                <!-- Hold -->
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Hold"
+                      method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="hold">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="false" />
+
+                    <select id="holdReasonSelect" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Awaiting further review" selected>Awaiting further review</option>
+                        <option value="Program capacity reached">Program capacity reached</option>
+                        <option value="Suspected document falsification">Suspected document falsification</option>
+                        <option value="Other">Other (specify)</option>
+                    </select>
+
+                    <input type="hidden" name="reason" id="holdReasonValue" value="Awaiting further review" />
+                    <input type="text" id="holdReasonOtherInput" class="form-control input-modern d-none"
+                           placeholder="Specify reason" style="min-width: 220px;" />
+
+                    <button type="submit" class="btn btn-warning" disabled title="Review first">
+                        <i class="fas fa-pause"></i> On Hold
+                    </button>
+                </form>
+
+                <!-- Reject -->
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Reject"
+                      method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="reject">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <select name="reason" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Unqualified">Unqualified</option>
+                        <option value="Violates Policy">Violates Policy</option>
+                        <option value="Missed Deadlines">Missed Deadlines</option>
+                        <option value="No Capacity">No Capacity</option>
+                    </select>
+                    <button type="submit" class="btn btn-danger" disabled title="Flag all documents first">
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <a class="btn btn-secondary" href="@Url.Action("Dashboard", "Admin", new { area = "Admin" })">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+@section Scripts {
+        <script src="~/js/admin-request-details-transferee.js"></script>
+
+    @{
+        var showSlipQuery = Context.Request.Query["showSlip"].ToString();
+        bool showSlip = string.Equals(showSlipQuery, "1", StringComparison.OrdinalIgnoreCase);
+        var redirectTarget = Url.Action("Dashboard", "Admin", new { area = "Admin" });
+        var registrationUrl = Url.Action("RegistrationSlip", "Admin", new { area = "Admin", id = Model.Id });
+    }
+    @if (showSlip)
+    {
+            <script>
+                (function () {
+                    const registrationUrl = '@registrationUrl';
+                    const redirectTarget = '@redirectTarget';
+                    (async () => {
+                        try {
+                            const resp = await fetch(registrationUrl, { credentials: 'include', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                            if (!resp.ok) {
+                                console.error('Failed to load registration slip partial:', resp.status);
+                                window.location.href = redirectTarget;
+                                return;
+                            }
+                            const html = await resp.text();
+                            const containerId = 'registrationModalContainer';
+                            let host = document.getElementById(containerId);
+                            if (!host) { host = document.createElement('div'); host.id = containerId; document.body.appendChild(host); }
+                            host.innerHTML = html;
+
+                            // Execute any scripts inside the partial
+                            host.querySelectorAll('script').forEach(old => {
+                                const s = document.createElement('script');
+                                if (old.src) s.src = old.src; else s.textContent = old.textContent || '';
+                                document.body.appendChild(s);
+                                old.remove();
+                            });
+
+                            const modalEl = document.getElementById('registrationModal');
+                            if (!modalEl) {
+                                console.warn('Registration modal element not found in partial.');
+                                window.location.href = redirectTarget;
+                                return;
+                            }
+                            const modal = new bootstrap.Modal(modalEl, { backdrop: 'static' });
+                            modal.show();
+
+                            modalEl.addEventListener('hidden.bs.modal', () => {
+                                host.innerHTML = '';
+                                // Redirect to dashboard after modal is closed
+                                setTimeout(() => { window.location.href = redirectTarget; }, 20);
+                            }, { once: true });
+                        } catch (ex) {
+                            console.error('Error showing registration slip:', ex);
+                            window.location.href = redirectTarget;
+                        }
+                    })();
+                })();
+            </script>
+    }
+}
+</div>

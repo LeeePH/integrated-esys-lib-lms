@@ -1,0 +1,390 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@{
+    Layout = "~/Views/Shared/ESys_KioskLayout.cshtml";
+    ViewData["Title"] = "Edit Rejected Enrollment";
+    var ef = Model.ExtraFields ?? new Dictionary<string, string>();
+    string EF(string key) => ef.TryGetValue(key, out var v) ? v : "";
+
+    // Document flags and labels (matching Admin)
+    var docs = new[] { "Form138", "GoodMoral", "Diploma", "MedicalCertificate", "CertificateOfIndigency", "BirthCertificate" };
+    var labels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Form138"] = "Form 138",
+        ["GoodMoral"] = "Good Moral",
+        ["Diploma"] = "Diploma",
+        ["MedicalCertificate"] = "Medical Certificate",
+        ["CertificateOfIndigency"] = "Certificate of Indigency",
+        ["BirthCertificate"] = "Birth Certificate"
+    };
+    string FlagVal(string key) => (Model.DocumentFlags != null && Model.DocumentFlags.TryGetValue(key, out var v)) ? (v ?? "").Trim() : "";
+    var needsPhysical = docs.Where(d =>
+    {
+        var s = FlagVal(d);
+        return s.Equals("To be followed", StringComparison.OrdinalIgnoreCase) || s.Equals("Ineligible", StringComparison.OrdinalIgnoreCase);
+    }).ToArray();
+}
+<style>
+    .container-narrow {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    .required-asterisk::after {
+        content: " *";
+        color: #dc3545;
+    }
+
+    input.input-validation-error,
+    select.input-validation-error,
+    textarea.input-validation-error,
+    .input-validation-error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 .1rem rgba(220, 53, 69, 0.15);
+    }
+
+    .field-validation-error, .validation-summary-errors {
+        color: #dc3545;
+    }
+
+    .field-validation-valid {
+        display: none;
+    }
+</style>
+
+<div class="container-narrow">
+    <!-- Header bar design reused from Freshmen Enrollment -->
+    <div class="d-flex w-100 rounded-2 p-2" style="background-color: #066B99;">
+        <img src="~/images/student-icon-white.svg" asp-append-version="true" alt="Student Icon" width="30" />
+        <h4 class="text-white ms-2">Edit & Resubmit Enrollment</h4>
+    </div>
+
+    <div class="mt-3">
+        <h5>Document Flags & Requirements</h5>
+        <p class="mb-2">Below is the admin review of your physical documents. Items marked “To be followed” or “Ineligible” must be submitted physically to the school.</p>
+
+        <div class="border rounded p-3 mb-3">
+            <div class="row g-2">
+                @foreach (var d in docs)
+                {
+                    var status = FlagVal(d);
+                    var label = labels.TryGetValue(d, out var lbl) ? lbl : d;
+                    var badgeClass = "bg-outline border text-secondary";
+                    if (status.Equals("Submitted", StringComparison.OrdinalIgnoreCase)) badgeClass = "bg-success";
+                    else if (status.Equals("To be followed", StringComparison.OrdinalIgnoreCase)) badgeClass = "bg-warning text-dark";
+                    else if (status.Equals("Ineligible", StringComparison.OrdinalIgnoreCase)) badgeClass = "bg-dark text-white";
+
+                    <div class="col-12 col-md-6">
+                        <div class="d-flex align-items-center justify-content-between border rounded p-2">
+                            <span class="fw-semibold">@label</span>
+                            <span class="badge @badgeClass">@((string.IsNullOrWhiteSpace(status) ? "unset" : status))</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (needsPhysical.Length > 0)
+            {
+                <div class="alert alert-warning mt-3 mb-0">
+                    Please prepare and submit physically:
+                    <ul class="mb-0">
+                        @foreach (var d in needsPhysical)
+                        {
+                            <li>@(labels.TryGetValue(d, out var lbl) ? lbl : d)</li>
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success mt-3 mb-0">No additional physical documents required based on the last review.</div>
+            }
+        </div>
+    </div>
+
+    <h6 class="text-muted">Update your information below and resubmit.</h6>
+
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger">@err</div>
+    }
+    @if (TempData["Success"] is string ok)
+    {
+        <div class="alert alert-success">@ok</div>
+    }
+
+    <form asp-action="EditEnrollment" method="post" enctype="application/x-www-form-urlencoded" novalidate>
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="token" value="@Model.EditToken" />
+
+        <h4 class="mt-3">Basic Information</h4>
+        <p>Please provide your correct information. This will be used for your enrollment.</p>
+        <hr />
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Student - Personal Details</legend>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Last Name</label>
+                    <input id="Student_LastName" name="extraFields[Student.LastName]" value="@EF("Student.LastName")" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">First Name</label>
+                    <input id="Student_FirstName" name="extraFields[Student.FirstName]" value="@EF("Student.FirstName")" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Middle Name</label>
+                    <input id="Student_MiddleName"
+                           name="extraFields[Student.MiddleName]"
+                           value="@EF("Student.MiddleName")"
+                           class="form-control"
+                           placeholder="Type N/A if not applicable"
+                           required />
+                    <small class="text-secondary">Type "N/A" if not applicable.</small>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Extension (Optional)</label>
+                    <input id="Student_Extension" name="extraFields[Student.Extension]" value="@EF("Student.Extension")" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Sex</label>
+                    <select id="Student_Sex" name="extraFields[Student.Sex]" class="form-select" required>
+                        <option value=""></option>
+                        <option selected="@(EF("Student.Sex") == "Male")">Male</option>
+                        <option selected="@(EF("Student.Sex") == "Female")">Female</option>
+                        <option selected="@(EF("Student.Sex") == "Other")">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Contact Number</label>
+                    <input id="Student_ContactNumber"
+                           name="extraFields[Student.ContactNumber]"
+                           value="@EF("Student.ContactNumber")"
+                           class="form-control"
+                           type="tel"
+                           inputmode="numeric"
+                           maxlength="11"
+                           pattern="^09[0-9]{9}$"
+                           placeholder="09xxxxxxxxx"
+                           required
+                           oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Email Address</label>
+                    <input id="Student_EmailAddress"
+                           name="extraFields[Student.EmailAddress]"
+                           value="@(EF("Student.EmailAddress") != "" ? EF("Student.EmailAddress") : Model.Email)"
+                           type="email"
+                           class="form-control"
+                           required />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Student - Address</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">House No. and Street</label>
+                    <input id="StudentAddress_HouseStreet" name="extraFields[StudentAddress.HouseStreet]" value="@EF("StudentAddress.HouseStreet")" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Barangay</label>
+                    <input id="StudentAddress_Barangay" name="extraFields[StudentAddress.Barangay]" value="@EF("StudentAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label required-asterisk">City</label>
+                    <input id="StudentAddress_City" name="extraFields[StudentAddress.City]" value="@EF("StudentAddress.City")" class="form-control" required />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required-asterisk">Postal Code</label>
+                    <input id="StudentAddress_PostalCode"
+                           name="extraFields[StudentAddress.PostalCode]"
+                           value="@EF("StudentAddress.PostalCode")"
+                           class="form-control"
+                           type="tel"
+                           inputmode="numeric"
+                           maxlength="4"
+                           required
+                           oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Academic</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Program/Course</label>
+                    <input id="Academic_Program" name="extraFields[Academic.Program]" value="@(Model.Program ?? EF("Academic.Program"))" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Year Level</label>
+                    <input id="Academic_YearLevel" name="extraFields[Academic.YearLevel]" value="@EF("Academic.YearLevel")" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Semester</label>
+                    <input id="Academic_Semester" name="extraFields[Academic.Semester]" value="@EF("Academic.Semester")" class="form-control" readonly />
+                </div>
+            </div>
+        </fieldset>
+
+        <h4>Parent/Guardian Information</h4>
+        <p>Please provide your correct information. This will be used as your emergency contact.</p>
+        <hr />
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Parent/Guardian - Personal Details</legend>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Last Name</label>
+                    <input id="Guardian_LastName" name="extraFields[Guardian.LastName]" value="@EF("Guardian.LastName")" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">First Name</label>
+                    <input id="Guardian_FirstName" name="extraFields[Guardian.FirstName]" value="@EF("Guardian.FirstName")" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Middle Name</label>
+                    <input id="Guardian_MiddleName" name="extraFields[Guardian.MiddleName]" value="@EF("Guardian.MiddleName")" class="form-control" placeholder='Type "N/A" if not applicable' required />
+                    <small class="text-secondary">Type "N/A" if not applicable.</small>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Extension (Optional)</label>
+                    <input id="Guardian_Extension" name="extraFields[Guardian.Extension]" value="@EF("Guardian.Extension")" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Sex</label>
+                    <select id="Guardian_Sex" name="extraFields[Guardian.Sex]" class="form-select" required>
+                        <option value=""></option>
+                        <option selected="@(EF("Guardian.Sex") == "Male")">Male</option>
+                        <option selected="@(EF("Guardian.Sex") == "Female")">Female</option>
+                        <option selected="@(EF("Guardian.Sex") == "Other")">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required-asterisk">Contact Number</label>
+                    <input id="Guardian_ContactNumber"
+                           name="extraFields[Guardian.ContactNumber]"
+                           value="@EF("Guardian.ContactNumber")"
+                           class="form-control"
+                           type="tel"
+                           inputmode="numeric"
+                           maxlength="11"
+                           pattern="^09[0-9]{9}$"
+                           placeholder="09xxxxxxxxx"
+                           required
+                           oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Relationship</label>
+                    <input id="Guardian_Relationship" name="extraFields[Guardian.Relationship]" value="@EF("Guardian.Relationship")" class="form-control" required />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto px-2">Parent/Guardian - Address</legend>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">House No. and Street</label>
+                    <input id="GuardianAddress_HouseStreet" name="extraFields[GuardianAddress.HouseStreet]" value="@EF("GuardianAddress.HouseStreet")" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label required-asterisk">Barangay</label>
+                    <input id="GuardianAddress_Barangay" name="extraFields[GuardianAddress.Barangay]" value="@EF("GuardianAddress.Barangay")" class="form-control" required list="barangays-list" autocomplete="off" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label required-asterisk">City</label>
+                    <input id="GuardianAddress_City" name="extraFields[GuardianAddress.City]" value="@EF("GuardianAddress.City")" class="form-control" required />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required-asterisk">Postal Code</label>
+                    <input id="GuardianAddress_PostalCode"
+                           name="extraFields[GuardianAddress.PostalCode]"
+                           value="@EF("GuardianAddress.PostalCode")"
+                           class="form-control"
+                           type="tel"
+                           inputmode="numeric"
+                           maxlength="4"
+                           required
+                           oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" />
+                </div>
+            </div>
+        </fieldset>
+
+        <p class="pt-2 text-secondary mb-3">
+            After resubmission, please submit required physical documents to the school office as indicated above.
+        </p>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn text-white" style="background-color: #066B99;">Resubmit</button>
+        </div>
+    </form>
+</div>
+<datalist id="barangays-list"></datalist>
+
+@section Scripts {
+    <script>
+        (function () {
+            const listEl = document.getElementById('barangays-list');
+
+            function normalizeName(s) {
+                return (s || "")
+                    .toUpperCase()
+                    .replace(/\./g, "")
+                    .replace(/^BRGY\s+|^BARANGAY\s+/g, "")
+                    .trim();
+            }
+
+            function connect(barangayId, postalId, mapping) {
+                const b = document.getElementById(barangayId);
+                const p = document.getElementById(postalId);
+                if (!b || !p) return;
+
+                function fillIfMatch() {
+                    const key = normalizeName(b.value);
+                    const code = mapping[key];
+                    if (code) p.value = code;
+                }
+
+                b.addEventListener('change', fillIfMatch);
+                b.addEventListener('blur', fillIfMatch);
+            }
+
+            fetch('@Url.Content("~/data/quezon-city-barangays.json")', { cache: 'no-cache' })
+                .then(r => r.json())
+                .then(data => {
+                    const items = Array.isArray(data) ? data : [];
+                    const names = [];
+                    const map = {};
+
+                    for (const it of items) {
+                        if (typeof it === 'string') {
+                            names.push(it);
+                        } else if (it && typeof it === 'object') {
+                            const nm = it.name || it.barangay || "";
+                            if (nm) {
+                                names.push(nm);
+                                if (it.postalCode) {
+                                    map[normalizeName(nm)] = String(it.postalCode);
+                                }
+                            }
+                        }
+                    }
+
+                    if (listEl) {
+                        listEl.innerHTML = names
+                            .sort((a, b) => a.localeCompare(b))
+                            .map(n => `<option value="${n}"></option>`)
+                            .join('');
+                    }
+
+                    connect('StudentAddress_Barangay', 'StudentAddress_PostalCode', map);
+                    connect('GuardianAddress_Barangay', 'GuardianAddress_PostalCode', map);
+                })
+                .catch(err => {
+                    console.warn('Failed to load barangays list:', err);
+                });
+        })();
+    </script>
+}

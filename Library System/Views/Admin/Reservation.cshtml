@@ -1,0 +1,750 @@
+﻿@model List<SystemLibrary.Models.Reservation>
+@{
+    ViewData["Title"] = "Reservation Management";
+    Layout = "_Layout";
+}
+
+<!-- External Styles and Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="~/css/reserved.css">
+
+<style>
+    .timer-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 4px;
+    }
+
+    .timer-active {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .timer-expired {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+</style>
+
+<!-- Message Modal for Success/Error -->
+<div id="reservationMessageModal" class="modal-overlay" style="display:none;">
+    <div class="modal-container">
+        <div class="modal-icon">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" fill="#0066a1" />
+                <path d="M35 50L45 60L65 40" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <h2 class="modal-title" id="reservationMessageTitle">Success</h2>
+        <p class="modal-message" id="reservationMessageBody"></p>
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-done" onclick="closeReservationMessageModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Modal for actions -->
+<div id="reservationConfirmModal" class="modal-overlay" style="display:none;">
+    <div class="modal-container">
+        <div class="modal-icon">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" fill="#FFA500" />
+                <path d="M50 30v30" stroke="white" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="50" cy="70" r="4" fill="white"/>
+            </svg>
+        </div>
+        <h2 class="modal-title" id="reservationConfirmTitle">Are you sure?</h2>
+        <p class="modal-message" id="reservationConfirmBody"></p>
+        <div class="modal-buttons">
+            <button type="button" class="modal-btn modal-btn-no" onclick="closeReservationConfirmModal()">No</button>
+            <button type="button" class="modal-btn modal-btn-yes" onclick="handleReservationConfirmYes()">Yes</button>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <!-- Top Section -->
+    <div class="top-header">
+        <h2 class="page-title">Reservation Management</h2>
+
+        <!-- Search and Filter Controls -->
+        <div class="top-controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchReservations()" />
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="loadAllReservations()">All</button>
+                <button class="filter-btn" onclick="loadPendingReservations()">Pending</button>
+                <button class="filter-btn" onclick="loadApprovedReservations()">Approved</button>
+                <button class="filter-btn" onclick="loadBorrowedBooks()">Borrowed</button>
+                <button class="filter-btn" onclick="loadRenewalRequests()">Renewals</button>
+                <button class="filter-btn" onclick="loadCancelledReservations()">Cancelled</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservation Table Section -->
+    <div class="content-box">
+        <table class="reservation-table">
+            <thead>
+                <tr>
+                    <th>Reservation Details</th>
+                    <th>Request Date</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="reservationTableBody">
+                @{
+                    var books = ViewBag.Books as List<SystemLibrary.Models.Book>;
+                    var users = ViewBag.Users as List<SystemLibrary.Models.User>;
+                }
+
+                @if (Model != null && Model.Any())
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        var reservation = Model[i];
+                        var book = books?.FirstOrDefault(b => b._id.ToString() == reservation.BookId);
+                        var user = users?.FirstOrDefault(u => u._id.ToString() == reservation.UserId);
+
+                        <tr class="reservation-row" data-status="@reservation.Status" data-reservation-id="@reservation._id">
+                            <td>
+                                <div class="reservation-details">
+                                    <div class="user-section">
+                                        <span class="material-icons icon-user">person</span>
+                                        <div>
+                                            <p class="user-name">@(user?.FullName ?? "Unknown User")</p>
+                                            <p class="user-id">Student #: @(reservation.StudentNumber ?? "N/A")</p>
+                                        </div>
+                                    </div>
+                                    <div class="book-section">
+                                        <span class="material-icons icon-book">menu_book</span>
+                                        <div>
+                                            <p class="book-title">@(book?.Title ?? "Unknown Book")</p>
+                                            <p class="isbn">ISBN: @(book?.ISBN ?? "N/A")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@reservation.ReservationDate.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                @if (reservation.BorrowType == "ONLINE")
+                                {
+                                    <span class="type-badge online">Online</span>
+                                }
+                                else if (reservation.BorrowType == "WALK IN")
+                                {
+                                    <span class="type-badge walkin">Walk In</span>
+                                }
+                                else
+                                {
+                                    <span class="type-badge">@reservation.BorrowType</span>
+                                }
+                            </td>
+                            <td>
+                                @if (reservation.Status == "Pending")
+                                {
+                                    <span class="status pending">Pending</span>
+                                }
+                                else if (reservation.Status == "Approved")
+                                {
+                                    @if (reservation.IsApprovalExpired)
+                                    {
+                                        <span class="status cancelled">Expired</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status ready">Approved</span>
+                                        <br />
+                                        @if (reservation.ApprovalDate.HasValue)
+                                        {
+                                            <span class="timer-badge timer-active" data-approval-date="@reservation.ApprovalDate.Value.ToString("O")" data-reservation-id="@reservation._id">⏱️ <span class="timer-countdown">Calculating...</span></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="timer-badge timer-active">⏱️ N/A</span>
+                                        }
+                                    }
+                                }
+                                else if (reservation.Status == "Borrowed")
+                                {
+                                    <span class="status" style="background-color: #4dabf7; color: white;">Borrowed</span>
+                                }
+                                else if (reservation.Status == "Returned")
+                                {
+                                    <span class="status" style="background-color: #51cf66; color: white;">Returned</span>
+                                }
+                                else if (reservation.Status == "Damaged")
+                                {
+                                    <span class="status" style="background-color: #ffa94d; color: white;">Damaged</span>
+                                }
+                                else if (reservation.Status == "Lost")
+                                {
+                                    <span class="status" style="background-color: #ff6b6b; color: white;">Lost</span>
+                                }
+                                else if (reservation.Status == "Rejected")
+                                {
+                                    <span class="status cancelled">Cancelled</span>
+                                }
+                                else
+                                {
+                                    <span class="status">@reservation.Status</span>
+                                }
+                            </td>
+                            <td class="action-cell">
+                                @if (reservation.Status == "Pending")
+                                {
+                                    <button class="btn btn-sm approve-btn" onclick="approveReservation('@reservation._id')">Approve</button>
+                                    <button class="btn btn-sm cancel-btn" onclick="cancelReservation('@reservation._id')">Cancel</button>
+                                }
+                                else if (reservation.Status == "Approved")
+                                {
+                                    <button class="btn btn-sm borrow-btn" onclick="markAsBorrowed('@reservation._id')">Borrowed</button>
+                                    <button class="btn btn-sm cancel-btn" onclick="cancelReservation('@reservation._id')">Cancel</button>
+                                }
+                                else if (reservation.Status == "Borrowed")
+                                {
+                                    <button class="btn btn-sm return-btn" onclick="markAsReturned('@reservation._id')">Returned</button>
+                                    <button class="btn btn-sm overdue-btn" onclick="markAsOverdue('@reservation._id')">Overdue</button>
+                                    <button class="btn btn-sm lost-btn" onclick="markAsLost('@reservation._id')">Lost</button>
+                                    <button class="btn btn-sm damaged-btn" onclick="markAsDamaged('@reservation._id')">Damaged</button>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No action</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <p>No reservations found</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Search functionality
+    function searchReservations() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('.reservation-row');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(input) ? '' : 'none';
+        });
+    }
+
+    // Load all reservations
+        async function loadAllReservations() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const responses = await Promise.all([
+                fetch('/Admin/GetPendingReservations'),
+                fetch('/Admin/GetApprovedReservations'),
+                fetch('/Admin/GetBorrowedReservations'),
+                fetch('/Admin/GetCancelledReservations'),
+                fetch('/Admin/GetRenewalRequests')
+            ]);
+
+            const results = await Promise.all(responses.map(r => r.json()));
+            const allData = results.flatMap(r => r.success ? r.data : []);
+            renderTable(allData);
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Failed to load all reservations');
+        }
+    }
+
+    // Load pending reservations
+    async function loadPendingReservations() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const response = await fetch('/Admin/GetPendingReservations');
+            const result = await response.json();
+
+            if (result.success) {
+                renderTable(result.data);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+        }
+    }
+
+    // Load approved reservations
+    async function loadApprovedReservations() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const response = await fetch('/Admin/GetApprovedReservations');
+            const result = await response.json();
+
+            if (result.success) {
+                renderTable(result.data);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+        }
+    }
+
+    // Load borrowed books
+    async function loadBorrowedBooks() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const response = await fetch('/Admin/GetBorrowedReservations');
+            const result = await response.json();
+
+            if (result.success) {
+                renderTable(result.data);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Failed to load borrowed books');
+        }
+    }
+
+    // Load cancelled reservations
+    async function loadCancelledReservations() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const response = await fetch('/Admin/GetCancelledReservations');
+            const result = await response.json();
+
+            if (result.success) {
+                renderTable(result.data);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Failed to load cancelled reservations');
+        }
+    }
+
+    // Load renewal requests
+    async function loadRenewalRequests() {
+        try {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const response = await fetch('/Admin/GetRenewalRequests');
+            const result = await response.json();
+
+            if (result.success) {
+                renderTable(result.data);
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Failed to load renewal requests');
+        }
+    }
+
+    // Render table with dynamic data
+    function renderTable(data) {
+        const tbody = document.getElementById('reservationTableBody');
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>No data found</p></td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = data.map((res, idx) => `
+            <tr class="reservation-row" data-status="${res.status}" data-reservation-id="${res.reservationId}">
+                <td>
+                    <div class="reservation-details">
+                        <div class="user-section">
+                            <span class="material-icons icon-user">person</span>
+                            <div>
+                                <p class="user-name">${res.userName}</p>
+                                <p class="user-id">Student #: ${res.studentNumber}</p>
+                            </div>
+                        </div>
+                        <div class="book-section">
+                            <span class="material-icons icon-book">menu_book</span>
+                            <div>
+                                <p class="book-title">${res.bookTitle}</p>
+                                <p class="isbn">ISBN: ${res.isbn}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>${res.reservationDate}</td>
+                <td>${getBorrowTypeBadge(res.borrowType)}</td>
+                <td>
+                    ${res.status === 'Approved' && res.isExpired ? 
+                        '<span class="status cancelled">Expired</span>' : 
+                        `<span class="status">${getStatusBadge(res.status)}</span>
+                         ${res.status === 'Approved' && res.approvalDate && !res.isExpired ? `<br/><span class="timer-badge timer-active" data-approval-date="${res.approvalDate}" data-reservation-id="${res.reservationId}">⏱️ <span class="timer-countdown">Calculating...</span></span>` : ''}`
+                    }
+                </td>
+                <td class="action-cell">${getActionButtons(res.reservationId, res.status)}</td>
+            </tr>
+        `).join('');
+    }
+
+    // Get status badge with proper styling
+    function getStatusBadge(status) {
+        switch (status) {
+            case 'Pending':
+                return '<span class="status pending">Pending</span>';
+            case 'Approved':
+                return '<span class="status ready">Approved</span>';
+            case 'Borrowed':
+                return '<span class="status" style="background-color: #4dabf7; color: white;">Borrowed</span>';
+            case 'Returned':
+                return '<span class="status" style="background-color: #51cf66; color: white;">Returned</span>';
+            case 'Damaged':
+                return '<span class="status" style="background-color: #ffa94d; color: white;">Damaged</span>';
+            case 'Lost':
+                return '<span class="status" style="background-color: #ff6b6b; color: white;">Lost</span>';
+            case 'Rejected':
+                return '<span class="status cancelled">Cancelled</span>';
+            default:
+                return `<span class="status">${status}</span>`;
+        }
+    }
+
+    // Get borrow type badge with proper styling
+    function getBorrowTypeBadge(borrowType) {
+        if (borrowType === 'ONLINE') {
+            return '<span class="type-badge online">Online</span>';
+        } else if (borrowType === 'WALK IN') {
+            return '<span class="type-badge walkin">Walk In</span>';
+        } else {
+            return `<span class="type-badge">${borrowType}</span>`;
+        }
+    }
+
+    // Get action buttons based on status
+        function getActionButtons(reservationId, status) {
+        if (status === 'Pending') {
+            return `
+                <button class="btn btn-sm approve-btn" onclick="approveReservation('${reservationId}')">Approve</button>
+                <button class="btn btn-sm cancel-btn" onclick="cancelReservation('${reservationId}')">Cancel</button>
+            `;
+        } else if (status === 'Approved') {
+            return `
+                <button class="btn btn-sm borrow-btn" onclick="markAsBorrowed('${reservationId}')">Borrowed</button>
+                <button class="btn btn-sm cancel-btn" onclick="cancelReservation('${reservationId}')">Cancel</button>
+            `;
+        } else if (status === 'Renewal Requested') {
+            return `
+                <button class="btn btn-sm approve-btn" onclick="approveRenewal('${reservationId}')">Approve Renewal</button>
+                <button class="btn btn-sm cancel-btn" onclick="rejectRenewal('${reservationId}')">Reject Renewal</button>
+            `;
+        }
+        // No actions for Borrowed, Returned, Damaged, Lost, Overdue, Cancelled
+        return '<span class="text-muted">No action</span>';
+    }
+
+    let reservationConfirmCallback = null;
+
+    function showReservationMessageModal(title, message, isError = false) {
+        const overlay = document.getElementById('reservationMessageModal');
+        const titleEl = document.getElementById('reservationMessageTitle');
+        const bodyEl = document.getElementById('reservationMessageBody');
+
+        titleEl.textContent = title;
+        bodyEl.textContent = message;
+
+        // Simple styling toggle for error vs success
+        if (isError) {
+            titleEl.style.color = '#dc3545';
+        } else {
+            titleEl.style.color = '#0066a1';
+        }
+
+        overlay.style.display = 'flex';
+    }
+
+    function closeReservationMessageModal() {
+        document.getElementById('reservationMessageModal').style.display = 'none';
+    }
+
+    function openReservationConfirmModal(title, message, callback) {
+        reservationConfirmCallback = callback;
+        const overlay = document.getElementById('reservationConfirmModal');
+        document.getElementById('reservationConfirmTitle').textContent = title;
+        document.getElementById('reservationConfirmBody').textContent = message;
+        overlay.style.display = 'flex';
+    }
+
+    function closeReservationConfirmModal() {
+        document.getElementById('reservationConfirmModal').style.display = 'none';
+        reservationConfirmCallback = null;
+    }
+
+    async function handleReservationConfirmYes() {
+        const cb = reservationConfirmCallback;
+        closeReservationConfirmModal();
+        if (typeof cb === 'function') {
+            await cb();
+        }
+    }
+
+    // Action functions
+    async function approveReservation(reservationId) {
+        openReservationConfirmModal('Approve Reservation', 'Approve this reservation?', async () => {
+            const formData = new FormData();
+            formData.append('reservationId', reservationId);
+
+            const response = await fetch('/Admin/ApproveReservation', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                showReservationMessageModal('Reservation Approved', result.message || 'Reservation approved successfully.');
+                loadPendingReservations();
+            } else {
+                showReservationMessageModal('Error', result.message || 'Failed to approve reservation.', true);
+            }
+        });
+    }
+
+    async function cancelReservation(reservationId) {
+        openReservationConfirmModal('Cancel Reservation', 'Cancel this reservation?', async () => {
+            const formData = new FormData();
+            formData.append('reservationId', reservationId);
+
+            const response = await fetch('/Admin/RejectReservation', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                showReservationMessageModal('Reservation Cancelled', result.message || 'Reservation cancelled successfully.');
+                loadPendingReservations();
+            } else {
+                showReservationMessageModal('Error', result.message || 'Failed to cancel reservation.', true);
+            }
+        });
+    }
+
+    async function markAsBorrowed(reservationId) {
+        openReservationConfirmModal('Mark as Borrowed', 'Mark this reservation as borrowed?', async () => {
+            const formData = new FormData();
+            formData.append('reservationId', reservationId);
+
+            const response = await fetch('/Admin/MarkAsBorrowed', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                showReservationMessageModal('Marked as Borrowed', result.message || 'Book marked as borrowed.');
+                loadApprovedReservations();
+            } else {
+                showReservationMessageModal('Error', result.message || 'Failed to mark as borrowed.', true);
+            }
+        });
+    }
+
+    async function markAsReturned(reservationId) {
+        openReservationConfirmModal('Mark as Returned', 'Mark this book as returned?', async () => {
+            const formData = new FormData();
+            formData.append('reservationId', reservationId);
+            formData.append('remarks', '');
+
+            const response = await fetch('/Admin/MarkAsReturned', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                showReservationMessageModal('Marked as Returned', result.message || 'Book marked as returned.');
+                loadBorrowedBooks();
+            } else {
+                showReservationMessageModal('Error', result.message || 'Failed to mark as returned.', true);
+            }
+        });
+    }
+
+    async function markAsOverdue(reservationId) {
+        openReservationConfirmModal('Mark as Overdue', 'Mark this book as overdue?', async () => {
+            const formData = new FormData();
+            formData.append('reservationId', reservationId);
+            formData.append('actionType', 'Overdue');
+            formData.append('remarks', '');
+
+            const response = await fetch('/Admin/MarkWithAction', { method: 'POST', body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                showReservationMessageModal('Marked as Overdue', result.message || 'Book marked as overdue.');
+                loadBorrowedBooks();
+            } else {
+                showReservationMessageModal('Error', result.message || 'Failed to mark as overdue.', true);
+            }
+        });
+    }
+
+    // Approve renewal
+    async function approveRenewal(reservationId) {
+        if (!confirm('Approve this renewal request? The due date will be extended by 14 days.')) return;
+        const formData = new FormData();
+        formData.append('reservationId', reservationId);
+
+        const response = await fetch('/Admin/ApproveRenewal', { method: 'POST', body: formData });
+        const result = await response.json();
+
+        if (result.success) {
+            showReservationMessageModal('Renewal Approved', result.message || 'Renewal approved successfully.');
+            loadRenewalRequests();
+        } else {
+            showReservationMessageModal('Error', result.message || 'Failed to approve renewal.', true);
+        }
+    }
+
+    // Reject renewal
+    async function rejectRenewal(reservationId) {
+        if (!confirm('Reject this renewal request?')) return;
+        const formData = new FormData();
+        formData.append('reservationId', reservationId);
+
+        const response = await fetch('/Admin/RejectRenewal', { method: 'POST', body: formData });
+        const result = await response.json();
+
+        if (result.success) {
+            showReservationMessageModal('Renewal Rejected', result.message || 'Renewal rejected.');
+            loadRenewalRequests();
+        } else {
+            showReservationMessageModal('Error', result.message || 'Failed to reject renewal.', true);
+        }
+    }
+
+    async function markAsLost(reservationId) {
+        if (!confirm('Mark as lost? This will automatically restrict the student account.')) return;
+        const formData = new FormData();
+        formData.append('reservationId', reservationId);
+        formData.append('actionType', 'Lost');
+        formData.append('remarks', '');
+
+        const response = await fetch('/Admin/MarkWithAction', { method: 'POST', body: formData });
+        const result = await response.json();
+
+        if (result.success) {
+            const msg = result.accountRestricted
+                ? 'Book marked as Lost. Student account has been automatically restricted.'
+                : 'Book marked as Lost. Warning: Failed to restrict student account.';
+            showReservationMessageModal('Marked as Lost', msg);
+            loadBorrowedBooks();
+        } else {
+            showReservationMessageModal('Error', result.message || 'Failed to mark as lost.', true);
+        }
+    }
+
+    async function markAsDamaged(reservationId) {
+        if (!confirm('Mark as damaged?')) return;
+        const formData = new FormData();
+        formData.append('reservationId', reservationId);
+        formData.append('actionType', 'Damaged');
+        formData.append('remarks', '');
+
+        const response = await fetch('/Admin/MarkWithAction', { method: 'POST', body: formData });
+        const result = await response.json();
+
+        if (result.success) {
+            showReservationMessageModal('Marked as Damaged', result.message || 'Book marked as damaged.');
+            loadBorrowedBooks();
+        } else {
+            showReservationMessageModal('Error', result.message || 'Failed to mark as damaged.', true);
+        }
+    }
+
+    // Dynamic countdown timer for 2-minute pickup window
+    function updateCountdownTimers() {
+        const timers = document.querySelectorAll('.timer-badge[data-approval-date]');
+        
+        timers.forEach(timer => {
+            const approvalDateStr = timer.getAttribute('data-approval-date');
+            if (!approvalDateStr) return;
+            
+            const approvalDate = new Date(approvalDateStr);
+            const deadline = new Date(approvalDate.getTime() + 2 * 60 * 1000); // Add 2 minutes
+            const now = new Date();
+            const remaining = deadline - now;
+            
+            const countdownSpan = timer.querySelector('.timer-countdown');
+            if (!countdownSpan) return;
+            
+            if (remaining <= 0) {
+                // Timer expired - trigger auto-cancel and update UI
+                const reservationId = timer.getAttribute('data-reservation-id');
+                const row = timer.closest('tr');
+                
+                if (row && reservationId) {
+                    // Update status to Expired
+                    const statusCell = row.querySelector('td:nth-child(4)');
+                    if (statusCell) {
+                        statusCell.innerHTML = '<span class="status cancelled">Expired</span>';
+                    }
+                    
+                    // Trigger auto-cancel on server
+                    fetch('/Admin/GetApprovedReservations')
+                        .then(() => {
+                            // Reload the table after a short delay to show updated status
+                            setTimeout(() => {
+                                if (typeof loadApprovedReservations === 'function') {
+                                    loadApprovedReservations();
+                                }
+                            }, 500);
+                        })
+                        .catch(err => console.error('Error triggering auto-cancel:', err));
+                }
+                
+                countdownSpan.textContent = 'Expired';
+                timer.classList.remove('timer-active');
+                timer.classList.add('timer-expired');
+            } else {
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                countdownSpan.textContent = `${minutes}:${seconds.toString().padStart(2, '0')} remaining`;
+                
+                // Change color when less than 30 seconds remaining
+                if (remaining < 30000) {
+                    timer.classList.remove('timer-active');
+                    timer.classList.add('timer-expired');
+                }
+            }
+        });
+    }
+
+    // Initialize countdown timers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCountdownTimers();
+        // Update every second
+        setInterval(updateCountdownTimers, 1000);
+    });
+
+    // Update timers after table is rendered dynamically
+    const originalRenderTable = renderTable;
+    renderTable = function(data) {
+        originalRenderTable(data);
+        // Small delay to ensure DOM is updated
+        setTimeout(updateCountdownTimers, 100);
+    };
+</script>

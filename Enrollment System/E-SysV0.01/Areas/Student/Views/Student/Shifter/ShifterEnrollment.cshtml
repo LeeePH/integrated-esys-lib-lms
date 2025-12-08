@@ -1,0 +1,309 @@
+﻿@model ShifterFormViewModel
+@{
+    ViewData["Title"] = "Shifter Enrollment Form";
+    Layout = "~/Views/Shared/ESys_EnrollmentLayout.cshtml";
+}
+
+<style>
+    .form-section {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .form-section h4 {
+            color: #066B99;
+            border-bottom: 2px solid #066B99;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+    .info-badge {
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .subject-table {
+        font-size: 0.9rem;
+    }
+
+        .subject-table th {
+            background: #066B99;
+            color: white;
+            font-weight: 500;
+        }
+
+    .badge-pass {
+        background: #4caf50;
+    }
+
+    .badge-fail {
+        background: #f44336;
+    }
+
+    .badge-ongoing {
+        background: #ff9800;
+    }
+</style>
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>@err
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Success"] is string ok)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@ok
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="text-primary"><i class="fas fa-exchange-alt me-2"></i>Shifter Enrollment Form</h2>
+        <p class="text-muted">Request to shift to a different program</p>
+    </div>
+
+    <!-- Important Notice -->
+    <div class="info-badge">
+        <h5 class="mb-2"><i class="fas fa-info-circle me-2"></i>Important Information</h5>
+        <ul class="mb-0">
+            <li>You can only shift to a different program (cannot shift to the same program).</li>
+            <li>Upon acceptance, you will start as <strong>1st Year, 1st Semester</strong> in the new program.</li>
+            <li>Subjects you <strong>passed</strong> that exist in both programs will be <strong>credited</strong> (you won't retake them).</li>
+            <li>If you have credited subjects, you will be classified as <strong>Irregular</strong>.</li>
+            <li>Shifter enrollment is only available during <strong>2nd Semester</strong> for 1st and 2nd year students.</li>
+        </ul>
+    </div>
+
+    <form asp-area="Student" asp-controller="ShifterEnrollment" asp-action="SubmitShifterEnrollment" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="token" value="@ViewBag.Token" />
+
+        <!-- Personal Information Section -->
+        <div class="form-section">
+            <h4><i class="fas fa-user me-2"></i>Personal Information</h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" value="@Model.LastName" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" value="@Model.FirstName" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" value="@Model.MiddleName" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Extension</label>
+                    <input type="text" class="form-control" value="@Model.Extension" readonly />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Sex</label>
+                    <input type="text" class="form-control" value="@Model.Sex" readonly />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Contact Number</label>
+                    <input type="text" class="form-control" value="@Model.ContactNumber" readonly />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-control" value="@Model.EmailAddress" readonly />
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Information Section -->
+        <div class="form-section">
+            <h4><i class="fas fa-graduation-cap me-2"></i>Academic Information</h4>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Course Last Enrolled in QCU</label>
+                    <input type="text" class="form-control" value="@Model.CourseLastEnrolled" readonly />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Course Applying to Shift <span class="text-danger">*</span></label>
+                    <select name="courseApplyingToShift" class="form-select" required>
+                        <option value="">-- Select Program --</option>
+                        @foreach (var prog in Model.AvailablePrograms)
+                        {
+                            <option value="@prog">@prog</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">Total Units Earned</label>
+                            <input type="number" class="form-control" value="@Model.TotalUnitsEarned" readonly />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Total Units Failed</label>
+                            <input type="number" class="form-control" value="@Model.TotalUnitsFailed" readonly />
+                        </div>
+                    </div>
+                </div>
+            <div>
+                <label for="TotalUnitsFailed" class="form-label mb-1 required-asterisk">Total Units Failed</label>
+                <input id="TotalUnitsFailed" type="number" min="0" class="rounded-2 p-1 w-100 form-control" required />
+            </div>
+        </div>
+
+        <!-- Subject Remarks Section -->
+        @if (Model.SubjectRemarks != null && Model.SubjectRemarks.Any())
+        {
+            <div class="form-section">
+                <h4><i class="fas fa-book me-2"></i>Your Subject History</h4>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover subject-table">
+                        <thead>
+                            <tr>
+                                <th>Subject Code</th>
+                                <th>Subject Title</th>
+                                <th>Units</th>
+                                <th>Semester Taken</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var subject in Model.SubjectRemarks.OrderBy(s => s.SemesterTaken).ThenBy(s => s.SubjectCode))
+                            {
+                                var badgeClass = subject.Remark.Equals("Pass", StringComparison.OrdinalIgnoreCase) ? "badge-pass" :
+                                subject.Remark.Equals("Fail", StringComparison.OrdinalIgnoreCase) ? "badge-fail" : "badge-ongoing";
+                                <tr>
+                                    <td><strong>@subject.SubjectCode</strong></td>
+                                    <td>@subject.SubjectTitle</td>
+                                    <td>@subject.Units</td>
+                                    <td>@subject.SemesterTaken</td>
+                                    <td><span class="badge @badgeClass">@subject.Remark</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        <!-- Reason for Shifting Section -->
+        <div class="form-section">
+            <h4><i class="fas fa-comment-alt me-2"></i>Reason for Shifting</h4>
+            <div class="mb-3">
+                <label class="form-label">Please explain why you want to shift programs <span class="text-danger">*</span></label>
+                <textarea name="reasonForShifting" class="form-control" rows="5" required
+                          placeholder="Example: I realized that my skills and interests are better suited for this program..."></textarea>
+                <small class="text-muted">Be honest and specific. This will be reviewed by the admin.</small>
+            </div>
+        </div>
+
+        <!-- Required Documents Section -->
+        <div class="form-section">
+            <h4><i class="fas fa-file-upload me-2"></i>Required Documents</h4>
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <strong>All documents must be submitted before your request can be accepted.</strong>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Endorsement Letter from Previous Program Dean <span class="text-danger">*</span></label>
+                    <input type="file" name="endorsementLetter" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required />
+                    <small class="text-muted">Accepted formats: PDF, JPG, PNG (Max 5MB)</small>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Library Clearance <span class="text-danger">*</span></label>
+                    <input type="file" name="libraryClearance" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required />
+                    <small class="text-muted">Accepted formats: PDF, JPG, PNG (Max 5MB)</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acknowledgement Section -->
+        <div class="form-section">
+            <h4><i class="fas fa-check-square me-2"></i>Acknowledgement</h4>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="acknowledgeTerms" required />
+                <label class="form-check-label" for="acknowledgeTerms">
+                    I acknowledge and understand that:
+                    <ul class="mt-2">
+                        <li>If accepted, I will start as <strong>1st Year, 1st Semester</strong> in the new program.</li>
+                        <li>Only subjects I passed that exist in both programs will be credited.</li>
+                        <li>I will be classified as <strong>Irregular</strong> if I have credited subjects.</li>
+                        <li>This decision is final and cannot be reversed once processed.</li>
+                    </ul>
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-paper-plane me-2"></i>Submit Shifter Enrollment Request
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // File size validation
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+                    if (this.files[0] && this.files[0].size > maxSize) {
+                        alert('File size must be less than 5MB');
+                        this.value = '';
+                    }
+                });
+            });
+
+            // Form validation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const courseSelect = document.querySelector('select[name="courseApplyingToShift"]');
+                const reasonTextarea = document.querySelector('textarea[name="reasonForShifting"]');
+                const acknowledgeCheckbox = document.getElementById('acknowledgeTerms');
+
+                if (!courseSelect.value) {
+                    e.preventDefault();
+                    alert('Please select a program to shift to.');
+                    courseSelect.focus();
+                    return;
+                }
+
+                if (reasonTextarea.value.trim().length < 50) {
+                    e.preventDefault();
+                    alert('Please provide a detailed reason (at least 50 characters).');
+                    reasonTextarea.focus();
+                    return;
+                }
+
+                if (!acknowledgeCheckbox.checked) {
+                    e.preventDefault();
+                    alert('Please acknowledge the terms before submitting.');
+                    acknowledgeCheckbox.focus();
+                    return;
+                }
+                alert('Submission successful!');
+                form[0].reset();
+                form.removeClass('was-validated');
+            });
+
+                // Confirm submission
+                if (!confirm('Are you sure you want to submit this shifter enrollment request? This action cannot be undone.')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

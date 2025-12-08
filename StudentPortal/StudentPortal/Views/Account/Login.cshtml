@@ -1,0 +1,49 @@
+﻿@model StudentPortal.Models.LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Login - MySUQC";
+}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Login.css" />
+<body>
+    <div class="login-container">
+        <div class="slideshow">
+            <div class="slide active" style="background-image:url('/images/6.png'); background-size:cover;"></div>
+            <div class="slide" style="background-image:url('/images/7.png'); background-size:cover;"></div>
+            <div class="slide" style="background-image:url('/images/8.png'); background-size:cover;"></div>
+            <div class="slide" style="background-image:url('/images/9.png'); background-size:cover;"></div>
+            <div class="slide" style="background-image:url('/images/10.png'); background-size:cover;"></div>
+        </div>
+
+        <div class="login-form">
+            <h2>Welcome Back</h2>
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Address" })
+                @Html.ValidationMessageFor(m => m.Email)
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password)
+                <button type="submit">Login</button>
+
+                if (ViewBag.Error != null)
+                {
+                    <p style="color:red">@ViewBag.Error</p>
+                }
+
+                <div class="links">
+                    <a href="@Url.Action("Register", "Account")">Register</a> |
+                    <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="~/js/login.js"></script>
+</body>

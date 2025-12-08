@@ -1,0 +1,352 @@
+@import url('/css/StudentDb/StudentClass.css');
+@import url('/css/Shared/BottomBar.css');
+
+
+.subject-name,
+.subject-code,
+.class-code,
+.recent-uploads {
+    padding-left: 20px;
+}
+
+/* ============================
+   Management Buttons (Admin)
+   ============================ */
+.manage-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    padding-left: 30px;
+}
+
+/* Base button style - consistent with back-button */
+.manage-btn {
+    width: 90%;
+    background: #fff;
+    color: var(--accent);
+    font-weight: 600;
+    border: 1px solid rgba(10, 20, 40, 0.08);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(16, 24, 40, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+    /* Slight lift on hover (no background color change) */
+    .manage-btn:hover {
+        transform: scale(1.01);
+        box-shadow: 0 6px 16px rgba(16, 24, 40, 0.1);
+    }
+
+    /* Icons slightly smaller for balance */
+    .manage-btn i {
+        font-size: 1rem;
+    }
+
+/* Keep Back button spacing consistent */
+.back-button {
+    margin-top: 10px;
+}
+
+/* add-content button (same visual as join/create) */
+.add-content-button {
+    margin-bottom: 60px;
+    margin-right: -20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    position: fixed;
+    right: 40px;
+    bottom: 24px; /* sits above bottom bar */
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    border: 1px solid rgba(10, 20, 40, 0.06);
+    cursor: pointer;
+    z-index: 220;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+    .add-content-button.selected {
+        box-shadow: 0 10px 28px rgba(36, 58, 115, 0.18);
+        border: 1px solid rgba(36, 58, 115, 0.12);
+        transform: scale(1.06);
+    }
+
+        .add-content-button.selected i {
+            color: var(--accent);
+        }
+
+/* content radial container (curves above top-left of button) */
+.content-radial {
+    position: fixed;
+    right: 108px; /* place left of button */
+    bottom: 88px; /* above the add button */
+    width: 220px;
+    height: 140px;
+    pointer-events: none;
+    z-index: 210;
+    transform-origin: center;
+    transition: opacity 180ms ease, transform 180ms ease;
+    opacity: 0;
+}
+
+    /* show when toggled */
+    .content-radial.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* small compact tooltip top-left of radial set */
+    .content-radial .content-tooltip {
+        position: absolute;
+        right: -30px;
+        bottom: 10px;
+        background: #182b5c;
+        color: #fff;
+        font-size: 12px;
+        padding: 6px 8px;
+        border-radius: 5px;
+        box-shadow: 0 8px 20px rgba(10,20,40,0.06);
+        white-space: nowrap;
+        transform: translate(-10%, -10%);
+    }
+
+/* action buttons */
+.content-action {
+    position: absolute;
+    left: 112%;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(10,20,40,0.08);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: transform 0.28s cubic-bezier(.2,.9,.3,1), opacity 0.22s ease;
+    pointer-events: none;
+    overflow: visible;
+    right: 0; /* align with container */
+}
+
+    /* stack buttons vertically */
+    .content-action.material {
+        bottom: 70px; /* first button above add button */
+    }
+
+    .content-action.task {
+        bottom: 130px; /* second button */
+    }
+
+    .content-action.assessment {
+        bottom: 190px; /* third button */
+    }
+
+    /* ----------------------------
+   Hover label on the left of button
+---------------------------- */
+    .content-action::after {
+        content: attr(data-label);
+        position: absolute;
+        top: 50%; /* vertically center with button */
+        right: 100%; /* position to the left of button */
+        transform: translateY(-50%) translateX(-8px); /* vertical center, slight gap */
+        background: #182b5c;
+        color: #fff;
+        padding: 6px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0; /* hidden by default */
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 300;
+        text-align: right; /* align text to the right edge of tooltip */
+    }
+
+    /* show tooltip only on hover */
+    .content-action:hover::after {
+        opacity: 1;
+        transform: translateY(-50%) translateX(-12px); /* slide slightly left */
+    }
+
+/* ----------------------------
+   Reveal buttons when radial is open
+---------------------------- */
+.content-radial.show .content-action {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* small focus outline */
+.content-action:focus {
+    outline: 3px solid rgba(24,43,92,0.12);
+    outline-offset: 3px;
+}
+
+/* Backdrop stays fixed over viewport but transparent */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent; /* no dark overlay */
+    display: none; /* hidden by default */
+    z-index: 200; /* above all content */
+}
+
+    .modal-backdrop[hidden] {
+        display: none !important;
+        pointer-events: none;
+    }
+
+/* Modal itself - manually positionable */
+.modal {
+    position: absolute; /* positioned inside the backdrop */
+    top: 30px; /* manually adjust */
+    right: 120px; /* manually adjust */
+    width: 360px;
+    max-width: calc(100vw - 48px);
+    padding: 16px;
+    border-radius: 10px;
+    background: #f3f6fb;
+    color: #0b213a;
+    box-shadow: 0 20px 40px rgba(3,7,18,0.12);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+    /* Modal heading */
+    .modal h3 {
+        color: var(--accent);
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    /* Inputs & textareas inside modal */
+    .modal input[type="text"],
+    .modal input[type="date"],
+    .modal input[type="url"],
+    .modal textarea,
+    .modal input[type="file"] {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(16,24,40,0.08);
+        background: #fff;
+        margin-bottom: 8px;
+        box-sizing: border-box;
+    }
+
+    .modal textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+
+/* Modal action buttons */
+.modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+    .modal-actions .btn {
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        border: none;
+    }
+
+        .modal-actions .btn.primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .modal-actions .btn.ghost {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid rgba(24,43,92,0.08);
+        }
+
+/* create-announcement card style override: icon removed, compact input */
+.create-announcement .content-left {
+    padding-left: 8px;
+}
+
+.create-announcement textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: #0b213a;
+    outline: none;
+    padding: 6px 0;
+    line-height: 1.3;
+    min-height: 20px;
+    max-height: 240px;
+    box-sizing: border-box;
+}
+
+/* actions hidden by default; JS toggles the hidden attribute */
+.create-announcement .announcement-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.create-announcement .btn {
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+    .create-announcement .btn.announce {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+    }
+
+    .create-announcement .btn.nevermind {
+        background: transparent;
+        border: 1px solid rgba(24,43,92,0.08);
+        color: var(--accent);
+    }
+
+/* Ensure spacing remains same as other content-cards */
+.create-announcement {
+    align-items: center;
+}
+
+/* small responsive tweak */
+@media (max-width: 720px) {
+    .content-radial {
+        right: 80px;
+        bottom: 120px;
+    }
+
+    .add-content-button {
+        right: 20px;
+        bottom: 18px;
+    }
+}

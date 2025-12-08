@@ -1,0 +1,33 @@
+﻿@model E_SysV0._01.Models.EnrollmentListViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = Model.Title;
+}
+<div class="card">
+    <h2 class="mb-3">@Model.Title (@Model.Items.Count)</h2>
+    @Html.Partial("~/Areas/Admin/Views/Admin/_ListFilters.cshtml")
+    @if (Model.Items.Count == 0)
+    {
+        <div class="alert alert-info">No rejected requests.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead><tr><th>Name</th><th>Email</th><th>Submitted</th><th>Reason</th><th></th></tr></thead>
+                <tbody>
+                    @foreach (var req in Model.Items)
+                    {
+                        <tr>
+                            <td>@req.FullName</td>
+                            <td>@req.Email</td>
+                            <td>@req.SubmittedAt.ToString("MMM dd, yyyy")</td>
+                            <td>@req.Reason</td>
+                            <td><a class="btn btn-outline-primary btn-sm" href="@Url.Action("RequestDetails", "Admin", new { area = "Admin", id = req.Id })">View</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

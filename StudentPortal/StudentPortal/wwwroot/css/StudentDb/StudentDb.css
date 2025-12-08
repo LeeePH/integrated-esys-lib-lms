@@ -1,0 +1,328 @@
+@import url('/css/Shared/BottomBar.css');
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --card-default-bg: #fcf7ec;
+    --card-default-text: #243a73;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial;
+}
+
+/* --- base --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #f3f6fb;
+    color: #0b213a;
+}
+
+    .page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: calc(var(--bottom-h) + 20px);
+    }
+
+    /* CLASS CONTAINER */
+.classes-container {
+    flex: 1;
+    padding: 28px;
+    background-image: none;
+    max-width: 95%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    column-gap: 20px;
+    row-gap: 12px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .classes-container {
+        padding: 16px;
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+    /* CLASS CARD */
+.class-card {
+    width: 100%;
+    min-width: 100%; /* ensures it fills its column */
+    height: 160px; /* original height */
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.08);
+    background: var(--card-default-bg);
+    border: 1px solid rgba(10, 20, 40, 0.04);
+    margin-bottom: 10px;
+    position: relative;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+}
+
+
+    .class-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+    }
+
+        /* VISUAL ROW SHIFT: move rows closer */
+        .class-card:nth-child(n+3) {
+            transform: translateY(0px); /* shift second row up */
+        }
+
+        .class-card:nth-child(n+5) {
+            transform: translateY(10px); /* shift third row further up */
+        }
+
+        .class-card:nth-child(n+7) {
+            transform: translateY(20px); /* fourth row, adjust as needed */
+        }
+
+        .class-card:nth-child(n+9) {
+            transform: translateY(30px); /* fourth row, adjust as needed */
+        }
+
+        .class-card:nth-child(n+11) {
+            transform: translateY(40px); /* fourth row, adjust as needed */
+        }
+
+    .status-tag {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        background: #fff;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+        color: var(--accent);
+        box-shadow: 0 4px 12px rgba(16,24,40,0.06);
+    }
+
+    .status-tag.pending { color: #ef4444; }
+    .status-tag.approved { color: #22c55e; }
+
+    /* LEFT (70%) */
+    .class-left {
+        width: 70%;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        background-color: var(--card-default-bg);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+        .class-left .class-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--card-default-text);
+        }
+
+        .class-left .class-section {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        .class-left.has-bg .class-name {
+            color: var(--card-default-bg);
+        }
+
+        .class-left.has-bg .class-section {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+    /* RIGHT (instructor) */
+    .class-right {
+        width: 30%;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        justify-content: center;
+        background: transparent;
+    }
+
+    .instructor-profile-image {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #9fb6ff, #cfe6ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+        box-shadow: 0 6px 12px rgba(16,24,40,0.06);
+    }
+
+    .instructor-role {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+/* JOIN CLASS BUTTON */
+.join-class-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: calc(var(--bottom-h) + 20px); /* 20px above bottom bar */
+    right: 20px; /* fixed distance from right edge */
+    background: linear-gradient(135deg, #ffffff, #f2f5ff);
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    border: 1px solid rgba(10, 20, 40, 0.06);
+    cursor: pointer;
+    z-index: 80;
+    transition: all 0.2s ease;
+    margin-left: auto;
+}
+
+    .join-class-button.selected {
+        box-shadow: 0 10px 28px rgba(36, 58, 115, 0.18);
+        border: 1px solid rgba(36, 58, 115, 0.12);
+        transform: scale(1.06);
+    }
+
+        .join-class-button.selected i {
+            color: var(--accent);
+        }
+
+/* MODAL */
+.modal-backdrop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    display: none;
+    z-index: 200;
+}
+
+    .modal-backdrop.show {
+        display: block;
+    }
+
+.modal {
+    position: fixed;
+    bottom: 110px;
+    right: 100px;
+    width: 190px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f3f6fb;
+    color: #0b213a;
+    box-shadow: 0 10px 26px rgba(24, 43, 92, 0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+    .modal h3 {
+        margin: 0;
+        font-size: 14px;
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .modal input[type="text"] {
+        width: 160px;
+        height: 32px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(16,24,40,0.08);
+        background: #fff;
+        color: #0b213a;
+        font-size: 12px;
+    }
+
+    .modal button {
+        width: 160px;
+        height: 34px;
+        border-radius: 8px;
+        background: none;
+        color: #f8f9ff;
+        border: 1px solid rgba(24,43,92,0.25);
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+        background-color: var(--accent);
+        margin-top: 5px;
+    }
+
+        .modal button:hover {
+            background: #12283e;
+            transform: translateY(-2px);
+        }
+
+/* TOAST POPUP */
+.toast {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    .toast.success {
+        background: #3cb371;
+    }
+
+    .toast.warning {
+        background: #e0a100;
+    }
+
+/* Hide scrollbar across browsers but keep scroll functionality */
+
+/* For Chrome, Edge, Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.class-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+html,
+body,
+.class-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge Legacy */
+}
+
+/* Ensure vertical scrolling still works */
+html, body {
+    overflow-y: auto;
+    overflow-x: hidden; /* disable horizontal scroll */
+}
+
+/* Optional: if your class-container has overflow */
+.class-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh; /* ensures consistent scrollable area */
+}

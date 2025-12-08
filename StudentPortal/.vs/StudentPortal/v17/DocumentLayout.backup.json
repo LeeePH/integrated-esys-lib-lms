@@ -1,0 +1,1013 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\adminmanageclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\adminmanageclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studentassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studentassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\shared\\_studentbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\shared\\_studentbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\library\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\library\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\shared\\librarymodal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\shared\\librarymodal.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studenttodo\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studenttodo\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studenttask\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studenttask\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studentmaterial\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studentmaterial\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studentclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studentclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studentdb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studentdb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\admindb\\adminassessment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\admindb\\adminassessment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\admindb\\adminassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\admindb\\adminassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\adminassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\adminassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\models\\admindb\\adminassessment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\models\\admindb\\adminassessment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\admindb\\adminassessmentlist.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\admindb\\adminassessmentlist.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\studentdb\\studentassessment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\studentdb\\studentassessment.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\studentdb\\studentdb.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\studentdb\\studentdb.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\admindb\\adminclass.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\admindb\\adminclass.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\adminclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\adminclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\admindb\\admindb.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\admindb\\admindb.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminmanagegrades\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminmanagegrades\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\admindb\\adminmanageclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\admindb\\adminmanageclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminmanageclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminmanageclass\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\librarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\librarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\services\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\services\\libraryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\shared\\_adminbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\shared\\_adminbottombar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studentdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studentdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\professordb\\professordb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\professordb\\professordb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\admindb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\admindb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\models\\enrollmentstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\models\\enrollmentstudent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\admindb\\adminmanagegrades.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\admindb\\adminmanagegrades.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\adminmanagegradescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\adminmanagegradescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\anticheat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\anticheat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studentanswerassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studentanswerassessment.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studenttodo.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studenttodo.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studenttask.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studenttask.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studentclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studentclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studentmaterial.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studentmaterial.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\studentdb\\studentdb.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\studentdb\\studentdb.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\css\\studentdb\\studentmaterial.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\css\\studentdb\\studentmaterial.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\admindb\\adminclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\admindb\\adminclass.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\admindb\\admindb.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\admindb\\admindb.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\wwwroot\\js\\admindb\\adminbottombar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\wwwroot\\js\\admindb\\adminbottombar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminassessmentlist\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminassessmentlist\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\admindb\\adminsubject\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\admindb\\adminsubject\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studentanswerassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studentanswerassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studentclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studentclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\models\\admindb\\uploaditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\models\\admindb\\uploaditem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studentanswerassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studentanswerassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\models\\studentdb\\studentanswerassessmentmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\models\\studentdb\\studentanswerassessmentmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studenttaskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studenttaskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studentmaterialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studentmaterialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\controllers\\studentassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\controllers\\studentassessmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|c:\\users\\rheyvon\\desktop\\integrated-esys-lib-lms\\studentportal\\studentportal\\views\\studentdb\\studentassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E1F9DD2-EDD7-46CC-8E72-D15B1ED14760}|StudentPortal\\StudentPortal.csproj|solutionrelative:studentportal\\views\\studentdb\\studentassessment\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_StudentBottomBar.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Shared\\_StudentBottomBar.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\Shared\\_StudentBottomBar.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Shared\\_StudentBottomBar.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\Shared\\_StudentBottomBar.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAABkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T11:54:37.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentTodo\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentTodo\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentTodo\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentTodo\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T11:45:06.279Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdminManageClassController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageClassController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminManageClassController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageClassController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\AdminManageClassController.cs",
+              "ViewState": "AgIAAIgDAAAAAAAAAAASwPoDAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T19:56:38.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LibraryModal.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Shared\\LibraryModal.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\Shared\\LibraryModal.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\Shared\\LibraryModal.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\Shared\\LibraryModal.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-04T11:50:56.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentTask\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentTask\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentTask\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentTask\\Index.cshtml",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T11:44:50.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentAssessment.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAssessment.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-26T23:12:52.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAlwKAAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T13:07:44.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentDb\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T22:17:30.048Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Library\\Search.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\Library\\Search.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Library\\Search.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\Library\\Search.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-03T23:29:58.278Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AdminAssessment.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessment.css",
+              "ViewState": "AgIAAJcCAAAAAAAAAAAqwKYCAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-02T02:36:34.401Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentClass\\Index.cshtml",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-03T20:35:26.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentMaterial\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T23:15:06.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AdminAssessment.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminAssessment.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminAssessment.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminAssessment.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminAssessment.js",
+              "ViewState": "AgIAAEUCAAAAAAAAAAAQwHECAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-04T11:15:06.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AdminAssessment.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\AdminDb\\AdminAssessment.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Models\\AdminDb\\AdminAssessment.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\AdminDb\\AdminAssessment.cs",
+              "RelativeToolTip": "StudentPortal\\Models\\AdminDb\\AdminAssessment.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T11:14:25.221Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AdminAssessmentController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminAssessmentController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminAssessmentController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminAssessmentController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\AdminAssessmentController.cs",
+              "ViewState": "AgIAAOUAAAAAAAAAAAAQwBEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T01:20:48.622Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "StudentAssessment.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentAssessment.css",
+              "ViewState": "AgIAADAAAAAAAAAAAAAUwL4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-26T23:06:50.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "StudentDb.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentDb.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-26T22:17:52.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminAssessment\\Index.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAQwLIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-02T02:35:17.121Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AdminClass.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminClass.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminClass.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminClass.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminClass.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHcAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-04T02:33:51.459Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminClass\\Index.cshtml",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAAAIMAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T23:24:30.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AdminAssessmentList.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminAssessmentList.css",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAgwM4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-02T02:36:42.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AdminClassController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminClassController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminClassController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminClassController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\AdminClassController.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:32:30.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AdminManageClass.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageClass.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageClass.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageClass.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminManageClass.js",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAD0AAACQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-04T02:04:22.095Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\appsettings.json",
+              "RelativeDocumentMoniker": "StudentPortal\\appsettings.json",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\appsettings.json",
+              "RelativeToolTip": "StudentPortal\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAACfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-02T23:36:41.377Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "LibraryController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\LibraryController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\LibraryController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\LibraryController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\LibraryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T23:29:40.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\ProfessorDb\\ProfessorDb\\Index.cshtml",
+              "ViewState": "AgIAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-03T21:12:12.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "StudentDbController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentDbController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentDbController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentDbController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentDbController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwB4AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T21:25:01.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminManageGrades\\Index.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-02T19:51:15.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "AdminDb.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminDb.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-30T01:31:18.629Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "_AdminBottomBar.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\Shared\\_AdminBottomBar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-03T21:51:08.328Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminManageClass\\Index.cshtml",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAFIAAADVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T22:08:38.194Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "LibraryService.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Services\\LibraryService.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Services\\LibraryService.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Services\\LibraryService.cs",
+              "RelativeToolTip": "StudentPortal\\Services\\LibraryService.cs",
+              "ViewState": "AgIAAKYBAAAAAAAAAAAtwFkBAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T23:27:59.193Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-02T22:57:27.459Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminDb\\Index.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACsAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T21:47:46.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "EnrollmentStudent.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\EnrollmentStudent.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Models\\EnrollmentStudent.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\EnrollmentStudent.cs",
+              "RelativeToolTip": "StudentPortal\\Models\\EnrollmentStudent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T22:58:41.194Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Models\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "StudentPortal\\Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T22:57:35.579Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "AdminManageGrades.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\AdminDb\\AdminManageGrades.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-02T20:00:45.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "AdminManageGradesController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageGradesController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\AdminManageGradesController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\AdminManageGradesController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\AdminManageGradesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T19:55:10.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Anticheat.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\Anticheat.js",
+              "ViewState": "AgIAAJ0BAAAAAAAAAAAYwGkDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-29T14:38:38.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "StudentAnswerAssessment.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentAnswerAssessment.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-02T02:18:35.167Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "StudentTodo.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTodo.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-02T02:18:29.79Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "StudentClass.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentClass.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-02T02:18:08.593Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "StudentMaterial.css",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\css\\StudentDb\\StudentMaterial.css",
+              "ViewState": "AgIAAO0CAAAAAAAAAAAowAoDAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-02T00:28:31.319Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "AdminClass.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminClass.js",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-01T23:55:27.558Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "StudentDb.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentDb.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-26T22:30:04.285Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "StudentTask.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentTask.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-26T23:16:14.668Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "AdminDb.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminDb.js",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAQwFcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-01T23:53:34.619Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "StudentMaterial.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\StudentDb\\StudentMaterial.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-26T23:14:41.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "AdminBottomBar.js",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
+              "RelativeDocumentMoniker": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
+              "RelativeToolTip": "StudentPortal\\wwwroot\\js\\AdminDb\\AdminBottomBar.js",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-01T23:50:01.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminAssessmentList\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T23:25:56.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\AdminDb\\AdminSubject\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-01T23:25:15.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentAnswerAssessment\\Index.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACwAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T23:25:07.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "StudentClassController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentClassController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentClassController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentClassController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentClassController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T23:27:56.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "UploadItem.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\AdminDb\\UploadItem.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Models\\AdminDb\\UploadItem.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\AdminDb\\UploadItem.cs",
+              "RelativeToolTip": "StudentPortal\\Models\\AdminDb\\UploadItem.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAA/wCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T15:18:34.281Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "StudentAnswerAssessmentController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentAnswerAssessmentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:21:37.181Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "StudentAnswerAssessmentModels.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
+              "RelativeToolTip": "StudentPortal\\Models\\StudentDb\\StudentAnswerAssessmentModels.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAuwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:22:36.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "StudentMaterialController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentMaterialController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentMaterialController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentMaterialController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentMaterialController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:15:20.221Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "StudentTaskController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentTaskController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentTaskController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentTaskController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentTaskController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:15:47.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "StudentAssessmentController.cs",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAssessmentController.cs",
+              "RelativeDocumentMoniker": "StudentPortal\\Controllers\\StudentAssessmentController.cs",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Controllers\\StudentAssessmentController.cs",
+              "RelativeToolTip": "StudentPortal\\Controllers\\StudentAssessmentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:15:29.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
+              "RelativeDocumentMoniker": "StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Rheyvon\\Desktop\\integrated-esys-lib-lms\\StudentPortal\\StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
+              "RelativeToolTip": "StudentPortal\\Views\\StudentDb\\StudentAssessment\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T23:08:19.354Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 360,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

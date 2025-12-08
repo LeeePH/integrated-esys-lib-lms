@@ -1,0 +1,330 @@
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\source\repos\ProfessorAccountCreation\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\Users\jelo\Downloads\COPY\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+D:\INTEG KILA JELO\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\SIA 1.1\INTEG KILA JELO\'TO\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\Users\jelo\Downloads\PROFCreation (2)\PROFCreation\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.exe
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.deps.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MailKit.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MimeKit.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\Snappier.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.AssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.sourcelink.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\bundle\ProfessorAccountCreation.styles.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\scopedcss\projectbundle\ProfessorAccountCreation.bundle.scp.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\Professo.A9AC8977.Up2Date
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\refint\ProfessorAccountCreation.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ProfessorAccountCreation.genruntimeconfig.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Professor\ProfessorAccountCreation\obj\Debug\net8.0\ref\ProfessorAccountCreation.dll

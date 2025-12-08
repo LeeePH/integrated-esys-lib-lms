@@ -1,0 +1,138 @@
+﻿@model List<ShifterEnrollmentRequest>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = ViewBag.Title ?? "On-Hold Shifter Requests";
+    var filterAction = ViewBag.FilterAction ?? "OnHoldShifter";
+    var filterQ = ViewBag.FilterQ ?? "";
+    var filterProgram = ViewBag.FilterProgram ?? "";
+    var settings = ViewBag.EnrollmentSettings as EnrollmentSettings;
+}
+
+<style>
+    .onhold-card {
+        border-left: 4px solid #6c757d;
+    }
+
+        .onhold-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+        }
+</style>
+
+<div class="container-fluid py-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3><i class="fas fa-pause-circle me-2 text-secondary"></i>@ViewBag.Title</h3>
+            <p class="text-muted mb-0">
+                <span class="badge bg-secondary">@Model.Count on hold</span>
+                @if (settings != null)
+                {
+                    <span class="ms-2">
+                        <i class="fas fa-calendar me-1"></i>@settings.Semester • AY @settings.AcademicYear
+                    </span>
+                }
+            </p>
+        </div>
+        <div>
+            <a asp-action="Dashboard" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" asp-action="@filterAction" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="q" value="@filterQ" class="form-control"
+                           placeholder="Name, email, or student ID...">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Program</label>
+                    <select name="program" class="form-select">
+                        <option value="">All Programs</option>
+                        <option value="BSIT" selected="@(filterProgram == "BSIT" ? "selected" : null)">BSIT</option>
+                        <option value="BSENT" selected="@(filterProgram == "BSENT" ? "selected" : null)">BSENT</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search me-2"></i>Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request List -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No on-hold shifter requests found.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var request in Model.OrderByDescending(r => r.SubmittedDate))
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card onhold-card h-100">
+                        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-user me-2"></i>
+                                @request.FirstName @request.LastName
+                            </h6>
+                            <span class="badge bg-dark">On Hold</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <strong>Student ID:</strong> @request.StudentUsername<br />
+                                <strong>Email:</strong> @request.Email<br />
+                                <strong>Contact:</strong> @request.ContactNumber
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-center my-3">
+                                <span class="badge bg-primary">@request.CourseLastEnrolled</span>
+                                <i class="fas fa-arrow-right text-muted mx-3"></i>
+                                <span class="badge bg-success">@request.CourseApplyingToShift</span>
+                            </div>
+
+                            <div class="alert alert-warning py-2">
+                                <small>
+                                    <strong><i class="fas fa-exclamation-circle me-1"></i>Hold Reason:</strong><br />
+                                    @request.AdminNotes
+                                </small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <small class="text-muted">Units Earned</small><br />
+                                    <span class="badge bg-success">@request.TotalUnitsEarned</span>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">Units Failed</small><br />
+                                    <span class="badge bg-danger">@request.TotalUnitsFailed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Submitted: @request.SubmittedDate.ToLocalTime().ToString("MMM dd")
+                            </small>
+                            <a asp-action="RequestDetailsShifter" asp-route-id="@request.Id"
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-eye me-1"></i>Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

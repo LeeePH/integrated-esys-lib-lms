@@ -1,0 +1,404 @@
+@model List<StudentPortal.Models.Library.Book>
+@{
+    ViewData["Title"] = "Library Search";
+    var searchTerm = ViewBag.SearchTerm as string ?? "";
+    var userEmail = ViewBag.UserEmail as string ?? "";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #5568d3;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .book-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 15px;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-author {
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .book-details {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .book-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .availability {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .available {
+            color: #28a745;
+        }
+
+        .unavailable {
+            color: #dc3545;
+        }
+
+        .reference-only {
+            color: #ffc107;
+        }
+
+        .reserve-btn {
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .reserve-btn:hover:not(:disabled) {
+            background: #5568d3;
+        }
+
+        .reserve-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .no-books {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            color: #666;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 10000;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        .toast.success {
+            background: #28a745;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        @@keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="@Url.Action("Index", "StudentDb")" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="header">
+            <h1><i class="fas fa-book"></i> Library Search</h1>
+            <form method="post" asp-action="Search" class="search-form">
+                <input type="text" name="searchTerm" class="search-input" 
+                       placeholder="Search by title, author, ISBN, subject..." 
+                       value="@searchTerm" />
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="books-grid">
+                @foreach (var book in Model)
+                {
+                    <div class="book-card">
+                        <div class="book-image">
+                            @if (!string.IsNullOrEmpty(book.Image) && book.Image != "/images/default-book.png")
+                            {
+                                <img src="@book.Image" alt="@book.Title" />
+                            }
+                            else
+                            {
+                                <i class="fas fa-book" style="font-size: 60px;"></i>
+                            }
+                        </div>
+                        <div class="book-info">
+                            <div class="book-title">@book.Title</div>
+                            <div class="book-author">by @book.Author</div>
+                            <div class="book-details">
+                                @if (!string.IsNullOrEmpty(book.ISBN))
+                                {
+                                    <div>ISBN: @book.ISBN</div>
+                                }
+                                @if (!string.IsNullOrEmpty(book.Subject))
+                                {
+                                    <div>Subject: @book.Subject</div>
+                                }
+                                <div>Copies: @book.AvailableCopies / @book.TotalCopies</div>
+                            </div>
+                            <div class="book-status">
+                                <div class="availability @(book.IsAvailable ? "available" : book.IsReferenceOnly ? "reference-only" : "unavailable")">
+                                    @if (book.IsReferenceOnly)
+                                    {
+                                        <span>Reference Only</span>
+                                    }
+                                    else if (book.IsAvailable)
+                                    {
+                                        <span>Available</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Unavailable</span>
+                                    }
+                                </div>
+                                <button class="reserve-btn" 
+                                        data-book-id="@book._id.ToString()" 
+                                        data-book-title="@book.Title"
+                                        @(book.IsAvailable ? "" : "disabled")>
+                                    <i class="fas fa-bookmark"></i> Reserve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="no-books">
+                <i class="fas fa-book-open" style="font-size: 60px; color: #ccc; margin-bottom: 20px;"></i>
+                <h3>No books found</h3>
+                <p>@(string.IsNullOrEmpty(searchTerm) ? "Try searching for a book." : $"No books found matching '{searchTerm}'. Try a different search term.")</p>
+            </div>
+        }
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reserveButtons = document.querySelectorAll('.reserve-btn');
+            
+            reserveButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const bookId = this.getAttribute('data-book-id');
+                    const bookTitle = this.getAttribute('data-book-title');
+                    
+                    if (!bookId) return;
+                    
+                    // Disable button during request
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reserving...';
+                    
+                    try {
+                        const response = await fetch('@Url.Action("ReserveBook", "Library")', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `bookId=${encodeURIComponent(bookId)}`
+                        });
+                        
+                        const result = await response.json();
+                        
+                        showToast(result.message, result.success ? 'success' : 'error');
+                        
+                        if (result.success) {
+                            // Update button state
+                            this.innerHTML = '<i class="fas fa-check"></i> Reserved';
+                            this.style.background = '#28a745';
+                            
+                            // Update availability display
+                            const availabilityDiv = this.closest('.book-status').querySelector('.availability');
+                            if (availabilityDiv) {
+                                availabilityDiv.textContent = 'Reserved';
+                                availabilityDiv.className = 'availability unavailable';
+                            }
+                        } else {
+                            // Re-enable button on error
+                            this.disabled = false;
+                            this.innerHTML = '<i class="fas fa-bookmark"></i> Reserve';
+                        }
+                    } catch (error) {
+                        showToast('Error reserving book. Please try again.', 'error');
+                        this.disabled = false;
+                        this.innerHTML = '<i class="fas fa-bookmark"></i> Reserve';
+                    }
+                });
+            });
+        });
+        
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+

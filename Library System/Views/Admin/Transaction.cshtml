@@ -1,0 +1,407 @@
+﻿@{
+    ViewData["Title"] = "Borrowing Transactions";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/lib/borrowing.css" />
+
+<div class="borrow-container">
+
+    <!-- HEADER -->
+    <div class="borrow-header">
+        <h1>Borrowing Transactions</h1>
+    </div>
+
+    <!-- SEARCH BOXES -->
+    <div class="borrow-search">
+        <!-- STUDENT SEARCH -->
+        <div class="borrow-box">
+            <h3>STUDENT ID / STUDENT NUMBER</h3>
+            <div class="search-input">
+                <input type="text" id="studentIdInput" placeholder="Enter Student ID or Number..." />
+                <button onclick="searchStudent()">Search</button>
+            </div>
+
+            <div class="borrow-card" id="studentCard" style="display: none;">
+                <div class="borrow-student">
+                    <img src="~/images/studentlogo.png" alt="Student" />
+                    <div class="borrow-info">
+                        <h4 id="studentName">-</h4>
+                        <p id="studentDetails">-</p>
+                    </div>
+                    <span class="status" id="studentStatus">-</span>
+                </div>
+
+                <div class="book-dates-grid">
+                    <div>
+                        <p class="date-label">Enrollment:</p>
+                        <p class="date-value" id="enrollmentStatus">-</p>
+                    </div>
+                    <div>
+                        <p class="date-label">Borrowed Books:</p>
+                        <p class="date-value" id="borrowedBooks">-</p>
+                    </div>
+                    <div>
+                        <p class="date-label">Overdue Books:</p>
+                        <p class="date-value" id="overdueBooks">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK SEARCH -->
+        <div class="borrow-box">
+            <h3>BOOK ID / ISBN</h3>
+            <div class="search-input">
+                <input type="text" id="bookIdInput" placeholder="Enter Book ID or ISBN..." />
+                <button onclick="searchBook()">Search</button>
+            </div>
+
+            <div class="borrow-card" id="bookCard" style="display: none;">
+                <div class="borrow-student">
+                    <img src="~/images/totalbooks.png" alt="Book" />
+                    <div class="borrow-info">
+                        <h4 id="bookTitle">-</h4>
+                        <p id="bookDetails">-</p>
+                    </div>
+                    <span class="status" id="bookStatus">-</span>
+                </div>
+
+                <div class="book-dates-grid">
+                    <div>
+                        <p class="date-label">ISBN:</p>
+                        <p class="date-value" id="bookISBN">-</p>
+                    </div>
+                    <div>
+                        <p class="date-label">Location:</p>
+                        <p class="date-value" id="bookLocation">-</p>
+                    </div>
+                    <div>
+                        <p class="date-label">Available:</p>
+                        <p class="date-value" id="bookAvailable">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRANSACTION HISTORY -->
+    <div class="borrow-transaction" id="transactionSection" style="display: none;">
+        <h3>TRANSACTION HISTORY</h3>
+        <div class="borrow-history">
+            <div class="history-item">
+                <img src="~/images/borrowcalendar.png" alt="Borrow Date" class="icons" />
+                <div>
+                    <h4>BORROW DATE</h4>
+                    <p id="borrowDate">-</p>
+                </div>
+            </div>
+
+            <div class="history-item">
+                <img src="~/images/duedateblue.png" alt="Due Date" class="icons" />
+                <div>
+                    <h4>DUE DATE</h4>
+                    <p id="dueDate">-</p>
+                </div>
+            </div>
+
+            <div class="history-item">
+                <img src="~/images/loanperiod.png" alt="Loan Period" class="icons" />
+                <div>
+                    <h4>LOAN PERIOD</h4>
+                    <p id="loanPeriod">-</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="borrow-status" id="eligibilityStatus" style="display: none;">
+            <img src="~/images/eligible.png" alt="Status" class="icons" id="statusIcon" />
+            <span id="eligibilityMessage">-</span>
+        </div>
+
+        <div class="borrow-process">
+            <button id="processBorrowBtn" onclick="showConfirmPopup()" disabled>Process Borrowing</button>
+        </div>
+    </div>
+</div>
+
+<!-- CONFIRMATION POPUP -->
+<div class="action-popup" id="confirmBorrowPopup">
+    <div class="popup-content confirm">
+        <div class="popup-icon">
+            <img src="~/images/heart.png" alt="Confirm Icon" />
+        </div>
+        <h2>Confirm Borrowing</h2>
+        <p>Are you sure you want to proceed with this transaction?</p>
+        <div class="popup-buttons">
+            <button class="popup-no" onclick="closeConfirmPopup()">NO</button>
+            <button class="popup-yes" onclick="confirmBorrowing()">YES</button>
+        </div>
+    </div>
+</div>
+
+<!-- SUCCESS POPUP -->
+<div class="action-popup" id="borrowSuccessPopup">
+    <div class="popup-content success">
+        <div class="popup-icon">
+            <img src="~/images/heart.png" alt="Book Borrowed Icon" />
+        </div>
+        <h2>Book Borrowed!</h2>
+        <p>Book has been successfully borrowed by the student.</p>
+        <button class="popup-done" onclick="closeSuccessPopup()">DONE</button>
+    </div>
+</div>
+
+<!-- ERROR POPUP -->
+<div class="action-popup" id="errorPopup">
+    <div class="popup-content error">
+        <div class="popup-icon">
+            <img src="~/images/error.png" alt="Error Icon" />
+        </div>
+        <h2>Error</h2>
+        <p id="errorMessage">-</p>
+        <button class="popup-done" onclick="closeErrorPopup()">OK</button>
+    </div>
+</div>
+
+<script>
+    let selectedStudent = null;
+    let selectedBook = null;
+    let eligibilityData = null;
+
+    // Search Student
+    async function searchStudent() {
+        const studentId = document.getElementById('studentIdInput').value.trim();
+
+        if (!studentId) {
+            showError('Please enter a Student ID or Number');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/Admin/SearchStudent?studentId=${encodeURIComponent(studentId)}`);
+            const result = await response.json();
+
+            if (result.success) {
+                selectedStudent = result.data;
+                displayStudentInfo(result.data);
+                checkEligibility();
+            } else {
+                showError(result.message || 'Student not found');
+                hideStudentCard();
+            }
+        } catch (error) {
+            showError('Error searching for student');
+            console.error(error);
+        }
+    }
+
+    // Search Book
+    async function searchBook() {
+        const bookId = document.getElementById('bookIdInput').value.trim();
+
+        if (!bookId) {
+            showError('Please enter a Book ID or ISBN');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/Admin/SearchBook?bookId=${encodeURIComponent(bookId)}`);
+            const result = await response.json();
+
+            if (result.success) {
+                selectedBook = result.data;
+                displayBookInfo(result.data);
+                checkEligibility();
+            } else {
+                showError(result.message || 'Book not found');
+                hideBookCard();
+            }
+        } catch (error) {
+            showError('Error searching for book');
+            console.error(error);
+        }
+    }
+
+    // Display Student Info
+    function displayStudentInfo(student) {
+        document.getElementById('studentName').textContent = student.name;
+        document.getElementById('studentDetails').innerHTML = `${student.email}<br />${student.idNumber}`;
+
+        const statusBadge = document.getElementById('studentStatus');
+        statusBadge.textContent = student.status === 'good' ? 'Good' :
+                                  student.status === 'restricted' ? 'Restricted' :
+                                  student.status === 'penalty' ? 'Has Penalty' : 'Limit Reached';
+        statusBadge.className = 'status ' + student.status;
+
+        document.getElementById('enrollmentStatus').textContent = student.enrollmentStatus;
+        document.getElementById('borrowedBooks').textContent = `${student.borrowedBooks}/${student.maxBooksAllowed}`;
+        document.getElementById('overdueBooks').textContent = student.overdueBooks > 0 ? student.overdueBooks : 'None';
+
+        document.getElementById('studentCard').style.display = 'block';
+    }
+
+    // Display Book Info
+    function displayBookInfo(book) {
+        document.getElementById('bookTitle').textContent = book.title;
+        document.getElementById('bookDetails').innerHTML = `${book.author}<br />${book.accessionNumber}`;
+
+        const statusBadge = document.getElementById('bookStatus');
+        statusBadge.textContent = book.status === 'available' ? 'Available' : 'Unavailable';
+        statusBadge.className = 'status ' + book.status;
+
+        document.getElementById('bookISBN').textContent = book.isbn || 'N/A';
+        document.getElementById('bookLocation').textContent = book.location;
+        document.getElementById('bookAvailable').textContent = `${book.availableCopies}/${book.totalCopies}`;
+
+        document.getElementById('bookCard').style.display = 'block';
+    }
+
+    // Check Eligibility
+    async function checkEligibility() {
+        if (!selectedStudent || !selectedBook) {
+            document.getElementById('transactionSection').style.display = 'none';
+            return;
+        }
+
+        try {
+            const response = await fetch('/Admin/CheckEligibility', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    studentId: selectedStudent.studentId,
+                    bookId: selectedBook.bookId
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                eligibilityData = result.data;
+                displayEligibility(result.data);
+            }
+        } catch (error) {
+            console.error('Error checking eligibility:', error);
+        }
+    }
+
+    // Display Eligibility
+    function displayEligibility(data) {
+        document.getElementById('transactionSection').style.display = 'block';
+
+        const borrowDate = new Date(data.borrowDate);
+        const dueDate = new Date(data.dueDate);
+
+        document.getElementById('borrowDate').textContent = borrowDate.toLocaleDateString();
+        document.getElementById('dueDate').textContent = dueDate.toLocaleDateString();
+        document.getElementById('loanPeriod').textContent = `${data.loanPeriodDays} days`;
+
+        const statusDiv = document.getElementById('eligibilityStatus');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusMessage = document.getElementById('eligibilityMessage');
+        const processBtn = document.getElementById('processBorrowBtn');
+
+        statusDiv.style.display = 'flex';
+        statusMessage.textContent = data.message;
+
+        if (data.isEligible) {
+            statusDiv.className = 'borrow-status success';
+            statusIcon.src = '/images/eligible.png';
+            processBtn.disabled = false;
+        } else {
+            statusDiv.className = 'borrow-status error';
+            statusIcon.src = '/images/error.png';
+            processBtn.disabled = true;
+        }
+    }
+
+    // Show Confirm Popup
+    function showConfirmPopup() {
+        document.getElementById('confirmBorrowPopup').style.display = 'flex';
+    }
+
+    // Close Confirm Popup
+    function closeConfirmPopup() {
+        document.getElementById('confirmBorrowPopup').style.display = 'none';
+    }
+
+    // Confirm Borrowing
+    async function confirmBorrowing() {
+        closeConfirmPopup();
+
+        try {
+            const response = await fetch('/Admin/ProcessBorrowing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    studentId: selectedStudent.studentId,
+                    bookId: selectedBook.bookId,
+                    borrowDate: new Date(),
+                    dueDate: eligibilityData.dueDate,
+                    loanPeriodDays: eligibilityData.loanPeriodDays
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('borrowSuccessPopup').style.display = 'flex';
+            } else {
+                showError(result.message || 'Failed to process borrowing');
+            }
+        } catch (error) {
+            showError('Error processing borrowing');
+            console.error(error);
+        }
+    }
+
+    // Close Success Popup
+    function closeSuccessPopup() {
+        document.getElementById('borrowSuccessPopup').style.display = 'none';
+        resetForm();
+    }
+
+    // Show Error
+    function showError(message) {
+        document.getElementById('errorMessage').textContent = message;
+        document.getElementById('errorPopup').style.display = 'flex';
+    }
+
+    // Close Error Popup
+    function closeErrorPopup() {
+        document.getElementById('errorPopup').style.display = 'none';
+    }
+
+    // Hide Cards
+    function hideStudentCard() {
+        document.getElementById('studentCard').style.display = 'none';
+        selectedStudent = null;
+        document.getElementById('transactionSection').style.display = 'none';
+    }
+
+    function hideBookCard() {
+        document.getElementById('bookCard').style.display = 'none';
+        selectedBook = null;
+        document.getElementById('transactionSection').style.display = 'none';
+    }
+
+    // Reset Form
+    function resetForm() {
+        document.getElementById('studentIdInput').value = '';
+        document.getElementById('bookIdInput').value = '';
+        hideStudentCard();
+        hideBookCard();
+        selectedStudent = null;
+        selectedBook = null;
+        eligibilityData = null;
+    }
+
+    // Allow Enter key to search
+    document.getElementById('studentIdInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchStudent();
+    });
+
+    document.getElementById('bookIdInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchBook();
+    });
+</script>

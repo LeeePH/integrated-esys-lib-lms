@@ -1,0 +1,172 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/return.css" />
+
+<div class="return-container py-6">
+    <main class="content-area">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="page-title mb-6">Return Transactions</h1>
+
+            <!-- Search Section -->
+            <div class="search-book-card mb-8">
+                <label for="book-id" class="search-label">BOOK ID / ACCENSION NUMBER</label>
+                <div class="input-group mb-6">
+                    <input type="text" id="book-id" placeholder="Enter Book ID..." class="search-input" />
+                    <button type="button" class="btn-search">Search</button>
+                </div>
+
+                <!-- Book Info (Initially Hidden) -->
+                <div class="book-info-section">
+                    <div class="book-header-row">
+                        <div class="book-header-left">
+                            <img src="~/images/totalbooks.png" alt="Book Icon" class="book-icon" />
+                            <div class="book-info-text">
+                                <h3 class="book-title">-</h3>
+                                <p class="book-meta">ISBN: -</p>
+                                <p class="book-meta">Borrowed by: -</p>
+                            </div>
+                        </div>
+                        <div class="status-badge">
+                            <img src="~/images/grayeligible.png" alt="Status Icon" class="icon-sm mr-2" />
+                            Status
+                        </div>
+                    </div>
+
+                    <div class="book-dates-grid">
+                        <div>
+                            <p class="date-label">Borrow Date:</p>
+                            <p class="date-value">-</p>
+                        </div>
+                        <div>
+                            <p class="date-label">Due Date:</p>
+                            <p class="date-value">-</p>
+                        </div>
+                        <div>
+                            <p class="date-label">Days Borrowed:</p>
+                            <p class="date-value">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Condition -->
+            <div class="condition-section">
+                <h2 class="section-title">BOOK CONDITION ASSESSMENT</h2>
+                <div class="condition-btn-container">
+                    <button class="condition-good condition-btn active" data-condition="Good">
+                        <img src="~/images/grayeligible.png" alt="Good" class="icon-lg mb-2" />
+                        <span class="font-semibold">Good Condition</span>
+                        <span class="text-xs">No Damage Observed</span>
+                    </button>
+                    <button class="condition-warning condition-btn" data-condition="Damage">
+                        <img src="~/images/graywarning.png" alt="Warning" class="icon-lg mb-2" />
+                        <span class="font-semibold">Damage</span>
+                        <span class="text-xs">Requires Repair</span>
+                    </button>
+                    <button class="condition-lost condition-btn" data-condition="Lost">
+                        <img src="~/images/wrong.png" alt="Lost" class="icon-lg mb-2" />
+                        <span class="font-semibold">Lost</span>
+                        <span class="text-xs">Book is missing / not returned</span>
+                    </button>
+                </div>
+
+                <!-- Damage Type Dropdown (Hidden by default) -->
+                <div id="damageTypeSection" style="margin-top: 20px;">
+                    <label for="damageType" class="search-label">DAMAGE TYPE</label>
+                    <select id="damageType" class="search-input" style="cursor: pointer;">
+                        <option value="">Select damage severity...</option>
+                        <option value="Minor" data-penalty="50">Minor Damage - ₱50</option>
+                        <option value="Moderate" data-penalty="100">Moderate Damage - ₱100</option>
+                        <option value="Major" data-penalty="200">Major Damage - ₱200</option>
+                    </select>
+                                </div>
+
+            <!-- Penalties -->
+            <div class="penalty-container">
+                <h3 class="penalty-title">PENALTIES AND FEES</h3>
+                <div class="penalty-card mb-4" id="penaltyBreakdown">
+                    <div class="flex justify-between items-center penalty-row">
+                        <span>No Penalties</span>
+                        <span class="font-bold">₱ 0</span>
+                    </div>
+                </div>
+                <hr class="penalty-divider" />
+                <div class="penalty-total mb-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold">TOTAL PENALTY:</span>
+                        <span class="text-2xl font-bold" id="totalPenaltyAmount">₱ 0</span>
+                    </div>
+                </div>
+                <div class="penalty-note flex items-center">
+                    <img src="~/images/overduebooks.png" alt="Note" class="icon-sm mr-2" />
+                    <span>Note: Actual payment is processed externally.</span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="action-buttons flex justify-end space-x-4 mb-8">
+                <button type="button" class="btn-danger" id="restrictBtn">Restrict Account</button>
+                <button type="button" class="btn-success" id="processReturnBtn">Process Return</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Anti-forgery token for POST requests -->
+@Html.AntiForgeryToken()
+
+<!-- === RESTRICT ACCOUNT CONFIRMATION POPUP === -->
+<div id="restrictModal" class="action-popup">
+    <div class="popup-content delete">
+        <div class="popup-icon"><img src="/images/restrict.png" alt=""></div>
+        <h2>Restrict Account</h2>
+        <p>Are you sure you want to restrict this account? This action cannot be undone.</p>
+        <div class="popup-buttons">
+            <button id="modalNoBtn" class="popup-no">No</button>
+            <button id="modalYesBtn" class="popup-yes">Yes, Restrict</button>
+        </div>
+    </div>
+</div>
+
+<!-- === RESTRICT SUCCESS POPUP === -->
+<div id="restrictSuccessPopup" class="action-popup">
+    <div class="popup-content delete">
+        <div class="popup-icon"><img src="/images/restrict.png" alt=""></div>
+        <h2>Account Restricted</h2>
+        <p>The account has been successfully restricted.</p>
+        <div class="popup-buttons">
+            <button id="closeRestrictSuccess" class="popup-done">DONE</button>
+        </div>
+    </div>
+</div>
+
+<!-- === CONFIRM RETURN POPUP === -->
+<div class="action-popup" id="confirmReturnPopup">
+    <div class="popup-content success">
+        <div class="popup-icon"><img src="/images/bluecheck.png" alt=""></div>
+        <h2>Confirm Return</h2>
+        <p>Are you sure you want to proceed with this return transaction?</p>
+        <div class="popup-buttons">
+            <button id="cancelReturn" class="popup-no">No</button>
+            <button id="confirmReturnYes" class="popup-done">Yes, Proceed</button>
+        </div>
+    </div>
+</div>
+
+<!-- === SUCCESS RETURN POPUP === -->
+<div class="action-popup" id="returnSuccessPopup">
+    <div class="popup-content success">
+        <div class="popup-icon"><img src="/images/bluecheck.png" alt=""></div>
+        <h2>Book Returned</h2>
+        <p>The book has been successfully returned by the student.</p>
+        <div class="popup-buttons">
+            <button id="closeReturnSuccess" class="popup-done">Done</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/return-transaction.js?v=@DateTime.Now.Ticks"></script>
+}

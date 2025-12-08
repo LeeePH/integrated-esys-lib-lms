@@ -1,0 +1,58 @@
+@model StudentPortal.Models.StudentDb.StudentAnswerAssessmentViewModel
+@{
+    ViewData["Title"] = "Student Assessment";
+    Layout = "_StudentLayout";
+    ViewBag.CurrentPage = "subjects";
+    ViewBag.HideBottomBar = false;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/StudentDb/StudentAnswerAssessment.css" asp-append-version="true" />
+}
+
+<main class="class-container">
+    <div class="form-container">
+        <div class="form-toolbar">
+            <button id="returnToAssessment" class="form-btn">Return to Assessment</button>
+        </div>
+        <iframe id="googleFormFrame" class="google-form"
+                src="@(string.IsNullOrWhiteSpace(Model.FormUrl) ? Url.Content("~/materials/forms/" + Model.AssessmentTitle.Replace(" ", "") + ".html") : Model.FormUrl)"
+                allow="fullscreen"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div id="embedFallback" style="display:none; padding:12px;">
+            <p>Having trouble loading the document? <a id="openInNewTab" href="@(string.IsNullOrWhiteSpace(Model.FormUrl) ? "#" : Model.FormUrl)" target="_blank" rel="noopener">Open in a new tab</a>.</p>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="~/js/studentdb/studentanswerassessment.js"></script>
+    <script>
+        (function(){
+            const frame = document.getElementById('googleFormFrame');
+            const fallback = document.getElementById('embedFallback');
+            if (!frame) return;
+            const t = setTimeout(() => { if (fallback) fallback.style.display = 'block'; }, 3000);
+            frame.addEventListener('load', () => { clearTimeout(t); });
+            const btn = document.getElementById('returnToAssessment');
+            if (btn) {
+                const parts = (window.location.pathname || '').split('/').filter(Boolean);
+                const i = parts.findIndex(p => p.toLowerCase() === 'studentanswerassessment');
+                if (i >= 0 && parts.length >= i + 3) {
+                    const classCode = parts[i + 1];
+                    const contentId = parts[i + 2];
+                    const url = `/StudentAssessment/${classCode}/${contentId}`;
+                    btn.addEventListener('click', async () => {
+                        const toastEl = document.getElementById('toast');
+                        if (toastEl) { toastEl.textContent = 'Marking submitted...'; toastEl.className = 'toast show'; }
+                        try {
+                            await fetch(`/StudentAnswerAssessment/${classCode}/${contentId}/mark-answered`, { method: 'POST', credentials: 'same-origin' });
+                        } catch (_) {}
+                        if (toastEl) { toastEl.textContent = 'Returning to assessment...'; setTimeout(() => toastEl.classList.remove('show'), 1500); }
+                        setTimeout(() => { window.location.href = url + '?submitted=1'; }, 600);
+                    });
+                }
+            }
+        })();
+    </script>
+    <script src="~/js/studentdb/anticheat.js"></script>
+</main>

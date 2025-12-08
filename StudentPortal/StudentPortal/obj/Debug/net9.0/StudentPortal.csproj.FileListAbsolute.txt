@@ -1,0 +1,700 @@
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\appsettings.Development.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\appsettings.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.exe
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.deps.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\StudentPortal.pdb
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\DnsClient.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\MailKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\MimeKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\MongoDB.Bson.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\MongoDB.Driver.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\SharpCompress.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\Snappier.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\TempBuildOut\ZstdSharp.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfo.cs
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.exe
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.deps.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\DnsClient.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\MailKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\MimeKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\Snappier.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\ZstdSharp.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\scopedcss\bundle\StudentPortal.styles.css
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tln4x31g20-zk3i8a83uf.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8fw0epupnq-dyjx89twm7.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\h9negbvy80-3bzgz86jvu.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\baqtejbbf5-dyjx89twm7.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vvxn9fx1k0-0064m6ar15.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6h2a6upc3d-2ffmulqouw.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ujyod61y1b-x81mvzfaoy.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\28zkkvphms-c2tiyv64ts.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pm0sjdximc-61n19gt1b8.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ph27tpgqs6-xtxxf3hu2r.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xqybmtlp8q-xtxxf3hu2r.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7op7q3ea3x-rjlmpip1hk.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckexe3ktam-xtxxf3hu2r.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\84nynzdic4-m63no7nzix.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6l6yah4n4p-taycrmejga.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\n8s9064c0j-9sw451updt.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oy79sc2wd5-zc5p8mkbb6.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\29zfy86io3-xtxxf3hu2r.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2txzanwwjs-bqjiyaj88i.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\qg4ctl4jcg-c2jlpeoesf.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\x0158htarz-erw9l3u2r3.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j4s8s5tmsw-aexeepp0ev.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\uwmciuvq49-d7shbmvgxk.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4473kijm0m-ausgxo2sd3.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0ij4wb21sk-k8d9w2qqmf.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\hwtm3chhwl-cosvhxvwiu.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\t84zu07jc0-ub07r2b239.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\14e20a6bu8-fvhpjtyr6v.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2i5n0mn75e-b7pk76d08c.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\othy9yu58r-fsbi9cje9m.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oh0j6shatt-rzd6atqjts.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\q0vep3smfj-ee0r1s7dh0.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4i4lamhong-dxx9fxp4il.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tp0m43j0j3-jd9uben2k1.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kmmr5krk6q-khv3u5hwcm.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\wlu8flvgap-r4e9w2rdcm.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4amv495j3k-lcd1t2u6c8.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4o71vt68v1-c2oey78nd0.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0mrgqtesjp-tdbxkamptv.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\46om9v2tex-j5mq2jizvt.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xjtwaf0rdv-06098lyss8.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\e625hnlp4t-nvvlpmu67g.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\bd8wy045nf-s35ty4nyc5.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kpqckyyqxy-pj5nd1wqec.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\fokl1qvraq-46ein0sx1k.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kgtl7lslvu-v0zj4ognzu.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pyvfvbld18-37tfw0ft22.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\s71lxgvb01-hrwsygsryq.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\u2mjqrwy5z-pk9g2wxc8p.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vov7k7ihs5-ft3s53vfgj.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\usjhpjmesn-6cfz1n2cew.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\cnrthn75mc-6pdc2jztkx.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\9pcwl6dey6-493y06b0oq.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lrii6489aa-iovd86k7lj.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0txp52ganh-vr1egmr9el.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4t8ma08yvo-kbrnm935zg.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\si6fab9bc5-jj8uyg4cgr.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1ynhlstsad-y7v9cxd14o.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\epu4xyp4h5-notf2xhcfb.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\116wz7mm0p-h1s4sie4z3.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\c0cwnwyrbg-63fj8s7r0e.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\maj7ae3853-0j3bgjxly4.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xlne3jdnga-47otxtyo56.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6wc691cdsp-4v8eqarkd7.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7rkcfyfbtv-356vix0kms.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ai0fz1luys-83jwlth58m.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\yfl4w7ay3n-mrlpezrjn3.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\l2bposcls8-lzl9nlhx6b.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\rgxvp58yol-ag7o75518u.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\at9ohbavo3-x0q3zqp4vz.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8s675gt03i-0i3buxo5is.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\zy6m88w8gm-o1o13a6vjx.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3iaj5qw1qa-ttgo8qnofa.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0jn43b9c32-2z0ns9nrw6.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lkjsdah51m-muycvpuwrr.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xnl2b5k0vb-87fc7y1x7t.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\23hki9lloz-mlv21k5csn.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentP.09900977.Up2Date
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\refint\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.genruntimeconfig.cache
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\ref\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8legsv4p7f-6327ch4648.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\77dpxszduh-8hsl5ubbk9.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\w2m0948bp7-em9eiyby69.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\v1wm7k35pq-3mwrgjybao.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\appsettings.Development.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\appsettings.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.exe
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.deps.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\StudentPortal.pdb
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\DnsClient.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\MailKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\MimeKit.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\MongoDB.Bson.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\MongoDB.Driver.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\SharpCompress.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\Snappier.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\temp_build_out\ZstdSharp.dll
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.Development.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.deps.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pi5gic83oz-i390tns7lc.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\k28rbkf07z-fy14syiyef.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\d3ga2lrzhg-n61d757ecm.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\a2j0b33oyp-0bke1hi2w0.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ss6yzgem2w-uwtipo04tq.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\m8sro671im-b9wg8el6s2.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\mfansw4f98-xr6pstj1v4.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lniguqfuby-0o2j4oa8pt.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\r741mdiaef-aeo6ihaoyz.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xa4uxw4d2e-so6ls18djh.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j2wmdsfw45-kx994x6fma.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\capmqicvwz-50qb4tk1dv.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\teedjqvvhl-6etu65ycsy.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42v0h9kkkm-e8hg2jjdsd.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\scob31ccl6-j6atsg4yvh.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\dikivpxifp-3b4wtytq15.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3glgom7043-hk5kgdj2hn.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oq2kxj2d84-pz51d6pcs7.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\52j5ivcy2l-noa2vkzy8i.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckhp5w6boe-nhx7dgaz1i.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\o7kv6jjry6-d6jejjv8e1.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1qeexafhpq-2og9k38d0d.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42xt5r4ir8-9e9sxmefwh.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\gut33kzolq-fhyyiy2kix.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ngveyro330-f897vbduob.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ao3myqh4vh-a6jq4wqe6r.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\sf5hq1w2sp-aq37fsrxoo.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2enk4meiks-bbzeabt1te.gz
+C:\Users\Rheyvon\source\repos\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\82ngvx3szs-98s8543kz1.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.deps.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.exe
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.deps.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\DnsClient.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\MailKit.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\MimeKit.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\Snappier.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\bin\Debug\net9.0\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\scopedcss\bundle\StudentPortal.styles.css
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckhp5w6boe-nhx7dgaz1i.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tln4x31g20-zk3i8a83uf.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8fw0epupnq-dyjx89twm7.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\a2j0b33oyp-0bke1hi2w0.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\h9negbvy80-3bzgz86jvu.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ss6yzgem2w-uwtipo04tq.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\o7kv6jjry6-d6jejjv8e1.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2enk4meiks-bbzeabt1te.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\capmqicvwz-50qb4tk1dv.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\baqtejbbf5-dyjx89twm7.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\w2m0948bp7-em9eiyby69.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vvxn9fx1k0-0064m6ar15.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6h2a6upc3d-2ffmulqouw.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ujyod61y1b-x81mvzfaoy.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\sf5hq1w2sp-aq37fsrxoo.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\r741mdiaef-aeo6ihaoyz.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8legsv4p7f-6327ch4648.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\28zkkvphms-c2tiyv64ts.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\m8sro671im-b9wg8el6s2.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\v1wm7k35pq-3mwrgjybao.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\k28rbkf07z-fy14syiyef.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\d3ga2lrzhg-n61d757ecm.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\teedjqvvhl-6etu65ycsy.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\mfansw4f98-xr6pstj1v4.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lniguqfuby-0o2j4oa8pt.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pm0sjdximc-61n19gt1b8.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1qeexafhpq-2og9k38d0d.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42v0h9kkkm-e8hg2jjdsd.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ph27tpgqs6-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j2wmdsfw45-kx994x6fma.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xqybmtlp8q-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7op7q3ea3x-rjlmpip1hk.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\82ngvx3szs-98s8543kz1.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ao3myqh4vh-a6jq4wqe6r.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42xt5r4ir8-9e9sxmefwh.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckexe3ktam-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\gut33kzolq-fhyyiy2kix.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\84nynzdic4-m63no7nzix.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6l6yah4n4p-taycrmejga.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\n8s9064c0j-9sw451updt.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oy79sc2wd5-zc5p8mkbb6.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\29zfy86io3-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ngveyro330-f897vbduob.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\scob31ccl6-j6atsg4yvh.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pi5gic83oz-i390tns7lc.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xa4uxw4d2e-so6ls18djh.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\dikivpxifp-3b4wtytq15.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3glgom7043-hk5kgdj2hn.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oq2kxj2d84-pz51d6pcs7.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\77dpxszduh-8hsl5ubbk9.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\52j5ivcy2l-noa2vkzy8i.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2txzanwwjs-bqjiyaj88i.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\qg4ctl4jcg-c2jlpeoesf.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\x0158htarz-erw9l3u2r3.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j4s8s5tmsw-aexeepp0ev.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\uwmciuvq49-d7shbmvgxk.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4473kijm0m-ausgxo2sd3.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0ij4wb21sk-k8d9w2qqmf.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\hwtm3chhwl-cosvhxvwiu.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\t84zu07jc0-ub07r2b239.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\14e20a6bu8-fvhpjtyr6v.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2i5n0mn75e-b7pk76d08c.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\othy9yu58r-fsbi9cje9m.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oh0j6shatt-rzd6atqjts.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\q0vep3smfj-ee0r1s7dh0.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4i4lamhong-dxx9fxp4il.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tp0m43j0j3-jd9uben2k1.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kmmr5krk6q-khv3u5hwcm.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\wlu8flvgap-r4e9w2rdcm.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4amv495j3k-lcd1t2u6c8.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4o71vt68v1-c2oey78nd0.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0mrgqtesjp-tdbxkamptv.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\46om9v2tex-j5mq2jizvt.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xjtwaf0rdv-06098lyss8.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\e625hnlp4t-nvvlpmu67g.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\bd8wy045nf-s35ty4nyc5.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kpqckyyqxy-pj5nd1wqec.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\fokl1qvraq-46ein0sx1k.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kgtl7lslvu-v0zj4ognzu.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pyvfvbld18-37tfw0ft22.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\s71lxgvb01-hrwsygsryq.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\u2mjqrwy5z-pk9g2wxc8p.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vov7k7ihs5-ft3s53vfgj.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\usjhpjmesn-6cfz1n2cew.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\cnrthn75mc-6pdc2jztkx.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\9pcwl6dey6-493y06b0oq.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lrii6489aa-iovd86k7lj.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0txp52ganh-vr1egmr9el.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4t8ma08yvo-kbrnm935zg.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\si6fab9bc5-jj8uyg4cgr.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1ynhlstsad-y7v9cxd14o.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\epu4xyp4h5-notf2xhcfb.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\116wz7mm0p-h1s4sie4z3.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\c0cwnwyrbg-63fj8s7r0e.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\maj7ae3853-0j3bgjxly4.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xlne3jdnga-47otxtyo56.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6wc691cdsp-4v8eqarkd7.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7rkcfyfbtv-356vix0kms.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ai0fz1luys-83jwlth58m.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\yfl4w7ay3n-mrlpezrjn3.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\l2bposcls8-lzl9nlhx6b.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\rgxvp58yol-ag7o75518u.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\at9ohbavo3-x0q3zqp4vz.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8s675gt03i-0i3buxo5is.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\zy6m88w8gm-o1o13a6vjx.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3iaj5qw1qa-ttgo8qnofa.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0jn43b9c32-2z0ns9nrw6.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lkjsdah51m-muycvpuwrr.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xnl2b5k0vb-87fc7y1x7t.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\23hki9lloz-mlv21k5csn.gz
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentP.09900977.Up2Date
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\refint\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.genruntimeconfig.cache
+C:\Users\Rheyvon\Desktop\integrated lms-enr\StudentPortal\StudentPortal\obj\Debug\net9.0\ref\StudentPortal.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.Development.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.deps.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.runtimeconfig.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.exe
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.deps.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.runtimeconfig.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.pdb
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\DnsClient.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MailKit.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MimeKit.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\Snappier.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\scopedcss\bundle\StudentPortal.styles.css
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckhp5w6boe-nhx7dgaz1i.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tln4x31g20-zk3i8a83uf.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8fw0epupnq-dyjx89twm7.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\a2j0b33oyp-0bke1hi2w0.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\h9negbvy80-3bzgz86jvu.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ss6yzgem2w-uwtipo04tq.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\o7kv6jjry6-d6jejjv8e1.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2enk4meiks-bbzeabt1te.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\capmqicvwz-50qb4tk1dv.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\baqtejbbf5-dyjx89twm7.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\w2m0948bp7-em9eiyby69.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vvxn9fx1k0-0064m6ar15.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6h2a6upc3d-2ffmulqouw.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ujyod61y1b-x81mvzfaoy.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\sf5hq1w2sp-aq37fsrxoo.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\r741mdiaef-aeo6ihaoyz.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8legsv4p7f-6327ch4648.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\28zkkvphms-c2tiyv64ts.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\m8sro671im-b9wg8el6s2.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\v1wm7k35pq-3mwrgjybao.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\k28rbkf07z-fy14syiyef.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\d3ga2lrzhg-n61d757ecm.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\teedjqvvhl-6etu65ycsy.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\mfansw4f98-xr6pstj1v4.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lniguqfuby-0o2j4oa8pt.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pm0sjdximc-61n19gt1b8.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1qeexafhpq-2og9k38d0d.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42v0h9kkkm-e8hg2jjdsd.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ph27tpgqs6-xtxxf3hu2r.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j2wmdsfw45-kx994x6fma.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xqybmtlp8q-xtxxf3hu2r.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7op7q3ea3x-rjlmpip1hk.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\82ngvx3szs-98s8543kz1.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ao3myqh4vh-a6jq4wqe6r.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42xt5r4ir8-9e9sxmefwh.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckexe3ktam-xtxxf3hu2r.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\gut33kzolq-fhyyiy2kix.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\84nynzdic4-m63no7nzix.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6l6yah4n4p-taycrmejga.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\n8s9064c0j-9sw451updt.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oy79sc2wd5-zc5p8mkbb6.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\29zfy86io3-xtxxf3hu2r.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ngveyro330-f897vbduob.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\scob31ccl6-j6atsg4yvh.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pi5gic83oz-i390tns7lc.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xa4uxw4d2e-so6ls18djh.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\dikivpxifp-3b4wtytq15.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3glgom7043-hk5kgdj2hn.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oq2kxj2d84-pz51d6pcs7.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\77dpxszduh-8hsl5ubbk9.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\52j5ivcy2l-noa2vkzy8i.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2txzanwwjs-bqjiyaj88i.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\qg4ctl4jcg-c2jlpeoesf.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\x0158htarz-erw9l3u2r3.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j4s8s5tmsw-aexeepp0ev.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\uwmciuvq49-d7shbmvgxk.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4473kijm0m-ausgxo2sd3.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0ij4wb21sk-k8d9w2qqmf.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\hwtm3chhwl-cosvhxvwiu.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\t84zu07jc0-ub07r2b239.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\14e20a6bu8-fvhpjtyr6v.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2i5n0mn75e-b7pk76d08c.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\othy9yu58r-fsbi9cje9m.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oh0j6shatt-rzd6atqjts.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\q0vep3smfj-ee0r1s7dh0.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4i4lamhong-dxx9fxp4il.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tp0m43j0j3-jd9uben2k1.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kmmr5krk6q-khv3u5hwcm.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\wlu8flvgap-r4e9w2rdcm.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4amv495j3k-lcd1t2u6c8.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4o71vt68v1-c2oey78nd0.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0mrgqtesjp-tdbxkamptv.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\46om9v2tex-j5mq2jizvt.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xjtwaf0rdv-06098lyss8.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\e625hnlp4t-nvvlpmu67g.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\bd8wy045nf-s35ty4nyc5.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kpqckyyqxy-pj5nd1wqec.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\fokl1qvraq-46ein0sx1k.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kgtl7lslvu-v0zj4ognzu.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pyvfvbld18-37tfw0ft22.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\s71lxgvb01-hrwsygsryq.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\u2mjqrwy5z-pk9g2wxc8p.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vov7k7ihs5-ft3s53vfgj.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\usjhpjmesn-6cfz1n2cew.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\cnrthn75mc-6pdc2jztkx.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\9pcwl6dey6-493y06b0oq.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lrii6489aa-iovd86k7lj.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0txp52ganh-vr1egmr9el.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4t8ma08yvo-kbrnm935zg.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\si6fab9bc5-jj8uyg4cgr.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1ynhlstsad-y7v9cxd14o.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\epu4xyp4h5-notf2xhcfb.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\116wz7mm0p-h1s4sie4z3.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\c0cwnwyrbg-63fj8s7r0e.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\maj7ae3853-0j3bgjxly4.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xlne3jdnga-47otxtyo56.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6wc691cdsp-4v8eqarkd7.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7rkcfyfbtv-356vix0kms.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ai0fz1luys-83jwlth58m.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\yfl4w7ay3n-mrlpezrjn3.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\l2bposcls8-lzl9nlhx6b.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\rgxvp58yol-ag7o75518u.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\at9ohbavo3-x0q3zqp4vz.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8s675gt03i-0i3buxo5is.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\zy6m88w8gm-o1o13a6vjx.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3iaj5qw1qa-ttgo8qnofa.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0jn43b9c32-2z0ns9nrw6.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lkjsdah51m-muycvpuwrr.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xnl2b5k0vb-87fc7y1x7t.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\23hki9lloz-mlv21k5csn.gz
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets\msbuild.StudentPortal.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets\msbuild.StudentPortal.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets\msbuild.build.StudentPortal.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.StudentPortal.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.StudentPortal.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentP.09900977.Up2Date
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\refint\StudentPortal.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.pdb
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.genruntimeconfig.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\ref\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\refint\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.deps.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\temp_build_out\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.exe
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.deps.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\StudentPortal.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\DnsClient.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MailKit.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MimeKit.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\Snappier.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\bin\Debug\net9.0\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.AssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\scopedcss\bundle\StudentPortal.styles.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tln4x31g20-zk3i8a83uf.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8fw0epupnq-dyjx89twm7.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\a2j0b33oyp-13u96koayr.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\h9negbvy80-3bzgz86jvu.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2enk4meiks-bbzeabt1te.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\baqtejbbf5-dyjx89twm7.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vvxn9fx1k0-0064m6ar15.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6h2a6upc3d-2ffmulqouw.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ujyod61y1b-x81mvzfaoy.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\sf5hq1w2sp-aq37fsrxoo.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8legsv4p7f-6327ch4648.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\28zkkvphms-c2tiyv64ts.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\m8sro671im-kdvfpfb8un.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\v1wm7k35pq-3mwrgjybao.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\k28rbkf07z-fy14syiyef.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\teedjqvvhl-vc9wxh3pu8.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lniguqfuby-otixf12oht.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pm0sjdximc-61n19gt1b8.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ph27tpgqs6-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xqybmtlp8q-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7op7q3ea3x-rjlmpip1hk.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckexe3ktam-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\84nynzdic4-m63no7nzix.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6l6yah4n4p-taycrmejga.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\n8s9064c0j-9sw451updt.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oy79sc2wd5-zc5p8mkbb6.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\29zfy86io3-xtxxf3hu2r.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ngveyro330-f897vbduob.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\scob31ccl6-j6atsg4yvh.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xa4uxw4d2e-so6ls18djh.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\dikivpxifp-3b4wtytq15.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3glgom7043-hk5kgdj2hn.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\52j5ivcy2l-noa2vkzy8i.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2txzanwwjs-t1cqhe9u97.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\qg4ctl4jcg-c2jlpeoesf.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\x0158htarz-sejl45xvog.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j4s8s5tmsw-aexeepp0ev.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\uwmciuvq49-xvp3kq03qx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4473kijm0m-ausgxo2sd3.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0ij4wb21sk-22vffe00uq.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\hwtm3chhwl-cosvhxvwiu.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\t84zu07jc0-qesaa3a1fm.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\14e20a6bu8-fvhpjtyr6v.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\2i5n0mn75e-tmc1g35s3z.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\othy9yu58r-fsbi9cje9m.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oh0j6shatt-rxsg74s51o.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\q0vep3smfj-ee0r1s7dh0.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4i4lamhong-q9ht133ko3.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\tp0m43j0j3-jd9uben2k1.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kmmr5krk6q-gye83jo8yx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\wlu8flvgap-r4e9w2rdcm.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4amv495j3k-wl58j5mj3v.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4o71vt68v1-c2oey78nd0.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0mrgqtesjp-d4r6k3f320.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\46om9v2tex-j5mq2jizvt.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xjtwaf0rdv-keugtjm085.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\e625hnlp4t-nvvlpmu67g.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\bd8wy045nf-zub09dkrxp.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kpqckyyqxy-pj5nd1wqec.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\fokl1qvraq-43atpzeawx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\kgtl7lslvu-v0zj4ognzu.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pyvfvbld18-ynyaa8k90p.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\s71lxgvb01-hrwsygsryq.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\u2mjqrwy5z-c63t5i9ira.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\vov7k7ihs5-ft3s53vfgj.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\usjhpjmesn-4094rpi4f9.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\cnrthn75mc-6pdc2jztkx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\9pcwl6dey6-hd3gran6i8.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lrii6489aa-iovd86k7lj.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0txp52ganh-ltid2c489k.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\4t8ma08yvo-kbrnm935zg.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\si6fab9bc5-8vyfqsqgz1.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1ynhlstsad-y7v9cxd14o.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\epu4xyp4h5-u9q1upor1n.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\116wz7mm0p-h1s4sie4z3.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\c0cwnwyrbg-4d85u1mtcx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\maj7ae3853-0j3bgjxly4.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xlne3jdnga-03hjc8e09r.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\6wc691cdsp-48y08845bh.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\7rkcfyfbtv-356vix0kms.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ai0fz1luys-83jwlth58m.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\yfl4w7ay3n-mrlpezrjn3.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\l2bposcls8-worgj0nhwm.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\rgxvp58yol-gk0pw8i4co.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\at9ohbavo3-x0q3zqp4vz.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\8s675gt03i-d6nrnj6jjx.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\zy6m88w8gm-m9qm4tazc0.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\3iaj5qw1qa-ttgo8qnofa.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\0jn43b9c32-jjsuc0puko.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\lkjsdah51m-9vr69e8ynj.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\xnl2b5k0vb-87fc7y1x7t.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\23hki9lloz-mlv21k5csn.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentP.09900977.Up2Date
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\StudentPortal.genruntimeconfig.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\ref\StudentPortal.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\r741mdiaef-ow1gyarn15.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\oq2kxj2d84-qmt6wnsah4.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\77dpxszduh-xf5x7gtnbq.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42xt5r4ir8-9e9sxmefwh.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\42v0h9kkkm-xop4awnyq9.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ss6yzgem2w-7ei48ug4qh.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\d3ga2lrzhg-b85zzfcv9q.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\1qeexafhpq-g0xt3n1q89.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\capmqicvwz-1kxps6ijl0.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\w2m0948bp7-870dkfftzz.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ckhp5w6boe-40eprvi3is.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\pi5gic83oz-hfhuhpq4ck.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\j2wmdsfw45-ituyeavd41.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\mfansw4f98-f1qfj9she4.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\gut33kzolq-dyzjmxqp9x.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\o7kv6jjry6-9bw922a4r9.gz
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\appsettings.Development.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\appsettings.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\appsettings.Development.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\appsettings.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\StudentPortal.deps.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\StudentPortal.runtimeconfig.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\StudentPortal.staticwebassets.endpoints.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\temp_build_out\StudentPortal.staticwebassets.runtime.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.staticwebassets.runtime.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.staticwebassets.endpoints.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.exe
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.deps.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.runtimeconfig.json
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\StudentPortal.pdb
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\BCrypt.Net-Next.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\BouncyCastle.Cryptography.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\DnsClient.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\MailKit.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\MimeKit.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\MongoDB.Bson.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\MongoDB.Driver.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\SharpCompress.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\Snappier.dll
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\tempbuild\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\82ngvx3szs-ns4p84em20.gz
+c:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\compressed\ao3myqh4vh-syo5o998r0.gz
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\StudentPortal\StudentPortal\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

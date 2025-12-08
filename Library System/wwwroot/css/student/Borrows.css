@@ -1,0 +1,812 @@
+﻿/* === GLOBAL STYLING === */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 70px;
+    color: #222;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(1.05);
+    }
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 70px); /* keep full height minus top bar */
+    gap: 20px;
+    overflow: hidden; /* prevent double scroll on parent */
+}
+
+/* === Borrow Section (scrollable main content) === */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    
+    height: calc(100vh - 70px);
+    scroll-behavior: smooth;
+}
+
+
+/* === CURRENT BORROWING SECTION === */
+.borrowed h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #8F2809;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+    .borrowed h2::after {
+        content: "";
+        flex-grow: 1;
+        height: 5px;
+        background: linear-gradient(90deg, #8F2809, #FF9809);
+        margin-left: 15px;
+        border-radius: 3px;
+    }
+
+.title-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.borrow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #FFF9F9;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: calc(100vh - 70px); /* 👈 fill up to bottom */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+.borrow-card {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr 1.5fr 1.5fr;
+    align-items: center;
+    gap: 24px;
+    background: #FFF9F9;
+    padding: 24px 28px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+    .borrow-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 18px rgba(0,0,0,0.15);
+    }
+
+/* === Column 1: Book Image === */
+.book-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-image, .book-cover {
+    width: 70px;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* === Column 2: Book Details === */
+.book-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.book-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.book-author {
+    font-size: 15px;
+    color: #3D3D3D;
+    margin: 0;
+}
+
+.date-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.borrow-date {
+    color: green;
+    font-weight: 600;
+}
+
+.due-date {
+    color: #EF0202;
+    font-weight: 600;
+}
+
+/* === Column 3: Status (aligned with book title & dates) === */
+.status-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    height: 100%;
+    font-size: 15px;
+}
+
+.status {
+    padding: 6px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+
+    .status.orange {
+        background: #FF9809;
+    }
+
+    .status.gray {
+        background: #8C918E;
+    }
+
+/* === Column 4: Actions === */
+.borrow-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+    max-width: 140px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+    /* Button colors (as per your specs) */
+    .btn.report {
+        background: #EF0202;
+    }
+
+    .btn.renewal {
+        background: #006B99;
+    }
+
+        .btn.renewal.disabled {
+            background: #8C918E;
+            cursor: not-allowed;
+        }
+
+    /* Optional hover effect for clickable buttons */
+    .btn:not(.disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+
+
+/* === NOTIFICATIONS === */
+/* === NOTIFICATIONS === */
+.notifications {
+    flex: 0.8;
+    min-width: 280px;
+    max-width: 360px;
+    background: #fff9f9;
+    padding: 30px 25px 40px 25px;
+    border-left: 1px solid #ddd;
+    overflow-y: auto;
+    position: relative;
+}
+
+    /* Header */
+    .notifications h2 {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 28px;
+        font-weight: 700;
+        color: #8F2809;
+        padding: 12px 20px;
+        background: #FCFFF5;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+
+        .notifications h2 img {
+            width: 32px;
+            height: 32px;
+        }
+
+/* List Container */
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Waitlist Item Card */
+.waitlist-item {
+    background: #FCFFF5;
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+    .waitlist-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        background: #fffefb;
+    }
+
+/* Book Info */
+.waitlist-book {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Info Texts */
+.waitlist-info {
+    flex: 1;
+}
+
+    .waitlist-info h4 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 5px;
+        color: #222;
+    }
+
+    .waitlist-info p {
+        font-size: 14px;
+        margin: 0 0 6px;
+        color: #555;
+    }
+
+.reservation-date {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Status Pill */
+.waitlist-status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+    .waitlist-status.waitlisted {
+        background: #fce5e5;
+        color: #d32f2f;
+    }
+
+    .waitlist-status.reserved {
+        background: #e4f7e9;
+        color: #1b7d38;
+    }
+
+/* Close Button (X) */
+.remove-waitlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: #000;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+    .remove-waitlist-btn:hover {
+        opacity: 1;
+    }
+
+/* Empty State */
+.empty-borrowed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+    color: #888;
+    font-size: 16px;
+    text-align: center;
+}
+
+    .empty-borrowed img.ghost-img {
+        width: 80px;
+        margin-bottom: 20px;
+        opacity: 0.6;
+    }
+
+/* === Confirm Modal - Improved Styling === */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+    .custom-modal .modal-content {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 420px;
+        text-align: center;
+        animation: slideUp 0.3s ease-in-out;
+        position: relative;
+    }
+
+    /* Prominent Title */
+    .custom-modal h3 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #EF0202;
+        margin-bottom: 1rem;
+    }
+
+    /* Modal Description */
+    .custom-modal p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+/* Buttons Container */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+    /* Cancel Button (Gray) */
+    .modal-buttons .btn.cancel {
+        background-color: #ccc;
+        color: #333;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    /* Confirm Button (Red) */
+    .modal-buttons .btn.confirm {
+        background-color: #d32f2f;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    /* Hover Effects */
+    .modal-buttons .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* === Report Modal Styling === */
+.modal-overlays {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Shared modal content base */
+.modal-content.report-modals {
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-in-out;
+    text-align: center;
+    border-top: 8px solid #006B99; /* Blue header accent */
+}
+
+/* Close icon (×) */
+.modal-content .close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+    .modal-content .close:hover {
+        color: #d32f2f;
+    }
+
+/* Modal title */
+.modal-content h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #EF0202;
+    text-align: center;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #006B99;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-group textarea,
+    .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        resize: vertical;
+    }
+
+    /* Make sure book name input appears right after label */
+    .form-group .book-name {
+        margin-top: 0.2rem;
+    }
+
+/* Action buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+    .form-actions .btn.cancel {
+        background: #ccc;
+        color: #333;
+        font-weight: bold;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .form-actions .btn.confirm {
+        background: #006B99;
+        color: white;
+        font-weight: bold;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .form-actions .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* === Confirm Modal */
+
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Enhanced content box */
+.modal-content.cancel {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    text-align: left;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 1;
+}
+
+
+    /* Header (icon + title) */
+    .modal-content.cancel .modal-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: #EF0202;
+        margin-bottom: 1rem;
+    }
+
+        .modal-content.cancel .modal-header i {
+            font-size: 1.8rem;
+        }
+
+    /* Message text */
+    .modal-content.cancel p {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+/* Buttons area */
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+    .modal-buttons .btn {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+        /* Button colors */
+        .modal-buttons .btn.cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .modal-buttons .btn.confirm {
+            background: #EF0202;
+           
+            color: #fff;
+        }
+
+.modal-content.success h3 {
+    color: #EF0202;
+}
+
+.modal-content.success .btn.confirm {
+    background: #28a745;
+}
+
+/* Renewal Modal Styles */
+.modal-content.renewal,
+.modal-content.success-renewal,
+.modal-content.error-renewal {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-content.renewal .modal-header,
+.modal-content.success-renewal .modal-header,
+.modal-content.error-renewal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.modal-content.renewal .modal-header i,
+.modal-content.success-renewal .modal-header i,
+.modal-content.error-renewal .modal-header i {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.modal-content.renewal h3,
+.modal-content.success-renewal h3,
+.modal-content.error-renewal h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.modal-content.success-renewal h3 {
+    color: #28a745;
+}
+
+.modal-content.error-renewal h3 {
+    color: #dc3545;
+}
+
+.modal-content.renewal p,
+.modal-content.success-renewal p,
+.modal-content.error-renewal p {
+    font-size: 16px;
+    color: #666;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+.modal-content.renewal .modal-buttons,
+.modal-content.success-renewal .modal-buttons,
+.modal-content.error-renewal .modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.modal-content.renewal .btn.confirm,
+.modal-content.success-renewal .btn.confirm,
+.modal-content.error-renewal .btn.confirm {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.modal-content.renewal .btn.confirm:hover,
+.modal-content.success-renewal .btn.confirm:hover,
+.modal-content.error-renewal .btn.confirm:hover {
+    background: #0056b3;
+}
+
+.modal-content.success-renewal .btn.confirm {
+    background: #28a745;
+}
+
+.modal-content.success-renewal .btn.confirm:hover {
+    background: #218838;
+}
+
+.modal-content.error-renewal .btn.confirm {
+    background: #dc3545;
+}
+
+.modal-content.error-renewal .btn.confirm:hover {
+    background: #c82333;
+}
+
+/* Optional fade animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+

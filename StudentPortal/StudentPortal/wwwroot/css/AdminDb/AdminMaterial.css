@@ -1,0 +1,461 @@
+@import url('/css/StudentDb/StudentMaterial.css');
+@import url('/css/Shared/BottomBar.css');
+
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    --left-w: 260px;
+    --gap: 32px;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+/* LEFT SECTION — FIXED CLASS INFO */
+.class-info {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 20%;
+    height: calc(100vh - 150px);
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.subject-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.subject-code,
+.class-code {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin: 4px 0;
+}
+
+.instructor-profile {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.instructor-profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.instructor-profile-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.instructor-role {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Recent Material */
+.recent-material {
+    margin-top: -10px;
+}
+
+    .recent-material h3 {
+        font-size: 0.95rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .recent-material ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .recent-material li {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #1e293b;
+    }
+
+.back-button {
+    margin-top: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+    .back-button:hover {
+        background: #0f1e36;
+    }
+
+
+/* RIGHT SECTION — MATERIAL CONTENT */
+.material-container {
+    position: relative;
+    margin: 0 0 20px 0;
+    height: calc(100vh - 110px);
+    width: 100%;
+    background: #fff;
+    color: #0b213a;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    border: 1px solid rgba(10, 20, 40, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.material-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.material-description {
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.material-scrollable {
+    padding: 24px;
+    overflow-y: auto;
+    height: calc(100% - 50px);
+    box-sizing: border-box;
+}
+
+/* library search removed */
+
+.material-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    padding: 0px 24px 10px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: 0 -2px 8px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+    .material-bottom p {
+        padding-left: 10px;
+        margin: -10px;
+        margin-top: 13px;
+    }
+
+.posted-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: left;
+    padding-top: 5px;
+}
+
+/* --- ADMIN MAKE CHANGES BUTTON --- */
+.make-changes-wrap {
+    position: fixed;
+    bottom: 120px;
+    right: 60px;
+    z-index: 99;
+}
+
+.make-changes-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #fff;
+    color: #0b213a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: -40px;
+    margin-bottom: -40px;
+}
+
+    .make-changes-button:hover {
+        box-shadow: 0 10px 28px rgba(36, 58, 115, 0.18);
+        border: 1px solid rgba(36, 58, 115, 0.12);
+        transform: scale(1.06);
+    }
+
+/* --- ADMIN ACTIONS (Radial Above Button) --- */
+.admin-actions {
+    position: absolute;
+    top: -130px;
+    right: -30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+    /* shown state */
+    .admin-actions.show {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+    }
+
+/* each action is a 2-column grid: label (auto) | button (fixed 54px) */
+.admin-action {
+    display: grid;
+    grid-template-columns: auto 54px; /* label (left) | button (right) */
+    gap: 8px;
+    align-items: center;
+    justify-items: start;
+}
+
+    /* ensure the label sits close to the button and doesn't stretch */
+    .admin-action .label {
+        background: #0b213a;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        justify-self: end; /* push the label to the right so it hugs the button */
+    }
+
+    /* the circular control */
+    .admin-action button {
+        grid-column: 2;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: none;
+        background: #fff;
+        box-shadow: 0 6px 16px rgba(16, 24, 40, 0.1);
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        /* hover / active style preserved */
+        .admin-action button:hover {
+            box-shadow: 0 10px 28px rgba(36, 58, 115, 0.18);
+            border: 1px solid rgba(36, 58, 115, 0.12);
+            transform: scale(1.06);
+        }
+
+
+/* --- EDIT MODE --- */
+.attachment-box {
+    position: relative;
+}
+
+    .attachment-box .remove-attachment {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #ef4444;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.75rem;
+        display: none;
+        cursor: pointer;
+    }
+
+    .attachment-box.editing .remove-attachment {
+        display: block;
+    }
+
+.add-attachment-box {
+    width: 180px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f3f6fb;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed var(--accent);
+    color: var(--accent);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+    .add-attachment-box.show {
+        display: flex;
+    }
+
+/* --- SAVE / CANCEL --- */
+.edit-controls {
+    position: absolute;
+    bottom: 15px;
+    right: 100px;
+    display: flex;
+    gap: 10px;
+}
+
+    .edit-controls .btn {
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+    }
+
+.save-btn {
+    background: var(--accent);
+    color: #fff;
+}
+
+.cancel-btn {
+    background: #cbd5e1;
+    color: #1e293b;
+}
+
+/* --- DELETE MODAL --- */
+.delete-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.25s ease;
+}
+
+    .delete-modal.show {
+        display: flex;
+        animation: fadeIn 0.25s ease forwards;
+    }
+
+/* Modal Box */
+.modal-content {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 16px;
+    padding: 28px 36px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 340px;
+    animation: slideUp 0.25s ease;
+    position: relative;
+}
+
+/* Warning Icon */
+.modal-icon {
+    font-size: 2.8rem;
+    color: #f87171;
+    margin-bottom: 12px;
+}
+
+/* Modal Header */
+.modal-content h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Modal Text */
+.modal-content p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+    .modal-buttons .btn {
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 10px 18px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-size: 0.95rem;
+    }
+
+.confirm-delete {
+    background: #ef4444;
+    color: #fff;
+}
+
+    .confirm-delete:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+    }
+
+.cancel-delete {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+    .cancel-delete:hover {
+        background: #cbd5e1;
+        transform: translateY(-2px);
+    }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

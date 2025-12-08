@@ -1,0 +1,431 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@{
+    ViewData["Title"] = "2nd Year Enrollment Request";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+
+    var program = ViewBag.ProgramNormalized as string ?? Model.Program ?? "BSIT";
+    var secondYearSubjects = ViewBag.SecondYearSubjects as List<E_SysV0._01.Models.SubjectRow> ?? new List<E_SysV0._01.Models.SubjectRow>();
+    var eligibility = ViewBag.SecondYearEligibility as Dictionary<string, string> ?? new Dictionary<string, string>();
+    var allRemarks = ViewBag.AllFirstYearRemarks as Dictionary<string, string> ?? new Dictionary<string, string>();
+    var prereqMap = ViewBag.PrerequisiteMap as Dictionary<string, List<string>> ?? new Dictionary<string, List<string>>();
+    var eligibleCount = ViewBag.EligibleCount ?? 0;
+    var ineligibleCount = ViewBag.IneligibleCount ?? 0;
+
+    var ef = Model.ExtraFields ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    string Get(string prefix, string name)
+    {
+        var key = string.IsNullOrEmpty(prefix) ? name : $"{prefix}.{name}";
+        return ef.TryGetValue(key, out var value) ? value : "";
+    }
+
+    var selectedSubjects = Get("", "SelectedSubjects")
+        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+        .Select(s => s.Trim())
+        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    var hasFailedSubjects = ef.TryGetValue("HasFailedSubjects", out var hfs) &&
+        bool.TryParse(hfs, out var failed) && failed;
+
+    var enrollmentType = Get("Academic", "EnrollmentType");
+    var isIrregular = enrollmentType.Contains("Irregular", StringComparison.OrdinalIgnoreCase) || hasFailedSubjects;
+
+    string displayStatus = Model.Status ?? "";
+    string submittedAt = Model.SubmittedAt.ToLocalTime().ToString("f");
+}
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-1"></i>@err</div>
+}
+@if (TempData["Info"] is string info)
+{
+    <div class="alert alert-info"><i class="fas fa-info-circle me-1"></i>@info</div>
+}
+
+<div class="card">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h2 class="mb-1">2nd Year Enrollment Request - @Model.FullName</h2>
+            <div class="small text-muted">
+                <strong>Type:</strong> 2nd Year Enrollment
+                &nbsp;&middot;&nbsp;
+                <strong>Status:</strong> <span class="badge bg-outline border text-secondary" style="font-weight:400;">@displayStatus</span>
+                &nbsp;&middot;&nbsp;
+                <strong>Submitted:</strong> @submittedAt
+            </div>
+        </div>
+        <div>
+            <span class="badge bg-@(isIrregular ? "warning text-dark" : "success") me-2">
+                @(isIrregular ? "Irregular" : "Regular")
+            </span>
+        </div>
+    </div>
+
+    <p class="text-muted mb-3">Review 2nd year enrollment eligibility and subject prerequisites.</p>
+
+    <div class="d-flex w-100 rounded-2 p-2 review-section-title">
+        <h4 class="ms-2">2nd Year Enrollment Review</h4>
+    </div>
+
+    <!-- Quick Info Section -->
+    <div class="mt-3">
+        <h4 class="section-spaced">Student Information</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Last Name</div><div class="data-value">@Get("Student", "LastName")</div></div>
+            <div class="data-item"><div class="data-label">First Name</div><div class="data-value">@Get("Student", "FirstName")</div></div>
+            <div class="data-item"><div class="data-label">Middle Name</div><div class="data-value">@Get("Student", "MiddleName")</div></div>
+            <div class="data-item"><div class="data-label">Email</div><div class="data-value">@Model.Email</div></div>
+        </div>
+
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item"><div class="data-label">Program</div><div class="data-value">@program</div></div>
+            <div class="data-item"><div class="data-label">Target Year/Sem</div><div class="data-value">2nd Year 1st Semester</div></div>
+            <div class="data-item"><div class="data-label">Enrollment Type</div><div class="data-value">@(isIrregular ? "Irregular" : "Regular")</div></div>
+        </div>
+    </div>
+
+    <!-- Eligibility Summary -->
+    <div class="mt-3">
+        <h4 class="section-spaced">Eligibility Summary</h4>
+        <hr />
+        <div class="data-grid mt-2 mb-3">
+            <div class="data-item">
+                <div class="data-label">Eligible Subjects</div>
+                <div class="data-value text-success eligibility-count">@eligibleCount</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Ineligible Subjects</div>
+                <div class="data-value text-danger eligibility-count">@ineligibleCount</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Selected by Student</div>
+                <div class="data-value text-primary eligibility-count">@selectedSubjects.Count</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1st Year Performance -->
+    <div class="mt-3">
+        <h4 class="section-spaced">1st Year Performance (All Semesters)</h4>
+        <hr />
+        <div class="table-responsive mb-3">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var remark in allRemarks.OrderBy(r => r.Key))
+                    {
+                        var badgeClass = remark.Value.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                        remark.Value.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                        "bg-warning text-dark";
+
+                        <tr>
+                            <td class="subject-code">@remark.Key</td>
+                            <td>
+                                <span class="badge @badgeClass remark-badge">@remark.Value.ToUpper()</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 2nd Year Subject Eligibility -->
+    <div class="mt-3">
+        <h4 class="section-spaced">2nd Year 1st Semester - Subject Eligibility</h4>
+        <hr />
+        <div class="table-responsive mb-3">
+            <table class="table table-sm table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">Selected</th>
+                        <th style="width:120px;">Subject Code</th>
+                        <th>Subject Title</th>
+                        <th style="width:70px;">Units</th>
+                        <th style="width:200px;">Prerequisites</th>
+                        <th style="width:150px;">Eligibility Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in secondYearSubjects)
+                    {
+                        var isEligible = eligibility.TryGetValue(subject.Code, out var status) &&
+                        status.StartsWith("Can enroll", StringComparison.OrdinalIgnoreCase);
+                        var isSelected = selectedSubjects.Contains(subject.Code);
+                        var eligibilityBadge = isEligible ? "bg-success" : "bg-danger";
+                        var rowClass = isSelected ? "table-primary" : (isEligible ? "" : "table-secondary");
+
+                        <tr class="@rowClass">
+                            <td class="text-center">
+                                @if (isSelected)
+                                {
+                                    <i class="fas fa-check text-primary" title="Selected by student"></i>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td class="subject-code">@subject.Code</td>
+                            <td>@subject.Title</td>
+                            <td>@subject.Units</td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(subject.PreRequisite))
+                                {
+                                    <small class="text-muted">@subject.PreRequisite</small>
+                                }
+                                else
+                                {
+                                    <small class="text-muted">None</small>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge @eligibilityBadge eligibility-badge">
+                                    @(isEligible ? "ELIGIBLE" : "NOT ELIGIBLE")
+                                </span>
+                                @if (!isEligible && eligibility.ContainsKey(subject.Code))
+                                {
+                                    <br />
+                                    <small class="text-muted">@eligibility[subject.Code]</small>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+    <div class="action-toolbar card mt-5 mx-auto">
+        <div class="card-body d-flex align-items-center justify-content-center flex-wrap gap-3 text-center">
+           
+            <div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">
+
+               
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Accept"
+                      method="post" class="d-inline js-action-form" data-action="accept">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="true" />
+                    <button type="submit" class="btn btn-success" @(Model.Status.Contains("Pending", StringComparison.OrdinalIgnoreCase) ? "" : "disabled")>
+                        <i class="fas fa-check"></i> Accept
+                    </button>
+                </form>
+
+               
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Hold"
+                      method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="hold">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="reviewed" value="true" />
+
+                    <select id="holdReasonSelect" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Awaiting further review" selected>Awaiting further review</option>
+                        <option value="Program capacity reached">Program capacity reached</option>
+                        <option value="Missing prerequisites">Missing prerequisites</option>
+                        <option value="Other">Other (specify)</option>
+                    </select>
+
+                    <input type="hidden" name="reason" id="holdReasonValue" value="Awaiting further review" />
+                    <input type="text" id="holdReasonOtherInput" class="form-control input-modern d-none"
+                           placeholder="Specify reason" style="min-width: 220px;" />
+
+                    <button type="submit" class="btn btn-warning" @(Model.Status.Contains("Pending", StringComparison.OrdinalIgnoreCase) ? "" : "disabled")>
+                        <i class="fas fa-pause"></i> On Hold
+                    </button>
+                </form>
+
+                <form asp-area="Admin" asp-controller="Admin" asp-action="Reject"
+                      method="post" class="d-flex align-items-center gap-2 js-action-form" data-action="reject">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <select name="reason" class="form-select select-modern select-sm" style="min-width: 220px;">
+                        <option value="Unqualified">Unqualified</option>
+                        <option value="Missing Prerequisites">Missing Prerequisites</option>
+                        <option value="Violates Policy">Violates Policy</option>
+                        <option value="No Capacity">No Capacity</option>
+                    </select>
+                    <button type="submit" class="btn btn-danger" @(Model.Status.Contains("Pending", StringComparison.OrdinalIgnoreCase) ? "" : "disabled")>
+                        <i class="fas fa-times"></i> Reject
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-secondary" href="@Url.Action("Dashboard", "Admin", new { area = "Admin" })">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const holdReasonSelect = document.getElementById('holdReasonSelect');
+        const holdReasonValue = document.getElementById('holdReasonValue');
+        const holdReasonOtherInput = document.getElementById('holdReasonOtherInput');
+
+            if (holdReasonSelect && holdReasonValue) {
+                holdReasonSelect.addEventListener('change', function() {
+                    if (this.value === 'Other') {
+                        holdReasonOtherInput.classList.remove('d-none');
+                        holdReasonValue.value = holdReasonOtherInput.value || 'Other';
+                    } else {
+                        holdReasonOtherInput.classList.add('d-none');
+                        holdReasonValue.value = this.value;
+                    }
+                });
+
+                if (holdReasonOtherInput) {
+                    holdReasonOtherInput.addEventListener('input', function() {
+                        if (holdReasonSelect.value === 'Other') {
+                            holdReasonValue.value = this.value || 'Other';
+                        }
+                    });
+                }
+            }
+
+            
+            const actionForms = document.querySelectorAll('.js-action-form');
+            actionForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const action = this.getAttribute('data-action');
+                    let message = '';
+
+                    switch(action) {
+                        case 'accept':
+                            message = 'Are you sure you want to accept this 2nd year enrollment request?';
+                            break;
+                        case 'hold':
+                            message = 'Are you sure you want to put this request on hold?';
+                            break;
+                        case 'reject':
+                            message = 'Are you sure you want to reject this 2nd year enrollment request?';
+                            break;
+                    }
+
+                    if (!confirm(message)) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        });
+
+    @functions {
+            public string GetAntiforgeryToken()
+            {
+                    return Url.ActionContext.HttpContext.RequestServices
+                            .GetService(typeof(Microsoft.AspNetCore.Antiforgery.IAntiforgery))
+                            is Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery
+                            ? antiforgery.GetAndStoreTokens(Url.ActionContext.HttpContext).RequestToken
+                            : string.Empty;
+            }
+    }
+</script>
+}
+
+<style>
+    .data-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .data-item {
+        display: flex;
+        flex-direction: column;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 0.375rem;
+    }
+
+    .data-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #6c757d;
+        margin-bottom: 0.25rem;
+    }
+
+    .data-value {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #212529;
+    }
+
+    .review-section-title {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .section-spaced {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .action-toolbar {
+        border: 1px solid #dee2e6;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .select-modern {
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .select-modern:focus {
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+    .input-modern {
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .input-modern:focus {
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+    .select-sm {
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .subject-code {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: #2c3e50;
+        letter-spacing: 0.5px;
+    }
+
+    .eligibility-count {
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+
+    .remark-badge {
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .eligibility-badge {
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>

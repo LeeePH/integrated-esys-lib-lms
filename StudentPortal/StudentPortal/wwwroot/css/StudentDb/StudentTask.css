@@ -1,0 +1,782 @@
+@import url('/css/Shared/BottomBar.css');
+@import url('/css/shared/LibraryModal.css');
+
+
+/* ====================== ROOT VARIABLES ====================== */
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    --left-w: 260px;
+    --gap: 32px;
+    --library-w: 800px; /* modal width */
+    --library-h: 500px; /* modal height */
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ====================== GLOBAL STYLES ====================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, #eef2f7 0%, #e6ecf5 60%, #f7f9fc 100%);
+    color: var(--card-text);
+}
+
+/* ====================== LAYOUT ====================== */
+.class-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    gap: 30px;
+    position: relative;
+}
+
+/* ====================== LEFT PANEL — SUBMIT CONTAINER ====================== */
+.submit-container {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 23.5%;
+    height: calc(100vh - 110px);
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.08);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.submit-container-top {
+    flex-shrink: 0;
+}
+
+.submit-container-middle {
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    padding-right: 4px;
+}
+
+.submit-container-bottom {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+/* Header */
+.submit-header {
+    display: flex;
+    justify-content: space-between; /* header left, counter right */
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0b213a;
+}
+
+.submit-container-top .submit-header .point-counter {
+    background: #e0e7ff; /* light blue box */
+    color: #3730a3; /* dark text */
+    padding: 2px 8px; /* space inside the box */
+    border-radius: 6px; /* rounded corners */
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-width: 36px; /* optional: width for alignment */
+    text-align: center;
+}
+
+/* ====================== ATTACHMENT AREA ====================== */
+.attachment-area {
+    background: #fff;
+    border: 1px dashed #94a3b8;
+    border-radius: 12px;
+    padding: 32px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #0b213a;
+    font-weight: 500;
+    margin: 10px 0 16px 0;
+    flex-shrink: 0;
+}
+
+.attach-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #0b213a;
+}
+
+    .attach-label:hover {
+        color: var(--accent);
+    }
+
+/* ====================== PRIVATE COMMENT BUTTON ====================== */
+.private-comment {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #475569;
+    transition: all 0.2s ease;
+    margin: 15px 0;
+    flex-shrink: 0;
+}
+
+    .private-comment:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+    }
+
+/* Comment box */
+.comment-box {
+    position: relative; /* required for absolute positioning of the close button */
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 360px;
+    max-height: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ====================== BUTTONS ====================== */
+.submit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    flex-shrink: 0;
+}
+
+.btn {
+    border: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(16, 24, 40, 0.06);
+}
+
+.submit-btn {
+    background: var(--accent);
+    color: #fff;
+    transition: transform 0.2s ease;
+}
+
+    .submit-btn:hover {
+        background: #00577c;
+    }
+
+.mark-done-btn {
+    background: #006b99;
+    color: #fff;
+    transition: transform 0.2s ease;
+}
+
+    .mark-done-btn:hover {
+        background: #00577c;
+    }
+
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+    .back-button:hover {
+        background: #00577c;
+    }
+
+/* ====================== RESPONSIVE ====================== */
+@media (max-width: 900px) {
+    .submit-container {
+        width: 240px;
+        left: 20px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .submit-container {
+        position: static;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
+
+/* RIGHT COLUMN */
+.right-column-task {
+    display: flex;
+    flex-direction: column; /* stack children vertically */
+    gap: 20px; /* space between task and comment container */
+    margin-left: 28%;
+    margin-top: -20px;
+    padding-right: 10px;
+    width: 70%;
+}
+
+/* TASK CARD */
+.task-container {
+    position: relative;
+    margin: 0 0 20px 0;
+    height: calc(100vh - 110px); /* fits viewport without overlapping bottom-bar */
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.task-scrollable {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 260px);
+}
+
+.task-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.task-description {
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+/* ATTACHMENTS */
+.attachments {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.attachment-box {
+    background: #FF9809;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+    .attachment-box:hover {
+        background: #f19008;
+    }
+
+
+/* ====================== TASK BOTTOM ====================== */
+.task-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    padding: 0px 24px 10px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: 0 -2px 8px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+    .task-bottom p {
+        padding-left: 10px;
+        margin: -10px;
+        margin-top: 13px;
+    }
+
+.posted-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: left;
+    padding-top: 5px;
+}
+
+#deadlineInput {
+    margin-left: 8px;
+    padding: 4px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    background: #fff;
+}
+
+/* ====================== PUBLIC COMMENT CONTAINER ====================== */
+.public-comment-container {
+    background: #fff;
+    margin: 0 0 48px 0;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+    padding: 18px;
+    height: calc(100vh - 145px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* ensures comments scroll inside */
+}
+
+.public-comment-header {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--accent);
+    padding: 0 24px 0 24px;
+}
+
+.public-comment-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px 24px;
+    border-top: 1px solid rgba(16,24,40,0.06);
+    border-bottom: 1px solid rgba(16,24,40,0.06);
+}
+
+    .public-comment-input textarea {
+        flex-grow: 1;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        resize: none;
+        font-size: 0.95rem;
+        height: 20px;
+    }
+
+.post-comment-btn {
+    padding: 8px 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+    .post-comment-btn:hover {
+        background: #00577c;
+    }
+
+.public-comment-list {
+    padding: 12px 24px;
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: calc(100% - 110px); /* subtract header + input */
+}
+
+/* ====================== COMMENT BOX ====================== */
+.comment-box {
+    background: #f8fafc; /* light gray background for comments */
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 95%;
+}
+
+    .comment-box .student-name {
+        font-weight: 600;
+        color: #0f172a; /* dark accent */
+        font-size: 0.95rem;
+    }
+
+    .comment-box .comment-text {
+        font-size: 0.9rem;
+        color: #334155;
+        line-height: 1.4;
+    }
+
+    .comment-box .comment-datetime {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+
+    /* ====================== INSTRUCTOR REPLY ====================== */
+    .comment-box .instructor-reply {
+        margin-top: 8px;
+        padding-left: 20px; /* indentation */
+        border-left: 2px solid #cbd5e1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+        .comment-box .instructor-reply i.fa-reply {
+            color: #0ea5e9;
+            margin-right: 4px;
+        }
+
+    .comment-box .instructor-name {
+        font-weight: 600;
+        color: #0f172a;
+        font-size: 0.9rem;
+    }
+
+    .comment-box .reply-text {
+        font-size: 0.88rem;
+        color: #334155;
+        line-height: 1.4;
+    }
+
+    .comment-box .reply-datetime {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+/* ====================== REPLY OPTION ====================== */
+.reply-option {
+    margin-top: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: max-content;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+    .reply-option:hover {
+        background: rgba(0,107,153,0.08);
+    }
+
+/* ====================== REPLY BOX INPUT ====================== */
+.reply-box-area {
+    margin-top: 10px;
+    padding-left: 6px;
+    display: none; /* ← HIDE BY DEFAULT */
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reply-box {
+    width: 95%;
+    min-height: 40px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    resize: none;
+}
+
+.reply-submit-btn {
+    width: max-content;
+    padding: 6px 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+    .reply-submit-btn:hover {
+        background: #00577c;
+    }
+
+
+
+/* ====================== CONFIRM MODALS ====================== */
+#confirmModal,
+#submitConfirmModal,
+#unsubmitConfirmModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    pointer-events: none; /* prevent accidental clicks */
+}
+
+    #confirmModal[aria-hidden="false"],
+    #submitConfirmModal[aria-hidden="false"],
+    #unsubmitConfirmModal[aria-hidden="false"] {
+        display: flex; /* only show when aria-hidden="false" */
+        pointer-events: auto;
+    }
+
+/* Force confirm modals to overlay and be clickable when visible */
+.confirm-modal[aria-hidden="false"] {
+    display: flex !important;
+    pointer-events: auto !important;
+    z-index: 1000;
+}
+
+.confirm-box {
+    background: #f3f6fb;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    width: 250px;
+}
+
+    .confirm-box p {
+        font-size: 0.95rem;
+        color: #0b213a;
+        margin-bottom: 18px;
+    }
+
+.confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+    .confirm-actions .btn {
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .confirm-actions .yes,
+    .confirm-actions .no {
+        background: #182b5c;
+        color: #fff;
+        transform: scale(1.02);
+    }
+
+/* ====================== ATTACHMENT LIST MODAL ====================== */
+#attachmentListModal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(16,24,40,0.5);
+    z-index: 400;
+}
+
+    #attachmentListModal[aria-hidden="false"] {
+        display: flex;
+    }
+
+.attachment-list-box {
+    background: #fff;
+    padding: 20px;
+    width: 360px;
+    max-height: 480px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+    .attachment-list-box .attachment-box {
+        margin: 4px 0;
+    }
+
+#closeAttachmentList {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #334155;
+}
+
+    #closeAttachmentList:hover {
+        color: #1e293b;
+    }
+
+
+/* ==========================================================
+   RESULT CONTAINER CSS
+   ========================================================== */
+
+/* Container */
+#resultContainer {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 23.5%;
+    height: calc(100vh - 110px);
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Top section */
+.result-container-top {
+    margin-bottom: 16px;
+}
+
+    .result-container-top .submit-header {
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .result-container-top .submit-header .point-counter {
+            background: #e0e7ff; /* light blue box */
+            color: #3730a3; /* dark text */
+            padding: 2px 8px; /* space inside the box */
+            border-radius: 6px; /* rounded corners */
+            font-size: 0.95rem;
+            font-weight: 600;
+            min-width: 36px; /* optional: width for alignment */
+            text-align: center;
+        }
+
+/* Middle section */
+.result-container-middle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: -25px;
+}
+
+    /* Attachment list button */
+    .result-container-middle .attachment-list-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #e2e8f0;
+        padding: 10px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .result-container-middle .attachment-list-btn:hover {
+            background-color: #cbd5e1;
+        }
+
+    .result-container-middle .attachment-list-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+.instructor-remarks-container {
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#instructorRemarks {
+    min-height: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    resize: none;
+    font-size: 0.9rem;
+    color: #334155;
+    background-color: #f8fafc;
+}
+
+/* Unsubmit button */
+.result-container-middle .unsubmit-btn {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .result-container-middle .unsubmit-btn:hover {
+        background-color: #f87171;
+    }
+
+/* Bottom section */
+.result-container-bottom {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+    /* Back button */
+    .result-container-bottom .back-button {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s ease;
+    }
+
+        .result-container-bottom .back-button:hover {
+            background: #00577c;
+        }
+
+    /* Icons inside buttons */
+    .result-container-middle i,
+    .result-container-bottom i {
+        font-size: 1rem;
+    }
+
+/* Hide all scrollbars but keep scroll functionality */
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+* {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}

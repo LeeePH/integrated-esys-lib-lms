@@ -1,0 +1,653 @@
+{
+  "Quezon City": [
+    {
+      "name": "Alicia",
+      "postalCode": "1133"
+    },
+    {
+      "name": "Amihan",
+      "postalCode": "1134"
+    },
+    {
+      "name": "Apolonio Samson",
+      "postalCode": "1106"
+    },
+    {
+      "name": "Araullo",
+      "postalCode": "1100"
+    },
+    {
+      "name": "Baesa",
+      "postalCode": "1106"
+    },
+    {
+      "name": "Bagbag",
+      "postalCode": "1125"
+    },
+    {
+      "name": "Bagong Lipunan ng Crame",
+      "postalCode": "1111"
+    },
+    {
+      "name": "Bagong Pag-asa",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Bagong Silangan",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Bahay Toro",
+      "postalCode": "1106"
+    },
+    {
+      "name": "Balingasa",
+      "postalCode": "1115"
+    },
+    {
+      "name": "Balon Bato",
+      "postalCode": "1106"
+    },
+    {
+      "name": "Batasan Hills",
+      "postalCode": "1126"
+    },
+    {
+      "name": "Bayanihan",
+      "postalCode": "1109"
+    },
+    {
+      "name": "Blue Ridge A",
+      "postalCode": "1139"
+    },
+    {
+      "name": "Blue Ridge B",
+      "postalCode": "1139"
+    },
+    {
+      "name": "Botocan",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Bungad",
+      "postalCode": "1109"
+    },
+    {
+      "name": "Camp Aguinaldo",
+      "postalCode": "1110"
+    },
+    {
+      "name": "Capri",
+      "postalCode": "1117"
+    },
+    {
+      "name": "Central",
+      "postalCode": "1100"
+    },
+    {
+      "name": "Claro",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Commonwealth",
+      "postalCode": "1121"
+    },
+    {
+      "name": "Culiat",
+      "postalCode": "1128"
+    },
+    {
+      "name": "Damar",
+      "postalCode": "1115"
+    },
+    {
+      "name": "Damar Village",
+      "postalCode": "1115"
+    },
+    {
+      "name": "Damayan",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Damayan Lagi",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Del Monte",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Dioquino Zobel",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Don Manuel",
+      "postalCode": "1113"
+    },
+    {
+      "name": "Doña Imelda",
+      "postalCode": "1113"
+    },
+    {
+      "name": "Doña Josefa",
+      "postalCode": "1114"
+    },
+    {
+      "name": "E. Rodriguez",
+      "postalCode": "1102"
+    },
+    {
+      "name": "East Kamias",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Escopa I",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Escopa II",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Escopa III",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Escopa IV",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Fairview",
+      "postalCode": "1118"
+    },
+    {
+      "name": "Gulod",
+      "postalCode": "1117"
+    },
+    {
+      "name": "Holy Spirit",
+      "postalCode": "1127"
+    },
+    {
+      "name": "Horseshoe",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Immaculate Conception",
+      "postalCode": "1111"
+    },
+    {
+      "name": "Kaligayahan",
+      "postalCode": "1123"
+    },
+    {
+      "name": "Kalusugan",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Kamuning",
+      "postalCode": "1113"
+    },
+    {
+      "name": "Kaunlaran",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Kristong Hari",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Krus na Ligas",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Laging Handa",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Libis",
+      "postalCode": "1110"
+    },
+    {
+      "name": "Lourdes",
+      "postalCode": "1114"
+    },
+    {
+      "name": "Loyola Heights",
+      "postalCode": "1108"
+    },
+    {
+      "name": "Maharlika",
+      "postalCode": "1114"
+    },
+    {
+      "name": "Malaya",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Mangga",
+      "postalCode": "1114"
+    },
+    {
+      "name": "Manresa",
+      "postalCode": "1115"
+    },
+    {
+      "name": "Mariana",
+      "postalCode": "1111"
+    },
+    {
+      "name": "Mariblo",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Marilag",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Masagana",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Masambong",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Matandang Balara",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Milagrosa",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Nagkaisang Nayon",
+      "postalCode": "1123"
+    },
+    {
+      "name": "Nayong Kanluran",
+      "postalCode": "1104"
+    },
+    {
+      "name": "New Era",
+      "postalCode": "1107"
+    },
+    {
+      "name": "North Fairview",
+      "postalCode": "1121"
+    },
+    {
+      "name": "Novaliches Proper",
+      "postalCode": "1123"
+    },
+    {
+      "name": "Obrero",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Old Balara",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Old Capitol Site",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Paang Bundok",
+      "postalCode": "1115"
+    },
+    {
+      "name": "Pag-ibig sa Nayon",
+      "postalCode": "1124"
+    },
+    {
+      "name": "Paligsahan",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Paltok",
+      "postalCode": "1110"
+    },
+    {
+      "name": "Pansol",
+      "postalCode": "1108"
+    },
+    {
+      "name": "Paraiso",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Pasong Putik Proper",
+      "postalCode": "1125"
+    },
+    {
+      "name": "Pasong Tamo",
+      "postalCode": "1107"
+    },
+    {
+      "name": "Payatas",
+      "postalCode": "1119"
+    },
+    {
+      "name": "Phil-Am",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Pinagkaisahan",
+      "postalCode": "1111"
+    },
+    {
+      "name": "Pinyahan",
+      "postalCode": "1100"
+    },
+    {
+      "name": "Project 6 (Bagong Bantay)",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Quirino 2-A",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Quirino 2-B",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Quirino 2-C",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Quirino 3-A",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Quirino 3-B",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Ramon Magsaysay",
+      "postalCode": "1111"
+    },
+    {
+      "name": "Roxas",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Sacred Heart",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Salvacion",
+      "postalCode": "1114"
+    },
+    {
+      "name": "San Agustin",
+      "postalCode": "1117"
+    },
+    {
+      "name": "San Antonio",
+      "postalCode": "1106"
+    },
+    {
+      "name": "San Bartolome",
+      "postalCode": "1116"
+    },
+    {
+      "name": "San Isidro (Galas)",
+      "postalCode": "1114"
+    },
+    {
+      "name": "San Isidro Labrador",
+      "postalCode": "1109"
+    },
+    {
+      "name": "San Jose",
+      "postalCode": "1105"
+    },
+    {
+      "name": "San Martin de Porres",
+      "postalCode": "1119"
+    },
+    {
+      "name": "San Roque",
+      "postalCode": "1109"
+    },
+    {
+      "name": "San Vicente",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Sangandaan",
+      "postalCode": "1116"
+    },
+    {
+      "name": "Santa Cruz",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Santa Lucia",
+      "postalCode": "1117"
+    },
+    {
+      "name": "Santa Monica",
+      "postalCode": "1117"
+    },
+    {
+      "name": "Santa Teresita",
+      "postalCode": "1114"
+    },
+    {
+      "name": "Santo Cristo",
+      "postalCode": "1105"
+    },
+    {
+      "name": "Santo Niño",
+      "postalCode": "1113"
+    },
+    {
+      "name": "Sikatuna Village",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Silangan",
+      "postalCode": "1102"
+    },
+    {
+      "name": "Socorro",
+      "postalCode": "1109"
+    },
+    {
+      "name": "South Triangle",
+      "postalCode": "1103"
+    },
+    {
+      "name": "Tagumpay",
+      "postalCode": "1109"
+    },
+    {
+      "name": "Talayan",
+      "postalCode": "1104"
+    },
+    {
+      "name": "Talipapa",
+      "postalCode": "1124"
+    },
+    {
+      "name": "Tandang Sora",
+      "postalCode": "1116"
+    },
+    {
+      "name": "Tatalon",
+      "postalCode": "1113"
+    },
+    {
+      "name": "Teachers Village East",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Teachers Village West",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Ugong Norte",
+      "postalCode": "1110"
+    },
+    {
+      "name": "Unang Sigaw",
+      "postalCode": "1106"
+    },
+    {
+      "name": "UP Campus",
+      "postalCode": "1101"
+    },
+    {
+      "name": "UP Village",
+      "postalCode": "1101"
+    },
+    {
+      "name": "Valencia",
+      "postalCode": "1112"
+    },
+    {
+      "name": "Vasra",
+      "postalCode": "1128"
+    },
+    {
+      "name": "Veterans Village",
+      "postalCode": "1108"
+    },
+    {
+      "name": "Villa Maria Clara",
+      "postalCode": "1101"
+    },
+    {
+      "name": "West Fairview",
+      "postalCode": "1121"
+    },
+    {
+      "name": "West Kamias",
+      "postalCode": "1102"
+    },
+    {
+      "name": "West Triangle",
+      "postalCode": "1104"
+    },
+    {
+      "name": "White Plains",
+      "postalCode": "1110"
+    }
+  ],
+
+  "Pateros City": [
+    {
+      "name": "Aguho",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Magtanggol",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Martires Del 96",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Poblacion",
+      "postalCode": "1620"
+    },
+    {
+      "name": "San Pedro",
+      "postalCode": "1620"
+    },
+    {
+      "name": "San Roque",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Santo Rosario-Kanluran",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Santo Rosario-Silangan",
+      "postalCode": "1620"
+    },
+    {
+      "name": "Tabacalera",
+      "postalCode": "1620"
+    }
+  ],
+
+  "Marikina City": [
+    {
+      "name": "Barangka",
+      "postalCode": "1803"
+    },
+    {
+      "name": "Calumpang",
+      "postalCode": "1801"
+    },
+    {
+      "name": "Concepcion Uno",
+      "postalCode": "1807"
+    },
+    {
+      "name": "Concepcion Dos",
+      "postalCode": "1811"
+    },
+    {
+      "name": "Fortune",
+      "postalCode": "1809"
+    },
+    {
+      "name": "Industrial Valley",
+      "postalCode": "1802"
+    },
+    {
+      "name": "Jesus Dela Peña",
+      "postalCode": "1800"
+    },
+    {
+      "name": "Malanday",
+      "postalCode": "1805"
+    },
+    {
+      "name": "Marikina Heights",
+      "postalCode": "1810"
+    },
+    {
+      "name": "Nangka",
+      "postalCode": "1808"
+    },
+    {
+      "name": "Parang",
+      "postalCode": "1809"
+    },
+    {
+      "name": "San Roque",
+      "postalCode": "1801"
+    },
+    {
+      "name": "Santa Elena",
+      "postalCode": "1800"
+    },
+    {
+      "name": "Santo Niño",
+      "postalCode": "1804"
+    },
+    {
+      "name": "Tañong",
+      "postalCode": "1803"
+    },
+    {
+      "name": "Tumana",
+      "postalCode": "1806"
+    }
+  ],
+
+  "Test City": [
+    {
+      "name": "Test Barangay",
+      "postalCode": "0000"
+    }
+  ]
+}

@@ -1,0 +1,770 @@
+﻿@model List<SystemLibrary.Models.Book>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Search Books";
+}
+
+<link rel="stylesheet" href="~/css/student/Search.css" />
+
+<div class="library-container">
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="category-left">
+                <label for="categories">Categories</label>
+                <select id="categories">
+                    <option>ALL</option>
+                    <option>Academics</option>
+                    <option>General Collection</option>
+                    <option>Specialized Books</option>
+                    <option>Digital Resources</option>
+                </select>
+            </div>
+            <div class="search-right">
+                <div class="search-box">
+                    <input id="searchInput" type="text" placeholder="Search..." />
+                    <img src="~/images/searchicon.png" alt="Search" class="search-icon" />
+                </div>
+            </div>
+        </header>
+
+        <!-- BOOK OF THE DAY -->
+        @if (ViewBag.BookOfTheDay != null)
+        {
+            var bookOfDay = ViewBag.BookOfTheDay as SystemLibrary.Models.Book;
+                        <section class="book-day">
+                            <div class="book-banner">BOOK OF THE DAY!!!</div>
+                            <div class="book-highlight">
+                                <div class="book-info">
+                                    <h3>@bookOfDay.Title.ToUpper()</h3>
+                                    <p class="author">@bookOfDay.Author</p>
+                                    <p class="desc">
+                            @if (!string.IsNullOrEmpty(bookOfDay.Subject))
+                            {
+                                <text>@bookOfDay.Subject</text>
+                            }
+                            else
+                            {
+                                <text>A compelling read by @bookOfDay.Author, available for borrowing in our library collection.</text>
+                            }
+                                    </p>
+                                </div>
+                                <div class="book-image">
+                                    <img src="@bookOfDay.Image" alt="@bookOfDay.Title" onerror="this.src='/images/default-book.png'" />
+                                </div>
+                            </div>
+                        </section>
+        }
+
+        <!-- TRENDING BOOKS -->
+        <section class="books-section">
+            <h2><img class="section-icon" src="~/images/trend.png" alt="Trending" /> TRENDING BOOKS</h2>
+            <div class="carousel-wrap">
+                <button class="carousel-arrow left">&lt;</button>
+                <div class="book-list horizontal" data-role="trending">
+                    @if (ViewBag.TrendingBooks != null && ((List<SystemLibrary.Models.Book>)ViewBag.TrendingBooks).Any())
+                    {
+                        foreach (var book in ViewBag.TrendingBooks as List<SystemLibrary.Models.Book>)
+                        {
+                                                    <div class="book-card"
+                                                         data-title="@book.Title"
+                                                         data-author="@book.Author"
+                                                         data-image="@book.Image"
+                                                         data-description="@($"{book.Subject} book by {book.Author} | ISBN: {book.ISBN}")"
+                                                         data-status="@(book.IsAvailable ? "Available" : "Not Available")"
+                                                         data-active="@book.IsActive.ToString().ToLower()"
+                                                         data-reference="@book.IsReferenceOnly.ToString().ToLower()"
+                                                         data-available-copies="@book.AvailableCopies"
+                                                         data-total-copies="@book.TotalCopies"
+                                                         data-book-id="@book._id.ToString()"
+                                                         onclick="openBookPopup(this)">
+                                                        <img src="@book.Image" alt="@book.Title" onerror="this.src='/images/default-book.png'" />
+                                                        <div class="card-info">
+                                                            <p>@book.Title</p>
+                                                            <span class="@(book.IsAvailable ? "available" : "unavailable")">
+                                        @(book.IsAvailable ? $"Available ({book.AvailableCopies})" : "Not Available")
+                                                            </span>
+                                                            <button class="reserve" @((!book.IsActive || book.IsReferenceOnly) ? "disabled" : "")>
+                                        @(
+                                                        !book.IsActive ? "INACTIVE" :
+                                                        (book.IsReferenceOnly ? "REFERENCE ONLY" :
+                                                            (book.IsAvailable ? "RESERVE" : "WAITLIST")
+                                                        )
+                                                    )
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                        }
+                    }
+                    else
+                    {
+                                    <p>No trending books available.</p>
+                    }
+                </div>
+                <button class="carousel-arrow right">&gt;</button>
+            </div>
+        </section>
+
+        <!-- RECOMMENDED BOOKS -->
+        <section class="books-section">
+            <h2><img class="section-icon" src="~/images/reco.png" alt="Recommended" /> RECOMMENDED</h2>
+            <div class="book-list horizontal" data-role="recommended">
+                @if (ViewBag.RecommendedBooks != null && ((List<SystemLibrary.Models.Book>)ViewBag.RecommendedBooks).Any())
+                {
+                    foreach (var book in ViewBag.RecommendedBooks as List<SystemLibrary.Models.Book>)
+                    {
+                                                <div class="book-card"
+                                                     data-title="@book.Title"
+                                                     data-author="@book.Author"
+                                                     data-image="@book.Image"
+                                                     data-description="@($"{book.Subject} book by {book.Author} | ISBN: {book.ISBN}")"
+                                                     data-status="@(book.IsAvailable ? "Available" : "Not Available")"
+                                                     data-active="@book.IsActive.ToString().ToLower()"
+                                                     data-reference="@book.IsReferenceOnly.ToString().ToLower()"
+                                                     data-available-copies="@book.AvailableCopies"
+                                                     data-total-copies="@book.TotalCopies"
+                                                     data-book-id="@book._id.ToString()"
+                                                     onclick="openBookPopup(this)">
+                                                    <img src="@book.Image" alt="@book.Title" onerror="this.src='/images/default-book.png'" />
+                                                    <div class="card-info">
+                                                        <p>@book.Title</p>
+                                                        <span class="@(book.IsAvailable ? "available" : "unavailable")">
+                                    @(book.IsAvailable ? $"Available ({book.AvailableCopies})" : "Not Available")
+                                                        </span>
+                                                        <button class="reserve" @((!book.IsActive || book.IsReferenceOnly) ? "disabled" : "")>
+                                    @(
+                                                    !book.IsActive ? "INACTIVE" :
+                                                    (book.IsReferenceOnly ? "REFERENCE ONLY" :
+                                                        (book.IsAvailable ? "RESERVE" : "WAITLIST")
+                                                    )
+                                                )
+                                                        </button>
+                                                    </div>
+                                                </div>
+                    }
+                }
+                else
+                {
+                                <p>No recommended books available.</p>
+                }
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Book Modal -->
+<div id="bookModal" class="modal">
+    <div class="modal-content book-modal-content">
+        <span class="close" onclick="closeBookPopup()">&times;</span>
+        <div class="modal-body book-modal-body">
+            <div class="book-modal-image">
+                <img id="bookImage" alt="Book cover" />
+            </div>
+            <div class="modal-info book-modal-info">
+                <h3 id="bookTitle"></h3>
+                <p class="book-author" id="bookAuthor"></p>
+                <p class="book-description" id="bookDescription"></p>
+                <div class="book-availability-info">
+                    <p id="bookAvailability"></p>
+                    <p id="bookStatus" class="book-status-badge"></p>
+                </div>
+                <div class="modal-actions">
+                    <button id="bookActionBtn" class="book-action-button"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reservation Success Modal -->
+<div id="reservationSuccessModal" class="modal reservation-modal">
+    <div class="modal-content reservation-modal-content">
+        <div class="reservation-header">
+            <svg class="reservation-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="8" width="16" height="13" rx="2" stroke="white" stroke-width="2" />
+                <path d="M8 8V6C8 4.89543 8.89543 4 10 4H14C15.1046 4 16 4.89543 16 6V8" stroke="white" stroke-width="2" />
+                <circle cx="9" cy="13" r="1" fill="white" />
+                <circle cx="12" cy="13" r="1" fill="white" />
+                <circle cx="15" cy="13" r="1" fill="white" />
+                <circle cx="9" cy="16" r="1" fill="white" />
+                <circle cx="12" cy="16" r="1" fill="white" />
+                <circle cx="15" cy="16" r="1" fill="white" />
+            </svg>
+            <h2>Your RESERVATION has been CREATED</h2>
+        </div>
+        <div class="reservation-body">
+            <p class="reservation-confirmation">A Confirmation has been sent to your Notification</p>
+            <p class="reservation-pickup"><strong>Pickup before:</strong> <span id="pickupDate"></span></p>
+            <button id="goToBorrowingsBtn" class="btn-borrowings">CLOSE</button>
+        </div>
+    </div>
+</div>
+
+<!-- Penalty Modal -->
+<div id="penaltyModal" class="modal penalty-modal">
+    <div class="modal-content penalty-modal-content">
+        <div class="penalty-header">
+            <div class="penalty-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2>Pending Penalties</h2>
+        </div>
+        <div class="penalty-body">
+            <p>You have <span id="penaltyCount" class="penalty-count">0</span> pending penalty(ies) totaling <span id="penaltyAmount" class="penalty-amount">₱0.00</span>.</p>
+            <p>Please settle your penalties before borrowing books.</p>
+        </div>
+        <div class="penalty-actions">
+            <button class="penalty-btn penalty-btn-secondary" onclick="closePenaltyModal()">Cancel</button>
+            <button class="penalty-btn penalty-btn-primary" onclick="goToAccount()">View Penalties</button>
+        </div>
+    </div>
+</div>
+
+<!-- Suspicious Activity Modal -->
+<div id="suspiciousActivityModal" class="modal error-modal">
+    <div class="modal-content error-modal-content">
+        <div class="error-header">
+            <div class="error-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                    <path d="M12 8v4m0 4h.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Suspicious Borrowing Detected</h2>
+        </div>
+        <div class="error-body">
+            <p>We have detected unusual reservation activity on your account. Please wait a moment before attempting to reserve books again. If you continue to experience issues, please contact the library administrator.</p>
+        </div>
+        <div class="error-actions">
+            <button class="error-btn" onclick="closeSuspiciousModal()">Got it</button>
+        </div>
+    </div>
+</div>
+
+<!-- Error Warning Modal -->
+<div id="errorModal" class="modal error-modal">
+    <div class="modal-content error-modal-content">
+        <div class="error-header">
+            <div class="error-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                    <path d="M12 8v4m0 4h.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>Oops!</h2>
+        </div>
+        <div class="error-body">
+            <p id="errorMessage"></p>
+        </div>
+        <div class="error-actions">
+            <button class="error-btn" onclick="closeErrorModal()">Got it</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Search functionality
+    function performSearch() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const categorySelect = document.getElementById('categories').value;
+        const allBookCards = document.querySelectorAll('.book-card');
+
+        allBookCards.forEach(card => {
+            const title = card.dataset.title.toLowerCase();
+            const author = card.dataset.author.toLowerCase();
+            const description = card.dataset.description.toLowerCase();
+
+            const matchesSearch = searchInput === '' ||
+                                  title.includes(searchInput) ||
+                                  author.includes(searchInput) ||
+                                  description.includes(searchInput);
+            const matchesCategory = categorySelect === 'ALL';
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.books-section').forEach(section => {
+            const visibleBooks = section.querySelectorAll('.book-card[style*="display: block"], .book-card:not([style*="display: none"])');
+            const bookList = section.querySelector('.book-list');
+            const noResultsMsg = section.querySelector('.no-results-message');
+
+            if (visibleBooks.length === 0) {
+                if (!noResultsMsg) {
+                    const msg = document.createElement('p');
+                    msg.className = 'no-results-message';
+                    msg.textContent = 'No books found matching your search.';
+                    bookList.appendChild(msg);
+                }
+            } else {
+                if (noResultsMsg) {
+                    noResultsMsg.remove();
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const categorySelect = document.getElementById('categories');
+        const searchIcon = document.querySelector('.search-icon');
+
+        // Search on input
+        searchInput.addEventListener('input', performSearch);
+
+        // Search on category change
+        categorySelect.addEventListener('change', performSearch);
+
+        // Search on icon click
+        searchIcon.addEventListener('click', performSearch);
+
+        // Search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Error modal outside click handler
+        const errorModal = document.getElementById('errorModal');
+        if (errorModal) {
+            errorModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeErrorModal();
+                }
+            });
+        }
+    });
+
+    // Carousel setup
+    window.onload = function () {
+        document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+            const list = wrap.querySelector('.book-list'),
+                [left, right] = wrap.querySelectorAll('.carousel-arrow');
+            const update = () => {
+                const overflows = list.scrollWidth > list.clientWidth;
+                [left, right].forEach(b => b.style.display = overflows ? "block" : "none");
+            };
+            left.onclick = () => list.scrollBy({ left: -300, behavior: "smooth" });
+            right.onclick = () => list.scrollBy({ left: 300, behavior: "smooth" });
+            window.addEventListener("resize", update);
+            update();
+        });
+    };
+
+    // Open Book Popup
+    function openBookPopup(card) {
+        const g = id => document.getElementById(id);
+        g("bookTitle").innerText = card.dataset.title;
+        g("bookAuthor").innerText = "By " + card.dataset.author;
+        g("bookImage").src = card.dataset.image;
+        const formattedDescription = card.dataset.description.replace(/\|/g, '<br>');
+        g("bookDescription").innerHTML = formattedDescription;
+
+        const isActive = card.dataset.active === 'true';
+        const available = card.dataset.status === "Available";
+        const isReference = card.dataset.reference === 'true';
+
+        // Update availability display based on active status
+        if (!isActive) {
+            g("bookAvailability").innerText = "Inactive";
+            g("bookStatus").innerText = "Inactive";
+        } else {
+            g("bookAvailability").innerText = `Available Copies: ${card.dataset.availableCopies} / ${card.dataset.totalCopies}`;
+            g("bookStatus").innerText = card.dataset.status;
+        }
+
+        const btn = g("bookActionBtn");
+
+        if (!isActive) {
+            btn.innerText = "INACTIVE";
+            btn.className = "primary disabled";
+            btn.disabled = true;
+            btn.onclick = null;
+        } else if (isReference) {
+            btn.innerText = "REFERENCE ONLY";
+            btn.className = "primary disabled";
+            btn.disabled = true;
+            btn.onclick = null;
+        } else {
+            btn.innerText = available ? "RESERVE" : "JOIN WAITLIST";
+            btn.className = available ? "primary reserve" : "primary waitlist";
+            btn.disabled = false;
+            btn.onclick = () => {
+                handleReservation(card.dataset.bookId);
+                closeBookPopup();
+            };
+        }
+
+        g("bookModal").style.display = "flex";
+    }
+
+    function closeBookPopup() {
+        document.getElementById("bookModal").style.display = "none";
+    }
+
+    function handleReservation(bookId) {
+        // First check if user has penalties
+        checkPenaltiesBeforeReservation(bookId);
+    }
+
+    async function checkPenaltiesBeforeReservation(bookId) {
+        try {
+            const response = await fetch('/Student/CheckPenalties');
+            const result = await response.json();
+
+            if (result.hasPenalties) {
+                // Show penalty popup
+                showPenaltyPopup(result.penaltyCount, result.totalAmount);
+                return;
+            }
+
+            // No penalties, proceed with reservation
+            proceedWithReservation(bookId);
+        } catch (error) {
+            console.error('Error checking penalties:', error);
+            // Show error modal
+            showErrorModal('Unable to check penalties. Please try again.');
+        }
+    }
+
+    async function proceedWithReservation(bookId) {
+        try {
+            const formData = new FormData();
+            formData.append('bookId', bookId);
+
+            const response = await fetch('@Url.Action("ReserveBook", "Student")', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Check if the response is ok
+            if (!response.ok) {
+                if (response.status === 401) {
+                    showErrorModal('Your session has expired. Please log in again.');
+                    setTimeout(() => {
+                        window.location.href = '@Url.Action("Login", "Account")';
+                    }, 2000);
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Check content type before parsing
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                console.error('Server returned non-JSON response');
+                showErrorModal('Server error occurred. Please try again or contact support.');
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Calculate pickup date (1 day from now)
+                const pickupDate = new Date();
+                pickupDate.setDate(pickupDate.getDate() + 1);
+                const formattedDate = pickupDate.toLocaleDateString('en-US', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    year: 'numeric'
+                });
+
+                document.getElementById('pickupDate').innerText = formattedDate;
+                document.getElementById('reservationSuccessModal').style.display = 'flex';
+
+                document.getElementById('goToBorrowingsBtn').onclick = () => {
+                    location.reload();
+                };
+            } else if (result.errorCode === 'SUSPICIOUS_ACTIVITY') {
+                // Show suspicious activity modal
+                showSuspiciousActivityModal();
+            } else {
+                // Show error modal instead of alert
+                showErrorModal(result.message || 'Failed to create reservation. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error creating reservation:', error);
+
+            // Show error modal with appropriate message
+            if (error.message.includes('JSON')) {
+                showErrorModal('Server returned an invalid response. Please check if you are logged in and try again.');
+            } else {
+                showErrorModal('An error occurred. Please try again.');
+            }
+        }
+    }
+
+    function showErrorModal(message) {
+        document.getElementById('errorMessage').textContent = message;
+        document.getElementById('errorModal').style.display = 'flex';
+    }
+
+    function closeErrorModal() {
+        document.getElementById('errorModal').style.display = 'none';
+    }
+
+    function showPenaltyPopup(penaltyCount, totalAmount) {
+        const penaltyModal = document.getElementById('penaltyModal');
+        const penaltyCountElement = document.getElementById('penaltyCount');
+        const penaltyAmountElement = document.getElementById('penaltyAmount');
+
+        penaltyCountElement.textContent = penaltyCount;
+        penaltyAmountElement.textContent = '₱' + parseFloat(totalAmount).toFixed(2);
+
+        penaltyModal.style.display = 'flex';
+    }
+
+    function closePenaltyModal() {
+        document.getElementById('penaltyModal').style.display = 'none';
+    }
+
+    function goToAccount() {
+        window.location.href = '@Url.Action("Account", "Student")';
+    }
+
+    function showSuspiciousActivityModal() {
+        document.getElementById('suspiciousActivityModal').style.display = 'flex';
+    }
+
+    function closeSuspiciousModal() {
+        document.getElementById('suspiciousActivityModal').style.display = 'none';
+    }
+
+    function closeReservationModal() {
+        document.getElementById('reservationSuccessModal').style.display = 'none';
+    }
+
+    // Function to open modal with scroll to top
+    function openModal(modalElement) {
+        modalElement.classList.add('active');
+        document.body.classList.add('modal-open');
+        modalElement.scrollTop = 0;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Function to close modal
+    function closeModal(modalElement) {
+        modalElement.classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
+    // Close modal when clicking X or outside
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            closeModal(modal);
+        });
+    });
+
+    // Close when clicking outside modal content
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this);
+            }
+        });
+    });
+</script>
+
+<style>
+    /* Penalty Modal Styles */
+    .penalty-modal .modal-content {
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .penalty-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .penalty-icon {
+        width: 60px;
+        height: 60px;
+        background-color: #f39c12;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .penalty-icon i {
+        font-size: 24px;
+        color: white;
+    }
+
+    .penalty-header h2 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .penalty-body {
+        margin-bottom: 25px;
+    }
+
+    .penalty-body p {
+        margin: 10px 0;
+        color: #555;
+        font-size: 16px;
+    }
+
+    .penalty-count, .penalty-amount {
+        font-weight: bold;
+        color: #e74c3c;
+    }
+
+    .penalty-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .penalty-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+    }
+
+    .penalty-btn-secondary {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    .penalty-btn-secondary:hover {
+        background-color: #7f8c8d;
+    }
+
+    .penalty-btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .penalty-btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    /* Error Modal Styles */
+    .error-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .error-modal-content {
+        background: white;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 450px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @@keyframes slideUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .error-header {
+        text-align: center;
+        padding: 30px 30px 20px;
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    }
+
+    .error-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .error-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .error-header h2 {
+        color: white;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+        text-align: center;
+    }
+
+    .error-body {
+        padding: 30px;
+        text-align: center;
+    }
+
+    .error-body p {
+        color: #555;
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .error-actions {
+        padding: 0 30px 30px;
+        text-align: center;
+    }
+
+    .error-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 12px 40px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+
+    .error-btn:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .error-btn:active {
+        transform: translateY(0);
+    }
+
+</style>

@@ -1,0 +1,184 @@
+﻿@section Styles {
+    <link href="~/css/EnrollmentStyles.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+     </style>
+}
+
+<div class="d-flex app-shell">
+    <!-- Sidebar -->
+    <aside class="d-flex flex-column flex-shrink-0 p-3 bg-white rounded-start-3" style="width: 250px;">
+        <a href="#" class="d-flex align-items-center mb-3 text-decoration-none">
+            <img src="~/images/logo.svg" alt="Logo" class="me-2 rounded p-2" width="40" style="background-color:#066B99;">
+            <div>
+                <span class="fs-5 fw-bold text-black">State University</span>
+                <small class="text-secondary">State University</small>
+            </div>
+        </a>
+        <hr>
+        <nav class="d-flex flex-column gap-2 mb-auto sidebar">
+            <a href="" class="sidebar-link active">
+                <img src="~/images/home.svg" alt="Home" width="25">
+                <span>Home</span>
+            </a>
+            <a href="@Url.Action("EnrollmentLandingPage", "Landing", new { area = "Student" })" class="sidebar-link">
+                <img src="~/images/logo-black.svg" alt="Enrollment" width="25">
+                <span>Online Enrollment</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="~/images/book-open-text-black.svg" alt="Library" width="25">
+                <span>University Library</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="~/images/user-round-pen-black.svg" alt="Portal" width="25">
+                <span>Student Portal</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="~/images/chart-area.svg" alt="Records" width="25">
+                <span>Update Records</span>
+            </a>
+            <a href="#" class="sidebar-link">
+                <img src="~/images/settings.svg" alt="Settings" width="25">
+                <span>Settings</span>
+            </a>
+        </nav>
+        <hr>
+        <div class="d-flex gap-2">
+            <img src="~/images/account-icon.svg" alt="User">
+            <div>
+                <strong>@(ViewBag.DisplayName ?? "Student")</strong>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#SignOutModal" class="d-block text-black text-decoration-none">Sign out</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="d-flex flex-column flex-grow-1" style="background-color: #066B99;">
+        <!-- Top Navbar -->
+        <nav class="top-navbar px-4 py-3 bg-light">
+            <div class="d-flex">
+                <div class="d-flex gap-2">
+                    <img src="~/images/account-icon.svg" alt="User" width="40">
+                    <div>
+                        <p>Hello! <strong>@(ViewBag.GreetName ?? "Student")</strong></p>
+                        <small>Welcome to your dashboard — all services in one place.</small>
+                    </div>
+                </div>
+                <div class="ms-auto text-end">
+            <p>Today is <strong id="currentDate">Loading...</strong></p>
+            <strong id="currentTime">Loading...</strong>
+        </div>
+    </div>
+    </nav>
+
+        <!-- Card Section -->
+        <section class="d-flex flex-grow-1 justify-content-center align-items-center gap-4 px-4 py-4">
+            <div class="dashboard-card">
+                <img src="~/images/logo-blue.svg" alt="Enrollment" width="50" class="mb-3">
+                <h3 class="mb-2 fw-semibold">Online Enrollment</h3>
+                <div class="card-content border border-primary">
+                    <small>
+                        Through the Online Enrollment platform, students are given the opportunity
+                        to register for their courses with ease and reliability. The system ensures
+                        a smooth and transparent process, eliminating the need for paperwork.
+                    </small><br><br>
+                    <small>
+                        Enroll online now and experience a faster, easier, and more convenient way
+                        to secure your spot!
+                    </small>
+                </div>
+                <a href="@Url.Action("EnrollmentLandingPage", "Landing", new { area = "Student" })" class="btn btn-primary w-75 mt-3 fw-bold">Go</a>
+            </div>
+
+            <div class="dashboard-card">
+                <img src="~/images/book-open-text.svg" alt="Library" width="50" class="mb-3">
+                <h3 class="mb-2 fw-semibold">University Library</h3>
+                <div class="card-content border border-success">
+                    <small>
+                        Access thousands of books, journals, and resources by activating your library
+                        account online. Enhance your learning with instant access to knowledge.
+                    </small>
+                </div>
+                <button class="btn btn-success w-75 mt-3">Go</button>
+            </div>
+
+            <div class="dashboard-card">
+                <img src="~/images/user-round-pen.svg" alt="Portal" width="50" class="mb-2">
+                <h3 class="mb-2 fw-semibold">Student Portal</h3>
+                <div class="card-content" style="border: 1px solid #EE82EE;">
+                    <small>
+                        View your enrollment status, class schedules, grades, and other academic
+                        details anytime.
+                    </small><br><br>
+                    <small>
+                        Stay updated with reliable access to essential information and services.
+                    </small>
+                </div>
+                <button class="btn w-75 mt-3 text-white" style="background-color:#EE82EE;">Go</button>
+            </div>
+        </section>
+        <footer class="top-navbar px-4 py-3 text-white" style="background-color: #00334C;">
+            <div class="d-flex">
+                <div>
+                    <p><strong>Philippine State University</strong></p>
+                    <small>Committed to providing excellence in education.</small>
+                </div>
+
+                <div class="ms-auto text-end">
+                    <p><strong id="contactPhone">09978276531</strong></p>
+                    <strong id="contactEmail">info@psu.edu.ph</strong>
+                </div>
+            </div>
+        </footer>
+    </main>
+</div>
+
+@* SIGN OUT MODAL *@
+<div class="modal fade" id="SignOutModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered rounded-5">
+        <div class="modal-content p-3">
+            <div class="modal-header d-flex justify-content-center">
+                <h3 class="modal-title text-center">Ready to Sign Out?</h3>
+            </div>
+            <div class="modal-body text-center px-5">
+                <p>You are about to sign out of your account. Do you want to continue?</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button class="btn white-btn" data-bs-dismiss="modal" style="width: 45%;">I'll stay</button>
+                <form asp-area="Student" asp-controller="StudentAccount" asp-action="Logout" method="post" style="width: 45%;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger w-100">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        
+        const dateOptions = { month: 'long', day: '2-digit', year: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+
+        const dateString = now.toLocaleDateString('en-US', dateOptions);
+
+        const timeString = now.toLocaleTimeString('en-US', timeOptions);
+
+        const dateElement = document.getElementById('currentDate');
+        const timeElement = document.getElementById('currentTime');
+
+        if (dateElement) {
+            dateElement.textContent = dateString;
+        }
+
+        if (timeElement) {
+            timeElement.textContent = timeString;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateClock();
+        setInterval(updateClock, 1000);
+    });
+</script>
+

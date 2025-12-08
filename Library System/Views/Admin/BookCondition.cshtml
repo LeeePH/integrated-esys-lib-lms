@@ -1,0 +1,266 @@
+﻿@model List<SystemLibrary.Models.ReturnTransaction>
+@{
+    ViewData["Title"] = "Book Condition";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/Admin/bookConditions.css" />
+
+<style>
+    .timer-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 4px;
+    }
+
+    .timer-active {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .timer-expired {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .tabs button {
+        cursor: pointer;
+    }
+</style>
+
+<!-- Alerts -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="content">
+    <!-- Top Section -->
+    <header>
+        <h1>Book Condition Management</h1>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button onclick="location.href='@Url.Action("SystemMaintenance", "Admin")'">Database</button>
+        <button onclick="location.href='@Url.Action("LogAudit", "Admin")'">Log Audit</button>
+        <button class="active">Book Condition</button>
+        <button onclick="location.href='@Url.Action("UnrestrictRequests", "Admin")'">Unrestrict Requests</button>
+    </div>
+
+    <!-- Controls -->
+    <div class="top-controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBooks()" />
+        </div>
+
+            <div class="filter-buttons">
+                <button class="btn btn-outline-secondary" onclick="filterByCondition('GOOD', this)">GOOD</button>
+                <button class="btn btn-outline-secondary" onclick="filterByCondition('DAMAGED', this)">DAMAGED</button>
+                <button class="btn btn-outline-secondary" onclick="filterByCondition('UNUSABLE', this)">UNUSABLE</button>
+                <button class="btn btn-primary" onclick="filterByCondition('REPAIRABLE', this)">REPAIRABLE</button>
+            </div>
+    </div>
+
+    <!-- Book Condition Table -->
+    <div class="table-container">
+        <table class="reservation-table">
+            <thead>
+                <tr>
+                    <th>Reservation Details</th>
+                    <th>Classification No.</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var returnTransaction in Model)
+                    {
+                        var rawCondition = (returnTransaction.BookCondition ?? "Good").Trim();
+                        var conditionNormalized = rawCondition.ToUpperInvariant();
+                        
+                        // Map detailed damage conditions to display categories
+                        string displayCategory;
+                        string displayCondition;
+                        bool showActions = false;
+                        
+                        switch (conditionNormalized)
+                        {
+                            case "GOOD":
+                                displayCategory = "GOOD";
+                                displayCondition = "GOOD";
+                                showActions = false;
+                                break;
+                            case "DAMAGED-MINOR":
+                            case "DAMAGED-MODERATE":
+                                displayCategory = "REPAIRABLE";
+                                displayCondition = rawCondition; // Show original like "Damaged-Minor"
+                                showActions = true;
+                                break;
+                            case "DAMAGED-MAJOR":
+                                displayCategory = "UNUSABLE";
+                                displayCondition = "DAMAGED";
+                                showActions = false;
+                                break;
+                            case "LOST":
+                                displayCategory = "UNUSABLE";
+                                displayCondition = "LOST";
+                                showActions = false;
+                                break;
+                            default:
+                                displayCategory = "REPAIRABLE";
+                                displayCondition = "REPAIRABLE";
+                                showActions = true;
+                                break;
+                        }
+                        
+                        <tr class="book-row" data-book-id="@returnTransaction.BookId" data-condition="@displayCategory">
+                            <td>
+                                <div class="book-details">
+                                    <div class="book-section">
+                                        <div>
+                                            <p class="book-title">@returnTransaction.BookTitle</p>
+                                            <p class="isbn">ISBN: @(!string.IsNullOrEmpty(returnTransaction.ISBN) ? returnTransaction.ISBN : returnTransaction.BookId.ToString())</p>
+                                            @if (!string.IsNullOrEmpty(returnTransaction.DamageType))
+                                            {
+                                                <p class="damage-details" style="font-size: 0.8em; color: #666; margin-top: 2px;">
+                                                    Damage: @returnTransaction.DamageType
+                                                </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="classification">@(!string.IsNullOrEmpty(returnTransaction.ClassificationNo) ? returnTransaction.ClassificationNo : returnTransaction.BookId.ToString())</span>
+                            </td>
+                            <td>
+                                @switch (displayCategory)
+                                {
+                                    case "GOOD":
+                                        <span class="status-badge" style="color: green ; font-weight: 600;">GOOD</span>
+                                        break;
+                                    case "DAMAGED":
+                                    case "UNUSABLE":
+                                        <span class="status-badge" style="color: red ; font-weight: 600;">@displayCondition</span>
+                                        break;
+                                    case "REPAIRABLE":
+                                    default:
+                                        <span class="status-badge" style="color: orange ; font-weight: 600;">@displayCondition</span>
+                                        break;
+                                }
+                            </td>
+                            <td class="action-cell">
+                                @if (showActions)
+                                {
+                                    <div class="action-buttons">
+                                        <button class="btn btn-success btn-sm" onclick="updateBookCondition('@returnTransaction.BookId', 'GOOD')">GOOD</button>
+                                        <button class="btn btn-danger btn-sm" onclick="updateBookCondition('@returnTransaction.BookId', 'CANCEL')">CANCEL</button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="no-action">-</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="empty-state">
+                            <p>No returned books found</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Search filter
+        function searchBooks() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('.book-row');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+
+        // Filter by condition
+        function filterByCondition(condition, btn) {
+            // Update button styles
+            document.querySelectorAll('.filter-buttons .btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-secondary');
+            });
+
+            if (btn) {
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-primary');
+            }
+
+            // Filter rows
+            const rows = document.querySelectorAll('.book-row');
+            rows.forEach(row => {
+                const rowCondition = row.getAttribute('data-condition') || 'REPAIRABLE';
+                if (condition === 'ALL' || rowCondition.toUpperCase() === condition.toUpperCase()) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Default to REPAIRABLE on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const defaultBtn = document.querySelector('.filter-buttons .btn.btn-primary');
+            filterByCondition('REPAIRABLE', defaultBtn);
+        });
+
+        // Update book condition
+        async function updateBookCondition(bookId, condition) {
+            if (!confirm(`Mark this book as ${condition}?`)) return;
+
+            try {
+                const response = await fetch('/Admin/UpdateBookCondition', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `bookId=${encodeURIComponent(bookId)}&condition=${encodeURIComponent(condition)}&notes=`
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Book condition updated successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                alert('Error updating book condition: ' + error.message);
+            }
+        }
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@using System.Linq
+@{
+    bool isSecondSemPending = string.Equals(Model.Status, "2nd Sem Pending", StringComparison.OrdinalIgnoreCase);
+}
+<div class="row">
+    <div class="col-md-6">
+        <h6>Applicant</h6>
+        <p class="mb-1"><strong>Name:</strong> @Model.FullName</p>
+        <p class="mb-1"><strong>Email:</strong> @Model.Email</p>
+        <p class="mb-1"><strong>Type:</strong> @Model.Type</p>
+        @if (!string.IsNullOrWhiteSpace(Model.Program))
+        {
+            <p class="mb-1"><strong>Program:</strong> @Model.Program</p>
+        }
+        <p class="mb-1"><strong>Submitted:</strong> @Model.SubmittedAt.ToString("MMM dd, yyyy 'at' h:mm tt")</p>
+        @if (Model.LastUpdatedAt != null)
+        {
+            <p class="mb-1"><strong>Last Updated:</strong> @Model.LastUpdatedAt?.ToString("MMM dd, yyyy 'at' h:mm tt")</p>
+        }
+
+        @if (Model.ExtraFields != null && Model.ExtraFields.Count > 0)
+        {
+            var extra = Model.ExtraFields;
+            bool HasVal(string? v) => !string.IsNullOrWhiteSpace(v);
+
+            var student = extra.Where(kv => kv.Key.StartsWith("Student.") && HasVal(kv.Value)).ToList();
+            var studentAddr = extra.Where(kv => kv.Key.StartsWith("StudentAddress.") && HasVal(kv.Value)).ToList();
+            var academic = extra.Where(kv => kv.Key.StartsWith("Academic.") && HasVal(kv.Value)).ToList();
+            var guardian = extra.Where(kv => kv.Key.StartsWith("Guardian.") && HasVal(kv.Value)).ToList();
+            var guardianAddr = extra.Where(kv => kv.Key.StartsWith("GuardianAddress.") && HasVal(kv.Value)).ToList();
+
+            string Pretty(string s)
+            {
+                if (string.IsNullOrEmpty(s)) return s;
+                var sb = new System.Text.StringBuilder();
+                for (int i = 0; i < s.Length; i++)
+                {
+                    var c = s[i];
+                    if (i > 0 && char.IsUpper(c) && char.IsLetterOrDigit(s[i - 1])) sb.Append(' ');
+                    sb.Append(c);
+                }
+                return sb.ToString();
+            }
+
+            string Label(string key)
+            {
+                switch (key)
+                {
+                    case "Student.Extension":
+                    case "Guardian.Extension":
+                        return "Suffix";
+                    case "Student.Sex":
+                    case "Guardian.Sex":
+                        return "Gender";
+                    case "Student.ContactNumber":
+                    case "Guardian.ContactNumber":
+                        return "Contact Number";
+                    case "Student.EmailAddress":
+                        return "Email Address";
+                    case "Academic.YearLevel":
+                        return "Year Level";
+                    case "Academic.Semester":
+                        return "Semester";
+                    case "Academic.AcademicYear":
+                        return "Academic Year";
+                    case "StudentAddress.HouseStreet":
+                    case "GuardianAddress.HouseStreet":
+                        return "House/Street";
+                    case "StudentAddress.PostalCode":
+                    case "GuardianAddress.PostalCode":
+                        return "Postal Code";
+                }
+                var last = key.Contains('.') ? key.Split('.').Last() : key;
+                return Pretty(last);
+            }
+
+            <div class="mt-2">
+                <h6 class="mb-1">Student Info</h6>
+                @if (student.Count > 0)
+                {
+                    <dl class="row mb-2">
+                        @foreach (var kv in student)
+                        {
+                            <dt class="col-sm-5">@Label(kv.Key)</dt>
+                            <dd class="col-sm-7">@kv.Value</dd>
+                        }
+                    </dl>
+                }
+
+                @if (studentAddr.Count > 0)
+                {
+                    <h6 class="mb-1">Student Address</h6>
+                    <dl class="row mb-2">
+                        @foreach (var kv in studentAddr)
+                        {
+                            <dt class="col-sm-5">@Label(kv.Key)</dt>
+                            <dd class="col-sm-7">@kv.Value</dd>
+                        }
+                    </dl>
+                }
+
+                @if (academic.Count > 0)
+                {
+                    <h6 class="mb-1">Academic Info</h6>
+                    <dl class="row mb-2">
+                        @foreach (var kv in academic)
+                        {
+                            <dt class="col-sm-5">@Label(kv.Key)</dt>
+                            <dd class="col-sm-7">@kv.Value</dd>
+                        }
+                    </dl>
+                }
+
+                @if (guardian.Count > 0)
+                {
+                    <h6 class="mb-1">Guardian Info</h6>
+                    <dl class="row mb-2">
+                        @foreach (var kv in guardian)
+                        {
+                            <dt class="col-sm-5">@Label(kv.Key)</dt>
+                            <dd class="col-sm-7">@kv.Value</dd>
+                        }
+                    </dl>
+                }
+
+                @if (guardianAddr.Count > 0)
+                {
+                    <h6 class="mb-1">Guardian Address</h6>
+                    <dl class="row mb-0">
+                        @foreach (var kv in guardianAddr)
+                        {
+                            <dt class="col-sm-5">@Label(kv.Key)</dt>
+                            <dd class="col-sm-7">@kv.Value</dd>
+                        }
+                    </dl>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="col-md-6">
+        <h6>Emergency Contact</h6>
+        <p class="mb-1"><strong>Name:</strong> @(Model.EmergencyContactName ?? "-")</p>
+        <p class="mb-1"><strong>Phone:</strong> @(Model.EmergencyContactPhone ?? "-")</p>
+    </div>
+</div>
+<hr />
+
+<div class="d-flex flex-wrap align-items-start gap-2">
+    <form asp-area="Admin" asp-controller="Admin" asp-action="Accept" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="reviewed" value="true" />
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-check"></i> Accept
+        </button>
+    </form>
+
+    @if (!isSecondSemPending)
+    {
+        <form asp-area="Admin" asp-controller="Admin" asp-action="Reject" method="post" class="d-flex align-items-start gap-2 flex-wrap">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="reviewed" value="true" />
+            <input type="text" name="reason" class="form-control" placeholder="Reason for rejection" required style="min-width: 260px;" />
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-times"></i> Reject
+            </button>
+        </form>
+    }
+</div>

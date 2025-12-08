@@ -1,0 +1,727 @@
+@import url('/css/Shared/BottomBar.css');
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-strong: #00567a;
+    --muted: #64748b;
+    --bg: #eef2f7;
+    --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.04);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* BASE */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: #0b213a;
+}
+
+.page {
+    min-height: 100vh;
+    padding-bottom: calc(var(--bottom-h) + 20px);
+}
+
+.class-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
+.seat-grid-container {
+    margin: 20px auto 10px; /* reduce bottom margin if needed */
+    width: calc(100% - 80px);
+    max-width: 1280px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--card-shadow);
+    padding: 16px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    /* Enable internal scrolling */
+    overflow: auto;
+    max-height: 80vh; /* adjust to your layout */
+}
+
+/* Top Bar (Sticky Inside Container) */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+}
+
+.top-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+    .back-button:hover {
+        transform: scale(1.02);
+    }
+
+.page-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-strong);
+}
+
+.top-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .btn.primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(24, 43, 92, 0.15);
+    }
+
+        .btn.primary:hover {
+            transform: scale(1.01);
+        }
+
+/* SECTION INFO */
+.section-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+    .section-info h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+.student-count {
+    font-size: 14px;
+    color: #465b8b;
+}
+
+/* SEATING GRID */
+.seating-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 14px;
+    padding-top: 12px;
+    overflow-y: auto;
+    flex-grow: 1; /* fill remaining space below top-bar */
+}
+
+.seat {
+    background: #f3f6fb;
+    border-radius: 10px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(16, 24, 40, 0.06);
+    transition: 0.15s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+    .seat:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(16, 24, 40, 0.08);
+    }
+
+    .seat img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 4px;
+    }
+
+.seat-name {
+    font-size: 12px;
+    color: var(--accent);
+}
+
+/* Seat status badge (used by focus mode) */
+.seat-status {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    pointer-events: none;
+}
+
+.seat.present .seat-status {
+    background: #ecfdf5;
+    color: #14532d;
+    border: 1px solid rgba(16,24,40,0.12);
+}
+.seat.absent .seat-status {
+    background: #fef2f2;
+    color: #7f1d1d;
+    border: 1px solid rgba(16,24,40,0.12);
+}
+.seat.late .seat-status {
+    background: #fff7ed;
+    color: #78350f;
+    border: 1px solid rgba(16,24,40,0.12);
+}
+
+/* COLUMN CONTAINER */
+.column-container {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    width: calc(100% - 80px);
+    max-width: 1280px;
+}
+
+/* CLASS LIST CONTAINER */
+.class-list-container {
+    flex: 1;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+}
+
+    .list-header h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .search-box input {
+        padding: 8px 30px 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(16, 24, 40, 0.1);
+        font-size: 14px;
+    }
+
+    .search-box i {
+        position: absolute;
+        right: 10px;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+.class-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.student-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    position: relative;
+}
+
+.student-photo {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Initial-based avatar */
+.avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(16,24,40,0.06);
+}
+
+.student-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.student-name {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* --- Student Status Tags (list view) --- */
+.student-status {
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+    border: 1px solid rgba(16,24,40,0.12);
+}
+
+/* removed grade chip styles */
+
+.student-status .fa-solid { opacity: 1; color: inherit; }
+.student-status .att-text { display: inline-block; }
+
+.status-present {
+    background: #ecfdf5;
+    color: #14532d;
+}
+.status-absent {
+    background: #fef2f2;
+    color: #7f1d1d;
+}
+.status-late {
+    background: #fff7ed;
+    color: #78350f;
+}
+
+/* Attendance action buttons */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.actions .mark-present,
+.actions .mark-absent,
+.actions .mark-late {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+    background: transparent;
+}
+
+.actions .mark-present {
+    color: #14532d;
+    border: 1px solid #cce3d8;
+}
+
+.actions .mark-absent {
+    color: #7f1d1d;
+    border: 1px solid #efd5d5;
+}
+
+.actions .mark-late {
+    color: #78350f;
+    border: 1px solid #f1dfcc;
+}
+
+.actions .mark-present:hover { background: #ecfdf5; }
+.actions .mark-absent:hover { background: #fef2f2; }
+.actions .mark-late:hover { background: #fff7ed; }
+
+/* Unenroll Button */
+.unenroll-btn {
+    background: none;
+    border: none;
+    color: #b91c1c;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+    .unenroll-btn::after {
+        content: "Unenroll";
+        position: absolute;
+        right: 110%;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #b91c1c;
+        color: #fff;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 6px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+    }
+
+    .unenroll-btn:hover::after {
+        opacity: 1;
+    }
+
+/* REQUEST CONTAINER */
+.class-request-container {
+    flex: 1;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px 24px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.request-header {
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+    margin-bottom: 14px;
+}
+
+    .request-header h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+.request-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Card styles for join requests (supports both server and client-rendered) */
+.request-item,
+.request-card,
+.join-request {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(16,24,40,0.06);
+    border: 1px solid rgba(16,24,40,0.06);
+    transition: transform .12s ease, box-shadow .15s ease;
+}
+
+.request-item:hover,
+.request-card:hover,
+.join-request:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16,24,40,0.10);
+}
+
+.request-photo {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.request-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.request-name {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.request-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.join-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.request-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* Button styles (support server-rendered .btn.accept/.btn.deny and client .approve-btn/.reject-btn) */
+.btn.accept,
+.approve-btn {
+    background: #1fa971;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(31,169,113,0.24);
+}
+
+.btn.deny,
+.reject-btn {
+    background: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(217,83,79,0.24);
+}
+
+.btn.accept:hover,
+.approve-btn:hover {
+    filter: brightness(1.05);
+}
+
+.btn.deny:hover,
+.reject-btn:hover {
+    filter: brightness(1.05);
+}
+
+/* ======================================================
+   Focus Mode: progress bar + modal
+   ====================================================== */
+
+#focus-progress,
+.focus-progress {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #fbfdff;
+    border-radius: 10px;
+    border: 1px solid rgba(16,24,40,0.04);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.progress-text {
+    font-size: 13px;
+    color: #25334a;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e6eef8;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 260ms ease;
+    border-radius: 6px;
+}
+
+/* Focus modal overlay */
+#focus-modal,
+.focus-modal {
+    display: none; /* hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+    /* Modal content box */
+    .focus-modal-content,
+    #focus-modal .focus-modal-content {
+        background: #fff;
+        border-radius: 14px;
+        padding: 24px 32px;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+/* Close x */
+#close-focus-modal {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+/* Student photo in modal */
+.focus-photo,
+#focus-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 6px auto 10px;
+    display: block;
+    box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+}
+
+/* Student name */
+.focus-name,
+#focus-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-strong);
+    margin-bottom: 10px;
+}
+
+/* Buttons row */
+.focus-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+/* Danger / Success / Warning button styles */
+.btn.small {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.btn.success {
+    background: #16a34a;
+    color: #fff;
+}
+
+.btn.danger {
+    background: #dc2626;
+    color: #fff;
+}
+
+.btn.warning {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.btn.success:hover {
+    background: #13833c;
+}
+
+.btn.danger:hover {
+    background: #b91c1c;
+}
+
+.btn.warning:hover {
+    background: #d97706;
+}
+
+/* When focus-mode is active, slightly blur the main content (but keep modal clear) */
+.focus-mode-active .class-container {
+    filter: blur(4px);
+    transition: filter 180ms ease;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 99999;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+    .seating-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .column-container {
+        flex-direction: column;
+    }
+
+    .class-list-container, .class-request-container {
+        width: 100%;
+    }
+
+    .focus-modal-content,
+    #focus-modal .focus-modal-content {
+        max-width: 92%;
+    }
+}
+
+/* Hide scrollbars for all elements */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+    *::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }

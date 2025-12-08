@@ -1,0 +1,134 @@
+@model StudentPortal.Models.ProfessorDb.ProfessorDashboardViewModel
+@{
+    ViewData["Title"] = "Professor Dashboard";
+    var toastMessage = TempData["ToastMessage"] as string;
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/AdminDb/AdminDb.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+    <style>
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 12000;
+        }
+
+        .class-code {
+            color: white;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <main class="classes-container" id="classContainer">
+            @foreach (var cls in Model.Classes)
+            {
+                <article class="class-card">
+                    <div class="class-left has-bg"
+                         style="background-image:url('@(string.IsNullOrEmpty(cls.BackgroundImageUrl) ? "/images/classbg.jpg" : cls.BackgroundImageUrl)');"
+                         onclick="location.href='@Url.Action("Index", "AdminClass", new { id = cls.ClassCode })'">
+                        <div class="class-name">@cls.SubjectName</div>
+                        <div class="class-section">
+                            @if (!string.IsNullOrWhiteSpace(cls.SectionLabel))
+                            {
+                                @($"Section: {cls.SectionLabel}")
+                            }
+                            else
+                            {
+                                @($"Code: {cls.SubjectCode}")
+                            }
+                        </div>
+                        <div class="class-code">Class Code: @cls.ClassCode</div>
+                    </div>
+                    <div class="class-right">
+                        <div class="instructor-profile-image">@Model.ProfessorInitials</div>
+                        <div>
+                            <div class="instructor-profile-name">@Model.ProfessorName</div>
+                            <div class="instructor-role">Professor</div>
+                        </div>
+                    </div>
+                </article>
+            }
+
+        </main>
+
+        <!-- Create class button (professors can create their own classes) -->
+        <button class="create-class-button" id="createBtn" type="button" title="Create class" aria-haspopup="dialog" aria-controls="createModal" onclick="openCreateModal(event)">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+
+        <!-- Modal for creating class (posts to ProfessorDb/CreateClass) -->
+        <div class="modal-backdrop" id="modalBackdrop" role="presentation" aria-hidden="true">
+            <div class="modal" id="createModal" role="dialog" aria-modal="true" aria-labelledby="createTitle">
+                <h3 id="createTitle">Create a Class</h3>
+
+                <form id="createForm" method="post" asp-controller="ProfessorDb" asp-action="CreateClass">
+                    @Html.AntiForgeryToken()
+                    <div class="custom-select" id="courseSelect" data-value="">
+                        <div class="selected">Select Course</div>
+                        <div class="options">
+                            <div data-value="BSCS">BSCS</div>
+                            <div data-value="BSIT">BSIT</div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="course" id="courseValue" />
+
+                    <div class="custom-select" id="yearSelect" data-value="">
+                        <div class="selected">Select Year</div>
+                        <div class="options">
+                            <div data-value="1st">1st</div>
+                            <div data-value="2nd">2nd</div>
+                            <div data-value="3rd">3rd</div>
+                            <div data-value="4th">4th</div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="year" id="yearValue" />
+
+                    <div class="custom-select" id="semesterSelect" data-value="">
+                        <div class="selected">Select Semester</div>
+                        <div class="options">
+                            <div data-value="1st">1st</div>
+                            <div data-value="2nd">2nd</div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="semester" id="semesterValue" />
+
+                    <input type="text" id="section" name="section" maxlength="1" placeholder="Enter section letter (A, B, C...)" />
+                    <input type="text" id="subjectName" name="subjectName" placeholder="Enter subject name" />
+                    <input type="text" id="subjectCode" name="subjectCode" placeholder="Enter subject code" />
+
+                    <button id="createClass" type="submit">CREATE CLASS</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="toast" class="toast">@toastMessage</div>
+
+        <script src="~/js/AdminDb/AdminDb.js" asp-append-version="true"></script>
+        @{ 
+            ViewBag.CurrentPage = "home";
+            ViewBag.Role = "Professor";
+            ViewBag.AdminName = Model.ProfessorName;
+            ViewBag.AdminInitials = Model.ProfessorInitials;
+        }
+        @await Html.PartialAsync("_AdminBottomBar")
+
+    </div>
+</body>
+</html>
+
+

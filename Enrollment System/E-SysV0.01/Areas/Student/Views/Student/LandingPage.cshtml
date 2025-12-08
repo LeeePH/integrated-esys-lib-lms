@@ -1,0 +1,27 @@
+﻿    @{
+        ViewData["Title"] = "Student Portal";
+        var openChangePassword = TempData["OpenChangePasswordModal"] as string;
+        var cpError = TempData["CP_Error"] as string;
+        var successMsg = TempData["Success"] as string;
+    }
+
+    <nav class="d-flex px-5 py-2 gap-5 fixed-top bg-white">
+        <div class="d-flex gap-2">
+            <div class="align-content-center">
+                <img src="~/images/logo.svg" class="rounded p-2" style="background-color:#066B99; width:50px; height:40px;" />
+            </div>
+            <div class="align-items-center">
+                <h5>State University</h5>
+                <small style="color:gray;">State University</small>
+            </div>
+        </div>
+   
+        <div class="d-flex align-items-center gap-2 ms-auto">
+       
+            <button type="button" data-bs-toggle="modal" data-bs-target="#ChangePasswordModal" class="btn text-white" style="background-color:#066B99; width:180px;">Change Password</button>
+        </div>
+    </nav>
+
+
+
+

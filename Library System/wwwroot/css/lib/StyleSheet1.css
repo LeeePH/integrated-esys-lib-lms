@@ -1,0 +1,421 @@
+﻿.content {
+    width: 100%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    header h1 {
+        color: #8b2f00;
+    }
+
+.filter select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+/* ====== TABS ====== */
+.tabs {
+    margin: 20px 0 30px 0;
+}
+
+    .tabs button {
+        border: none;
+        background: #e7ecf1;
+        padding: 10px 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: 0.3s ease;
+        font-weight: 500;
+        color: #444;
+    }
+
+        .tabs button.active {
+            background: #004b70;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 75, 112, 0.3);
+        }
+
+/* ====== REPORT CARD ====== */
+.report-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+/* ====== SECTION TITLES ====== */
+.report-header,
+.activity-header,
+.most-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 18px;
+}
+
+    .report-header h2,
+    .activity-header h3,
+    .most-header h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+.peak-indicator {
+    font-size: 0.95rem;
+    color: #007bff;
+    font-weight: 500;
+    background-color: #eaf2ff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+/* ====== STATS SECTION ====== */
+.stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.stat {
+    flex: 1;
+    text-align: center;
+    border-radius: 12px;
+    padding: 25px 0;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .stat:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat h3 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .stat p {
+        font-size: 0.95rem;
+        margin-top: 6px;
+        color: #555;
+    }
+
+    /* Colors */
+    .stat.blue {
+        background: #b9e3ff;
+    }
+
+    .stat.green {
+        background: #b9ffce;
+    }
+
+    .stat.purple {
+        background: #e6c9ff;
+    }
+
+    .stat.orange {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+    }
+
+/* ====== CHART ====== */
+.chart-container {
+    width: 100%;
+    height: 320px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 20px;
+    overflow-x: auto;
+    margin-bottom: 35px;
+}
+
+    .chart-container canvas {
+        min-width: 800px;
+    }
+
+/* ====== MOST BORROWED BOOKS ====== */
+.activity-table {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    margin-bottom: 35px;
+}
+
+.table-wrapper {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 15px 20px;
+    overflow-x: auto;
+}
+
+.activity-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+    .activity-bar .progress-bar {
+        position: relative;
+        flex: 1;
+        height: 8px;
+        background: #eee;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .activity-bar .progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 8px;
+        background: #007bff;
+        border-radius: 5px;
+        transition: width 0.3s ease-in-out;
+    }
+
+    .activity-bar span {
+        font-size: 14px;
+        color: #333;
+    }
+
+td strong {
+    color: #222;
+}
+
+td span {
+    color: #555;
+    font-size: 13px;
+}
+
+.unique-students {
+    display: block;
+    color: #6c757d;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+/* ====== MOST ACTIVE STUDENTS TABLE ====== */
+.students-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .students-table thead {
+        background: #f1f4f8;
+    }
+
+    .students-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+        color: #444;
+    }
+
+    .students-table td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #dee2e6;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .students-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+/* ====== BADGES ====== */
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background: #007bff;
+    color: #fff;
+}
+
+.badge-info {
+    background: #17a2b8;
+    color: #fff;
+}
+
+/* ====== UTILITY ====== */
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+/* Unified section design */
+.activity-section {
+    margin-top: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Card container for table */
+.activity-card {
+    border-top: 2px solid #007bff;
+    padding-top: 1rem;
+}
+
+/* Tables inside cards */
+.activity-table, .students-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .students-table td, .students-table th {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .activity-table td {
+        padding: 10px;
+    }
+
+    .students-table th {
+        text-align: left;
+        color: #555;
+        font-weight: 600;
+    }
+
+/* Progress bar style */
+.progress-bar {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    height: 8px;
+    width: 100%;
+    margin: 4px 0;
+}
+
+.progress {
+    background-color: #007bff;
+    height: 8px;
+    border-radius: 10px;
+}
+
+/* Badges */
+.badge {
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.85rem;
+}
+
+.badge-primary {
+    background-color: #007bff;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+}
+
+.no-data {
+    color: #888;
+    text-align: center;
+    padding: 1rem;
+}
+
+
+/* Layout for Top Borrowing Courses section */
+
+
+
+/* Default activity-card (block layout for most sections) */
+.activity-card {
+    border-top: 2px solid #007bff;
+    padding-top: 1rem;
+    background-color: #fff;
+}
+
+.top-courses-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Left table container */
+.courses-table {
+    flex: 1;
+}
+
+/* Right chart container */
+.courses-chart {
+    flex: 0 0 350px; /* makes chart fixed width */
+    height: 350px; /* keeps it square and smaller */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    /* Canvas responsive control */
+    .courses-chart canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+/* Responsive: stack on small screens */
+@media (max-width: 900px) {
+    .top-courses-layout {
+        flex-direction: column;
+    }
+
+    .courses-table, .courses-chart {
+        flex: 1 1 100%;
+    }
+
+    .courses-chart {
+        min-height: 250px;
+    }
+}

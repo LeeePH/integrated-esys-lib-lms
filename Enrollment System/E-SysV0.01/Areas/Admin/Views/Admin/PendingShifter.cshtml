@@ -1,0 +1,172 @@
+﻿@model List<ShifterEnrollmentRequest>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = ViewBag.Title ?? "Pending Shifter Requests";
+    var filterAction = ViewBag.FilterAction ?? "PendingShifter";
+    var filterQ = ViewBag.FilterQ ?? "";
+    var filterProgram = ViewBag.FilterProgram ?? "";
+    var settings = ViewBag.EnrollmentSettings as EnrollmentSettings;
+}
+
+<style>
+    .shifter-card {
+        border-left: 4px solid #ff9800;
+        transition: transform 0.2s;
+    }
+
+        .shifter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+    .program-badge {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.75rem;
+    }
+
+    .shift-arrow {
+        color: #ff9800;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="container-fluid py-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3><i class="fas fa-exchange-alt me-2 text-warning"></i>@ViewBag.Title</h3>
+            <p class="text-muted mb-0">
+                <span class="badge bg-warning text-dark">@Model.Count requests pending</span>
+                @if (settings != null)
+                {
+                    <span class="ms-2">
+                        <i class="fas fa-calendar me-1"></i>@settings.Semester • AY @settings.AcademicYear
+                    </span>
+                }
+            </p>
+        </div>
+        <div>
+            <a asp-action="Dashboard" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" asp-action="@filterAction" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="q" value="@filterQ" class="form-control"
+                           placeholder="Name, email, or student ID...">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Program</label>
+                    <select name="program" class="form-select">
+                        <option value="">All Programs</option>
+                        <option value="BSIT" selected="@(filterProgram == "BSIT" ? "selected" : null)">BSIT</option>
+                        <option value="BSENT" selected="@(filterProgram == "BSENT" ? "selected" : null)">BSENT</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search me-2"></i>Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request List -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No pending shifter requests found.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var request in Model.OrderByDescending(r => r.SubmittedDate))
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card shifter-card h-100">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-user-graduate me-2"></i>
+                                @request.FirstName @request.LastName
+                            </h6>
+                            <small class="text-muted">
+                                <i class="far fa-clock me-1"></i>
+                                @request.SubmittedDate.ToLocalTime().ToString("MMM dd, yyyy")
+                            </small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <strong>Student ID:</strong> @request.StudentUsername<br />
+                                    <strong>Email:</strong> @request.Email<br />
+                                    <strong>Contact:</strong> @request.ContactNumber
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span class="badge bg-primary program-badge">@request.CourseLastEnrolled</span>
+                                        <i class="fas fa-arrow-right shift-arrow mx-3"></i>
+                                        <span class="badge bg-success program-badge">@request.CourseApplyingToShift</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <small class="text-muted">Units Earned</small><br />
+                                    <span class="badge bg-success">@request.TotalUnitsEarned units</span>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">Units Failed</small><br />
+                                    <span class="badge bg-danger">@request.TotalUnitsFailed units</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>Reason (excerpt):</strong>
+                                <p class="small text-muted mb-0">
+                                    @(request.ReasonForShifting?.Length > 100
+                                                                ? request.ReasonForShifting.Substring(0, 100) + "..."
+                                                                : request.ReasonForShifting)
+                        </p>
+                    </div>
+
+                            <div class="alert alert-warning py-2 mb-2">
+                                <small>
+                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                    Documents Status:
+                            @if (!string.IsNullOrWhiteSpace(request.EndorsementLetterPath) &&
+                                                        !string.IsNullOrWhiteSpace(request.LibraryClearancePath))
+                                    {
+                                        <span class="badge bg-success">Complete</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Incomplete</span>
+                                    }
+                                </small>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <a asp-action="RequestDetailsShifter" asp-route-id="@request.Id"
+                               class="btn btn-primary btn-sm w-100">
+                                <i class="fas fa-eye me-2"></i>Review Request
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,387 @@
+﻿/* === GLOBAL STYLING === */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 70px;
+    color: #222;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(1.05);
+    }
+
+.content {
+    width: 100%;
+    padding: 0px 40px 0px 90px;
+    margin-top: -50px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    header h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #8b2f00;
+        margin-bottom: 20px;
+    }
+
+/* Tabs below header */
+.tabs {
+    margin: 25px 0;
+}
+
+    .tabs button {
+        border: none;
+        background: #e7ecf1;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-right: 8px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+        .tabs button.active {
+            background: #004b70;
+            color: white;
+        }
+
+
+/* === TOP HEADER === */
+.top-header {
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.page-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #8b2f00;
+    margin-bottom: 20px;
+}
+
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* === SEARCH BAR === */
+.search-box {
+    position: relative;
+    flex: 1 1 300px;
+}
+
+    .search-box input {
+        width: 100%;
+        padding: 10px 40px 10px 15px;
+        border: 2px solid #ccc;
+        border-radius: 25px;
+        outline: none;
+        font-size: 14px;
+    }
+
+        .search-box input:focus {
+            box-shadow: 0 20px 20px rgba(0, 0, 0, 0.15); /* more shadow when focused */
+            border-color: #1d4ed8;
+        }
+
+    /* Adjust search icon (image) */
+    .search-box img {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
+
+        .search-box img:hover {
+            opacity: 1;
+        }
+
+/* === FILTER BUTTONS === */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.filter-btn {
+    background-color: #006B99;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    height: 38px;
+    transition: background 0.2s;
+}
+
+    .filter-btn.active,
+    .filter-btn:hover {
+        background: #006B99;
+        color: white;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* stronger hover shadow */
+    }
+
+/* Improve visibility of Bootstrap outline buttons in light mode */
+.filter-buttons .btn-outline-secondary {
+    border: 2px solid #6c757d;
+    color: #495057;
+    font-weight: 600;
+    background-color: #ffffff;
+}
+
+    .filter-buttons .btn-outline-secondary:hover,
+    .filter-buttons .btn-outline-secondary:active {
+        background-color: #e9ecef;
+        border-color: #495057;
+        color: #212529;
+    }
+
+.filter-buttons .btn-primary {
+    border: 2px solid #004b70;
+    color: white;
+    background-color: #006B99;
+    font-weight: 600;
+}
+
+    .filter-buttons .btn-primary:hover {
+        background-color: #005588;
+        border-color: #004b70;
+    }
+
+/* Action buttons in table */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-buttons .btn,
+.action-buttons .btn-sm {
+    font-weight: 600;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.action-buttons .btn-success,
+.action-buttons .btn-sm.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+    .action-buttons .btn-success:hover,
+    .action-buttons .btn-sm.btn-success:hover {
+        background-color: #218838;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+.action-buttons .btn-danger,
+.action-buttons .btn-sm.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+    .action-buttons .btn-danger:hover,
+    .action-buttons .btn-sm.btn-danger:hover {
+        background-color: #c82333;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+/* === WHITE CARD (TABLE AREA) === */
+.content-box {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    overflow-x: auto;
+}
+
+.reservation-table {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    table-layout: fixed;
+}
+
+    .reservation-table th,
+    .reservation-table td {
+        padding: 14px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .reservation-table tbody tr {
+        min-height: 70px;
+    }
+
+/* === DETAILS INSIDE TABLE === */
+.reservation-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.user-section,
+.book-section {
+    display: flex;
+    align-items: center; /* text beside icon */
+    gap: 8px; /* space between icon and text */
+}
+
+/* === IMAGE ICON STYLING (Replaces Material Icons) === */
+.icon-lg {
+    width: 24px; /* fits well beside text */
+    height: 24px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px; /* small gap from text */
+}
+
+.mb-2 {
+    margin-bottom: 2px; /* subtle alignment adjustment */
+}
+
+/* Adjust user/book icons beside text */
+.user-section img,
+.book-section img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    flex-shrink: 0; /* prevent shrinking */
+    margin-right: 8px;
+}
+
+/* === TEXT STYLING === */
+.user-name {
+    font-weight: 600;
+}
+
+.user-id,
+.isbn {
+    color: #777;
+    font-size: 13px;
+}
+
+.book-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+/* === STATUS + BUTTONS === */
+.status {
+    background-color: #FFC97D;
+    color: #000;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 35px;
+    border-radius: 50px;
+    text-align: center;
+}
+
+.btn {
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 22px; /* bigger size */
+    border-radius: 20px; /* rounded corners */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 14px;
+}
+
+    .btn.approve {
+        background-color: #00B44B;
+    }
+
+        .btn.approve:hover {
+            background-color: #009b40; /* slightly darker on hover */
+        }
+
+    .btn.cancel {
+        background-color: #EF0202;
+    }
+
+        .btn.cancel:hover {
+            background-color: #c20101; /* slightly darker on hover */
+        }
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+    .top-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        justify-content: flex-start;
+    }
+
+    .reservation-table th,
+    .reservation-table td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .status {
+        padding: 3px 8px;
+        font-size: 12px;
+    }
+}

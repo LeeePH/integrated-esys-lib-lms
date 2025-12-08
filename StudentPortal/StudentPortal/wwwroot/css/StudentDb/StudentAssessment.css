@@ -1,0 +1,435 @@
+@import url('/css/StudentDb/StudentTask.css');
+@import url('/css/Shared/BottomBar.css');
+
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    --left-w: 260px;
+    --gap: 32px;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html, body {
+    overflow: hidden;
+}
+
+/* LAYOUT */
+.class-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    gap: 30px;
+    position: relative;
+}
+
+/* LEFT PANEL */
+/* LEFT PANEL — SUBMIT CONTAINER */
+.submit-container {
+    position: fixed; /* pins to viewport */
+    top: 20px; /* distance from top of viewport */
+    left: 40px; /* distance from left of viewport */
+    width: 23.5%;
+    height: calc(100vh - 110px); /* fits viewport without overlapping bottom-bar */
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow: hidden;
+    box-sizing: border-box;
+    /* override any flex centering effect */
+    margin: 0 !important;
+}
+
+
+/* Explicit section layout for better position locking */
+/* TOP: header + open-quiz + private comment (all pinned to top) */
+.submit-container-top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* consistent spacing between header and open-quiz */
+    flex-shrink: 0; /* keeps top block from collapsing */
+    margin-bottom: 8px;
+    margin-top: 15px;
+}
+
+/* MIDDLE: scrollable content if needed */
+.submit-container-middle {
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    padding-right: 6px;
+    box-sizing: border-box;
+}
+
+/* BOTTOM: buttons container (pinned above back-button) */
+.submit-container-bottom {
+    flex-shrink: 0;
+    margin-top: 8px;
+}
+
+/* Header */
+.submit-header {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0b213a;
+    margin: 0; /* remove default h2 margin so spacing is controlled by gap */
+}
+
+/* OPEN QUIZ BUTTON AREA */
+.open-quiz {
+    height: 80px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #475569;
+    transition: all 0.25s ease;
+    margin-left: 3px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(10, 20, 40, 0.04);
+}
+
+    .open-quiz:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+        box-shadow: 0 6px 18px rgba(10, 20, 40, 0.06);
+        transform: translateY(-1px);
+    }
+
+    /* ICON STYLE */
+    .open-quiz i {
+        font-size: 2rem;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    /* LABEL STYLE */
+    .open-quiz span {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.9rem;
+    }
+
+    /* ICON ANIMATION ON HOVER */
+    .open-quiz:hover i {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    /* OPEN DOOR ICON (appears on hover) */
+    .open-quiz::after {
+        content: "\f52b"; /* Font Awesome fa-door-open */
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 2rem;
+        position: absolute;
+        top: 36%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        color: #475569;
+        opacity: 0;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+    }
+
+    .open-quiz:hover::after {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+/* BUTTONS (pinned above the back button) */
+/* remove negative margins and let this stay near bottom section */
+.submit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.btn {
+    border: none;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.15s ease;
+}
+
+.mark-done-btn {
+    background: #006b99;
+    color: #fff;
+    transition: transform 0.2s ease;
+}
+
+    .mark-done-btn:hover {
+        background: #00577c;
+    }
+
+/* Fixed back button — inside container at bottom-left */
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.12s ease;
+    z-index: 5;
+}
+
+    .back-button:hover {
+        background: #00577c;
+    }
+
+/* --- RESPONSIVE SAFETY ADJUSTMENTS --- */
+@media (max-width: 1100px) {
+    .submit-container {
+        width: 300px;
+        left: 20px;
+        padding: 16px;
+    }
+
+    .open-quiz,
+    .private-comment,
+    .submit-buttons {
+        max-width: 260px;
+    }
+}
+
+@media (max-width: 600px) {
+    .submit-container {
+        position: static;
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 16px;
+    }
+
+    .submit-container-top {
+        gap: 10px;
+    }
+
+    .back-button {
+        position: static;
+        margin-top: 12px;
+        align-self: flex-start;
+    }
+}
+
+
+
+/* RIGHT SECTION — ASSESSMENT CONTENT */
+.assessment-container {
+    position: relative;
+    margin-left: 27%;
+    margin-top: -20px;
+    height: calc(100vh - 110px); /* fits viewport without overlapping bottom-bar */
+    width: 70%;
+    background: #fff;
+    color: #0b213a;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding: 0px 20px 0px 0;
+}
+
+.assessment-scrollable {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.assessment-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.assessment-description {
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+/* ATTACHMENTS */
+.attachments {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* ATTACHMENTS */
+.attachments {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.attachment-box {
+    background: #FF9809;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+    .attachment-box:hover {
+        background: #b45309;
+    }
+
+/* library search (inside container) */
+.library-search {
+    position: absolute;
+    bottom: 80px; /* sits right above the bottom section */
+    left: 20px; /* aligns with container padding */
+    z-index: 5;
+}
+
+.library-btn {
+    background: var(--accent);
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.2);
+    transition: all 0.3s ease;
+}
+
+    .library-btn:hover {
+        background: #00577c;
+        transform: scale(1.06);
+    }
+
+    /* Tooltip styling */
+    .library-btn::after {
+        content: "Search Library";
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(30%) translateY(43px);
+        background: var(--accent);
+        color: #fff;
+        padding: 6px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Show tooltip on hover */
+    .library-btn:hover::after,
+    .library-btn:hover::before {
+        opacity: 1;
+        transform: translateX(30%) translateY(43px);
+    }
+
+/* BOTTOM SECTION */
+.assessment-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    padding: 0px 24px 10px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: 0 -2px 8px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.posted-date,
+.deadline-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: left;
+    padding-top: 3px;
+}
+
+/* CONFIRM MODAL */
+.confirm-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+    .confirm-modal.show {
+        display: flex;
+    }
+
+.confirm-box {
+    background: #f3f6fb;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 340px;
+}
+
+    .confirm-box p {
+        font-size: 0.95rem;
+        color: #0b213a;
+        margin-bottom: 18px;
+    }
+
+.confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+    .confirm-actions .btn {
+        padding: 8px 20px;
+    }
+
+    .confirm-actions .yes,
+    .confirm-actions .no {
+        background: #182b5c;
+        color: #fff;
+    }

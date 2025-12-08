@@ -1,0 +1,387 @@
+﻿@model SystemLibrary.ViewModels.BorrowingsViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Borrowings";
+}
+
+<!-- ✅ Keep first design’s CSS -->
+<link rel="stylesheet" href="~/css/student/Borrows.css" />
+
+<!-- ✅ Success/Error Alerts from second code -->
+@if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+}
+
+<div class="dashboard-container">
+    <main class="main-content">
+        <div class="borrowed">
+            <h2>
+                <img src="~/images/borrow.png" alt="Borrowed" class="title-icon" />
+                Borrowed
+            </h2>
+        </div>
+
+        <div class="borrow-list">
+            @if (Model.BorrowedBooks != null && Model.BorrowedBooks.Any())
+            {
+                @foreach (var book in Model.BorrowedBooks)
+                {
+                            <div class="borrow-card">
+                                <div class="book-img">
+                                    <img src="@book.Image" alt="@book.Title" class="book-image" />
+                                </div>
+
+                                <div class="book-details">
+                                    <p class="book-title">@book.Title</p>
+                                    <p class="book-author">@book.Author</p>
+                                    <div class="date-row">
+                                        <span class="borrow-date">Borrowed Date<br />@book.BorrowedDate.ToString("MM/dd/yyyy")</span>
+                                    </div>
+                                </div>
+
+                                <div class="status-col">
+                                    <span class="status @(book.IsOverdue ? "red" : book.IsDueSoon ? "orange" : "gray")">@book.Status</span>
+                                    <span class="due-date">Due Date<br />@book.DueDate.ToString("MM/dd/yyyy")</span>
+
+                            @if (book.DaysRemaining >= 0)
+                            {
+                                            <span class="days-remaining">DUE NOW</span>
+                            }
+                            else
+                            {
+                                            <span class="days-overdue">@Math.Abs(book.DaysRemaining) minute(s) overdue</span>
+                            }
+                                </div>
+
+                                <div class="borrow-actions">                              
+                                    @if (book.Status == "Borrowed" && !book.IsOverdue && book.Status != "Renewal Requested" && book.DaysRemaining > 0)
+                                    {
+                                        <button type="button" class="btn renewal" onclick="requestRenewal('@book.ReservationId', '@book.Title')">
+                                            Request Renewal
+                                        </button>
+                                    }
+                                    else if (book.Status == "Renewal Requested")
+                                    {
+                                        <button type="button" class="btn renewal" disabled style="opacity: 0.6; cursor: not-allowed;">
+                                            Renewal Pending...
+                                        </button>
+                                    }
+                                    else if (book.Status == "Borrowed" && book.DaysRemaining == 0)
+                                    {
+                                        <button type="button" class="btn renewal" disabled style="opacity: 0.6; cursor: not-allowed;" title="Cannot renew - 0 days remaining">
+                                            Renewal Disabled (0 Days)
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                }
+            }
+            else
+            {
+                    <div class="empty-borrowed">
+                        <img src="~/images/ghost.png" alt="Ghost" class="ghost-img" />
+                        <p>No borrowed books at the moment.</p>
+                    </div>
+            }
+        </div>
+    </main>
+
+    <aside class="notifications">
+        <h2>
+            <img src="~/images/time.png" alt="Waitlist" class="notif-icon" />
+            Waitlist...
+        </h2>
+        <div class="notif-list">
+            @if (Model.Waitlist != null && Model.Waitlist.Any())
+            {
+                @foreach (var reservation in Model.Waitlist)
+                {
+                            <div class="waitlist-item" data-reservation-id="@reservation.Id">
+                                <div class="waitlist-book">
+                                    <div class="waitlist-info">
+                                        <h4>@reservation.BookTitle</h4>
+                                        <p>@reservation.BookAuthor</p>
+                                        <small class="reservation-date">@reservation.ReservationType on @reservation.ReservationDate.ToString("MMM dd, yyyy")</small>
+                                        @if (reservation.Status == "Approved")
+                                        {
+                                            <span class="waitlist-status approved">Ready for Pickup!</span>
+                                            <small class="pickup-notice">Please collect your book within 2 minutes</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="waitlist-status @(reservation.Status == "Pending" ? "pending" : "waitlisted")">@reservation.Status</span>
+                                        }
+                                    </div>
+                                </div>
+                                <button class="remove-waitlist-btn" onclick="removeFromWaitlist('@reservation.Id')">×</button>
+                            </div>
+                }
+            }
+            else
+            {
+                    <div class="empty-borrowed">
+                        <img src="~/images/ghost.png" alt="Ghost" class="ghost-img" />
+                        <p>Nothing here so far...</p>
+                    </div>
+            }
+        </div>
+    </aside>
+</div>
+
+<!-- Cancel Confirmation Modal -->
+
+<div id="cancelModal" class="custom-modal" style="display:none;">
+    <div class="modal-content cancel">
+        <div class="modal-header">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Cancel Reservation</h3>
+        </div>
+        <p>Are you sure you want to remove this book from your waitlist?</p>
+        <div class="modal-buttons">
+            <button class="btn cancel" onclick="closeCancelModal()">Cancel</button>
+            <button class="btn confirm" onclick="confirmCancel()">Remove</button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" class="custom-modal" style="display:none;">
+    <div class="modal-content success">
+        <div class="modal-header">
+            <i class="fas fa-check-circle" style="color:#28a745;"></i>
+            <h3>Removed from Waitlist</h3>
+        </div>
+        <p>The book has been successfully removed from your waitlist.</p>
+        <div class="modal-buttons">
+            <button class="btn confirm" onclick="closeSuccessModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ✅ Keep first design’s modal structure -->
+<div class="modal-overlays" id="reportModal" style="display:none;">
+    <div class="modal-content report-modals">
+        <span class="close" onclick="closeReportModal()">&times;</span>
+        <h3>Report Book Issue</h3>
+
+        <form id="reportForm" asp-controller="Student" asp-action="ReportBookIssue" method="post">
+            <input type="hidden" id="reportReservationId" name="reservationId" />
+
+            <div class="form-group">
+                <label for="reportBookTitle">Book Name</label>
+                <input type="text" id="reportBookTitle" class="book-name" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="issueDescription">Describe the Issue</label>
+                <textarea id="issueDescription" name="issueDescription" rows="4" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn cancel" onclick="closeReportModal()">Cancel</button>
+                <button type="submit" class="btn confirm">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Renewal Status Modal -->
+<div id="renewalModal" class="custom-modal" style="display:none;">
+    <div class="modal-content renewal" id="renewalModalContent">
+        <div class="modal-header">
+            <i class="fas fa-book" id="renewalIcon"></i>
+            <h3 id="renewalTitle">Renewal Request</h3>
+        </div>
+        <p id="renewalMessage"></p>
+        <div class="modal-buttons">
+            <button class="btn confirm" onclick="closeRenewalModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedReservationId = null; // store reservation id for confirmation
+
+
+    function removeFromWaitlist(reservationId) {
+        selectedReservationId = reservationId;
+        document.getElementById('cancelModal').style.display = 'flex';
+    }
+
+
+    function closeCancelModal() {
+        document.getElementById('cancelModal').style.display = 'none';
+        selectedReservationId = null;
+    }
+
+
+    function openSuccessModal() {
+        document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function closeSuccessModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+
+
+    async function confirmCancel() {
+        if (!selectedReservationId) return;
+
+        try {
+            const response = await fetch('/Student/RemoveFromWaitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `reservationId=${selectedReservationId}`
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const item = document.querySelector(`[data-reservation-id="${selectedReservationId}"]`);
+                if (item) item.remove();
+
+                const remaining = document.querySelectorAll('.waitlist-item');
+                if (remaining.length === 0) {
+                    const notifList = document.querySelector('.notif-list');
+                    notifList.innerHTML = `
+                        <div class="empty-notif">
+                            <img src="/images/ghost.png" alt="Ghost" class="ghost-img" />
+                            <p>Nothing here so far...</p>
+                        </div>`;
+                }
+
+                closeCancelModal();   
+                openSuccessModal();   
+            } else {
+                showNotification(result.message, 'error');
+            }
+        } catch (err) {
+            showNotification('An error occurred. Please try again.', 'error');
+        }
+    }
+
+
+    function openReportModal(reservationId, bookTitle) {
+        document.getElementById('reportReservationId').value = reservationId;
+        document.getElementById('reportBookTitle').value = bookTitle;
+        document.getElementById('reportModal').style.display = 'flex';
+    }
+
+    function closeReportModal() {
+        document.getElementById('reportModal').style.display = 'none';
+    }
+
+    function showNotification(message, type) {
+        alert(message);
+    }
+
+    async function requestRenewal(reservationId, bookTitle) {
+        try {
+            const response = await fetch('/Student/RequestRenewal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    reservationId: reservationId
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Show success modal
+                showRenewalModal(
+                    '✅ Renewal Submitted',
+                    result.message,
+                    'success',
+                    () => location.reload()
+                );
+            } else {
+                // Show error modal with specific reason
+                let title = 'Renewal Request';
+                let icon = 'warning';
+                
+                if (result.reason === 'DueToday') {
+                    title = '⏰ Cannot Renew';
+                    icon = 'clock';
+                } else if (result.reason === 'HasPenalties') {
+                    title = '💳 Unpaid Penalties';
+                    icon = 'exclamation-circle';
+                } else if (result.reason === 'NotFound') {
+                    title = '❌ Error';
+                    icon = 'times-circle';
+                }
+                
+                showRenewalModal(title, result.message, 'error');
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            showRenewalModal(
+                '❌ Error',
+                'An error occurred while processing your renewal request. Please try again.',
+                'error'
+            );
+        }
+    }
+
+    function showRenewalModal(title, message, type, onConfirm = null) {
+        const modal = document.getElementById('renewalModal');
+        const titleElem = document.getElementById('renewalTitle');
+        const messageElem = document.getElementById('renewalMessage');
+        const iconElem = document.getElementById('renewalIcon');
+        const contentDiv = document.getElementById('renewalModalContent');
+        
+        // Set title and message
+        titleElem.textContent = title;
+        messageElem.textContent = message;
+        
+        // Update modal styling based on type
+        contentDiv.classList.remove('renewal', 'success-renewal', 'error-renewal');
+        
+        if (type === 'success') {
+            contentDiv.classList.add('success-renewal');
+            iconElem.className = 'fas fa-check-circle';
+            iconElem.style.color = '#28a745';
+        } else {
+            contentDiv.classList.add('error-renewal');
+            iconElem.className = 'fas fa-exclamation-circle';
+            iconElem.style.color = '#dc3545';
+        }
+        
+        // Store callback if provided
+        if (onConfirm) {
+            modal.dataset.onConfirm = 'true';
+            window.renewalOnConfirm = onConfirm;
+        } else {
+            modal.dataset.onConfirm = 'false';
+        }
+        
+        // Show modal
+        modal.style.display = 'flex';
+    }
+
+    function closeRenewalModal() {
+        const modal = document.getElementById('renewalModal');
+        if (window.renewalOnConfirm && modal.dataset.onConfirm === 'true') {
+            window.renewalOnConfirm();
+        }
+        modal.style.display = 'none';
+    }
+</script>
+
+

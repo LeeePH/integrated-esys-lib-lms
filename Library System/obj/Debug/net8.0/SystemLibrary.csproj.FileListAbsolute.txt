@@ -1,0 +1,864 @@
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\appsettings.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\DnsClient.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\Snappier.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\James\source\repos\SystemLibrary\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\James\source\repos\SystemLibrary\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\SystemLibrary\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\SystemLibrary\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Ayebram Nambayan\Downloads\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\James\Documents\coding\SystemLibrary1 - Copy-20251016T114256Z-1-001\SystemLibrary1 - Copy\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\PROJECTS\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\James\Documents\coding\sia\SystemLibrary2\sia\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Ayebram Nambayan\Downloads\sprint3 (1)\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\James\Documents\IPT_SYSTEM\SystemLibrary1\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\SuperSystem2\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\integrated-esys-library-main\SystemLibrary1\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Snappier.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets\msbuild.SystemLibrary.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets\msbuild.build.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SystemLibrary.props
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.sourcelink.json
+<<<<<<< HEAD
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\appsettings.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.staticwebassets.runtime.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.staticwebassets.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.exe
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.deps.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.runtimeconfig.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Snappier.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.csproj.AssemblyReference.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.AssemblyInfoInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.AssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.RazorAssemblyInfo.cs
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.sourcelink.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\bundle\SystemLibrary.styles.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\scopedcss\projectbundle\SystemLibrary.bundle.scp.css
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLi.0746C7C5.Up2Date
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\refint\SystemLibrary.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.pdb
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\SystemLibrary.genruntimeconfig.cache
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\obj\Debug\net8.0\ref\SystemLibrary.dll
+=======
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Newtonsoft.Json.dll
+>>>>>>> 989cd7affacb903e58d815ecbbc2737e06e8465d
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Rheyvon\Desktop\integrated-esys-lib-lms\Library System\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\x86\leptonica-1.82.0.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\x86\tesseract50.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\x64\leptonica-1.82.0.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\x64\tesseract50.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\SixLabors.ImageSharp.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\Tesseract.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\UglyToad.PdfPig.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\UglyToad.PdfPig.Core.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\UglyToad.PdfPig.Fonts.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\UglyToad.PdfPig.Tokenization.dll
+C:\Users\Lee\Desktop\integrated esys-lib-lms\Library System\bin\Debug\net8.0\UglyToad.PdfPig.Tokens.dll

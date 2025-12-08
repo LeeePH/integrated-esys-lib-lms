@@ -1,0 +1,179 @@
+/* General Body */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FCFFF5;
+    color: #006B99;
+    font-size: 13px; /* smaller, professional */
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1.5rem 0;
+    background-color: #006B99;
+    color: #FCFFF5;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+/* Main Container */
+.registration-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Page Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #006B99;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+/* Alert Messages */
+.alert {
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background-color: #8F2809;
+    color: #FCFFF5;
+}
+
+/* Form Fields */
+form div {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+/* Checkbox Options */
+.program-options label {
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Education Section */
+.education-group h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #006B99;
+}
+
+.education-sub div {
+    margin-bottom: 0.75rem;
+}
+
+/* Submit and Back Buttons */
+button.submit-btn,
+button.back-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* remove underline */
+    transition: 0.2s;
+}
+
+/* Submit Button */
+button.submit-btn {
+    background-color: #049F6E;
+    color: #FCFFF5;
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+    button.submit-btn:hover {
+        background-color: #037A55;
+    }
+
+/* Back Button */
+button.back-btn {
+    background-color: #FF9809;
+    color: #FCFFF5;
+    margin-bottom: 1.5rem;
+}
+
+    button.back-btn:hover {
+        background-color: #e68a00;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .registration-container {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    label, input, .program-options label, .education-group h3, button {
+        font-size: 0.85rem;
+    }
+}
+
+/* Styled Dropdown */
+select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    color: #006B99;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    box-sizing: border-box;
+    appearance: none; /* remove default arrow */
+    background-image: url("data:image/svg+xml,%3Csvg fill='%23006B99' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+}
+
+    /* Hover Effect */
+    select:hover {
+        border-color: #0097c7;
+    }
+
+    /* Focus Effect */
+    select:focus {
+        border-color: #006B99;
+        box-shadow: 0 0 0 3px rgba(0, 107, 153, 0.1);
+        outline: none;
+    }

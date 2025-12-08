@@ -1,0 +1,1024 @@
+﻿@{
+    ViewData["Title"] = "Landing Page";
+    var errorField = ViewBag.ErrorField as string ?? "";
+    var inputEmail = ViewBag.InputEmail as string ?? "";
+    var errorMsg = ViewBag.ErrorMessage as string;
+    var openChangePassword = TempData["OpenChangePasswordModal"] as string;
+    var cpError = TempData["CP_Error"] as string;
+
+    // Enrollment status (populated by controller)
+    var _ay = ViewBag.EnrollmentAcademicYear as string ?? "";
+    var _sem = ViewBag.EnrollmentSemester as string ?? "1st Semester";
+    bool _isOpen = (ViewBag.EnrollmentOpen as bool?) ?? false;
+    var _duration = ViewBag.EnrollmentDuration as string ?? "";
+    var announcements = ViewBag.Announcements as List<E_SysV0._01.Models.Announcement> ?? new List<E_SysV0._01.Models.Announcement>();
+    string enrollmentBanner;
+    if (string.IsNullOrWhiteSpace(_ay))
+    {
+        enrollmentBanner = _isOpen
+            ? $"{_sem} \n Enrollment Open for {_duration}"
+            : $"{_sem} Enrollment Closed";
+    }
+    else
+    {
+        enrollmentBanner = _isOpen
+            ? $" {_ay} {_sem} \n Enrollment Open for {_duration}"
+            : $" {_ay} {_sem} Enrollment Closed";
+    }
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+
+    body {
+        overflow-y: scroll !important;
+    }
+</style>
+<nav class="navbar navbar-expand-lg bg-white fixed-top">
+    <div class="container-fluid px-5">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img src="~/images/logo.svg" class="rounded p-2" style="background-color:#066B99; width:50px; height:40px;" />
+            <div>
+                <h5 class="mb-0">State University</h5>
+                <small style="color:gray;">State University</small>
+            </div>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-4 gap-lg-4">
+                <li class="nav-item">
+                    <a href="#" class="nav-link px-3 py-2">Home <span></span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#Enroll" class="nav-link px-3 py-2">Enroll <span></span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#Programs" class="nav-link px-3 py-2">Programs <span></span></a>
+                </li>
+            </ul>
+
+            <div class="d-flex ms-auto mt-3 mt-lg-0">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#LoginModal" class="btn btn-custom">Login</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+@* CHANGE PASSWORD MODAL (first login / forced change) *@
+<div class="modal fade" id="ChangePasswordModal" tabindex="-1" aria-labelledby="ChangePasswordLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-3" style="background-color: #066B99; color: white; position: relative;">
+                <h3 class="modal-title w-100 text-center m-0" id="ChangePasswordLabel">Change Password</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem;"></button>
+            </div>
+            <div class="modal-body px-4 py-4">
+                @if (!string.IsNullOrWhiteSpace(cpError))
+                {
+                    <div class="alert alert-danger">@cpError</div>
+                }
+
+                <form asp-area="Student"
+                      asp-controller="StudentAccount"
+                      asp-action="ChangePassword"
+                      asp-antiforgery="true"
+                      method="post"
+                      class="d-flex flex-column gap-3">
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <label for="cpNewPassword" class="form-label">New Password <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="password" id="cpNewPassword" name="newPassword" class="form-control border-secondary" autocomplete="new-password" required>
+                            <button type="button" class="btn btn-outline-secondary" data-toggle-target="#cpNewPassword" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                        <div class="form-text">Follow the rules below. A strength indicator will update as you type.</div>
+                    </div>
+
+                    <div>
+                        <label for="cpConfirmPassword" class="form-label">Confirm New Password <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="password" id="cpConfirmPassword" name="confirmPassword" class="form-control border-secondary" autocomplete="new-password" required>
+                            <button type="button" class="btn btn-outline-secondary" data-toggle-target="#cpConfirmPassword" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                        <div id="cpMatchHint" class="form-text text-danger d-none">Passwords do not match.</div>
+                    </div>
+
+                    <div>
+                        <label class="form-label mb-1">Password requirements</label>
+                        <ul class="small mb-2" id="cpPolicyList">
+                            <li data-rule="len">At least 8 characters long</li>
+                            <li data-rule="upper">Must contain one uppercase letter (A–Z)</li>
+                            <li data-rule="lower">Must contain one lowercase letter (a–z)</li>
+                            <li data-rule="digit">Must contain one number (0–9)</li>
+                            <li data-rule="symbol">Must contain one special character</li>
+                            <li data-rule="space">Must not contain spaces</li>
+                        </ul>
+                        <div class="progress" style="height: 6px;">
+                            <div id="cpStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-2">
+                        <button type="submit" class="btn text-white" style="background-color:#066B99;">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="PhilStateSection">
+    <section class="container">
+        <div class="pleft-column">
+            <small>@enrollmentBanner</small>
+            <div class="mb-3">
+                <h2>Your Future Starts at</h2>
+                <h1 class="highlight">Philippine State University</h1>
+            </div>
+            <p>
+                Transform your dreams into reality with completely free education.
+                Get world-class education with no tuition fees for all students.
+            </p>
+            <a href="#Contact" class="btn-contact">Contact Us</a>
+        </div>
+
+        <div class="pright-column">
+            <h1>Online Enrollment</h1>
+            <br />
+            <ul>
+                <li>No tuition fees</li>
+                <li>Fast enrollment process</li>
+                <li>No hidden fees</li>
+                <li>Online enrollment available</li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+
+
+<section id="Announcement">
+
+    <div class="position-relative" style="background-color: #f8f9fa;">
+
+        <div class="position-absolute start-0 end-0 text-center shadow-sm"
+             style="background-color: #ffffff; top: -25px; border-top: 6px solid #066B99; border-radius: 6px 6px 0 0; padding: 15px 0;">
+            <h1 class="fw-bolder fs-3 m-0" style="color: #066B99;">ANNOUNCEMENTS</h1>
+        </div>
+
+        <div style="height: 60px;"></div>
+
+
+        <section class="py-5 px-3" style="background-color: #066B99; color: white; padding-top: 120px;">
+            <div class="container">
+                <div class="row g-4 align-items-stretch">
+
+
+                    @if (announcements.Count > 0)
+                    {
+                        <div class="col-lg-8">
+                            @{
+                                var latest = announcements.First();
+                            }
+                            <div class="shadow rounded-4 overflow-hidden bg-white">
+                                <div class="row g-0 h-100">
+                                    <div class="col-md-5">
+                                        @if (!string.IsNullOrWhiteSpace(latest.ImagePath))
+                                        {
+                                            <img src="@(Url.Content(latest.ImagePath ?? "~/images/placeholder-image.jpg"))" class="img-fluid h-100 object-fit-cover"
+                                                 alt="@latest.Title" style="min-height: 250px;" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@(Url.Content("~/images/placeholder-image.jpg"))" class="img-fluid h-100 object-fit-cover"
+                                                 alt="Image" style="min-height: 250px;" />
+                                        }
+                                    </div>
+                                    <div class="col-md-7 p-4 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h3 class="fw-bold" style="color: #222;">@latest.Title</h3>
+                                            <p class="text-muted small mb-2">@latest.PostedAtUtc.ToLocalTime().ToString("MMMM dd, yyyy")</p>
+                                            <p style="color: #333;">@Html.Raw(latest.Content.Length > 400 ? Html.Encode(latest.Content).Replace("\n", "<br/>").Substring(0, 400) + "..." : Html.Encode(latest.Content).Replace("\n", "<br/>"))</p>
+                                            <p class="mb-3"><small class="text-secondary">#announcement</small></p>
+                                        </div>
+                                        <div>
+                                            <button class="btn text-white fw-semibold read-more-btn" style="background-color:#066B99; border: none;"
+                                                    data-id="@latest.Id">
+                                                Read More
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="p-4 rounded-4 h-100" style="background-color: #05587E;">
+                                <h5 class="fw-bold mb-3 text-uppercase" style="color: #FF9809;">RECENT ANNOUNCEMENTS</h5>
+                                <ul class="list-unstyled">
+                                    @foreach (var a in announcements)
+                                    {
+                                        <li class="mb-2">
+                                            <a href="javascript:void(0);" class="text-white text-decoration-underline d-block mb-2 small recent-ann-link" data-id="@a.Id">
+                                                @a.Title
+                                                <div class="small text-white-50">@a.PostedAtUtc.ToLocalTime().ToString("MMM dd, yyyy")</div>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="col-12">
+                            <div class="shadow rounded-4 overflow-hidden bg-white p-4">
+                                <h4 class="fw-bold">No announcements</h4>
+                                <p class="text-muted">There are currently no announcements from the administration.</p>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+</section>
+
+@* Hidden data nodes for announcements used by the Read More modal script *@
+@foreach (var a in announcements)
+{
+    <div id="ann-data-@a.Id" class="d-none">
+        <div class="ann-title">@Html.Raw(Html.Encode(a.Title))</div>
+        <div class="ann-date">@a.PostedAtUtc.ToLocalTime().ToString("MMMM dd, yyyy")</div>
+        <div class="ann-image">@Html.Raw(Html.Encode(a.ImagePath ?? ""))</div>
+        <div class="ann-content">@Html.Raw(a.Content.Replace("\n", "<br/>"))</div>
+    </div>
+}
+
+@* Read more modal *@
+<div class="modal fade" id="AnnouncementReadModal" tabindex="-1" aria-labelledby="AnnouncementReadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AnnouncementReadModalLabel">Announcement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="annModalImageContainer" class="mb-3 text-center" style="display:none;">
+                    <img id="annModalImage" src="" class="img-fluid rounded-3" alt="Announcement image" style="max-height: 320px; object-fit:cover;" />
+                </div>
+                <h4 id="annModalTitle" class="mb-2"></h4>
+                <p class="text-muted small" id="annModalDate"></p>
+                <div id="annModalContent" class="text-secondary"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="enroll-section">
+    <section id="Enroll" style="background-color: #066B99; padding-bottom: 60px; position: relative;">
+
+        <div class="section-header-wrapper">
+            <div class="enroll-section-header shadow-sm">
+                <h1>APPLICATION AND ENROLLMENT INSTRUCTIONS</h1>
+            </div>
+        </div>
+
+        <div style="height: 60px;"></div>
+
+        <div class="container text-center">
+            <div class="row gy-4 gx-4 justify-content-center">
+
+                <div class="col-10 col-sm-6 col-md-5 col-lg-3">
+                    <div class="enroll-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Freshman Enrollment">
+                        <h2>Freshman</h2>
+                        <p>Enrollment Instructions</p>
+                        <button class="btn enroll-btn" data-bs-toggle="modal" data-bs-target="#freshmanModal">View Details</button>
+                    </div>
+                </div>
+
+                <div class="col-10 col-sm-6 col-md-5 col-lg-3">
+                    <div class="enroll-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" alt="Transferee Enrollment">
+                        <h2>Transferee</h2>
+                        <p>Enrollment Instructions</p>
+                        <button class="btn enroll-btn" data-bs-toggle="modal" data-bs-target="#transfereeModal">View Details</button>
+                    </div>
+                </div>
+
+                <div class="col-10 col-sm-6 col-md-5 col-lg-3">
+                    <div class="enroll-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135823.png" alt="Shifter Enrollment">
+                        <h2>Shifter</h2>
+                        <p>Enrollment Instructions</p>
+                        <button class="btn enroll-btn" data-bs-toggle="modal" data-bs-target="#shifterModal">View Details</button>
+                    </div>
+                </div>
+
+                <div class="col-10 col-sm-6 col-md-5 col-lg-3">
+                    <div class="enroll-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/992/992700.png" alt="Returnee Enrollment">
+                        <h2>Returnee</h2>
+                        <p>Enrollment Instructions</p>
+                        <button class="btn enroll-btn" data-bs-toggle="modal" data-bs-target="#returneeModal">View Details</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<section class="p-3">
+    <div class="d-flex justify-content-around">
+        <div class="text-center">
+            <h1>15,000+</h1>
+            <small>Faculty Members</small>
+        </div>
+        <div class="text-center">
+            <h1>98%</h1>
+            <small>Scholarship Recipient</small>
+        </div>
+        <div class="text-center">
+            <h1>500+</h1>
+            <small>Faculty Members</small>
+        </div>
+        <div class="text-center">
+            <h1>95%</h1>
+            <small>Graduate Employment Rate</small>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-5" style="background-color: #066B99;">
+    <div class="container text-center text-white px-3">
+        <div class="mb-5">
+            <h1 class="fw-bold mb-3">Why Choose Philippine State University?</h1>
+            <p class="mb-4">
+                We're committed to making quality education accessible to every student through completely free education and comprehensive student support services.
+            </p>
+        </div>
+
+        <div class="row gy-4 gx-4 justify-content-center">
+
+            
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 d-flex">
+                <div class="info-card w-100">
+                    <img src="~/images/education-icon.svg"
+                         alt="Free Education">
+                    <h2 class="text-dark fs-4">Free Education</h2>
+                    <p>Completely free education with no tuition fees for all students.</p>
+                </div>
+            </div>
+
+            
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 d-flex">
+                <div class="info-card w-100">
+                    <img src="~/images/book.svg"
+                         alt="Quality Education">
+                    <h2 class="text-dark fs-4">Quality Education</h2>
+                    <p>Accredited programs with industry-relevant curriculum and experienced faculty.</p>
+                </div>
+            </div>
+
+            
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 d-flex">
+                <div class="info-card w-100">
+                    <img src="~/images/student.svg"
+                         alt="Student Support">
+                    <h2 class="text-dark fs-4">Student Support</h2>
+                    <p>Comprehensive support services including counseling, tutoring, and career guidance.</p>
+                </div>
+            </div>
+
+            
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 d-flex">
+                <div class="info-card w-100">
+                    <img src="~/images/globe.svg"
+                         alt="Career Success">
+                    <h2 class="text-dark fs-4">Career Success</h2>
+                    <p>Strong industry partnerships ensuring excellent job placement for graduates.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="program-section" id="Programs">
+    <div class="container text-center">
+        <h1 class="fw-bold mb-3">Our Academic Programs</h1>
+        <p class="text-muted mb-5">
+            Discover our wide range of degree programs, all available with full scholarship opportunities for qualified students.
+        </p>
+
+        <div class="row justify-content-center g-4">
+            <!-- Program 1 -->
+            <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                <div class="program-card w-100">
+                    <h2>Bachelor of Science in Information Technology</h2>
+                    <div class="program-info">
+                        <div class="duration">
+                            <img src="https://img.icons8.com/ios-filled/50/clock--v1.png" alt="Duration">
+                            <span>4 years</span>
+                        </div>
+                        <div class="tuition">
+                            <img src="https://img.icons8.com/ios-filled/50/star--v1.png" alt="No Tuition Fee">
+                            <span>No Tuition Fee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                <div class="program-card w-100">
+                    <h2>Bachelor of Early Childhood Education</h2>
+                    <div class="program-info">
+                        <div class="duration">
+                            <img src="https://img.icons8.com/ios-filled/50/clock--v1.png" alt="Duration">
+                            <span>4 years</span>
+                        </div>
+                        <div class="tuition">
+                            <img src="https://img.icons8.com/ios-filled/50/star--v1.png" alt="No Tuition Fee">
+                            <span>No Tuition Fee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 3 -->
+            <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                <div class="program-card w-100">
+                    <h2>Bachelor of Science in Entrepreneurship</h2>
+                    <div class="program-info">
+                        <div class="duration">
+                            <img src="https://img.icons8.com/ios-filled/50/clock--v1.png" alt="Duration">
+                            <span>3 years</span>
+                        </div>
+                        <div class="tuition">
+                            <img src="https://img.icons8.com/ios-filled/50/star--v1.png" alt="No Tuition Fee">
+                            <span>No Tuition Fee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="text-white py-4" style="background-color: #066B99;" id="Contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 mb-4 mb-md-0">
+                <h4 class="fw-bold mb-2">Philippine State University</h4>
+                <p class="mb-3">
+                    Committed to providing excellence in education through innovative programs,
+                    world-class facilities, and comprehensive scholarship opportunities for deserving students.
+                </p>
+                <ul class="list-unstyled mb-3">
+                    <li class="mb-2 d-flex align-items-center">
+                        <img src="images/location.svg" alt="Location" class="me-2" width="20">
+                        <a href="https://maps.google.com/?q=San Bartolome, Novaliches, Quezon City, Philippines"
+                           target="_blank" class="text-white text-decoration-none">
+                            San Bartolome, Novaliches, Quezon City, Philippines
+                        </a>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <img src="images/phone.svg" alt="Phone" class="me-2" width="20">
+                        <a href="tel:09978276531" class="text-white text-decoration-none">
+                            09978276531
+                        </a>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <img src="images/email.svg" alt="Email" class="me-2" width="20">
+                        <a href="mailto:info@psu.edu.ph" class="text-white text-decoration-none">
+                            info@psu.edu.ph
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#"><img src="images/facebook.svg" alt="Facebook" width="15"></a>
+                    <a href="#"><img src="images/x.svg" alt="Twitter/X" width="24"></a>
+                    <a href="#"><img src="images/instagram.svg" alt="Instagram" width="24"></a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <h4 class="fw-bold">Quick Links</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none d-block py-1">Academic Calendar</a></li>
+                    <li><a href="#" class="text-white text-decoration-none d-block py-1">Student Portal</a></li>
+                    <li><a href="#" class="text-white text-decoration-none d-block py-1">Library</a></li>
+                    <li><a href="#" class="text-white text-decoration-none d-block py-1">Student Services</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@* LOGIN MODAL (email + password only) *@
+<div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-heading p-2 d-flex flex-column align-items-center position-relative">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                <img src="~/images/logo.svg" alt="logo icon" style="width:60px; background: #066B99;" class="rounded-circle p-2">
+                <h4>Philippine State University</h4>
+                <p class="fst-italic">Future starts here.</p>
+            </div>
+
+            <div class="modal-body" style="padding: 10% 20%; background-color: #066B99;">
+                @* Show server-side error clearly inside the modal *@
+                @if (!string.IsNullOrWhiteSpace(errorMsg))
+                {
+                    <div class="alert alert-danger w-100" role="alert">@errorMsg</div>
+                }
+
+                <form asp-area="Student"
+                      asp-controller="StudentAccount"
+                      asp-action="StudentLogin"
+                      asp-route-returnUrl="@Context.Request.Query["returnUrl"]"
+                      method="post"
+                      class="d-flex flex-column gap-3 align-items-center ">
+                    @Html.AntiForgeryToken()
+                    <h2 class="text-white">Login</h2>
+
+                    <div class="d-flex flex-column w-100">
+                        <label for="email" class="text-white">Email</label>
+                        <input type="email"
+                               class="form-control w-100 @(errorField == "email" ? "is-invalid" : "")"
+                               id="email"
+                               name="email"
+                               value="@inputEmail"
+                               autocomplete="email"
+                               required />
+                        @if (errorField == "email")
+                        {
+                            <div class="invalid-feedback">Please enter your email.</div>
+                        }
+                    </div>
+                    <div class="d-flex flex-column w-100">
+                        <label for="password" class="text-white">Password</label>
+                        <div class="position-relative">
+                            <input type="password"
+                                   class="form-control w-100 @(errorField == "password" ? "is-invalid" : "")"
+                                   id="password"
+                                   name="password"
+                                   autocomplete="current-password"
+                                   required
+                                   style="padding-right:3.5rem;" />
+                            <button type="button"
+                                    id="togglePassword"
+                                    class="btn btn-sm admin-toggle-password position-absolute"
+                                    aria-label="Toggle password visibility"
+                                    title="Show / hide password"
+                                    style="top:50%; right:.35rem; transform:translateY(-50%); z-index:2;color:dimgray;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        @if (errorField == "password")
+                        {
+                            <div class="invalid-feedback">Please check your password.</div>
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" value="true">
+                            <label class="form-check-label text-white" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="text-white" data-bs-toggle="modal" data-bs-target="#ForgotPasswordModal">Forgot Password</a>
+                    </div>
+                    <button type="submit" class="btn btn-light w-100 mt-5">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ForgotPasswordModal" tabindex="-1" aria-labelledby="ForgotPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-3" style="background-color: #066B99; color: white; position: relative;">
+                <h3 class="modal-title w-100 text-center m-0" id="ForgotPasswordLabel">Forgot Password</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem;"></button>
+            </div>
+            <div class="modal-body text-center p-5">
+                <img src="~/images/ForgotPasswordIcon.svg" alt="icon" class="mb-4">
+                <p class="mb-3">Please enter the email address associated with your account to receive a password reset link.</p>
+
+                <form asp-area="Student"
+                      asp-controller="StudentAccount"
+                      asp-action="ForgotPassword"
+                      method="post"
+                      class="d-flex flex-column align-items-center gap-3">
+                    @Html.AntiForgeryToken()
+                    <input type="email" name="email" class="form-control mb-3 border-secondary w-100" placeholder="Email Address" required />
+                    <div class="d-flex gap-2 w-100 justify-content-center">
+                        <button type="submit" class="btn btn-sm text-white fw-bold w-50 p-2" style="background-color: #066B99;">Send Reset Link</button>
+                        <button type="button" class="btn btn-outline-secondary w-25" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+
+                <div class="mt-3">
+                    <small class="text-muted">If the email exists, we'll send a reset link. Check your inbox (and spam).</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- NEW: RESET PASSWORD MODAL (opened by email link) --- *@
+<div class="modal fade" id="ResetPasswordModal" tabindex="-1" aria-labelledby="ResetPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-3" style="background-color: #066B99; color: white; position: relative;">
+                <h3 class="modal-title w-100 text-center m-0" id="ResetPasswordLabel">Reset Password</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem;"></button>
+            </div>
+            <div class="modal-body px-4 py-4">
+                @if (TempData["Error"] is string resetErr && !string.IsNullOrWhiteSpace(resetErr))
+                {
+                    <div class="alert alert-danger">@resetErr</div>
+                }
+
+                <form asp-area="Student"
+                      asp-controller="StudentAccount"
+                      asp-action="ResetPassword"
+                      method="post"
+                      class="d-flex flex-column gap-3">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="resetEmail" name="email" value="@(ViewBag.ResetEmail ?? "")" />
+                    <input type="hidden" id="resetToken" name="token" value="@(ViewBag.ResetToken ?? "")" />
+
+                    <div>
+                        <label for="rpNewPassword" class="form-label">New Password <span class="text-danger">*</span></label>
+                        <input type="password" id="rpNewPassword" name="newPassword" class="form-control border-secondary" autocomplete="new-password" required>
+                        <div class="form-text">Follow the rules below. A strength indicator will update as you type.</div>
+                    </div>
+
+                    <div>
+                        <label for="rpConfirmPassword" class="form-label">Confirm New Password <span class="text-danger">*</span></label>
+                        <input type="password" id="rpConfirmPassword" name="confirmPassword" class="form-control border-secondary" autocomplete="new-password" required>
+                        <div id="rpMatchHint" class="form-text text-danger d-none">Passwords do not match.</div>
+                    </div>
+
+                    <div>
+                        <label class="form-label mb-1">Password requirements</label>
+                        <ul class="small mb-2" id="rpPolicyList">
+                            <li data-rule="len">At least 8 characters long</li>
+                            <li data-rule="upper">Must contain one uppercase letter (A–Z)</li>
+                            <li data-rule="lower">Must contain one lowercase letter (a–z)</li>
+                            <li data-rule="digit">Must contain one number (0–9)</li>
+                            <li data-rule="symbol">Must contain one special character</li>
+                            <li data-rule="space">Must not contain spaces</li>
+                        </ul>
+                        <div class="progress" style="height: 6px;">
+                            <div id="rpStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-2">
+                        <button id="rpSubmit" type="submit" class="btn text-white" style="background-color:#066B99;">Reset Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- CONFIG NODE: controller will set TempData["OpenResetPasswordModal"] and ViewBag.ResetEmail/ResetToken --- *@
+<div id="resetModalConfig" data-open="@(!string.IsNullOrWhiteSpace(TempData["OpenResetPasswordModal"] as string) ? "true" : "false")"
+     data-email="@(ViewBag.ResetEmail ?? "")" data-token="@(ViewBag.ResetToken ?? "")"></div>
+
+
+<div class="modal fade" id="freshmanModal" tabindex="-1" aria-labelledby="freshmanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border border-success rounded-3">
+            <button type="button" class="btn-close m-3 ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#1ABC9C" class="bi bi-exclamation-circle-fill mb-3" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l-.35 3.507a.552.552 0 0 0 1.1 0l-.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+
+                <h5 class="fw-bold mb-4 text-uppercase" id="freshmanModalLabel">ATTENTION, STUDENTS</h5>
+
+                <p class="mb-3 text-dark">
+                    <strong class="text-dark">Freshman Enrollment Steps:</strong>
+                </p>
+
+                <div class="text-start mx-auto" style="max-width:350px;">
+                    <ol class="small">
+                        <li>Visit the school during the official enrollment period.</li>
+                        <li>Proceed to the Freshman Terminal and fill out the Enrollment Form.</li>
+                        <li>
+                            Submit the following requirements:
+                            <ul>
+                                <li>Form 138</li>
+                                <li>Good moral</li>
+                                <li>Medical Certificate</li>
+                                <li>Diploma</li>
+                                <li>Certificate of Indigency</li>
+                                <li>Birth Certificate</li>
+                            </ul>
+                        </li>
+                        <li>Wait for verification and clearance.</li>
+                        <li>Once approved, the staff will print your Registration Form as proof of enrollment.</li>
+                    </ol>
+                </div>
+
+                <p class="mb-3 mt-4">
+                    Complete your enrollment early to avoid last-minute rush.
+                </p>
+
+                <div class="mt-4">
+                    <button type="button" class="btn text-white px-5" style="background-color:#076591;" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="transfereeModal" tabindex="-1" aria-labelledby="transfereeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border border-success rounded-3">
+            <button type="button" class="btn-close m-3 ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#1ABC9C" class="bi bi-exclamation-circle-fill mb-3" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l-.35 3.507a.552.552 0 0 0 1.1 0l-.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+
+                <h5 class="fw-bold mb-4 text-uppercase" id="transfereeModalLabel">ATTENTION, STUDENTS</h5>
+
+                <p class="mb-3 text-dark">
+                    <strong class="text-dark">Transferee Enrollment Steps:</strong>
+                </p>
+
+                <div class="text-start mx-auto" style="max-width:350px;">
+                    <ol class="small">
+                        <li>Visit the school registrar's office and proceed to the Transferee Terminal.</li>
+                        <li>Fill out the Enrollment Form.</li>
+                        <li>
+                            Submit the following documents:
+                            <ul>
+                                <li>Form 138</li>
+                                <li>Good moral</li>
+                                <li>Medical Certificate</li>
+                                <li>Diploma</li>
+                                <li>Certificate of Indigency</li>
+                                <li>Birth Certificate</li>
+                                <li>Transcript of Records (TOR)</li>
+                            </ul>
+                        </li>
+                        <li>Wait for document evaluation and clearance.</li>
+                        <li>The staff will print your Registration Form after successful approval.</li>
+                    </ol>
+                </div>
+
+                <p class="mb-3 mt-4">
+                    Complete your enrollment early to avoid last-minute rush.
+                </p>
+
+                <div class="mt-4">
+                    <button type="button" class="btn text-white px-5" style="background-color:#076591;" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="shifterModal" tabindex="-1" aria-labelledby="shifterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border border-success rounded-3">
+            <button type="button" class="btn-close m-3 ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#1ABC9C" class="bi bi-exclamation-circle-fill mb-3" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l-.35 3.507a.552.552 0 0 0 1.1 0l-.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+
+                <h5 class="fw-bold mb-4 text-uppercase" id="shifterModalLabel">ATTENTION, STUDENTS</h5>
+
+                <p class="mb-3 text-dark">
+                    <strong class="text-dark">Shifter Enrollment Steps:</strong>
+                </p>
+
+                <div class="text-start mx-auto" style="max-width:350px;">
+                    <ol class="small">
+                        <li>Go to the registrar's office and proceed to the Specific Terminal.</li>
+                        <li>Fill out the Shifter Form provided in the system.</li>
+                        <li>
+                            Submit the following requirements:
+                            <ul>
+                                <li>Endorsement Letter from previous program dean</li>
+                                <li>Clearance from library.</li>
+                            </ul>
+                        </li>
+                        <li>Once approved and verified, the staff will print your updated Registration Form under your new program.</li>
+                    </ol>
+                </div>
+
+                <p class="mb-3 mt-4">
+                    Complete your enrollment early to avoid last-minute rush.
+                </p>
+
+                <div class="mt-4">
+                    <button type="button" class="btn text-white px-5" style="background-color:#076591;" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="returneeModal" tabindex="-1" aria-labelledby="returneeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border border-success rounded-3">
+            <button type="button" class="btn-close m-3 ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#1ABC9C" class="bi bi-exclamation-circle-fill mb-3" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l-.35 3.507a.552.552 0 0 0 1.1 0l-.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+
+                <h5 class="fw-bold mb-4 text-uppercase" id="returneeModalLabel">ATTENTION, STUDENTS</h5>
+
+                <p class="mb-3 text-dark">
+                    <strong class="text-dark">Returnee Enrollment Steps:</strong>
+                </p>
+
+                <div class="text-start mx-auto" style="max-width:350px;">
+                    <ol class="small">
+                        <li>Visit the registrar's office and proceed to the Returnee Terminal.</li>
+                        <li>Fill out the Returnee Form in the system.</li>
+                        <li>
+                            Submit the following requirements:
+                            <ul>
+                                <li>Clearance from library</li>
+                                <li>Letter of intent Request for Re-Admission</li>
+                                <li>Updated Medical Certificate</li>
+                            </ul>
+                        </li>
+                        <li>Wait for record reactivation and clearance.</li>
+                        <li>Once cleared, the staff will print your Registration Form to complete your re-enrollment.</li>
+                    </ol>
+                </div>
+
+                <p class="mb-3 mt-4">
+                    Complete your enrollment early to avoid last-minute rush.
+                </p>
+
+                <div class="mt-4">
+                    <button type="button" class="btn text-white px-5" style="background-color:#076591;" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <div id="cpModalConfig" data-open="@(!string.IsNullOrWhiteSpace(openChangePassword) ? "true" : "false")"></div>
+
+
+    <div id="resetModalConfig" data-open="@(!string.IsNullOrWhiteSpace(TempData["OpenResetPasswordModal"] as string) ? "true" : "false")"
+         data-email="@(ViewBag.ResetEmail ?? "")" data-token="@(ViewBag.ResetToken ?? "")"></div>
+
+    <script>
+        (function () {
+            var toggle = document.getElementById('togglePassword');
+            var input = document.getElementById('password');
+            if (!toggle || !input) return;
+
+            toggle.addEventListener('click', function (e) {
+                // toggle type
+                var wasPassword = input.type === 'password';
+                try {
+                    input.type = wasPassword ? 'text' : 'password';
+                } catch (ex) {
+                    // fallback: replace node (rare)
+                    var clone = input.cloneNode(true);
+                    clone.type = wasPassword ? 'text' : 'password';
+                    input.parentNode.replaceChild(clone, input);
+                    input = clone;
+                }
+
+                // swap icon
+                var icon = toggle.querySelector('i.fa');
+                if (icon) {
+                    icon.classList.toggle('fa-eye', !wasPassword);
+                    icon.classList.toggle('fa-eye-slash', wasPassword);
+                }
+
+                // keep focus and caret at end
+                input.focus();
+                try {
+                    var len = input.value.length;
+                    input.setSelectionRange(len, len);
+                } catch (ex) { /* ignore */ }
+            });
+
+            // Optional: toggle icon on manual paste/visibility change (keeps icon in sync)
+            input.addEventListener('input', function () {
+                var icon = toggle.querySelector('i.fa');
+                if (!icon) return;
+                if (input.type === 'text') {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        })();
+    </script>
+
+    <script>
+        (function () {
+            // wire read more buttons and recent links
+            function showAnnouncementById(id) {
+                var node = document.getElementById('ann-data-' + id);
+                if (!node) return;
+                var title = node.querySelector('.ann-title')?.innerText || '';
+                var date = node.querySelector('.ann-date')?.innerText || '';
+                var imagePath = node.querySelector('.ann-image')?.innerText || '';
+                var contentHtml = node.querySelector('.ann-content')?.innerHTML || '';
+
+                document.getElementById('annModalTitle').innerText = title;
+                document.getElementById('annModalDate').innerText = date;
+                document.getElementById('annModalContent').innerHTML = contentHtml;
+
+                var imgContainer = document.getElementById('annModalImageContainer');
+                var img = document.getElementById('annModalImage');
+                if (imagePath && imagePath.trim().length > 0) {
+                    img.src = imagePath.startsWith('/') ? imagePath : ('/' + imagePath);
+                    imgContainer.style.display = 'block';
+                } else {
+                    img.src = '';
+                    imgContainer.style.display = 'none';
+                }
+
+                var modalEl = document.getElementById('AnnouncementReadModal');
+                var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+
+            document.querySelectorAll('.read-more-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var id = this.getAttribute('data-id');
+                    if (id) showAnnouncementById(id);
+                });
+            });
+
+            document.querySelectorAll('.recent-ann-link').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    var id = this.getAttribute('data-id');
+                    if (id) showAnnouncementById(id);
+                });
+            });
+        })();
+    </script>
+
+    @* External scripts (load change-password utilities first, then forgot-password) *@
+    <script src="~/js/change-password-modal.js"></script>
+    <script src="~/js/forgot-password.js"></script>
+   
+
+
+    <script>
+        // small bootstrap: auto-open LoginModal if the server returned an error message
+        (function () {
+            var hasError = @(!string.IsNullOrWhiteSpace(errorMsg) ? "true" : "false");
+            if (hasError) {
+                var el = document.getElementById('LoginModal');
+                if (el) bootstrap.Modal.getOrCreateInstance(el).show();
+            }
+
+        })();
+    </script>
+}

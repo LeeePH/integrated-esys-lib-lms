@@ -1,0 +1,195 @@
+@model StudentPortal.Models.AdminDb.AdminManageClassViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "LMS — Manage Class (Admin)";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="~/css/admindb/adminmanageclass.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Shared/BottomBar.css" asp-append-version="true" />
+
+    <!-- XLSX (Excel Export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body data-class-code="@Model.ClassCode">
+    <div class="page">
+        <main class="class-container">
+            <!-- SEAT GRID CONTAINER -->
+            <section class="seat-grid-container" aria-label="Seating chart">
+                <div class="top-bar">
+                    <div class="top-left">
+                        <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                        <h2 class="page-title">Manage Class</h2>
+                    </div>
+
+                    <div class="top-right">
+                        <button id="focus-mode-btn" class="btn small primary"><i class="fa-solid fa-crosshairs"></i> Focus Mode</button>
+                        <button id="export-btn" class="btn small primary"><i class="fa-solid fa-download"></i> Export</button>
+                    </div>
+                </div>
+
+                <div class="section-info">
+                    <h3 class="section-name">Section: @Model.SectionName</h3>
+                    <div class="student-count" id="studentCount">Students: @Model.Students.Count</div>
+                </div>
+
+
+                <div id="seating-grid" class="seating-grid" aria-label="Seating chart" role="grid"></div>
+            </section>
+
+            <!-- NEW COLUMN CONTAINER -->
+            <section class="column-container">
+                <!-- CLASS LIST CONTAINER -->
+                <div class="class-list-container">
+                    <div class="list-header">
+                        <h3><i class="fa-solid fa-users-line"></i> Class List</h3>
+                        <div class="search-box">
+                            <input type="text" id="classSearch" placeholder="Search student..." />
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                    <div id="student-list" class="class-list">
+                        @if (Model.Students != null && Model.Students.Count > 0)
+                        {
+                            foreach (var s in Model.Students)
+                            {
+                                var statusLower = (s.Status ?? "").ToLower();
+                                var icon = statusLower == "present" ? "fa-circle-check" : statusLower == "late" ? "fa-clock" : "fa-circle-xmark";
+                                var name = s.StudentName ?? "";
+                                var parts = name.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+                                var initials = parts.Length > 0 ? (parts[0].Substring(0,1) + (parts.Length > 1 ? parts[^1].Substring(0,1) : "")).ToUpper() : "";
+                                <div class="student-card">
+                                    <div class="student-photo avatar">@initials</div>
+                                    <div class="student-info">
+                                        <div class="student-name">@s.StudentName</div>
+                                        <div class="student-email">@s.StudentEmail</div>
+                                    </div>
+                                    <span class="student-status status-@statusLower"><i class="fa-solid @icon"></i><span class="att-text">@s.Status</span></span>
+                                    <div class="actions">
+                                        <button type="button" class="btn small success mark-present" data-id="@s.Id" data-status="Present" onclick="markAttendance('@s.Id','Present')"><i class="fa-solid fa-check"></i> </button>
+                                        <button type="button" class="btn small warning mark-late" data-id="@s.Id" data-status="Late" onclick="markAttendance('@s.Id','Late')"><i class="fa-solid fa-clock"></i> </button>
+                                        <button type="button" class="btn small danger mark-absent" data-id="@s.Id" data-status="Absent" onclick="markAttendance('@s.Id','Absent')"><i class="fa-solid fa-xmark"></i> </button>
+                                        <button type="button" class="unenroll" title="Un-enroll" data-id="@s.Id" data-email="@s.StudentEmail">x</button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="no-students">No approved students yet.</div>
+                        }
+                    </div>
+                </div>
+
+                <!-- CLASS REQUEST CONTAINER -->
+                <div class="class-request-container">
+                    <div class="request-header">
+                        <h3><i class="fa-solid fa-user-plus"></i> Join Requests</h3>
+                    </div>
+                    <div id="join-request-list" class="request-list">
+                        @if (Model.JoinRequests != null && Model.JoinRequests.Count > 0)
+                        {
+                            foreach (var req in Model.JoinRequests)
+                            {
+                                var dateStr = req.RequestedAt.ToLocalTime().ToString("g");
+                                var name = req.StudentName ?? "";
+                                var parts = name.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+                                var initials = parts.Length > 0 ? (parts[0].Substring(0,1) + (parts.Length > 1 ? parts[^1].Substring(0,1) : "")).ToUpper() : "";
+                                <div class="request-item">
+                                    <div class="request-photo">@initials</div>
+                                    <div class="request-info">
+                                        <div class="request-name">@req.StudentName</div>
+                                        <div class="request-meta">(@Model.SectionName) • @dateStr</div>
+                                    </div>
+                                    <div class="request-actions">
+                                        <button type="button" class="approve-btn btn accept"
+                                                data-id="@req.Id"
+                                                data-name="@req.StudentName"
+                                                data-class-code="@req.ClassCode"
+                                                data-student-email="@req.StudentEmail">Accept</button>
+                                        <button type="button" class="reject-btn btn deny" data-id="@req.Id">Deny</button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="no-requests">No pending join requests.</div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast -->
+        <div id="toast" class="toast" aria-live="polite" role="status"></div>
+    </div>
+
+    <!-- Focus Mode Progress Bar -->
+    <div id="focus-progress" class="focus-progress" style="display:none;">
+        <div class="progress-text">Focus Progress: <span id="progress-text">0 / 0</span></div>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+    </div>
+
+    <!-- Focus Mode Modal -->
+    <div id="focus-modal" class="focus-modal">
+        <div class="focus-modal-content">
+            <span class="close" id="close-focus-modal">&times;</span>
+            <img id="focus-photo" class="focus-photo" src="" alt="Student Photo">
+            <div id="focus-name" class="focus-name">Student Name</div>
+            <div class="focus-buttons">
+                <button id="mark-absent" class="btn small danger"><i class="fa-solid fa-xmark"></i> Absent</button>
+                <button id="mark-late" class="btn small warning"><i class="fa-solid fa-clock"></i> Late</button>
+                <button id="mark-present" class="btn small success"><i class="fa-solid fa-check"></i> Present</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="unenroll-modal" class="focus-modal">
+        <div class="focus-modal-content">
+            <span class="close" id="close-unenroll-modal">&times;</span>
+            <div class="focus-name" id="unenroll-title">Un-enroll Student</div>
+            <div id="unenroll-name" class="request-name"></div>
+            <div id="unenroll-email" class="request-meta"></div>
+            <div class="focus-buttons">
+                <button id="cancel-unenroll" class="btn small">Cancel</button>
+                <button id="confirm-unenroll" class="btn small danger">Un-enroll</button>
+            </div>
+        </div>
+    </div>
+    <!-- Confirm Unenroll Modal -->
+    <div id="unenrollModal" class="confirm-modal" aria-hidden="true">
+        <div class="confirm-modal-content" role="dialog" aria-modal="true" aria-labelledby="unenrollTitle">
+            <h3 id="unenrollTitle">Confirm Unenroll</h3>
+            <p id="unenrollDesc">Are you sure you want to unenroll <span id="unenrollStudentName"></span> from this class?</p>
+            <div class="confirm-actions">
+                <button id="confirmUnenrollBtn" class="btn danger">Unenroll</button>
+                <button id="cancelUnenrollBtn" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local JS -->
+    <script src="~/js/AdminDb/AdminManageClass.js" asp-append-version="true"></script>
+    @{
+        ViewBag.Role = "Admin";
+        ViewBag.ClassCode = Model.ClassCode;
+        ViewBag.CurrentPage = "subjects";
+    }
+    @await Html.PartialAsync("_AdminBottomBar")
+
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+@using System.Reflection
+@using Microsoft.AspNetCore.Http
+@{
+    string adminName = "";
+    string adminInitials = "";
+    string classCode = "";
+    string avatarUrl = "";
+
+    if (ViewBag.AdminName != null) adminName = ViewBag.AdminName.ToString();
+    if (ViewBag.AdminInitials != null) adminInitials = ViewBag.AdminInitials.ToString();
+    if (ViewBag.AdminAvatarUrl != null) avatarUrl = ViewBag.AdminAvatarUrl.ToString();
+    if (ViewBag.UserName != null && string.IsNullOrWhiteSpace(adminName)) adminName = ViewBag.UserName.ToString();
+    if (ViewBag.UserInitials != null && string.IsNullOrWhiteSpace(adminInitials)) adminInitials = ViewBag.UserInitials.ToString();
+    if (ViewBag.UserAvatarUrl != null && string.IsNullOrWhiteSpace(avatarUrl)) avatarUrl = ViewBag.UserAvatarUrl.ToString();
+    if (ViewBag.ClassCode != null) classCode = ViewBag.ClassCode.ToString();
+
+    if (Model != null)
+    {
+        var t = Model.GetType();
+        string GetProp(string name) => t.GetProperty(name)?.GetValue(Model)?.ToString();
+        if (string.IsNullOrWhiteSpace(adminName)) adminName = GetProp("AdminName") ?? GetProp("UserName") ?? GetProp("ProfessorName") ?? "";
+        if (string.IsNullOrWhiteSpace(adminInitials)) adminInitials = GetProp("AdminInitials") ?? GetProp("Avatar") ?? GetProp("ProfessorInitials") ?? "";
+        if (string.IsNullOrWhiteSpace(avatarUrl)) avatarUrl = GetProp("AdminAvatarUrl") ?? GetProp("UserAvatarUrl") ?? "";
+        if (string.IsNullOrWhiteSpace(classCode)) classCode = GetProp("ClassCode") ?? "";
+    }
+
+    var sessionName = Context?.Session?.GetString("UserName");
+    if (string.IsNullOrWhiteSpace(adminName) && !string.IsNullOrWhiteSpace(sessionName)) adminName = sessionName;
+    if (string.IsNullOrWhiteSpace(adminInitials) && !string.IsNullOrWhiteSpace(adminName))
+    {
+        var parts = adminName.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+        adminInitials = string.Concat(parts.Select(p => p[0])).ToUpper();
+    }
+
+    if (string.IsNullOrWhiteSpace(adminName)) adminName = "Admin";
+    if (string.IsNullOrWhiteSpace(adminInitials)) adminInitials = "AD";
+
+    if (string.IsNullOrEmpty(classCode))
+    {
+        classCode = ViewBag.ClassCodeFromBody ?? "";
+    }
+
+    bool isStudent = string.Equals(ViewBag.Role?.ToString(), "Student", System.StringComparison.OrdinalIgnoreCase);
+}
+
+<!-- Bottom bar -->
+<div class="bottom-bar">
+    <div class="user-profile" id="userProfile">
+        <div class="user-avatar">
+            @if (!string.IsNullOrWhiteSpace(avatarUrl))
+            {
+                <img src="@avatarUrl" alt="@adminName" />
+            }
+            else
+            {
+                @adminInitials
+            }
+        </div>
+        <div class="user-name">@adminName</div>
+        <div class="user-popup" id="userPopup">
+            <span id="signOutBtn">Exit • Sign out</span>
+        </div>
+    </div>
+
+    <div class="menu-wrap">
+        <div class="menu-circle" id="menuCircle" title="Open menu" role="button" tabindex="0">
+            <div class="menu-grid"><span></span><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="radial-actions" id="radialActions">
+            <button class="action home" data-page="home" data-label="Home"><i class="fa-solid fa-house"></i></button>
+            @if (isStudent)
+            {
+                <button class="action subjects" data-page="subjects" data-label="Subjects"><i class="fa-solid fa-book"></i></button>
+                <button class="action todo" data-page="todo" data-label="To-Do"><i class="fa-solid fa-pencil"></i></button>
+            }
+            else
+            {
+                <button class="action subjects locked" data-page="locked" data-label="Locked" aria-label="Locked" disabled aria-disabled="true"><i class="fa-solid fa-lock"></i></button>
+                <button class="action assessment" data-page="assessment" data-label="Assessment"><i class="fa-solid fa-clipboard-question"></i></button>
+            }
+        </div>
+    </div>
+
+    <div class="right-space"></div>
+</div>
+
+@if (isStudent)
+{
+    <script src="~/js/StudentDb/StudentBottomBar.js" asp-append-version="true"></script>
+    <script>
+        window.studentBottomBarData = {
+            classCode: '@classCode',
+            currentPage: '@ViewBag.CurrentPage'
+        };
+    </script>
+}
+else
+{
+    <script src="~/js/AdminDb/AdminBottomBar.js" asp-append-version="true"></script>
+    <script>
+        window.adminBottomBarData = {
+            classCode: '@classCode',
+            currentPage: '@ViewBag.CurrentPage'
+        };
+    </script>
+}

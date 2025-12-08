@@ -1,0 +1,466 @@
+﻿/* === GLOBAL STYLING === */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 70px;
+    color: #222;
+    overflow: hidden;
+}
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/mainbg.png');
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(1.05);
+    }
+
+/* === INBOX HEADER === */
+.inbox-container {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.main-content {
+    flex: 1;
+    padding: 5px 30px;
+    overflow-y: auto;
+    max-height: calc(100vh - 70px);
+}
+
+/* === HEADER TITLE SECTION === */
+.current-borrowing h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #8F2809;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+    .current-borrowing h2::after {
+        content: "";
+        flex-grow: 1;
+        height: 5px;
+        background: linear-gradient(90deg, #8F2809, #FF9809);
+        margin-left: 15px;
+        border-radius: 3px;
+    }
+
+.title-icon {
+    width: 35px;
+    height: 35px;
+}
+
+.inbox-count {
+    font-size: 32px;
+    font-weight: 700;
+    color: #8F2809;
+    margin-left: 6px;
+}
+
+
+/* === FILTER TABS + MARK AS READ ROW === */
+.filter-tabs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-top: 10px;
+}
+
+.clear-all-btn {
+    transition: opacity 0.3s ease;
+}
+
+    .clear-all-btn[style*="display: none"] {
+        opacity: 0;
+    }
+
+    .clear-all-btn[style*="display: block"] {
+        opacity: 1;
+    }
+
+
+.tab-btn {
+    text-decoration: none !important;
+    background-color: #D9D9D9;
+    color: black !important;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .tab-btn:hover {
+        background-color: #006B99;
+        color: white !important;
+    }
+
+    .tab-btn.active {
+        background-color: #006B99;
+        color: white !important;
+        font-weight: 700;
+    }
+
+/* Count inside tabs */
+.tab-count {
+    font-size: 0.85rem;
+    color: black;
+    margin-left: 0.25rem;
+}
+
+.tab-btn:hover .tab-count {
+    color: white;
+}
+
+.tab-btn.active .tab-count {
+    color: white;
+}
+
+/* === Mark All as Read Button === */
+.mark-all-read-btn {
+    background: #006B99;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+    .mark-all-read-btn:hover {
+        background: #004a6e;
+    }
+
+/* === NOTIFICATIONS WITH SIDEBAR === */
+.notif-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    /* Custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: #006B99 #e0e0e0;
+}
+
+    /* Webkit scrollbar styling for Chrome/Safari */
+    .notif-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .notif-section::-webkit-scrollbar-track {
+        background: #e0e0e0;
+        border-radius: 10px;
+    }
+
+    .notif-section::-webkit-scrollbar-thumb {
+        background: #006B99;
+        border-radius: 10px;
+    }
+
+        .notif-section::-webkit-scrollbar-thumb:hover {
+            background: #004a6e;
+        }
+
+.menu-dropdown li[data-isread="false"] {
+    color: #999;
+    cursor: not-allowed;
+}
+
+
+.notif-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #AECCE4;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.notif-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 150px;
+}
+
+.library-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 6px;
+}
+
+.library-text {
+    font-size: 20px;
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+}
+
+.notif-right {
+    flex: 1;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.notif-title {
+    color: #000;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.notif-message {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.notif-date {
+    color: #666;
+    font-size: 14px;
+    display: block;
+    margin-top: 8px;
+}
+
+
+/* Notification Status */
+.notif-card.unread {
+    background: #AECCE4 !important;
+    border-left: 4px solid #006B99 !important;
+}
+
+.notif-card.read {
+    opacity: 0.75;
+}
+
+
+
+.unread-badge {
+    background: #4CAF50;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Notification type icons */
+.notif-type-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.notif-card.success .notif-type-icon {
+    color: #4CAF50;
+}
+
+.notif-card.danger .notif-type-icon {
+    color: #f44336;
+}
+
+.notif-card.warning .notif-type-icon {
+    color: #ff9800;
+}
+
+.notif-card.info .notif-type-icon {
+    color: #2196F3;
+}
+
+/* Action buttons */
+.notif-card > div:last-child {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+    .notif-card > div:last-child button {
+        background: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 10px 15px;
+        border: 2px solid;
+        transition: background 0.3s ease;
+    }
+
+        .notif-card > div:last-child button[title="Archive"] {
+            border-color: #ff9800;
+            color: #ff9800;
+        }
+
+            .notif-card > div:last-child button[title="Archive"]:hover {
+                background: #fff3e0;
+            }
+
+        .notif-card > div:last-child button[title="Delete"] {
+            border-color: #f44336;
+            color: #f44336;
+        }
+
+            .notif-card > div:last-child button[title="Delete"]:hover {
+                background: #ffebee;
+            }
+
+/* Empty State */
+.empty-state, .empty-state.empty-state-dynamic {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+}
+
+/* === DELETE MODAL STYLES === */
+#deleteModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+    #deleteModal.active {
+        display: flex;
+    }
+
+    #deleteModal > div {
+        background: #fff;
+        padding: 40px;
+        border-radius: 16px;
+        max-width: 550px;
+        width: 100%;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+        #deleteModal > div > div:first-child {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #f44336;
+        }
+
+            #deleteModal > div > div:first-child i {
+                font-size: 40px;
+            }
+
+    #deleteModal h3 {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    #deleteModal p {
+        color: #444;
+        font-size: 18px;
+        margin: 20px 0 30px;
+        line-height: 1.5;
+    }
+
+    #deleteModal > div > div:last-child {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    #deleteModal button {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+        #deleteModal button:first-child {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+            #deleteModal button:first-child:hover {
+                background: #ddd;
+                transform: translateY(-2px);
+            }
+
+        #deleteModal button:last-child {
+            background: #f44336;
+            color: white;
+        }
+
+            #deleteModal button:last-child:hover {
+                background: #d32f2f;
+                transform: translateY(-2px);
+            }
+
+/* Responsive */
+@media (max-width: 600px) {
+    #deleteModal > div {
+        padding: 30px 20px;
+    }
+
+    #deleteModal h3 {
+        font-size: 24px;
+    }
+
+    #deleteModal p {
+        font-size: 16px;
+    }
+
+    #deleteModal button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    #deleteModal > div > div:last-child {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+
+    .notif-section {
+        max-height: calc(100vh - 400px);
+    }
+}

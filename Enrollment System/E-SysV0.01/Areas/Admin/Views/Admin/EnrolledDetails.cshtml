@@ -1,0 +1,567 @@
+﻿@model E_SysV0._01.Models.EnrollmentRequest
+@using E_SysV0._01.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminAppLayout.cshtml";
+    ViewData["Title"] = "Enrolled Details";
+
+    string FlagVal(string key) => (Model.DocumentFlags != null && Model.DocumentFlags.TryGetValue(key, out var v)) ? v : "";
+
+    var docs = new[] { "Form138", "GoodMoral", "Diploma", "MedicalCertificate", "CertificateOfIndigency", "BirthCertificate" };
+    var docLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Form138"] = "Form 138",
+        ["GoodMoral"] = "Good Moral",
+        ["Diploma"] = "Diploma",
+        ["MedicalCertificate"] = "Medical Certificate",
+        ["CertificateOfIndigency"] = "Certificate of Indigency",
+        ["BirthCertificate"] = "Birth Certificate"
+    };
+
+    var extra = Model.ExtraFields ?? new Dictionary<string, string>();
+    string Get(string prefix, string name)
+    {
+        var key = string.IsNullOrEmpty(prefix) ? name : $"{prefix}.{name}";
+        return extra.TryGetValue(key, out var v) ? v : "";
+    }
+
+    var subjects = ViewBag.SubjectSchedules as List<dynamic> ?? new List<dynamic>();
+    var currentSchedule = ViewBag.CurrentSchedule as List<dynamic> ?? new List<dynamic>();
+    var hasCurrentSchedule = ViewBag.HasCurrentSchedule == true;
+    var existingRemarks = ViewBag.ExistingSubjectRemarks as Dictionary<string, string> ?? new Dictionary<string, string>();
+
+    var enrolledSemester = extra.TryGetValue("Academic.Semester", out var sem) ? sem : "1st Semester";
+    var enrolledYearLevel = extra.TryGetValue("Academic.YearLevel", out var yl) ? yl : "1st Year";
+    var program = !string.IsNullOrWhiteSpace(Get("Academic", "Program")) ? Get("Academic", "Program") : (Model.Program ?? "BSIT");
+
+    var is1stSemester = enrolledSemester.StartsWith("1", StringComparison.OrdinalIgnoreCase);
+    var is2ndSemester = enrolledSemester.StartsWith("2", StringComparison.OrdinalIgnoreCase);
+
+    // ✅ NEW: Detect 2nd Year enrollment
+    var is1stYear = enrolledYearLevel.Contains("1st Year", StringComparison.OrdinalIgnoreCase);
+    var is2ndYear = enrolledYearLevel.Contains("2nd Year", StringComparison.OrdinalIgnoreCase);
+
+    var calcUrl = Url.Action("CalculateEligibility", "Admin", new { area = "Admin" });
+
+    List<SubjectRow> subjectsForRemarks;
+    List<SubjectRow> targetSubjects;
+    string targetYearLevel;
+    string targetSemester;
+
+    // ✅ UPDATED: Handle both 1st Year and 2nd Year 1st Semester
+    if (is1stSemester)
+    {
+        if (is1stYear)
+        {
+            // 1st Year 1st Semester → target 1st Year 2nd Semester
+            subjectsForRemarks = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+                ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear1stSem.Subjects.ToList()
+                : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear1stSem.Subjects.ToList();
+
+            targetSubjects = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+                ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear2ndSem.Subjects.ToList()
+                : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear2ndSem.Subjects.ToList();
+
+            targetYearLevel = "1st Year";
+            targetSemester = "2nd Semester";
+        }
+        else if (is2ndYear)
+        {
+            // ✅ NEW: 2nd Year 1st Semester → target 2nd Year 2nd Semester
+            subjectsForRemarks = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+                ? E_SysV0._01.Models.BSENTSubjectModels._2ndYear._2ndYear1stSem.Subjects.ToList()
+                : E_SysV0._01.Models.BSITSubjectModels._2ndYear._2ndYear1stSem.Subjects.ToList();
+
+            targetSubjects = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+                ? E_SysV0._01.Models.BSENTSubjectModels._2ndYear._2ndYear2ndSem.Subjects.ToList()
+                : E_SysV0._01.Models.BSITSubjectModels._2ndYear._2ndYear2ndSem.Subjects.ToList();
+
+            targetYearLevel = "2nd Year";
+            targetSemester = "2nd Semester";
+        }
+        else
+        {
+            // Fallback (should not happen)
+            subjectsForRemarks = new List<SubjectRow>();
+            targetSubjects = new List<SubjectRow>();
+            targetYearLevel = enrolledYearLevel;
+            targetSemester = "2nd Semester";
+        }
+    }
+    else
+    {
+        // Not 1st semester (should not reach here for EnrolledDetails)
+        subjectsForRemarks = new List<SubjectRow>();
+        targetSubjects = new List<SubjectRow>();
+        targetYearLevel = enrolledYearLevel;
+        targetSemester = enrolledSemester;
+    }
+
+    var secondSemCanonical = targetSubjects.Select(s => new
+    {
+        code = s.Code,
+        title = s.Title,
+        units = s.Units,
+        prereq = (string.IsNullOrWhiteSpace(s.PreRequisite) ? new string[0] : s.PreRequisite.Split(',').Select(x => x.Trim()).ToArray())
+    }).ToList();
+
+    var prerequisites = ViewBag.Prerequisites as Dictionary<string, List<string>> ?? new Dictionary<string, List<string>>();
+    bool remarksEditable = true;
+}
+
+<div class="card">
+    @if (TempData["Success"] is string successMsg)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle me-2"></i>@successMsg
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["Error"] is string errorMsg)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-triangle me-2"></i>@errorMsg
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+            <h2 class="mb-1">Enrolled Student - @Model.FullName</h2>
+            <div class="badge bg-secondary mt-2">
+                <i class="fas fa-info-circle me-1"></i>@enrolledYearLevel @enrolledSemester
+            </div>
+        </div>
+        <a href="@Url.Action("Enrolled")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Enrolled
+        </a>
+    </div>
+
+    @* ✅ UPDATED: Description text based on year level *@
+    <p class="text-muted mb-3">
+        @if (is1stYear && is1stSemester)
+        {
+            <span>Student is enrolled in <strong>1st Year 1st Semester</strong>. Set subject remarks and calculate 1st Year 2nd Semester eligibility.</span>
+        }
+        else if (is2ndYear && is1stSemester)
+        {
+            <span>Student is enrolled in <strong>2nd Year 1st Semester</strong>. Set subject remarks and calculate 2nd Year 2nd Semester eligibility.</span>
+        }
+        else
+        {
+            <span>Student is enrolled in <strong>@enrolledYearLevel @enrolledSemester</strong>. Set remarks to track student performance.</span>
+        }
+    </p>
+    @if (is2ndYear && is1stSemester)
+    {
+        var firstYearRemarks = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        // ✅ FIXED: Load from ViewBag.ExistingSubjectRemarks (which includes archived data)
+        var allExistingRemarks = ViewBag.ExistingSubjectRemarks as Dictionary<string, string>
+        ?? new Dictionary<string, string>();
+
+        // ✅ Get 1st year subject codes to filter
+        var firstYearSubjectCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        // Add all 1st year 1st semester subjects
+        var firstYear1stSem = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+        ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear1stSem.Subjects
+        : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear1stSem.Subjects;
+
+        foreach (var s in firstYear1stSem)
+            firstYearSubjectCodes.Add(s.Code);
+
+        // Add all 1st year 2nd semester subjects
+        var firstYear2ndSem = string.Equals(program, "BSENT", StringComparison.OrdinalIgnoreCase)
+        ? E_SysV0._01.Models.BSENTSubjectModels._1stYear._1stYear2ndSem.Subjects
+        : E_SysV0._01.Models.BSITSubjectModels._1stYear._1stYear2ndSem.Subjects;
+
+        foreach (var s in firstYear2ndSem)
+            firstYearSubjectCodes.Add(s.Code);
+
+        // ✅ Filter remarks to only include 1st year subjects
+        foreach (var kvp in allExistingRemarks)
+        {
+            if (firstYearSubjectCodes.Contains(kvp.Key))
+            {
+                firstYearRemarks[kvp.Key] = kvp.Value;
+            }
+        }
+
+        if (firstYearRemarks.Any())
+        {
+            <div class="card mb-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        1st Year Performance (For Prerequisite Checking)
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-info-circle me-2"></i>
+                        These 1st year subject remarks will be used to check prerequisites for 2nd year 2nd semester subjects.
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var remark in firstYearRemarks.OrderBy(r => r.Key))
+                                {
+                                    var badgeClass = remark.Value.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                                    remark.Value.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                                    "bg-warning text-dark";
+
+                                    <tr>
+                                        <td><strong>@remark.Key</strong></td>
+                                        <td>
+                                            <span class="badge @badgeClass">@remark.Value.ToUpper()</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+        else
+        {
+            <div class="alert alert-warning mb-4">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Warning:</strong> No 1st year subject remarks found. Cannot calculate 2nd year eligibility without prerequisite data.
+            </div>
+            <hr />
+        }
+    }
+    @if (Model.Type != null && Model.Type.Contains("Transferee", StringComparison.OrdinalIgnoreCase))
+    {
+        var firstSemRemarks = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        // Load from ExtraFields
+        if (Model.ExtraFields != null)
+        {
+            foreach (var kvp in Model.ExtraFields)
+            {
+                if (kvp.Key.StartsWith("SubjectRemarks.", StringComparison.OrdinalIgnoreCase) &&
+                !kvp.Key.Contains(".2ndSem.", StringComparison.OrdinalIgnoreCase))
+                {
+                    var code = kvp.Key.Replace("SubjectRemarks.", "");
+                    firstSemRemarks[code] = kvp.Value;
+                }
+            }
+        }
+
+        if (firstSemRemarks.Any())
+        {
+            <div class="card mb-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        1st Semester Performance (From TOR Evaluation)
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-info-circle me-2"></i>
+                        These subject remarks were evaluated from the transferee's Transcript of Records and will be used for prerequisite checking.
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var remark in firstSemRemarks.OrderBy(r => r.Key))
+                                {
+                                    var badgeClass = remark.Value.Equals("pass", StringComparison.OrdinalIgnoreCase) ? "bg-success" :
+                                    remark.Value.Equals("fail", StringComparison.OrdinalIgnoreCase) ? "bg-danger" :
+                                    "bg-warning text-dark";
+
+                                    <tr>
+                                        <td><strong>@remark.Key</strong></td>
+                                        <td>
+                                            <span class="badge @badgeClass">@remark.Value.ToUpper()</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+
+    @* ✅ UPDATED: Show document flags ONLY for 1st Year 1st Semester *@
+    @if (is1stYear && is1stSemester)
+    {
+        <form id="saveFlagsForm" asp-action="UpdateDocumentFlags" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <h6 class="mt-4 mb-3">Document Flags</h6>
+
+            <div class="flag-grid mt-2 mb-3">
+                @foreach (var d in docs)
+                {
+                    var current = FlagVal(d);
+                    var label = docLabels.TryGetValue(d, out var lbl) ? lbl : d;
+
+                    <div class="flag-item">
+                        <div class="flag-header">
+                            <span class="flag-title">@label</span>
+                            @if (string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <span class="badge bg-success">Submitted</span>
+                            }
+                            else if (string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <span class="badge bg-warning text-dark">To be followed</span>
+                            }
+                            else if (string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <span class="badge bg-dark">Ineligible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-outline border text-secondary">unset</span>
+                            }
+                        </div>
+                        <select name="flags[@d]" class="form-select" style="max-width: 220px;">
+                            <option value=""></option>
+                            <option value="Submitted" selected="@(string.Equals(current, "Submitted", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Submitted</option>
+                            <option value="To be followed" selected="@(string.Equals(current, "To be followed", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">To be followed</option>
+                            <option value="Ineligible" selected="@(string.Equals(current, "Ineligible", StringComparison.OrdinalIgnoreCase) ? "selected" : null)">Ineligible</option>
+                        </select>
+                    </div>
+                }
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-3">
+                <i class="fas fa-save"></i> Save Document Flags
+            </button>
+        </form>
+        <hr />
+    }
+    else
+    {
+        @* ✅ NEW: Hide document flags for 2nd Year (already validated) *@
+        <div class="alert alert-success mb-4">
+            <h6 class="mb-2"><i class="fas fa-check-circle me-2"></i>Document Compliance</h6>
+            <p class="mb-0">Document flags were validated during 1st year enrollment.</p>
+        </div>
+        <hr />
+    }
+
+    @if (hasCurrentSchedule && currentSchedule.Count > 0)
+    {
+        <div class="mb-4">
+            <h6 class="mt-4 mb-3"><i class="fas fa-calendar-alt me-2"></i>Current Schedule (@enrolledYearLevel @enrolledSemester)</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Title</th>
+                            <th>Units</th>
+                            <th>Day</th>
+                            <th>Time</th>
+                            <th>Room</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var schedule in currentSchedule)
+                        {
+                            <tr>
+                                <td><strong>@schedule.Code</strong></td>
+                                <td>@schedule.Title</td>
+                                <td>@schedule.Units</td>
+                                <td>@schedule.Day</td>
+                                <td>@schedule.Time</td>
+                                <td>@schedule.Room</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+    }
+    
+    <form id="saveRemarksForm" asp-action="UpdateDocumentFlags" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <div id="subjectRemarksData"></div>
+
+        @* ✅ UPDATED: Dynamic header based on year level *@
+        <h6 class="mt-4 mb-3">
+            <i class="fas fa-edit me-2"></i>
+            @enrolledYearLevel @enrolledSemester Subject Remarks
+        </h6>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Units</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in subjects)
+                    {
+                        var currentRemark = existingRemarks.ContainsKey(subject.Code) ? existingRemarks[subject.Code] : "ongoing";
+                        <tr>
+                            <td><strong>@subject.Code</strong></td>
+                            <td>@subject.Title</td>
+                            <td>@subject.Units</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]" id="fail_@subject.Code" value="fail" @(currentRemark == "fail" ? "checked" : "")>
+                                    <label class="btn btn-outline-danger" for="fail_@subject.Code">Fail</label>
+
+                                    <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]" id="ongoing_@subject.Code" value="ongoing" @(currentRemark == "ongoing" ? "checked" : "")>
+                                    <label class="btn btn-outline-warning" for="ongoing_@subject.Code">Ongoing</label>
+
+                                    <input type="radio" class="btn-check" name="subjectRemarks[@subject.Code]" id="pass_@subject.Code" value="pass" @(currentRemark == "pass" ? "checked" : "")>
+                                    <label class="btn btn-outline-success" for="pass_@subject.Code">Pass</label>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* ✅ UPDATED: Show eligibility button for both 1st Year and 2nd Year 1st Semester *@
+        @if (is1stSemester && (is1stYear || is2ndYear))
+        {
+            <div class="text-center my-4">
+                <button type="button" class="btn btn-info btn-lg" id="calculateEligibility">
+                    <i class="fas fa-calculator me-2"></i>
+                    Calculate @(is1stYear ? "1st Year 2nd Semester" : "2nd Year 2nd Semester") Eligibility
+                </button>
+            </div>
+
+            <div id="secondSemesterTable" class="d-none">
+                <hr />
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-clipboard-check me-2"></i>
+                            @(is1stYear ? "1st Year 2nd Semester" : "2nd Year 2nd Semester") Eligibility
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm" id="secondSemSubjectsTable">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Title</th>
+                                    <th>Units</th>
+                                    <th>Prerequisites</th>
+                                    <th>Eligibility</th>
+                                </tr>
+                            </thead>
+                            <tbody id="secondSemSubjectsBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success btn-lg my-3">
+            <i class="fas fa-save me-2"></i>Save Subject Remarks@(is1stSemester ? " & Eligibility" : "")
+        </button>
+    </form>
+</div>
+
+@{
+    var showSlipQuery = Context.Request.Query["showSlip"].ToString();
+    bool showSlip = string.Equals(showSlipQuery, "1", StringComparison.OrdinalIgnoreCase);
+    var redirectTarget = Url.Action("Dashboard", "Admin", new { area = "Admin" });
+    var registrationUrl = Url.Action("RegistrationSlip", "Admin", new { area = "Admin", id = Model.Id });
+}
+@if (showSlip)
+{
+    <script>
+        (function () {
+            const registrationUrl = '@registrationUrl';
+            const redirectTarget = '@redirectTarget';
+            (async () => {
+                try {
+                    const resp = await fetch(registrationUrl, { credentials: 'include', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                    if (!resp.ok) {
+                        console.error('Failed to load registration slip partial:', resp.status);
+                        window.location.href = redirectTarget;
+                        return;
+                    }
+                    const html = await resp.text();
+                    const containerId = 'registrationModalContainer';
+                    let host = document.getElementById(containerId);
+                    if (!host) { host = document.createElement('div'); host.id = containerId; document.body.appendChild(host); }
+                    host.innerHTML = html;
+
+                    host.querySelectorAll('script').forEach(old => {
+                        const s = document.createElement('script');
+                        if (old.src) s.src = old.src; else s.textContent = old.textContent || '';
+                        document.body.appendChild(s);
+                        old.remove();
+                    });
+
+                    const modalEl = document.getElementById('registrationModal');
+                    if (!modalEl) {
+                        console.warn('Registration modal element not found in partial.');
+                        window.location.href = redirectTarget;
+                        return;
+                    }
+                    const modal = new bootstrap.Modal(modalEl, { backdrop: 'static' });
+                    modal.show();
+
+                    // Only redirect when the modal does not opt-out via data-no-redirect="true"
+                    modalEl.addEventListener('hidden.bs.modal', () => {
+                        host.innerHTML = '';
+                        const noRedirect = modalEl.getAttribute('data-no-redirect') === 'true';
+                        if (!noRedirect) {
+                            setTimeout(() => { window.location.href = redirectTarget; }, 20);
+                        }
+                    }, { once: true });
+                } catch (ex) {
+                    console.error('Error showing registration slip:', ex);
+                    window.location.href = redirectTarget;
+                }
+            })();
+        })();
+    </script>
+}
+
+@section Scripts {
+    <div id="requestDetailsConfig"
+         data-request-id="@Model.Id"
+         data-is-second-sem-pending="@(is2ndSemester ? "true" : "false")"
+         data-is-year-progression="@(is2ndYear ? "true" : "false")"
+         data-enrolled-year-level="@enrolledYearLevel"
+         data-enrolled-semester="@enrolledSemester"
+         data-target-year-level="@targetYearLevel"
+         data-target-semester="@targetSemester"
+         data-existing-second-sem-eligibility='@Html.Raw(Json.Serialize(ViewBag.ExistingSecondSemEligibility ?? new Dictionary<string, string>()))'
+         data-second-sem-subjects='@Html.Raw(Json.Serialize(secondSemCanonical))'
+         data-prerequisites='@Html.Raw(Json.Serialize(prerequisites))'
+         data-calc-url='@calcUrl'>
+    </div>
+    <script src="~/js/admin-enrolled-details.js"></script>
+}

@@ -1,0 +1,2256 @@
+@model List<SystemLibrary.Models.User>
+@{
+    ViewBag.Title = "User Management Student";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/Admin/Usermanage.css" />
+</head>
+<body>
+    <main class="content">
+
+        <header>
+            <h1>User Management</h1>
+            <div class="header-actions">
+                <button class="add-user" onclick="openAddUserModal()">+ Add New User</button>
+            </div>
+        </header>
+
+        <section class="tabs">
+            <button onclick="location.href='@Url.Action("UserSettings", "Admin")'">
+                Library Staff
+            </button>
+            <button class="active" onclick="location.href='@Url.Action("UserSettingsStudent", "Admin")'">
+                Student Accounts
+            </button>
+        </section>
+
+        <section class="user-list">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var user in Model)
+                {
+                            <div class="user-card">
+                                <div class="user-left">
+                                    <div class="avatar student">
+                                        <i class="icon">👤</i>
+                                    </div>
+                                    <div>
+                                        <div class="name-row">
+                                            <h3>@user.FullName.ToUpper()</h3>
+                                            <span class="role student-role">STUDENT</span>
+                                        </div>
+                                        <p>@user.Username</p>
+                                        <p class="created">Created: @user.CreatedAt.ToString("M/d/yyyy")</p>
+                                    </div>
+                                </div>
+
+                        <div class="user-right">
+                            <span class="status @(user.IsRestricted ? "restricted" : "active")">
+                                ● @(user.IsRestricted ? "RESTRICTED" : "ACTIVE")
+                            </span>
+                            <div class="actions">
+                                <button class="update" data-user-id="@user._id">Update password</button>
+
+                                @if (user.IsRestricted)
+                                {
+                                    <button class="unrestrict" data-user-id="@user._id">Unrestrict User</button>
+                                }
+                                else
+                                {
+                                    <button class="restrict" data-user-id="@user._id">Restrict User</button>
+                                }
+
+                                <button class="penalties" data-user-id="@user._id" data-user-name="@user.FullName">View Penalties</button>
+
+                                @if (user.IsRestricted)
+                                {
+                                    <button class="activate" data-user-id="@user._id">Activate User</button>
+                                }
+                                else
+                                {
+                                    <button class="delete" data-user-id="@user._id">Inactive User</button>
+                                }
+                            </div>
+                        </div>
+
+                            </div>
+                }
+            }
+            else
+            {
+                    <p>No student accounts found.</p>
+            }
+        </section>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal-overlay">
+        <div class="modal add-user-modal">
+            <div class="modal-header">
+                <h2>ADD USER</h2>
+                <button class="close-btn" onclick="closeAddUserModal()">
+                    <i class="fas fa-times">X</i>
+                </button>
+            </div>
+            <div class="modal-body scrollable-content">
+                <!-- Data Lookup Section -->
+                <div class="form-section mac-lookup-section">
+                    <h3>🔍 Data Lookup</h3>
+                    <div class="form-group">
+                        <label>Lookup Type:</label>
+                        <select id="lookupType" onchange="toggleStudentLookupFields()">
+                            <option value="">Select lookup type</option>
+                            <option value="student">Student by Student Email</option>
+                            <option value="manual">Manual Entry</option>
+                        </select>
+                    </div>
+                    
+                    <div id="studentLookupGroup" class="form-group" style="display: none;">
+                        <label>Student Email:</label>
+                        <div class="lookup-input-group">
+                            <input type="text" id="studentEmailLookup" placeholder="Enter Student Email (e.g., student@example.com)">
+                            <button type="button" onclick="lookupStudent()" class="lookup-btn">📊 View Data</button>
+                        </div>
+                    </div>
+                    
+                    <div id="studentLookupResult" class="lookup-result" style="display: none;">
+                        <!-- Lookup results will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Manual Entry Section -->
+                <div id="manualEntrySection" class="form-section manual-entry-section">
+                    <h3>📝 Manual Entry</h3>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="email" placeholder="Enter email address">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="name" placeholder="Enter full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="username" placeholder="Enter username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm password">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Role</label>
+                        <select id="role">
+                            <option value="STUDENT">STUDENT</option>
+                        </select>
+                    </div>
+
+                    <!-- Student-specific fields -->
+                    <div id="studentFields" class="student-fields-section">
+                        <h4>Student Information</h4>
+                        <div class="form-group">
+                            <label>Student Number</label>
+                            <input type="text" id="studentNumber" placeholder="Enter student number">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Year Level</label>
+                            <select id="yearLevel">
+                                <option value="">Select year level</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                                <option value="5th Year">5th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Course</label>
+                            <input type="text" id="course" placeholder="Enter course (e.g., BSIT, BSCS)">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Program</label>
+                            <input type="text" id="program" placeholder="Enter program">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department</label>
+                            <input type="text" id="department" placeholder="Enter department">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" id="contactNumber" placeholder="Enter contact number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeAddUserModal()">Cancel</button>
+                <button class="save-btn" onclick="addUser()">+ Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/bluecheck.png" alt="Success" class="success-icon">
+            <div class="success-text">New User Added!</div>
+            <button class="done-btn" onclick="closeSuccessModal()">DONE</button>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal-overlay">
+        <div class="modal change-password-modal">
+            <div class="modal-header">
+                <div class="header-left">
+                    <img src="~/images/lock.png" alt="Lock Icon" class="lock-icon">
+                    <h2>Reset Password</h2>
+                </div>
+                <button class="close-btn" onclick="closeChangePasswordModal()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="currentUserId">
+
+                <label>Enter new password:</label>
+                <input type="password" id="newPassword">
+
+                <label>Confirm new password:</label>
+                <input type="password" id="confirmNewPassword">
+            </div>
+
+            <div class="modal-footer">
+                <button class="done-btn" onclick="confirmPasswordUpdate()">DONE</button>
+            </div>
+        </div>
+    </div>
+
+
+        </div>
+    </div>
+
+    <!-- Are You Sure Modal -->
+    <div id="confirmUpdateModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/lock.png" alt="Confirm Icon" class="success-icon">
+            <div class="success-text">Are you sure you want to reset this user's password?</div>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <button class="cancel-btn" onclick="closeConfirmUpdateModal()">Cancel</button>
+                <button class="done-btn" onclick="resetPassword()">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Updated Modal -->
+    <div id="passwordUpdatedModal" class="modal-overlay">
+        <div class="modal success-modal">
+            <img src="~/images/lock.png" alt="Success" class="success-icon">
+            <div class="success-text">Password Updated!</div>
+            <button class="done-btn" onclick="closePasswordUpdatedModal()">DONE</button>
+        </div>
+    </div>
+
+
+    <!-- Restrict Confirmation Popup -->
+    <div id="restrictPopup" class="popup-overlay">
+        <div class="popup-card">
+            <img src="~/images/deactivate.png" alt="Restrict Icon" class="popup-icon">
+            <p>Are you sure you want to <span class="highlight">RESTRICT</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('restrictPopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('restrict')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Popup -->
+    <div id="deletePopup" class="popup-overlay">
+        <div class="popup-card">
+            <img src="~/images/trashbin.png" alt="Delete Icon" class="popup-icon">
+            <p>Are you sure you want to <span class="highlight">DELETE</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('deletePopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('delete')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-card">
+            <p id="successMessage" class="success-only-text">User has been successfully updated.</p>
+            <div class="popup-buttons">
+                <button class="btn confirm" onclick="closeSuccessPopupAndReload()">DONE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unrestrict Confirmation Popup -->
+    <div id="unrestrictPopup" class="popup-overlay">
+        <div class="popup-card">
+            <p>Are you sure you want to <span class="highlight">UNRESTRICT</span> this user?</p>
+            <div class="popup-buttons">
+                <button class="btn cancel" onclick="closePopup('unrestrictPopup')">NO</button>
+                <button class="btn confirm" onclick="confirmAction('unrestrict')">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unrestricted Success Popup -->
+    <div id="unrestrictedSuccessPopup" class="popup-overlay">
+        <div class="popup-card unrestricted-popup">
+            <p class="popup-message">User is now <span class="highlight-text">UNRESTRICTED</span></p>
+            <button class="btn done-btn" onclick="closeSuccessPopupAndReload()">DONE</button>
+        </div>
+    </div>
+
+    <!-- View Penalties Popup -->
+    <div id="penaltiesPopup" class="popup-overlay">
+        <div class="popup-card penalties-popup">
+            <div class="penalties-header">
+                <h2><i class="fas fa-exclamation-triangle"></i> Student Penalties</h2>
+                <button class="close-btn" onclick="closePopup('penaltiesPopup')">
+                    <i class="fas fa-times">X</i>
+                </button>
+            </div>
+            <div id="penaltiesList" class="penalties-list">
+                <!-- Penalties will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Verification Modal -->
+    <div id="paymentVerificationModal" class="modal-overlay">
+        <div class="modal payment-verification-modal">
+            <div class="modal-header">
+                <div class="header-left">
+                    <img src="~/images/lock.png" alt="Payment Icon" class="lock-icon">
+                    <h2>Verify Payment</h2>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="verificationPenaltyId">
+                <input type="hidden" id="verificationPenaltyAmount">
+                
+                <div class="verification-info">
+                    <p><strong>Penalty Amount:</strong> <span id="displayPenaltyAmount">₱0.00</span></p>
+                    <p class="info-text">Please upload proof of payment (Image or PDF receipt)</p>
+                </div>
+
+                <div class="file-upload-section">
+                    <label for="paymentProofFile" class="file-upload-label" id="fileUploadLabel">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Click to upload or drag and drop</span>
+                        <small>Supports: JPG, PNG, PDF (Max 10MB)</small>
+                    </label>
+                    <input type="file" id="paymentProofFile" accept="image/*,.pdf" style="display: none;" onchange="handleFileSelect(event)">
+                    
+                    <div id="filePreview" class="file-preview" style="display: none;">
+                        <div class="preview-content">
+                            <img id="previewImage" src="" alt="Preview" style="max-width: 100%; max-height: 300px; display: none;">
+                            <div id="previewPdf" style="display: none;">
+                                <i class="fas fa-file-pdf" style="font-size: 48px; color: #dc3545;"></i>
+                                <p id="pdfFileName"></p>
+                            </div>
+                            <button type="button" class="remove-file-btn" onclick="removeFile()">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ocrResults" class="ocr-results" style="display: none;">
+                    <h4>Extracted Receipt Information:</h4>
+                    <div id="extractedText" class="extracted-text"></div>
+                    <div class="verification-status">
+                        <label>
+                            <input type="checkbox" id="verifyPaymentCheckbox"> 
+                            I verify that the payment information matches the penalty amount
+                        </label>
+                    </div>
+                </div>
+
+                <div id="uploadProgress" class="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">Processing...</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closePaymentVerificationModal()">Cancel</button>
+                <button class="save-btn" id="submitVerificationBtn" onclick="submitPaymentVerification()" disabled>
+                    <i class="fas fa-check"></i> Verify & Mark as Paid
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+@section Scripts {
+        <script>
+            let currentUserId = null;
+            let currentAction = null;
+            let tempNewPassword = '';
+            let tempConfirmNewPassword = '';
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // ----- Add User -----
+                document.querySelector(".add-user").addEventListener("click", openAddUserModal);
+
+                // ----- Change Password -----
+                document.querySelectorAll(".update").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openChangePasswordModal();
+                    });
+                });
+
+                // ----- Restrict User -----
+                document.querySelectorAll(".restrict").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('restrict');
+                    });
+                });
+
+                // ----- Unrestrict User -----
+                document.querySelectorAll(".unrestrict").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('unrestrict');
+                    });
+                });
+
+                // ----- Delete User -----
+                document.querySelectorAll(".delete").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        openPopup('delete');
+                    });
+                });
+
+                // ----- View Penalties -----
+                document.querySelectorAll(".penalties").forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        currentUserId = this.getAttribute('data-user-id');
+                        const userName = this.getAttribute('data-user-name');
+                        loadPenalties(userName);
+                    });
+                });
+
+            });
+
+            // =============================
+            // ADD USER MODAL
+            // =============================
+            function openAddUserModal() {
+                document.getElementById("addUserModal").style.display = "flex";
+            }
+
+            function closeAddUserModal() {
+                document.getElementById("addUserModal").style.display = "none";
+                // Clear form fields
+                document.getElementById('email').value = '';
+                document.getElementById('name').value = '';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('studentNumber').value = '';
+                document.getElementById('yearLevel').value = '';
+                document.getElementById('course').value = '';
+                document.getElementById('program').value = '';
+                document.getElementById('department').value = '';
+                document.getElementById('contactNumber').value = '';
+                document.getElementById('studentNumberLookup').value = '';
+                document.getElementById('lookupType').value = '';
+                document.getElementById('studentLookupGroup').style.display = 'none';
+                document.getElementById('studentLookupResult').style.display = 'none';
+                document.getElementById('manualEntrySection').style.display = 'block';
+            }
+
+            function toggleStudentLookupFields() {
+                const lookupType = document.getElementById("lookupType").value;
+                const studentLookupGroup = document.getElementById("studentLookupGroup");
+                const manualEntrySection = document.getElementById("manualEntrySection");
+                const studentLookupResult = document.getElementById("studentLookupResult");
+
+                // Hide all sections first
+                studentLookupGroup.style.display = "none";
+                studentLookupResult.style.display = "none";
+
+                if (lookupType === "student") {
+                    studentLookupGroup.style.display = "block";
+                    manualEntrySection.style.display = "none";
+                } else if (lookupType === "manual") {
+                    manualEntrySection.style.display = "block";
+                } else {
+                    manualEntrySection.style.display = "block";
+                }
+            }
+
+            async function lookupStudent() {
+                const email = document.getElementById("studentEmailLookup").value.trim();
+                
+                if (!email) {
+                    alert("Please enter a student email");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`@Url.Action("LookupStudent", "Admin")?email=${encodeURIComponent(email)}`);
+                    const result = await response.json();
+
+                    const lookupResult = document.getElementById("studentLookupResult");
+                    
+                    if (result.success && result.data) {
+                        lookupResult.innerHTML = `
+                            <div class="lookup-success">
+                                <h4>✅ Student Found in Enrollment System</h4>
+                                <div class="student-info">
+                                    <p><strong>Username:</strong> ${result.data.username || 'N/A'}</p>
+                                    <p><strong>Email:</strong> ${result.data.email || 'N/A'}</p>
+                                    <p><strong>Type:</strong> ${result.data.type || 'N/A'}</p>
+                                    <p><strong>First Login:</strong> ${result.data.firstLogin ? 'Yes' : 'No'}</p>
+                                </div>
+                                <div class="auto-fill-section">
+                                    <p>${result.data.message || 'Student accounts are automatically synced from the enrollment system when they log in.'}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        lookupResult.innerHTML = `
+                            <div class="lookup-error">
+                                <h4>❌ Student Not Found</h4>
+                                <p>${result.message || "Student not found in enrollment system"}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    lookupResult.style.display = "block";
+                } catch (error) {
+                    alert("Error looking up student: " + error.message);
+                }
+            }
+
+
+            async function addUser() {
+                const email = document.getElementById("email").value;
+                const name = document.getElementById("name").value;
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+                const role = document.getElementById("role").value;
+                
+                // Student-specific fields
+                const studentNumber = document.getElementById("studentNumber").value;
+                const yearLevel = document.getElementById("yearLevel").value;
+                const course = document.getElementById("course").value;
+                const program = document.getElementById("program").value;
+                const department = document.getElementById("department").value;
+                const contactNumber = document.getElementById("contactNumber").value;
+
+                if (!email || !name || !username || !password || !confirmPassword) {
+                    alert("Please fill in all required fields");
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match");
+                    return;
+                }
+
+                if (password.length < 6) {
+                    alert("Password must be at least 6 characters");
+                    return;
+                }
+
+                // Validate student-specific fields
+                if (role === "STUDENT") {
+                    if (!studentNumber || !yearLevel || !course) {
+                        alert("Please fill in Student Number, Year Level, and Course");
+                        return;
+                    }
+                }
+
+                try {
+                    const response = await fetch('@Url.Action("AddUser", "Admin")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Name: name,
+                            Username: username,
+                            Email: email,
+                            Password: password,
+                            ConfirmPassword: confirmPassword,
+                            Role: role,
+                            StudentNumber: studentNumber,
+                            YearLevel: yearLevel,
+                            Course: course,
+                            Program: program,
+                            Department: department,
+                            ContactNumber: contactNumber
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        closeAddUserModal();
+                        document.getElementById("successModal").style.display = "flex";
+                    } else {
+                        alert(result.message || "Failed to add user");
+                    }
+                } catch (error) {
+                    alert("An error occurred while adding the user");
+                    console.error(error);
+                }
+            }
+
+            function closeSuccessModal() {
+                document.getElementById("successModal").style.display = "none";
+                location.reload();
+            }
+
+                    // =============================
+            // CHANGE PASSWORD MODAL
+            // =============================
+            function openChangePasswordModal() {
+                console.log("Opening password modal for user:", currentUserId);
+                document.getElementById("currentUserId").value = currentUserId;
+                document.getElementById("changePasswordModal").style.display = "flex";
+                // Clear temp variables
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+                // Clear input fields
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+            }
+
+            function closeChangePasswordModal() {
+                console.log("Closing password modal");
+                document.getElementById("changePasswordModal").style.display = "none";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+
+            function confirmPasswordUpdate() {
+                console.log("=== confirmPasswordUpdate START ===");
+
+                const newPasswordField = document.getElementById("newPassword");
+                const confirmNewPasswordField = document.getElementById("confirmNewPassword");
+
+                console.log("newPasswordField exists:", !!newPasswordField);
+                console.log("confirmNewPasswordField exists:", !!confirmNewPasswordField);
+
+                const newPassword = newPasswordField ? newPasswordField.value : '';
+                const confirmNewPassword = confirmNewPasswordField ? confirmNewPasswordField.value : '';
+
+                console.log("newPassword value:", newPassword);
+                console.log("newPassword length:", newPassword.length);
+                console.log("confirmNewPassword value:", confirmNewPassword);
+                console.log("confirmNewPassword length:", confirmNewPassword.length);
+
+                if (!newPassword || !confirmNewPassword) {
+                    alert("Please fill in all fields");
+                    return;
+                }
+
+                if (newPassword !== confirmNewPassword) {
+                    alert("Passwords do not match");
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert("Password must be at least 6 characters");
+                    return;
+                }
+
+                // Store the passwords temporarily
+                tempNewPassword = newPassword;
+                tempConfirmNewPassword = confirmNewPassword;
+
+                console.log("Stored in tempNewPassword:", tempNewPassword);
+                console.log("Stored in tempConfirmNewPassword:", tempConfirmNewPassword);
+                console.log("=== confirmPasswordUpdate END ===");
+
+                // Just hide, don't clear
+                document.getElementById("changePasswordModal").style.display = "none";
+                document.getElementById("confirmUpdateModal").style.display = "flex";
+            }
+
+            function closeConfirmUpdateModal() {
+                console.log("Closing confirm update modal");
+                document.getElementById("confirmUpdateModal").style.display = "none";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+
+            async function resetPassword() {
+                console.log("=== resetPassword START ===");
+                console.log("currentUserId variable:", currentUserId);
+
+                const userIdField = document.getElementById("currentUserId");
+                console.log("userIdField exists:", !!userIdField);
+
+                const userId = userIdField ? userIdField.value : '';
+                const newPassword = tempNewPassword;
+                const confirmNewPassword = tempConfirmNewPassword;
+
+                console.log("userId:", userId);
+                console.log("tempNewPassword:", tempNewPassword);
+                console.log("tempNewPassword length:", tempNewPassword.length);
+                console.log("tempConfirmNewPassword:", tempConfirmNewPassword);
+                console.log("tempConfirmNewPassword length:", tempConfirmNewPassword.length);
+
+                if (!userId) {
+                    alert("User ID is missing!");
+                    console.error("userId is empty");
+                    return;
+                }
+
+                if (!newPassword) {
+                    alert("New password is missing!");
+                    console.error("tempNewPassword is empty");
+                    return;
+                }
+
+                if (!confirmNewPassword) {
+                    alert("Confirm password is missing!");
+                    console.error("tempConfirmNewPassword is empty");
+                    return;
+                }
+
+                const payload = {
+                    UserId: userId,
+                    NewPassword: newPassword,
+                    ConfirmNewPassword: confirmNewPassword
+                };
+
+                console.log("Payload to send:", JSON.stringify(payload, null, 2));
+
+                try {
+                    const response = await fetch('@Url.Action("AdminResetPassword", "Admin")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    console.log("Response status:", response.status);
+                    const result = await response.json();
+                    console.log("Server response:", result);
+
+                    closeConfirmUpdateModal();
+
+                    if (result.success) {
+                        document.getElementById("passwordUpdatedModal").style.display = "flex";
+                    } else {
+                        let errorMsg = result.message || "Failed to reset password";
+                        if (result.errors && result.errors.length > 0) {
+                            errorMsg += "\n\nErrors:\n" + result.errors.join("\n");
+                        }
+                        alert(errorMsg);
+                    }
+                } catch (error) {
+                    alert("An error occurred while resetting the password");
+                    console.error("Error details:", error);
+                }
+
+                console.log("=== resetPassword END ===");
+            }
+
+            function closePasswordUpdatedModal() {
+                console.log("Closing password updated modal");
+                document.getElementById("passwordUpdatedModal").style.display = "none";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+                tempNewPassword = '';
+                tempConfirmNewPassword = '';
+            }
+            // =============================
+            // POPUPS (Restrict / Unrestrict / Delete)
+            // =============================
+            function openPopup(type) {
+                currentAction = type;
+                if (type === 'restrict') {
+                    document.getElementById('restrictPopup').style.display = 'flex';
+                } else if (type === 'delete') {
+                    document.getElementById('deletePopup').style.display = 'flex';
+                } else if (type === 'unrestrict') {
+                    document.getElementById('unrestrictPopup').style.display = 'flex';
+                }
+            }
+
+            function closePopup(id) {
+                document.getElementById(id).style.display = 'none';
+            }
+
+            async function confirmAction(action) {
+                closePopup(action + 'Popup');
+
+                let endpoint = '';
+                let successMsg = '';
+                let showUnrestrictedPopup = false;
+
+                switch(action) {
+                    case 'restrict':
+                        endpoint = '@Url.Action("RestrictUser", "Admin")';
+                        successMsg = 'User has been RESTRICTED successfully';
+                        break;
+                    case 'unrestrict':
+                        endpoint = '@Url.Action("UnrestrictUser", "Admin")';
+                        showUnrestrictedPopup = true;
+                        break;
+                    case 'delete':
+                        endpoint = '@Url.Action("DeleteUser", "Admin")';
+                        successMsg = 'User has been DELETED successfully';
+                        break;
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append('userId', currentUserId);
+
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        if (showUnrestrictedPopup) {
+                            document.getElementById('unrestrictedSuccessPopup').style.display = 'flex';
+                        } else {
+                            const msg = document.getElementById('successMessage');
+                            msg.textContent = successMsg;
+                            document.getElementById('successPopup').style.display = 'flex';
+                        }
+                    } else {
+                        alert(result.message || 'Failed to perform action');
+                    }
+                } catch (error) {
+                    alert('An error occurred');
+                    console.error(error);
+                }
+            }
+
+            function closeSuccessPopupAndReload() {
+                closePopup('successPopup');
+                closePopup('unrestrictedSuccessPopup');
+                location.reload();
+            }
+
+            function viewMACData() {
+                window.open('@Url.Action("Index", "MOCKData")', '_blank');
+            }
+
+            // =============================
+            // PENALTY MANAGEMENT
+            // =============================
+            async function loadPenalties(userName) {
+                try {
+                    console.log('Loading penalties for user:', currentUserId);
+                    const response = await fetch(`/Admin/GetUserPenalties?userId=${currentUserId}`);
+                    console.log('Response status:', response.status);
+                    const penalties = await response.json();
+                    console.log('Penalties received:', penalties);
+                    
+                    const penaltiesList = document.getElementById('penaltiesList');
+                    penaltiesList.innerHTML = '';
+
+                    if (penalties.length === 0) {
+                        penaltiesList.innerHTML = '<p class="no-penalties">No penalties found for this student.</p>';
+                    } else {
+                        penalties.forEach(penalty => {
+                            const penaltyItem = document.createElement('div');
+                            penaltyItem.className = 'penalty-item-modern';
+                            penaltyItem.innerHTML = `
+                                <div class="penalty-content">
+                                    <div class="penalty-main-info">
+                                        <div class="penalty-book-title">${penalty.bookTitle}</div>
+                                        <div class="penalty-type-badge penalty-type-${penalty.penaltyType.toLowerCase()}">${penalty.penaltyType}</div>
+                                    </div>
+                                    <div class="penalty-description">${penalty.description}</div>
+                                    <div class="penalty-details">
+                                        <div class="penalty-date">
+                                            <i class="fas fa-calendar"></i> ${penalty.createdDate}
+                                        </div>
+                                        <div class="penalty-amount">₱${parseFloat(penalty.amount).toFixed(2)}</div>
+                                        <div class="penalty-status-modern ${penalty.isPaid ? 'paid' : 'pending'}">
+                                            <i class="fas fa-${penalty.isPaid ? 'check-circle' : 'clock'}"></i>
+                                            ${penalty.isPaid ? 'Paid' : 'Pending'}
+                                        </div>
+                                    </div>
+                                </div>
+                                ${!penalty.isPaid ? `
+                                    <div class="penalty-actions-modern">
+                                        <button class="btn-modern btn-success" onclick="markPenaltyAsPaid('${penalty.id}')" title="Mark as Paid">
+                                            <i class="fas fa-check"></i> Mark Paid
+                                        </button>
+              
+                                    </div>
+                                ` : ''}
+                            `;
+                            penaltiesList.appendChild(penaltyItem);
+                        });
+                    }
+
+                    document.getElementById('penaltiesPopup').style.display = 'flex';
+                } catch (error) {
+                    console.error('Error loading penalties:', error);
+                    alert('Error loading penalties: ' + error.message);
+                }
+            }
+
+
+            let currentPenaltyData = null;
+
+            async function markPenaltyAsPaid(penaltyId) {
+                try {
+                    // Close the penalties popup first
+                    closePopup('penaltiesPopup');
+                    
+                    // Small delay to ensure modal closes smoothly
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    
+                    // Get penalty details
+                    const response = await fetch('/Admin/GetPenaltyDetails?penaltyId=' + penaltyId);
+                    const result = await response.json();
+                    
+                    if (result.success && result.penalty) {
+                        currentPenaltyData = result.penalty;
+                        document.getElementById('verificationPenaltyId').value = penaltyId;
+                        document.getElementById('verificationPenaltyAmount').value = result.penalty.amount;
+                        document.getElementById('displayPenaltyAmount').textContent = '₱' + parseFloat(result.penalty.amount).toFixed(2);
+                        
+                        // Reset form
+                        document.getElementById('paymentProofFile').value = '';
+                        document.getElementById('filePreview').style.display = 'none';
+                        document.getElementById('ocrResults').style.display = 'none';
+                        document.getElementById('submitVerificationBtn').disabled = true;
+                        document.getElementById('verifyPaymentCheckbox').checked = false;
+                        
+                        // Show payment verification modal
+                        document.getElementById('paymentVerificationModal').style.display = 'flex';
+                    } else {
+                        alert('Failed to load penalty details');
+                    }
+                } catch (error) {
+                    console.error('Error loading penalty details:', error);
+                    alert('Error loading penalty details: ' + error.message);
+                }
+            }
+
+            function closePaymentVerificationModal() {
+                document.getElementById('paymentVerificationModal').style.display = 'none';
+                document.getElementById('paymentProofFile').value = '';
+                document.getElementById('filePreview').style.display = 'none';
+                document.getElementById('ocrResults').style.display = 'none';
+                currentPenaltyData = null;
+            }
+
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                // Validate file size (10MB max)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size exceeds 10MB limit');
+                    event.target.value = '';
+                    return;
+                }
+
+                const preview = document.getElementById('filePreview');
+                const previewImage = document.getElementById('previewImage');
+                const previewPdf = document.getElementById('previewPdf');
+                const pdfFileName = document.getElementById('pdfFileName');
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        previewPdf.style.display = 'none';
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (file.type === 'application/pdf') {
+                    previewImage.style.display = 'none';
+                    previewPdf.style.display = 'block';
+                    pdfFileName.textContent = file.name;
+                    preview.style.display = 'block';
+                }
+
+                // Process file for OCR
+                processFileForOCR(file);
+            }
+
+            function removeFile() {
+                document.getElementById('paymentProofFile').value = '';
+                document.getElementById('filePreview').style.display = 'none';
+                document.getElementById('ocrResults').style.display = 'none';
+                document.getElementById('submitVerificationBtn').disabled = true;
+            }
+
+            async function processFileForOCR(file) {
+                const progressDiv = document.getElementById('uploadProgress');
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                const ocrResults = document.getElementById('ocrResults');
+                const extractedText = document.getElementById('extractedText');
+
+                progressDiv.style.display = 'block';
+                progressFill.style.width = '0%';
+                progressText.textContent = 'Uploading file...';
+
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('penaltyId', document.getElementById('verificationPenaltyId').value);
+                    formData.append('penaltyAmount', document.getElementById('verificationPenaltyAmount').value);
+
+                    progressFill.style.width = '30%';
+                    progressText.textContent = 'Extracting text from receipt...';
+
+                    const response = await fetch('/Admin/ProcessPaymentProof', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    progressFill.style.width = '70%';
+                    progressText.textContent = 'Analyzing receipt...';
+
+                    const result = await response.json();
+
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Complete!';
+
+                    setTimeout(() => {
+                        progressDiv.style.display = 'none';
+                        
+                        if (result.success) {
+                            // Always show extracted text if available, even if amount not found
+                            const hasText = result.extractedText && result.extractedText.trim().length >= 5;
+                            
+                            if (!hasText) {
+                                alert('Unable to extract text from the receipt. Please ensure:\n' +
+                                     '1. The file is a clear, readable receipt\n' +
+                                     '2. For PDFs: The PDF contains selectable text\n' +
+                                     '3. For images: The image is clear and text is readable\n' +
+                                     '4. Tesseract OCR is installed (for image files)\n\n' +
+                                     'Note: Check the browser console and server logs for more details.');
+                                return;
+                            }
+
+                            // Display extracted text
+                            let htmlContent = `
+                                <div class="extracted-info">
+                                    <p><strong>Amount Found:</strong> ${result.extractedAmount ? '₱' + parseFloat(result.extractedAmount).toFixed(2) : '<span style="color: #856404;">Not detected - please verify manually</span>'}</p>
+                                    <p><strong>Confidence:</strong> ${result.confidence ? (result.confidence * 100).toFixed(1) + '%' : 'N/A'}</p>
+                                    <p><strong>Extracted Text (for verification):</strong></p>
+                                    <pre style="max-height: 250px; overflow-y: auto; background: #f5f5f5; padding: 15px; border-radius: 4px; font-size: 11px; white-space: pre-wrap; word-wrap: break-word; border: 1px solid #ddd; font-family: 'Courier New', monospace;">${escapeHtml(result.extractedText)}</pre>
+                                </div>
+                            `;
+                            
+                            extractedText.innerHTML = htmlContent;
+                            ocrResults.style.display = 'block';
+                            
+                            // Check if amount matches
+                            const penaltyAmount = parseFloat(document.getElementById('verificationPenaltyAmount').value);
+                            const extractedAmount = result.extractedAmount ? parseFloat(result.extractedAmount) : null;
+                            
+                            if (extractedAmount !== null) {
+                                const amountMatch = Math.abs(penaltyAmount - extractedAmount) < 0.01;
+                                if (amountMatch) {
+                                    extractedText.innerHTML += '<div class="amount-match" style="color: #10b981; margin-top: 10px; padding: 10px; background: #d4edda; border-radius: 4px; border: 1px solid #c3e6cb;"><i class="fas fa-check-circle"></i> <strong>Amount matches penalty!</strong></div>';
+                                } else {
+                                    extractedText.innerHTML += '<div class="amount-mismatch" style="color: #ef4444; margin-top: 10px; padding: 10px; background: #f8d7da; border-radius: 4px; border: 1px solid #f5c6cb;"><i class="fas fa-exclamation-triangle"></i> <strong>Amount does not match.</strong> Expected: ₱' + penaltyAmount.toFixed(2) + ', Found: ₱' + extractedAmount.toFixed(2) + '. Please verify manually.</div>';
+                                }
+                            } else {
+                                extractedText.innerHTML += '<div style="color: #856404; margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 4px; border: 1px solid #ffeaa7;"><i class="fas fa-info-circle"></i> <strong>Amount not automatically detected.</strong> Please review the extracted text above and verify the payment amount manually. Look for "Total", "Amount", or similar keywords in the text.</div>';
+                            }
+
+                            // Enable verification checkbox - allow manual verification even if amount not detected
+                            const checkbox = document.getElementById('verifyPaymentCheckbox');
+                            checkbox.checked = false;
+                            document.getElementById('submitVerificationBtn').disabled = true;
+                            
+                            // Remove old event listener and add new one
+                            const newCheckbox = checkbox.cloneNode(true);
+                            checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+                            newCheckbox.addEventListener('change', function() {
+                                document.getElementById('submitVerificationBtn').disabled = !this.checked;
+                            });
+                        } else {
+                            // Show error with extracted text if available (for debugging)
+                            let errorMsg = 'Failed to process receipt:\n\n' + (result.message || 'Unable to extract text from the file.');
+                            if (result.extractedText) {
+                                errorMsg += '\n\nExtracted text (for debugging):\n' + result.extractedText.substring(0, 200);
+                            }
+                            alert(errorMsg);
+                            removeFile();
+                        }
+                    }, 500);
+                } catch (error) {
+                    progressDiv.style.display = 'none';
+                    console.error('Error processing file:', error);
+                    alert('Error processing receipt: ' + error.message);
+                }
+            }
+
+            async function submitPaymentVerification() {
+                const checkbox = document.getElementById('verifyPaymentCheckbox');
+                if (!checkbox.checked) {
+                    alert('Please verify that the payment information matches before submitting.');
+                    return;
+                }
+
+                const fileInput = document.getElementById('paymentProofFile');
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert('Please upload proof of payment.');
+                    return;
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append('penaltyId', document.getElementById('verificationPenaltyId').value);
+                    formData.append('file', fileInput.files[0]);
+
+                    const response = await fetch('/Admin/VerifyAndMarkPenaltyAsPaid', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        closePaymentVerificationModal();
+                        
+                        // Don't reload penalties - just show success message
+                        // The penalties modal should not appear again
+                        const msg = document.getElementById('successMessage');
+                        msg.textContent = result.message || 'Payment verified and penalty marked as paid successfully';
+                        document.getElementById('successPopup').style.display = 'flex';
+                    } else {
+                        alert(result.message || 'Failed to verify payment');
+                    }
+                } catch (error) {
+                    console.error('Error verifying payment:', error);
+                    alert('Error verifying payment: ' + error.message);
+                }
+            }
+
+            // Drag and drop functionality for file upload
+            document.addEventListener('DOMContentLoaded', function() {
+                const label = document.getElementById('fileUploadLabel');
+                const input = document.getElementById('paymentProofFile');
+                
+                if (label && input) {
+                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        label.addEventListener(eventName, preventDefaults, false);
+                    });
+                    
+                    function preventDefaults(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    
+                    ['dragenter', 'dragover'].forEach(eventName => {
+                        label.addEventListener(eventName, () => {
+                            label.style.background = '#e9ecef';
+                            label.style.borderColor = '#0056b3';
+                        }, false);
+                    });
+                    
+                    ['dragleave', 'drop'].forEach(eventName => {
+                        label.addEventListener(eventName, () => {
+                            label.style.background = '#f8f9fa';
+                            label.style.borderColor = '#006B99';
+                        }, false);
+                    });
+                    
+                    label.addEventListener('drop', (e) => {
+                        const dt = e.dataTransfer;
+                        const files = dt.files;
+                        if (files.length > 0) {
+                            input.files = files;
+                            const event = new Event('change', { bubbles: true });
+                            input.dispatchEvent(event);
+                        }
+                    }, false);
+                }
+            });
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            async function removePenalty(penaltyId) {
+                if (!confirm('Are you sure you want to remove this penalty?')) {
+                    return;
+                }
+
+                try {
+                    console.log('Removing penalty:', penaltyId);
+                    
+                    const response = await fetch('/Admin/RemovePenalty', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `penaltyId=${penaltyId}`
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Reload penalties to show updated list
+                        const userName = document.querySelector('.penalties[data-user-id="' + currentUserId + '"]').getAttribute('data-user-name');
+                        loadPenalties(userName);
+                        
+                        // Show success message
+                        const msg = document.getElementById('successMessage');
+                        msg.textContent = result.message;
+                        document.getElementById('successPopup').style.display = 'flex';
+                    } else {
+                        alert(result.message || 'Failed to remove penalty');
+                    }
+                } catch (error) {
+                    console.error('Error removing penalty:', error);
+                    alert('Error removing penalty: ' + error.message);
+                }
+            }
+
+        </script>
+}
+
+<style>
+    /* Penalty Button Styles */
+    .penalties {
+        background-color: #f39c12;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 2px;
+        transition: background-color 0.3s;
+    }
+
+    .penalties:hover {
+        background-color: #e67e22;
+    }
+
+    /* Modern Penalty Popup Styles */
+    .penalties-popup {
+        max-width: 800px;
+        width: 90vw;
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+    }
+
+    .penalties-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        border-bottom: 2px solid #e9ecef;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .penalties-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .penalties-header h2 i {
+        margin-right: 8px;
+        color: #ffd700;
+    }
+
+    .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+
+    .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    .penalties-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 25px;
+        background: #f8f9fa;
+        min-height: 0;
+    }
+
+    .penalties-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .penalties-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .penalties-list::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+
+    .penalties-list::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+    .penalty-item-modern {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        overflow: hidden;
+        transition: all 0.3s;
+        border: 1px solid #e9ecef;
+    }
+
+    .penalty-item-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .penalty-content {
+        padding: 20px;
+    }
+
+    .penalty-main-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .penalty-book-title {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 16px;
+        flex: 1;
+        margin-right: 15px;
+    }
+
+    .penalty-type-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .penalty-type-late {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .penalty-type-damage {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .penalty-type-lost {
+        background: #d1ecf1;
+        color: #0c5460;
+    }
+
+    .penalty-type-other {
+        background: #e2e3e5;
+        color: #383d41;
+    }
+
+    .penalty-description {
+        color: #6c757d;
+        font-size: 14px;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .penalty-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    @@media (max-width: 768px) {
+        .penalty-details {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+    }
+
+    .penalty-date {
+        color: #6c757d;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .penalty-amount {
+        font-weight: 700;
+        color: #e74c3c;
+        font-size: 18px;
+    }
+
+    .penalty-status-modern {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .penalty-status-modern.paid {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .penalty-status-modern.pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .penalty-actions-modern {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    @@media (max-width: 768px) {
+        .penalty-actions-modern {
+            justify-content: center;
+            gap: 8px;
+        }
+    }
+
+    .btn-modern {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-modern:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    .penalties-footer {
+        padding: 20px 25px;
+        border-top: 1px solid #e9ecef;
+        background: white;
+        text-align: right;
+    }
+
+    .no-penalties {
+        text-align: center;
+        color: #6c757d;
+        font-style: italic;
+        padding: 40px 20px;
+        background: white;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+
+    /* Add User Modal Styles */
+    .add-user-modal {
+        max-width: 600px;
+        width: 95vw;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .add-user-modal .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .add-user-modal .modal-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .add-user-modal .close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+
+    .add-user-modal .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    .scrollable-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 25px;
+        background: #f8f9fa;
+        min-height: 0;
+    }
+
+    .scrollable-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+
+    .scrollable-content::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+
+    .form-section {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e9ecef;
+    }
+
+    .form-section h3 {
+        margin: 0 0 20px 0;
+        color: #2c3e50;
+        font-size: 18px;
+        font-weight: 600;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+        background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group input::placeholder {
+        color: #adb5bd;
+    }
+
+    .modal-footer {
+        padding: 20px 25px;
+        background: white;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    .cancel-btn, .save-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 100px;
+    }
+
+    .cancel-btn {
+        background: #6c757d;
+        color: white;
+    }
+
+    .cancel-btn:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+    }
+
+    .save-btn {
+        background: #28a745;
+        color: white;
+    }
+
+    .save-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .add-user-modal {
+            width: 98vw;
+            max-height: 95vh;
+            margin: 10px;
+        }
+
+        .scrollable-content {
+            padding: 20px 15px;
+        }
+
+        .form-section {
+            padding: 20px 15px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            flex-direction: column;
+        }
+
+        .cancel-btn, .save-btn {
+            width: 100%;
+        }
+
+        .penalties-popup {
+            width: 95vw;
+            max-height: 95vh;
+        }
+
+        .penalties-list {
+            padding: 15px 20px;
+        }
+
+        .penalty-item-modern {
+            margin-bottom: 12px;
+        }
+
+        .penalty-content {
+            padding: 15px;
+        }
+
+        .penalty-main-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .penalty-book-title {
+            margin-right: 0;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .add-user-modal .modal-header {
+            padding: 15px 20px;
+        }
+
+        .add-user-modal .modal-header h2 {
+            font-size: 18px;
+        }
+
+        .scrollable-content {
+            padding: 15px 10px;
+        }
+
+        .form-section {
+            padding: 15px 10px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+    }
+
+    /* Header Actions */
+    .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .view-mac-btn {
+        background: #17a2b8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .view-mac-btn:hover {
+        background: #138496;
+        transform: translateY(-1px);
+    }
+
+    /* MOCK data Lookup Styles for Students */
+    .mac-lookup-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mac-lookup-section h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .lookup-input-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .lookup-input-group input {
+        flex: 1;
+        padding: 10px 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .lookup-input-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .lookup-btn {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .lookup-btn:hover {
+        background: #5a6fd8;
+        transform: translateY(-1px);
+    }
+
+    .lookup-result {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .lookup-success {
+        background: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+
+    .lookup-error {
+        background: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+
+    .lookup-success h4,
+    .lookup-error h4 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .student-info {
+        margin-bottom: 15px;
+    }
+
+    .student-info p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .auto-fill-section {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .auto-fill-section h5 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .auto-fill-section label {
+        display: block;
+        margin: 10px 0 5px 0;
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 13px;
+    }
+
+    .auto-fill-section input {
+        width: 100%;
+        padding: 8px 10px;
+        border: 2px solid #e9ecef;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .auto-fill-section input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    }
+
+    .create-from-mac-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 10px;
+        transition: all 0.3s;
+    }
+
+    .create-from-mac-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    .manual-entry-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+    }
+
+    .manual-entry-section h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .student-fields-section {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .student-fields-section h4 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* Responsive Design for MAC Lookup */
+    @@media (max-width: 768px) {
+        .lookup-input-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .lookup-btn {
+            width: 100%;
+        }
+
+        .mac-lookup-section,
+        .manual-entry-section {
+            padding: 15px;
+        }
+    }
+
+
+    /* Add User Modal Height Control */
+    #addUserModal .modal {
+        width: 90%;
+        max-width: 500px;
+        height: 80vh;
+        max-height: 600px;
+        overflow: hidden;
+    }
+
+    #addUserModal .modal-body {
+        height: calc(100% - 60px);
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    /* MOCK data Lookup Section Height Control */
+    .mac-lookup-section {
+        max-height: 40vh;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    /* Manual Entry Section Height Control */
+    .manual-entry-section {
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+
+
+    /* Fix Add User Modal Height - Prevent Screen Overlap */
+    #addUserModal .modal {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    #addUserModal .modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    /* Payment Verification Modal Styles */
+    .payment-verification-modal {
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .payment-verification-modal .modal-body {
+        overflow-y: auto;
+        max-height: calc(90vh - 140px);
+        padding: 20px;
+        flex: 1;
+    }
+
+    .payment-verification-modal .modal-header {
+        flex-shrink: 0;
+    }
+
+    .payment-verification-modal .modal-footer {
+        flex-shrink: 0;
+    }
+
+    .verification-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .verification-info p {
+        margin: 8px 0;
+        color: #495057;
+    }
+
+    .verification-info .info-text {
+        font-size: 14px;
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .file-upload-section {
+        margin: 20px 0;
+    }
+
+    .file-upload-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        border: 2px dashed #006B99;
+        border-radius: 8px;
+        background: #f8f9fa;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .file-upload-label:hover {
+        background: #e9ecef;
+        border-color: #0056b3;
+    }
+
+    .file-upload-label i {
+        font-size: 48px;
+        color: #006B99;
+        margin-bottom: 10px;
+    }
+
+    .file-upload-label span {
+        font-size: 16px;
+        font-weight: 600;
+        color: #006B99;
+        margin-bottom: 5px;
+    }
+
+    .file-upload-label small {
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .file-preview {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .preview-content {
+        position: relative;
+        text-align: center;
+    }
+
+    .remove-file-btn {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .remove-file-btn:hover {
+        background: #c82333;
+    }
+
+    .ocr-results {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+
+    .ocr-results h4 {
+        margin-top: 0;
+        color: #006B99;
+        font-size: 16px;
+    }
+
+    .extracted-text {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .extracted-info p {
+        margin: 8px 0;
+        font-size: 14px;
+    }
+
+    .verification-status {
+        margin-top: 15px;
+        padding: 10px;
+        background: white;
+        border-radius: 4px;
+    }
+
+    .verification-status label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .verification-status input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .upload-progress {
+        margin-top: 20px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 25px;
+        background: #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #006B99, #0056b3);
+        width: 0%;
+        transition: width 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .amount-match {
+        padding: 10px;
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 4px;
+    }
+
+    .amount-mismatch {
+        padding: 10px;
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 4px;
+    }
+</style>
+@Html.AntiForgeryToken()
+

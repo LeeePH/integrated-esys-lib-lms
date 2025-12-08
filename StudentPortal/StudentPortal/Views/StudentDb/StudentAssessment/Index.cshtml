@@ -1,0 +1,105 @@
+@model StudentPortal.Models.StudentDb.StudentAssessmentViewModel
+@{
+    ViewData["Title"] = "Student Assessment";
+    Layout = "_StudentLayout";
+    ViewBag.CurrentPage = "subjects";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/StudentDb/StudentAssessment.css" asp-append-version="true" />
+}
+
+<main class="class-container">
+
+        <!-- LEFT SECTION — SUBMIT PANEL -->
+        <section class="submit-container">
+            <div class="submit-container-top">
+                <h2 class="submit-header">Your Work</h2>
+                @if (Model.IsAnswered)
+                {
+                    <div class="answered-status">
+                        <span class="status-pill">Submitted</span>
+                        @if (Model.Score.HasValue && Model.MaxScore.HasValue)
+                        {
+                            <span class="score-pill">Score: @Model.Score / @Model.MaxScore</span>
+                        }
+                    </div>
+                }
+
+                <div class="open-quiz" id="openQuiz"
+                     data-class-code="@Model.ClassCode" data-content-id="@Model.ContentId"
+                     data-url="@(string.IsNullOrWhiteSpace(Model.ClassCode) || string.IsNullOrWhiteSpace(Model.ContentId) ? string.Empty : $"/StudentAnswerAssessment/{Model.ClassCode}/{Model.ContentId}")">
+                    <i class="fa-solid fa-door-closed"></i>
+                    <span>Open Quiz</span>
+                </div>
+            </div>
+
+            <form method="post" asp-action="MarkAsDone" class="submit-container-bottom">
+                <input type="hidden" name="classCode" value="@Model.ClassCode" />
+                <input type="hidden" name="contentId" value="@Model.ContentId" />
+                <div class="submit-buttons">
+                    <button type="button" class="btn mark-done-btn" id="markDoneBtn">Mark as Done</button>
+                </div>
+            </form>
+
+            <div class="submit-container-middle">
+                <!-- If any scrollable content goes here -->
+            </div>
+
+            <button class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        </section>
+
+        <!-- RIGHT: ASSESSMENT CONTAINER -->
+        <section class="assessment-container" id="assessmentContainer">
+            <div class="assessment-scrollable">
+
+                <!-- TITLE -->
+                <h2 class="assessment-title" id="assessmentTitle">
+                    @Model.AssessmentTitle
+                </h2>
+
+                <!-- DESCRIPTION -->
+                <p class="assessment-description" id="assessmentDescription">
+                    @Model.Description
+                </p>
+
+                <!-- ATTACHMENTS -->
+                <div class="attachments" id="attachmentList">
+                    @foreach (var file in Model.Attachments)
+                    {
+                        <div class="file-item">
+                            <i class="fa-solid fa-paperclip"></i>
+                            <a href="@file.FileUrl" target="_blank">@file.FileName</a>
+                        </div>
+                    }
+                </div>
+
+                <!-- Library search entry -->
+                <div class="library-search" style="margin-top: 16px;">
+                    <button class="btn library-btn" type="button" onclick="window.location.href='@Url.Action("Search", "Library")'">
+                        <i class="fa-solid fa-book"></i> Search Library
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="assessment-bottom" id="assessmentBottom">
+                <p class="posted-date" id="dateInfo">
+                    Posted @Model.PostedDate • Deadline @Model.Deadline
+                </p>
+            </div>
+        </section>
+    <!-- CONFIRMATION MODAL -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-box">
+            <p>Are you sure you want to mark this done without attaching your work?</p>
+            <div class="confirm-actions">
+                <button id="confirmYes" class="btn yes">Yes</button>
+                <button id="confirmNo" class="btn no">No</button>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+</main>
+
+<script src="~/js/studentdb/studentassessment.js"></script>

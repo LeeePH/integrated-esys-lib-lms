@@ -1,0 +1,324 @@
+﻿@import url('/css/shared/AdminBottomBar.css');
+
+/* Root tokens (matching original) */
+:root {
+    --accent: #006b99;
+    --card-bg: #fff;
+    --muted: #64748b;
+    --danger: #ef4444;
+    --success: #16a34a;
+    --bg: #eef2f7;
+    --gap: 20px;
+    --green-highlight: #e6f9ef;
+    --green-border: #16a34a;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Base */
+html, body, .page {
+    background: var(--bg);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* disables page scrollbar */
+}
+
+/* layout */
+.import-grades-page {
+    max-width: 1220px;
+    width: 100%;
+    margin: 30px auto;
+    box-sizing: border-box;
+    /* Flexible height: minimum viewport size but can expand */
+    min-height: calc(100dvh - var(--bottom-h) - 48px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Allow internal scrolling if something forces fixed-size children */
+    overflow: visible;
+}
+
+
+/* Import card: fills available vertical space */
+.import-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+    padding: 16px;
+    flex: 1; /* take remaining vertical space */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+    /* Table preview inside the import card: scrollable */
+    .import-card .table-preview {
+        flex: 1; /* fill remaining space */
+        overflow-y: auto; /* vertical scroll if table is tall */
+        overflow-x: auto; /* horizontal scroll if table is wide */
+    }
+
+/* header */
+.import-title {
+    margin: 0;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.2px;
+}
+
+/* center initial import */
+.import-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    gap: 12px;
+    min-height: 360px;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    transition: background-color 0.2s ease, transform 0.15s ease; /* smooth transition */
+}
+
+    .primary-btn.large {
+        padding: 16px 22px;
+        font-size: 1.05rem;
+        border-radius: 12px;
+    }
+
+    .primary-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* hover effect */
+    .primary-btn:not(:disabled):hover {
+        background-color: #005e80; /* slightly darker than var(--accent) */
+    }
+
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid rgba(16,24,40,0.06);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s ease, color 0.2s ease; /* smooth transition */
+}
+
+    .secondary-btn:hover {
+        background-color: rgba(16, 24, 40, 0.08); /* slightly darker */
+        color: #0f172a; /* optional: slightly darker text for contrast */
+    }
+
+
+.muted-note {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* fileControls */
+.file-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.file-info {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.search-wrap {
+    flex: 1 1 320px;
+    max-width: 480px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(16,24,40,0.06);
+    box-sizing: border-box;
+    background: #eef2f7;
+}
+
+/* table area */
+.table-wrap {
+    background: var(--bg);
+    border-radius: 8px;
+    overflow: auto;
+    max-height: calc(100vh - 300px);
+    border: 1px solid rgba(16,24,40,0.04);
+}
+
+/* data table */
+.import-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+}
+
+    .import-table th,
+    .import-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(16,24,40,0.04);
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .import-table thead th {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 2;
+        font-weight: 700;
+        color: #23385f;
+    }
+
+    .import-table tbody tr:hover {
+        background: rgba(16,24,40,0.02);
+    }
+
+/* highlight fixed columns */
+.col-fixed {
+    background: var(--green-highlight);
+    border-left: 3px solid rgba(22,163,74,0.08);
+}
+
+    .col-fixed th {
+        background: linear-gradient(90deg, rgba(22,163,74,0.08), rgba(22,163,74,0.03));
+        color: var(--green-border);
+    }
+
+/* small meta row under header */
+.col-meta {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8,12,20,0.35);
+    z-index: 9999;
+}
+
+    .modal[aria-hidden="false"] {
+        display: flex;
+    }
+
+.modal-panel {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 12px;
+    min-width: 320px;
+    max-width: 520px;
+    box-shadow: 0 12px 40px rgba(10,20,30,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .modal-panel h2 {
+        margin: 0;
+        color: #21345a;
+    }
+
+    .modal-panel p {
+        margin: 0;
+        color: var(--muted);
+    }
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* TOAST POPUP */
+.toast {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+    .toast.success {
+        background: #3cb371;
+    }
+
+    .toast.warning {
+        background: #e0a100;
+    }
+
+/* accessibility helpers */
+.sr-only {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .import-card {
+        padding: 16px;
+    }
+
+    .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .table-wrap {
+        max-height: 350px;
+    }
+
+    .import-table {
+        min-width: 640px;
+    }
+}

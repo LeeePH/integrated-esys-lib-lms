@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SIA_solution</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @if (ViewBag.Role == "Admin" || ViewBag.Role == "Librarian")
+    {
+        <link rel="stylesheet" href="~/css/dark-mode.css" asp-append-version="true" />
+    }
+
+</head>
+<body>
+  
+        <header class="header">
+            <h2 class="logo">Library System</h2>
+            <div class="header-controls">
+                @if (ViewBag.Role == "Admin" || ViewBag.Role == "Librarian")
+                {
+                    @if (ViewBag.Role == "Librarian")
+                    {
+                        <!-- Notification Icon -->
+                        <a href="@Url.Action("Notifications", "Librarian")" class="notification-icon-link" title="Notifications">
+                            <div class="notification-icon-wrapper">
+                                <i class="fas fa-bell notification-icon"></i>
+                                @if (ViewBag.UnreadNotificationCount != null && (int)ViewBag.UnreadNotificationCount > 0)
+                                {
+                                    <span class="notification-badge">@ViewBag.UnreadNotificationCount</span>
+                                }
+                            </div>
+                        </a>
+                    }
+                    <!-- Dark Mode Toggle Button -->
+                    <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                }
+                <!-- Modified logout form to prevent default submission and show modal -->
+                <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form" id="logoutForm">
+                    <button type="submit" class="logout-btn">
+                        <img src="/images/logouts.png" alt="Logout" />
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+    </header>
+
+    <!-- Added logout confirmation modal -->
+    <div id="logoutConfirmModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="25" y="45" width="50" height="40" rx="5" fill="#0066A1" />
+                    <path d="M 35 45 L 35 35 Q 35 20 50 20 Q 65 20 65 35 L 65 45"
+                          stroke="#0066A1" stroke-width="6" fill="none" stroke-linecap="round" />
+                    <circle cx="42" cy="62" r="2.5" fill="white" />
+                    <circle cx="50" cy="62" r="2.5" fill="white" />
+                    <circle cx="58" cy="62" r="2.5" fill="white" />
+                    <rect x="48" y="68" width="4" height="8" rx="1" fill="white" />
+                </svg>
+            </div>
+            <h2 class="modal-title">Are you sure you want to log out?</h2>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-no" id="logoutNoBtn">NO</button>
+                <button type="button" class="modal-btn modal-btn-yes" id="logoutYesBtn">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Added logout success modal -->
+    <div id="logoutSuccessModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="25" y="45" width="50" height="40" rx="5" fill="#0066A1" />
+                    <path d="M 35 45 L 35 35 Q 35 20 50 20 Q 65 20 65 35 L 65 45"
+                          stroke="#0066A1" stroke-width="6" fill="none" stroke-linecap="round" />
+                    <circle cx="42" cy="62" r="2.5" fill="white" />
+                    <circle cx="50" cy="62" r="2.5" fill="white" />
+                    <circle cx="58" cy="62" r="2.5" fill="white" />
+                    <rect x="48" y="68" width="4" height="8" rx="1" fill="white" />
+                </svg>
+            </div>
+            <h2 class="modal-title">Successfully Logged Out!</h2>
+            <p class="modal-message">You have been logged out successfully</p>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-done" id="logoutDoneBtn">DONE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Added inactivity warning modal -->
+    <div id="inactivityWarningModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-icon warning">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="40" fill="#FFA500" stroke="#FF8C00" stroke-width="3"/>
+                    <path d="M 50 25 L 50 55" stroke="white" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="50" cy="70" r="4" fill="white"/>
+                </svg>
+            </div>
+            <h2 class="modal-title">Inactivity Detected</h2>
+            <p class="modal-message">You have been inactive for 1 minute.</p>
+            <p class="modal-message">You will be automatically logged out in <strong><span id="countdownTimer">30</span> seconds</strong></p>
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-yes" id="stayLoggedInBtn">STAY LOGGED IN</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <nav class="sidebar @((string)ViewBag.Role ?? "")">
+            <ul class="nav">
+                @if (ViewBag.Role == "Admin")
+                {
+                    <li>
+                        <a asp-controller="Admin" asp-action="Dashboard">
+                            <img src="~/images/dashboard.png" alt="Dashboard"><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Catalog">
+                            <img src="~/images/catalog.png" alt="Catalog"><span>Catalog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Transaction">
+                            <img src="~/images/transactions.png" alt="Transaction"><span>Transactions</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Admin" asp-action="Reservation">
+                            <img src="~/images/reservations.png" alt="Reservation"><span>Reservation</span>
+                        </a>
+                    </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="ReturnHistory">
+                                <img src="~/images/returns.png" alt="Return"><span>Returns</span>
+                            </a>
+                        </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Borrowing">
+                            <img src="~/images/reports.png" alt="Reports"><span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="UserSettings" class="menu-item">
+                            <img src="/images/accounts.png" alt="Settings">
+                            <span>User Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="SystemMaintenance" class="menu-item">
+                            <img src="/images/maintenance.png" alt="System">
+                            <span>System Maintenance</span>
+                        </a>
+                    </li>
+                    
+                }
+                else if (ViewBag.Role == "Librarian")
+                {
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Dashboard" class="menu-item">
+                            <img src="/images/dashboard.png" alt="Dashboard">
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Catalog" class="menu-item">
+                            <img src="/images/catalog.png" alt="Catalog">
+                            <span class="menu-text">Catalog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Transaction" class="menu-item">
+                            <img src="/images/transactions.png" alt="Transaction">
+                            <span class="menu-text">Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Notifications" class="menu-item">
+                            <img src="/images/notif.png" alt="Notifications">
+                            <span class="menu-text">Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="ReturnHistory" class="menu-item">
+                            <img src="/images/returns.png" alt="Return">
+                            <span class="menu-text">Returns</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Reservation" class="menu-item">
+                            <img src="/images/reservations.png" alt="Reservation">
+                            <span class="menu-text">Reservation</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Librarian" asp-action="Borrowing" class="menu-item">
+                            <img src="/images/reports.png" alt="Reports">
+                            <span class="menu-text">Reports</span>
+                        </a>
+                    </li>
+                }
+                else if (ViewBag.Role == "Student")
+                {
+                    <li>
+                        <a asp-controller="Student" asp-action="Dashboard">
+                            <img src="~/images/dashboard.png" alt="Dashboard"><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Student" asp-action="BrowseBooks">
+                            <img src="/images/search.png" alt="Search"><span>Browse Books</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Student" asp-action="Borrowings">
+                            <img src="/images/borrow.png" alt="Borrow"><span>My Borrowed Books</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Student" asp-action="Notifications">
+                            <img src="/images/notifications.png" alt="Notifications"><span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Student" asp-action="Account">
+                            <img src="/images/accounts.png" alt="Account"><span>My Account</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Added JavaScript for logout modal functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutForm = document.getElementById('logoutForm');
+            const confirmModal = document.getElementById('logoutConfirmModal');
+            const successModal = document.getElementById('logoutSuccessModal');
+            const noBtn = document.getElementById('logoutNoBtn');
+            const yesBtn = document.getElementById('logoutYesBtn');
+            const doneBtn = document.getElementById('logoutDoneBtn');
+
+            // Prevent default form submission and show confirmation modal
+            logoutForm.addEventListener('submit', function(e) {
+                if (logoutForm.dataset.autoLogout === 'true') {
+                    return;
+                }
+                e.preventDefault();
+                confirmModal.classList.add('active');
+            });
+
+            // Close confirmation modal on NO
+            noBtn.addEventListener('click', function() {
+                confirmModal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside
+            confirmModal.addEventListener('click', function(e) {
+                if (e.target === confirmModal) {
+                    confirmModal.classList.remove('active');
+                }
+            });
+
+            // Handle YES button - show success modal then submit
+            yesBtn.addEventListener('click', function() {
+                confirmModal.classList.remove('active');
+                successModal.classList.add('active');
+            });
+
+            // Handle DONE button - submit the logout form
+            doneBtn.addEventListener('click', function() {
+                successModal.classList.remove('active');
+                // Submit the form to actually log out
+                logoutForm.submit();
+            });
+
+            // Dark Mode Toggle Functionality
+            @if (ViewBag.Role == "Admin" || ViewBag.Role == "Librarian")
+            {
+                <text>
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                const sunIcon = darkModeToggle.querySelector('.sun-icon');
+                const moonIcon = darkModeToggle.querySelector('.moon-icon');
+                
+                // Check for saved dark mode preference or default to light mode
+                const savedTheme = localStorage.getItem('darkMode');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                // Initialize dark mode based on saved preference or system preference
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                }
+                
+                // Toggle dark mode
+                darkModeToggle.addEventListener('click', function() {
+                    const isDarkMode = document.body.classList.contains('dark-mode');
+                    
+                    if (isDarkMode) {
+                        // Switch to light mode
+                        document.body.classList.remove('dark-mode');
+                        sunIcon.style.display = 'block';
+                        moonIcon.style.display = 'none';
+                        localStorage.setItem('darkMode', 'light');
+                    } else {
+                        // Switch to dark mode
+                        document.body.classList.add('dark-mode');
+                        sunIcon.style.display = 'none';
+                        moonIcon.style.display = 'block';
+                        localStorage.setItem('darkMode', 'dark');
+                    }
+                });
+                </text>
+            }
+
+            // Inactivity Timer for Students and Librarians
+            const userRole = '@(ViewBag.Role ?? string.Empty)';
+            if (logoutForm && (userRole === 'Student' || userRole === 'Librarian')) {
+                const inactivityWarningTime = 1 * 60 * 1000; // 1 minute
+                const warningDuration = 30 * 1000; // 30 seconds warning
+                const inactivityWarningModal = document.getElementById('inactivityWarningModal');
+                const countdownTimer = document.getElementById('countdownTimer');
+                const stayLoggedInBtn = document.getElementById('stayLoggedInBtn');
+                
+                let inactivityTimerId;
+                let warningTimerId;
+                let countdownIntervalId;
+
+                const triggerAutoLogout = () => {
+                    if (!logoutForm) return;
+                    
+                    // Clear any existing timers
+                    clearTimeout(inactivityTimerId);
+                    clearTimeout(warningTimerId);
+                    clearInterval(countdownIntervalId);
+                    
+                    // Close warning modal if open
+                    inactivityWarningModal.classList.remove('active');
+                    
+                    // Set auto logout flag
+                    logoutForm.dataset.autoLogout = 'true';
+                    if (!document.getElementById('autoLogoutFlag')) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'autoLogout';
+                        hiddenInput.value = 'true';
+                        hiddenInput.id = 'autoLogoutFlag';
+                        logoutForm.appendChild(hiddenInput);
+                    }
+                    
+                    // Submit logout form
+                    logoutForm.submit();
+                };
+
+                const showWarningModal = () => {
+                    // Show the warning modal
+                    inactivityWarningModal.classList.add('active');
+                    
+                    // Start countdown
+                    let secondsLeft = 30;
+                    countdownTimer.textContent = secondsLeft;
+                    
+                    countdownIntervalId = setInterval(() => {
+                        secondsLeft--;
+                        countdownTimer.textContent = secondsLeft;
+                        
+                        if (secondsLeft <= 0) {
+                            clearInterval(countdownIntervalId);
+                        }
+                    }, 1000);
+                    
+                    // Set timer to auto logout after warning period
+                    warningTimerId = setTimeout(triggerAutoLogout, warningDuration);
+                };
+
+                const resetInactivityTimer = () => {
+                    // Clear all existing timers
+                    clearTimeout(inactivityTimerId);
+                    clearTimeout(warningTimerId);
+                    clearInterval(countdownIntervalId);
+                    
+                    // Close warning modal if it's open
+                    if (inactivityWarningModal.classList.contains('active')) {
+                        inactivityWarningModal.classList.remove('active');
+                    }
+                    
+                    // Set new inactivity timer
+                    inactivityTimerId = setTimeout(showWarningModal, inactivityWarningTime);
+                };
+
+                // "Stay Logged In" button handler
+                stayLoggedInBtn.addEventListener('click', function() {
+                    resetInactivityTimer();
+                });
+
+                // Prevent modal close on outside click for warning modal
+                inactivityWarningModal.addEventListener('click', function(e) {
+                    // Don't allow closing by clicking outside
+                    e.stopPropagation();
+                });
+
+                // Track user activity
+                ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(eventName => {
+                    document.addEventListener(eventName, resetInactivityTimer, { passive: true });
+                });
+
+                // Initialize the timer
+                resetInactivityTimer();
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <style>
+        /* Notification Icon Styles */
+        .notification-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-right: 15px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .notification-icon-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification-icon-wrapper:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 0 6px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,709 @@
+@import url('/css/StudentDb/StudentDb.css');
+@import url('/css/shared/AdminBottomBar.css');
+
+:root {
+    --bottom-h: 64px;
+    --accent: #006b99;
+    --accent-light: #1e3a8a;
+    --card-text: #0b213a;
+    --bg: #eef2f7;
+    --border-light: rgba(16, 24, 40, 0.06);
+    --shadow-soft: 0 6px 16px rgba(16, 24, 40, 0.06);
+    /* left panel width and horizontal gap */
+    --left-w: 260px;
+    --gap: 32px;
+    font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ---------------- Global ---------------- */
+html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--card-text);
+}
+
+.page {
+    min-height: 100vh;
+    padding-bottom: calc(var(--bottom-h) + 20px);
+}
+
+/* main layout container */
+.class-container {
+    display: block;
+}
+
+/* LEFT SECTION (fixed sidebar) */
+.class-info {
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    width: 20%;
+    min-width: 260px; /* optional: prevent shrinking on small screens */
+    height: calc(100vh - 150px); /* stays within viewport */
+    background: #f3f6fb;
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* prevents jumping scrollbars */
+}
+
+/* Prevent text scaling / layout shift */
+.subject-name,
+.subject-code,
+.class-code,
+.instructor-profile,
+.recent-uploads,
+.back-button {
+    flex-shrink: 0; /* prevents shrinking with viewport */
+}
+
+/* Subject info */
+.subject-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.subject-code,
+.class-code {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin: 4px 0;
+}
+
+/* Instructor Section */
+.instructor-profile {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.instructor-profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.instructor-profile-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.instructor-role {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Recent Uploads */
+.recent-material {
+    flex-grow: 1; /* takes remaining space without moving others */
+    overflow-y: auto; /* scrolls only inside this section */
+    margin-top: 10px;
+    padding-right: 4px;
+}
+
+    .recent-material h3 {
+        font-size: 0.95rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+    }
+
+    .recent-material ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recent-material li {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #1e293b;
+    }
+
+/* Back Button */
+.back-button {
+    margin-top: 16px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+    .back-button:hover {
+        background: #00577c;
+    }
+
+/* ---------------- RIGHT COLUMN (stacked content) ----------------
+   This parent sits to the right of .class-info so both children stack vertically
+   ------------------------------------------------------------------ */
+.right-column {
+    margin-left: 25%;
+    margin-top: 16px;
+    padding-right: 40px;
+    width: 72%;
+}
+
+
+/* ---------------- ASSESSMENT (card) ---------------- */
+.assessment-container {
+    position: relative;
+    margin: 0 0 20px 0;
+    height: calc(100vh - 110px); /* fits viewport without overlapping bottom-bar */
+    width: 100%;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.assessment-scrollable {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.assessment-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.assessment-description {
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+/* attachments */
+.attachments {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.attachment-box {
+    background: #FF9809;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+    .attachment-box:hover {
+        background: #f19008;
+    }
+
+/* library search removed */
+
+/* bottom area */
+.assessment-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    padding: 0px 24px 10px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: 0 -2px 8px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+    .assessment-bottom p {
+        padding-left: 10px;
+        margin: -10px;
+        margin-top: 13px;
+    }
+
+.posted-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: left;
+    padding-top: 5px;
+}
+
+#deadlineInput {
+    margin-left: 8px;
+    padding: 4px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+    background: #fff;
+}
+
+/* --- EDIT CONTROLS --- */
+.edit-controls {
+    position: absolute;
+    bottom: 15px;
+    right: 128px;
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+    .edit-controls.show {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .edit-controls .btn {
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+    }
+
+.save-btn {
+    background: var(--accent);
+    color: #fff;
+}
+
+.cancel-btn {
+    background: #cbd5e1;
+    color: #1e293b;
+}
+
+/* Anti-Cheating Container */
+.anti-cheat-container {
+    width: 100%; /* keep full width of parent */
+    box-sizing: border-box; /* include padding in width */
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Ensure right-column children don�t overflow */
+.right-column > section {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Top Section: Logs */
+.logs-top {
+    display: flex;
+    gap: 16px;
+    align-items: stretch; /* ensures both categories are same height */
+}
+
+/* Each category (Interaction / Omni-Focus) */
+.logs-category {
+    flex: 1; /* Both halves equal width */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-header {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+}
+
+/* Horizontal row of log boxes */
+.log-boxes {
+    display: flex;
+    gap: 12px;
+    flex: 1; /* allow boxes to grow and fill category height */
+    align-items: stretch;
+}
+
+.log-box {
+    background: #f3f6fb;
+    border-radius: 10px;
+    padding: 16px 12px;
+    flex: 1; /* equal width and stretch to fill height */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px; /* optional baseline */
+}
+
+.log-type {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.log-count {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* Bottom Section: Assessment Validity */
+.logs-bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.assessment-flag {
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    background: #22c55e; /* default green = Valid */
+}
+
+    .assessment-flag.void {
+        background: #ef4444; /* red = Void */
+    }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .logs-top {
+        flex-direction: column;
+    }
+}
+
+/* ===================== LOG LIST MODAL ===================== */
+.loglist-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.loglist-modal-content {
+    background: #fff;
+    width: 550px;
+    min-height: 70vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    animation: fadeIn 0.2s ease;
+}
+
+.loglist-modal-close {
+    float: right;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loglist-title {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.loglist-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.log-entry {
+    background: #f5f7fb;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+}
+
+/* Fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------- ADMIN MAKE CHANGES BUTTON ---------------- */
+.make-changes-wrap {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.make-changes-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #fff;
+    color: #0b213a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .make-changes-button:hover {
+        transform: scale(1.04);
+        box-shadow: 0 10px 28px rgba(36,58,115,0.12);
+    }
+
+/* admin actions dropdown anchored to the wrap */
+.admin-actions {
+    position: absolute;
+    top: -120px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: all 0.22s ease;
+}
+
+    .admin-actions.show {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+    }
+
+.admin-action {
+    display: grid;
+    grid-template-columns: auto 48px;
+    gap: 8px;
+    align-items: center;
+}
+
+    .admin-action .label {
+        background: #0b213a;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        justify-self: end;
+    }
+
+    .admin-action button {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: #fff;
+        box-shadow: 0 6px 16px rgba(16,24,40,0.1);
+        cursor: pointer;
+    }
+
+/* --- DELETE MODAL --- */
+.delete-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.25s ease;
+}
+
+    .delete-modal.show {
+        display: flex;
+        animation: fadeIn 0.25s ease forwards;
+    }
+
+/* Modal Box */
+.modal-content {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 16px;
+    padding: 28px 36px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 340px;
+    animation: slideUp 0.25s ease;
+    position: relative;
+}
+
+/* Warning Icon */
+.modal-icon {
+    font-size: 2.8rem;
+    color: #f87171;
+    margin-bottom: 12px;
+}
+
+/* Modal Header */
+.modal-content h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Modal Text */
+.modal-content p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+    .modal-buttons .btn {
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 10px 18px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-size: 0.95rem;
+    }
+
+.confirm-delete {
+    background: #ef4444;
+    color: #fff;
+}
+
+    .confirm-delete:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+    }
+
+.cancel-delete {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+    .cancel-delete:hover {
+        background: #cbd5e1;
+        transform: translateY(-2px);
+    }
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ---------------- TOAST ---------------- */
+.toast {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 0.8rem 1.4rem;
+    border-radius: 0.6rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(5px);
+    }
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 1000px) {
+    .class-info {
+        position: relative;
+        left: 0;
+        width: 100%;
+        height: auto;
+        margin-bottom: 16px;
+    }
+
+    .right-column {
+        margin-left: 0;
+        padding-right: 18px;
+    }
+
+    .assessment-container, .submitted-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .make-changes-wrap {
+        right: 18px;
+        bottom: 96px;
+    }
+}
+
+/* Hide scrollbars for all elements */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+    *::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
