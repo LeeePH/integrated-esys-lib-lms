@@ -51,7 +51,24 @@
         <div id="detailedDataSection" class="detailed-data-section" style="display: none;">
             <div class="detailed-data-header">
                 <h3 id="detailedDataTitle">Detailed Data</h3>
-                <button id="closeDetailedData" class="close-btn">&times;</button>
+                <div class="header-actions">
+                    <div class="filter-row borrowing-filter" id="borrowMonthControls" style="display:none; align-items:center; gap:8px; flex-wrap:wrap; margin-right:12px;">
+                        <strong>Filter by month:</strong>
+                        <input type="month" id="borrowMonthFrom" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                        <input type="month" id="borrowMonthTo" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                        <button id="btnFilterBorrowing" class="btn btn-outline-primary btn-sm"><i class="fas fa-filter"></i> Filter</button>
+                        <button id="btnResetBorrowing" class="btn btn-outline-secondary btn-sm">Reset</button>
+                    </div>
+                    <button id="exportPdfBtn" class="export-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export as PDF
+                    </button>
+                    <button id="closeDetailedData" class="close-btn">&times;</button>
+                </div>
             </div>
             <div class="detailed-data-content">
                 <div id="detailedDataTable" class="table-responsive">
@@ -62,9 +79,70 @@
     </section>
 </main>
 
+<style>
+    .detailed-data-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .export-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .export-btn:hover {
+        background-color: #3367d6;
+    }
+
+    .export-btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 28px;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-btn:hover {
+        color: #333;
+    }
+</style>
+
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+        <script>
         // Dynamic data from server
         const monthlyData = @Html.Raw(Json.Serialize(Model.MonthlyData));
 
@@ -127,6 +205,9 @@
             window.location.href = '@Url.Action("Borrowing", "Admin")?daysRange=' + days;
         }
 
+        let currentDataType = '';
+        let currentDataItems = [];
+
         // Handle stat card clicks
         document.addEventListener('DOMContentLoaded', function() {
             const statCards = document.querySelectorAll('.clickable-stat');
@@ -134,16 +215,54 @@
             const detailedDataTitle = document.getElementById('detailedDataTitle');
             const detailedDataTable = document.getElementById('detailedDataTable');
             const closeDetailedData = document.getElementById('closeDetailedData');
+            const exportPdfBtn = document.getElementById('exportPdfBtn');
+            const modal = document.getElementById('detailedDataModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDataTable = document.getElementById('modalDataTable');
+            const closeModal = document.getElementById('closeModal');
+
+            const monthFrom = document.getElementById('borrowMonthFrom');
+            const monthTo = document.getElementById('borrowMonthTo');
+            const filterBtn = document.getElementById('btnFilterBorrowing');
+            const resetBtn = document.getElementById('btnResetBorrowing');
 
             statCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const dataType = this.getAttribute('data-type');
+                    document.getElementById('borrowMonthControls').style.display = 'flex';
                     loadDetailedData(dataType);
                 });
             });
 
+            filterBtn.addEventListener('click', function() {
+                applyBorrowMonthFilter();
+            });
+
+            resetBtn.addEventListener('click', function() {
+                monthFrom.value = '';
+                monthTo.value = '';
+                renderFilteredData();
+            });
+
             closeDetailedData.addEventListener('click', function() {
                 detailedDataSection.style.display = 'none';
+                document.getElementById('borrowMonthControls').style.display = 'none';
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // Export PDF button click
+            exportPdfBtn.addEventListener('click', function() {
+                exportToPDF();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
             });
 
             async function loadDetailedData(type) {
@@ -152,6 +271,8 @@
                     const result = await response.json();
                     
                     if (result.success) {
+                        currentDataType = type;
+                        currentDataItems = result.data.data;
                         displayDetailedData(result.data, type);
                     } else {
                         alert('Error loading detailed data: ' + result.message);
@@ -193,7 +314,19 @@
                 
                 table += '<tbody>';
                 
-                items.forEach(item => {
+                const filteredItems = applyBorrowMonthFilter(true, items, type).sort((a, b) => {
+                    const getDate = (item) => {
+                        if (type === 'totalborrowing') return item.borrowDate || item.dueDate;
+                        if (type === 'totalreturns') return item.returnDate;
+                        if (type === 'currentlyborrowed') return item.dueDate || item.borrowDate;
+                        return null;
+                    };
+                    const ad = Date.parse(getDate(a) || 0);
+                    const bd = Date.parse(getDate(b) || 0);
+                    return isNaN(bd) ? -1 : isNaN(ad) ? 1 : bd - ad; // latest on top
+                });
+
+                filteredItems.forEach(item => {
                     table += '<tr>';
                     if (type === 'totalborrowing') {
                         table += `<td>${item.studentName || 'N/A'}</td>`;
@@ -229,6 +362,197 @@
                 table += '</tbody></table>';
                 return table;
             }
+
+            function applyBorrowMonthFilter(returnListOnly = false, overrideItems = null, typeOverride = null) {
+                const fromVal = monthFrom.value;
+                const toVal = monthTo.value;
+                const items = overrideItems || currentDataItems;
+                const type = typeOverride || currentDataType;
+
+                if (!items || items.length === 0) return returnListOnly ? items : detailedDataTable.innerHTML = createTable(items, type);
+
+                const fromDate = fromVal ? new Date(fromVal + '-01') : null;
+                const toDate = toVal ? new Date(toVal + '-01') : null;
+                if (toDate) { toDate.setMonth(toDate.getMonth() + 1); toDate.setDate(0); }
+
+                const getDateForItem = (item) => {
+                    if (type === 'totalborrowing') return item.borrowDate || item.dueDate;
+                    if (type === 'totalreturns') return item.returnDate;
+                    if (type === 'currentlyborrowed') return item.dueDate || item.borrowDate;
+                    return null;
+                };
+
+                const filtered = items.filter(i => {
+                    const dateString = getDateForItem(i);
+                    if (!dateString) return !fromDate && !toDate;
+                    const parsed = Date.parse(dateString);
+                    if (isNaN(parsed)) return !fromDate && !toDate;
+                    const d = new Date(parsed);
+                    if (fromDate && d < fromDate) return false;
+                    if (toDate && d > toDate) return false;
+                    return true;
+                });
+
+                if (returnListOnly) return filtered;
+                detailedDataTable.innerHTML = createTable(filtered, type);
+            }
+
+            function renderFilteredData() {
+                if (!currentDataItems || !currentDataType) return;
+                detailedDataTable.innerHTML = createTable(applyBorrowMonthFilter(true), currentDataType);
+            }
+
+            function exportToPDF() {
+                if (!currentDataItems || currentDataItems.length === 0) {
+                    alert('No data available to export');
+                    return;
+                }
+
+                // Disable button during export
+                exportPdfBtn.disabled = true;
+                exportPdfBtn.textContent = 'Generating PDF...';
+
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF('l', 'mm', 'a4'); // landscape orientation
+
+                    // Add title
+                    doc.setFontSize(18);
+                    doc.setFont('helvetica', 'bold');
+
+                    let reportTitle = '';
+                    if (currentDataType === 'totalborrowing') {
+                        reportTitle = 'Total Borrowing Report';
+                    } else if (currentDataType === 'totalreturns') {
+                        reportTitle = 'Total Returns Report';
+                    } else if (currentDataType === 'currentlyborrowed') {
+                        reportTitle = 'Currently Borrowed Report';
+                    }
+
+                    doc.text(reportTitle, 14, 15);
+
+                    // Add metadata
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'normal');
+                    const dateRange = document.getElementById('dateRangeFilter').selectedOptions[0].text;
+                    const generatedDate = new Date().toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    doc.text(`Date Range: ${dateRange}`, 14, 22);
+                    doc.text(`Generated: ${generatedDate}`, 14, 27);
+                    doc.text(`Total Records: ${currentDataItems.length}`, 14, 32);
+
+                    // Prepare table data
+                    let headers = [];
+                    let rows = [];
+
+                    if (currentDataType === 'totalborrowing') {
+                        headers = [['Student Name', 'Student Number', 'Book Title', 'Author', 'Borrow Date', 'Due Date', 'Status', 'Copy ID']];
+                        rows = currentDataItems.map(item => [
+                            item.studentName || 'N/A',
+                            item.studentNumber || 'N/A',
+                            item.bookTitle || 'N/A',
+                            item.bookAuthor || 'N/A',
+                            item.borrowDate || 'N/A',
+                            item.dueDate || 'N/A',
+                            item.status || 'N/A',
+                            item.copyIdentifier || 'N/A'
+                        ]);
+                    } else if (currentDataType === 'totalreturns') {
+                        headers = [['Student Name', 'Student Number', 'Book Title', 'Author', 'Return Date', 'Condition', 'Remarks', 'Copy ID']];
+                        rows = currentDataItems.map(item => [
+                            item.studentName || 'N/A',
+                            item.studentNumber || 'N/A',
+                            item.bookTitle || 'N/A',
+                            item.bookAuthor || 'N/A',
+                            item.returnDate || 'N/A',
+                            item.condition || 'N/A',
+                            item.remarks || 'N/A',
+                            item.copyIdentifier || 'N/A'
+                        ]);
+                    } else if (currentDataType === 'currentlyborrowed') {
+                        headers = [['Student Name', 'Student Number', 'Book Title', 'Author', 'Borrow Date', 'Due Date', 'Days Overdue', 'Copy ID']];
+                        rows = currentDataItems.map(item => [
+                            item.studentName || 'N/A',
+                            item.studentNumber || 'N/A',
+                            item.bookTitle || 'N/A',
+                            item.bookAuthor || 'N/A',
+                            item.borrowDate || 'N/A',
+                            item.dueDate || 'N/A',
+                            (item.daysOverdue || 0) + ' days',
+                            item.copyIdentifier || 'N/A'
+                        ]);
+                    }
+
+                    // Add table
+                    doc.autoTable({
+                        head: headers,
+                        body: rows,
+                        startY: 38,
+                        theme: 'striped',
+                        headStyles: {
+                            fillColor: [66, 133, 244],
+                            textColor: 255,
+                            fontStyle: 'bold',
+                            fontSize: 9
+                        },
+                        bodyStyles: {
+                            fontSize: 8
+                        },
+                        alternateRowStyles: {
+                            fillColor: [245, 245, 245]
+                        },
+                        margin: { top: 38, left: 14, right: 14 },
+                        styles: {
+                            cellPadding: 3,
+                            overflow: 'linebreak',
+                            fontSize: 8
+                        },
+                        columnStyles: {
+                            0: { cellWidth: 30 },
+                            1: { cellWidth: 25 },
+                            2: { cellWidth: 45 },
+                            3: { cellWidth: 35 },
+                            4: { cellWidth: 25 },
+                            5: { cellWidth: 25 },
+                            6: { cellWidth: 25 },
+                            7: { cellWidth: 20 }
+                        }
+                    });
+
+                    // Add footer with page numbers
+                    const pageCount = doc.internal.getNumberOfPages();
+                    for (let i = 1; i <= pageCount; i++) {
+                        doc.setPage(i);
+                        doc.setFontSize(8);
+                        doc.setFont('helvetica', 'italic');
+                        doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
+                    }
+
+                    // Save the PDF
+                    const fileName = `${reportTitle.replace(/ /g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+                    doc.save(fileName);
+
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    alert('Error generating PDF. Please try again.');
+                } finally {
+                    // Re-enable button
+                    exportPdfBtn.disabled = false;
+                    exportPdfBtn.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export as PDF
+                    `;
+                }
+            }
         });
-    </script>
-    }
+        </script>
+}

@@ -95,7 +95,7 @@ namespace SystemLibrary.Controllers
                 // Direct database seeding - bypass service layer
                 var database = _MOCKDataService.GetDatabase();
                 var studentCollection = database.GetCollection<StudentMOCKData>("StudentMOCKData");
-                var staffCollection = database.GetCollection<StaffMOCKData>("StaffMOCKData");
+                var staffCollection = database.GetCollection<StaffMOCKData>("StaffMockData");
 
                 // Clear existing data
                 await studentCollection.DeleteManyAsync(Builders<StudentMOCKData>.Filter.Empty);
@@ -181,6 +181,30 @@ namespace SystemLibrary.Controllers
                 TempData["ErrorMessage"] = $"Error force seeding MOCK data: {ex.Message}";
             }
             
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddStaff(StaffMOCKData staff)
+        {
+            if (string.IsNullOrWhiteSpace(staff.EmployeeId) || string.IsNullOrWhiteSpace(staff.FullName))
+            {
+                TempData["ErrorMessage"] = "Employee ID and Full Name are required.";
+                return RedirectToAction("Index");
+            }
+
+            staff.CreatedAt = DateTime.UtcNow;
+            staff.UpdatedAt = DateTime.UtcNow;
+
+            var added = await _MOCKDataService.AddStaffMOCKDataAsync(staff);
+            if (!added)
+            {
+                TempData["ErrorMessage"] = "A staff record with the same Employee ID already exists.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["SuccessMessage"] = "Staff MOCK record added.";
             return RedirectToAction("Index");
         }
     }

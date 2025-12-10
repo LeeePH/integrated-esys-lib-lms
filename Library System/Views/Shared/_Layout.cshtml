@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Linq
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,20 +17,52 @@
         <header class="header">
             <h2 class="logo">Library System</h2>
             <div class="header-controls">
-                @if (ViewBag.Role == "Admin" || ViewBag.Role == "Librarian")
-                {
-                    @if (ViewBag.Role == "Librarian")
+                    @if (ViewBag.Role == "Admin" || ViewBag.Role == "Librarian")
                     {
-                        <!-- Notification Icon -->
-                        <a href="@Url.Action("Notifications", "Librarian")" class="notification-icon-link" title="Notifications">
-                            <div class="notification-icon-wrapper">
-                                <i class="fas fa-bell notification-icon"></i>
-                                @if (ViewBag.UnreadNotificationCount != null && (int)ViewBag.UnreadNotificationCount > 0)
-                                {
-                                    <span class="notification-badge">@ViewBag.UnreadNotificationCount</span>
-                                }
+                        var notificationList = ViewBag.Notifications as List<SystemLibrary.Models.Notification> ?? new List<SystemLibrary.Models.Notification>();
+                        var phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+
+                        @if (ViewBag.Role == "Librarian")
+                        {
+                        <!-- Notification Icon + Dropdown -->
+                        <div class="notification-dropdown">
+                            <button type="button" class="notification-icon-link" id="notificationToggle" title="Notifications" aria-expanded="false">
+                                <div class="notification-icon-wrapper">
+                                    <i class="fas fa-bell notification-icon"></i>
+                                    @if (ViewBag.UnreadNotificationCount != null && (int)ViewBag.UnreadNotificationCount > 0)
+                                    {
+                                        <span class="notification-badge">@ViewBag.UnreadNotificationCount</span>
+                                    }
+                                </div>
+                            </button>
+                            <div class="notification-menu" id="notificationMenu">
+                                <div class="notification-menu-header">
+                                    <span>Notifications</span>
+                                    <a href="@Url.Action("Notifications", "Librarian")" class="notification-view-all">View all</a>
+                                </div>
+                                <div class="notification-menu-list">
+                                    @if (notificationList.Any())
+                                    {
+                                        foreach (var notif in notificationList.Take(4))
+                                        {
+                                            var createdAtPh = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(notif.CreatedAt, DateTimeKind.Utc), phTimeZone);
+                                            <div class="notification-menu-item @(notif.IsRead ? "" : "unread")">
+                                                <div class="notification-menu-title">
+                                                    <i class="fas @notif.Icon"></i>
+                                                    <span>@notif.Title</span>
+                                                </div>
+                                                <p class="notification-menu-message">@notif.Message</p>
+                                                <small class="notification-menu-date">@createdAtPh.ToString("MMMM dd, yyyy - hh:mm tt")</small>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="notification-empty">No notifications yet</div>
+                                    }
+                                </div>
                             </div>
-                        </a>
+                        </div>
                     }
                     <!-- Dark Mode Toggle Button -->
                     <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
@@ -336,6 +369,25 @@
                 </text>
             }
 
+            // Notification dropdown toggle
+            const notificationToggle = document.getElementById('notificationToggle');
+            const notificationMenu = document.getElementById('notificationMenu');
+
+            if (notificationToggle && notificationMenu) {
+                notificationToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const isOpen = notificationMenu.classList.toggle('open');
+                    notificationToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                });
+
+                document.addEventListener('click', function (e) {
+                    if (!notificationMenu.contains(e.target) && !notificationToggle.contains(e.target)) {
+                        notificationMenu.classList.remove('open');
+                        notificationToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
             // Inactivity Timer for Students and Librarians
             const userRole = '@(ViewBag.Role ?? string.Empty)';
             if (logoutForm && (userRole === 'Student' || userRole === 'Librarian')) {
@@ -445,6 +497,10 @@
             margin-right: 15px;
             text-decoration: none;
             color: inherit;
+            background: transparent;
+            color: #1e90ff;
+            border: none;
+            cursor: pointer;
         }
 
         .notification-icon-wrapper {
@@ -456,6 +512,7 @@
             height: 40px;
             border-radius: 50%;
             background: transparent;
+            color: #1e90ff;
             transition: background-color 0.3s ease;
         }
 
@@ -465,7 +522,7 @@
 
         .notification-icon {
             font-size: 20px;
-            color: #fff;
+            color: #1e90ff;
         }
 
         .notification-badge {
@@ -491,6 +548,94 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .notification-dropdown {
+            position: relative;
+        }
+
+        .notification-menu {
+            position: absolute;
+            right: 0;
+            top: 48px;
+            width: 320px;
+            background: #ffffff;
+            color: #1f2937;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 12px;
+            display: none;
+            z-index: 20;
+        }
+
+        .notification-menu.open {
+            display: block;
+        }
+
+        .notification-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .notification-view-all {
+            font-size: 0.9rem;
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        .notification-menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .notification-menu-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px;
+            background: #f9fafb;
+        }
+
+        .notification-menu-item.unread {
+            border-color: #1e90ff;
+            background: #eef6ff;
+        }
+
+        .notification-menu-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .notification-menu-title i {
+            color: #1e90ff;
+        }
+
+        .notification-menu-message {
+            margin: 0 0 6px 0;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .notification-menu-date {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        .notification-empty {
+            text-align: center;
+            color: #6b7280;
+            padding: 16px 0;
+            border: 1px dashed #d1d5db;
+            border-radius: 8px;
         }
     </style>
 </body>

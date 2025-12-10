@@ -18,7 +18,8 @@ namespace SystemLibrary.Services
         {
             _users = mongoDbService.GetCollection<User>("Users");
             _studentProfiles = mongoDbService.GetCollection<StudentProfile>("StudentProfiles");
-            _staffData = mongoDbService.GetCollection<StaffMOCKData>("StaffMOCKData");
+            // Match actual Mongo collection name for staff mock data
+            _staffData = mongoDbService.GetCollection<StaffMOCKData>("StaffMockData");
             _conflicts = mongoDbService.GetCollection<DuplicateAccountConflict>("DuplicateAccountConflicts");
             _notificationService = notificationService;
         }

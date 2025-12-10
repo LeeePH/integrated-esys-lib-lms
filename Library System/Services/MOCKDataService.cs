@@ -15,7 +15,8 @@ namespace SystemLibrary.Services
         {
             _database = database;
             _StudentMOCKData = database.GetCollection<StudentMOCKData>("StudentMOCKData");
-            _StaffMOCKData = database.GetCollection<StaffMOCKData>("StaffMOCKData");
+            // Use actual collection name in MongoDB for staff
+            _StaffMOCKData = database.GetCollection<StaffMOCKData>("StaffMockData");
             _BookMOCKData = database.GetCollection<BookMOCKData>("BookMOCKData");
         }
 

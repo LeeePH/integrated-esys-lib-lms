@@ -628,6 +628,11 @@
         document.getElementById('updateBookId').value = id;
         document.getElementById('update_Id').value = id;
 
+        // Publication date should always default to today and stay read-only
+        const publicationInput = document.getElementById('updatePublicationDate');
+        publicationInput.value = new Date().toISOString().split('T')[0];
+        publicationInput.readOnly = true;
+
         document.getElementById('updateTitle').value = title;
         document.getElementById('updateAuthor').value = author;
         document.getElementById('updateISBN').value = isbn;
@@ -641,10 +646,6 @@
                 break;
             }
         }
-
-        document.getElementById('updatePublicationDate').value = publicationDate
-            ? publicationDate.split('T')[0]
-            : '';
 
         document.getElementById('updateRestrictions').value = restrictions || '';
 

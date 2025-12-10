@@ -227,21 +227,28 @@
         </div>
 
         <!-- Table -->
-        <div class="table-wrapper">
+        <div class="table-wrapper" id="overdueAccountsSection" style="display:none;">
+            <div class="filter-row" style="margin-bottom: 12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <strong>Filter by Due Date (month):</strong>
+                <input type="month" id="overdueTableFrom" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                <input type="month" id="overdueTableTo" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                <button id="btnFilterOverdueAccounts" class="btn btn-outline-primary btn-sm" onclick="filterOverdueAccountsTable()">Filter</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="resetOverdueAccountsTable()">Reset</button>
+            </div>
             @if (Model.OverdueAccounts.Any())
             {
-                <table>
+                <table id="overdueBooksTable">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Overdue Books</th>
-                            <th>Days Overdue</th>
-                            <th>Status</th>
-                            @* <th>Action</th> *@
+                            <th style="cursor:pointer" data-col="0" data-type="string">Student <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="1" data-type="number">Overdue Books <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="2" data-type="date">Earliest Due Date <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="3" data-type="number">Days Overdue <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="4" data-type="string">Status <span class="sort-indicator"></span></th>
                         </tr>
                     </thead>
                     <tbody id="overdueTable">
-                        @foreach (var account in Model.OverdueAccounts)
+                        @foreach (var account in Model.OverdueAccounts.OrderByDescending(a => a.OverdueBooks?.OrderBy(b => b.DueDate).FirstOrDefault()?.DueDate ?? DateTime.MinValue))
                         {
                             <tr class="overdue-row" 
                                 data-student="@account.StudentName.ToLower()" 
@@ -253,6 +260,10 @@
                                 data-overdue-books='@Html.Raw(Json.Serialize(account.OverdueBooks))'>
                                 <td>@account.StudentName</td>
                                 <td>@account.OverdueBookCount</td>
+                                @{
+                                    var earliestDue = account.OverdueBooks?.OrderBy(b => b.DueDate).FirstOrDefault()?.DueDate;
+                                }
+                                <td data-due="@earliestDue?.ToString("yyyy-MM-dd")">@earliestDue?.ToString("MMM dd, yyyy")</td>
                                 <td>@account.MaxDaysOverdue</td>
                                 <td>
                                     @if (account.IsRestricted)
@@ -318,6 +329,77 @@
                     <!-- Data will be populated here -->
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Overdue Books Report -->
+    <section class="report-card" id="overdueBooksSection" style="display:none;">
+        <div class="report-header">
+            <h2>Overdue Books</h2>
+        </div>
+
+        <div class="table-wrapper">
+            @{
+                var overdueBooks = Model.OverdueAccounts
+                    .SelectMany(a => a.OverdueBooks.Select(b => new {
+                        StudentName = a.StudentName,
+                        StudentNumber = a.StudentNumber,
+                        BookTitle = b.BookTitle,
+                        DueDate = b.DueDate,
+                        DaysOverdue = b.DaysOverdue,
+                        LateFee = b.LateFee
+                    }))
+                    .OrderByDescending(b => b.DueDate)
+                    .ThenByDescending(b => b.DaysOverdue)
+                    .ThenBy(b => b.StudentName)
+                    .ToList();
+            }
+
+            @if (overdueBooks.Any())
+            {
+                <div class="filter-row" style="margin-bottom: 12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                    <strong>Filter Overdue Books by Due Date (month):</strong>
+                    <input type="month" id="overdueBooksFrom" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                    <input type="month" id="overdueBooksTo" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                    <button id="btnFilterOverdueBooks" class="btn btn-outline-primary btn-sm">Filter</button>
+                    <button id="btnResetOverdueBooks" class="btn btn-outline-secondary btn-sm">Reset</button>
+                </div>
+                <table id="overdueBooksListTable" class="sortable-table">
+                    <thead>
+                        <tr>
+                            <th style="cursor:pointer" data-col="0" data-type="string">Student <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="1" data-type="string">Book Title <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="2" data-type="date">Due Date <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="3" data-type="number">Days Overdue <span class="sort-indicator"></span></th>
+                            <th style="cursor:pointer" data-col="4" data-type="currency">Late Fee <span class="sort-indicator"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var book in overdueBooks)
+                        {
+                            <tr>
+                                <td>
+                                    <div style="display:flex; flex-direction:column; gap:2px;">
+                                        <span>@book.StudentName</span>
+                                        <small style="color:#64748b;">@book.StudentNumber</small>
+                                    </div>
+                                </td>
+                                <td>@book.BookTitle</td>
+                                <td>@book.DueDate.ToString("MMM dd, yyyy")</td>
+                                <td>@book.DaysOverdue day(s)</td>
+                                <td>₱@book.LateFee.ToString("N2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <img src="~/images/empty.png" alt="Empty" />
+                    <p>No overdue books found for the selected period.</p>
+                </div>
+            }
         </div>
     </section>
 </main>
@@ -408,6 +490,113 @@
             closeDetailedData.addEventListener('click', function() {
                 detailedDataSection.style.display = 'none';
             });
+
+            // Ensure filter button is wired safely and expose function on window
+            try {
+                const btn = document.getElementById('btnFilterOverdueAccounts');
+                if (btn) {
+                    // Wrap with safe handler to catch errors so page JS doesn't halt
+                    btn.addEventListener('click', function (e) {
+                        try {
+                            if (typeof filterOverdueAccountsTable === 'function') {
+                                filterOverdueAccountsTable();
+                            } else if (window.filterOverdueAccountsTable) {
+                                window.filterOverdueAccountsTable();
+                            } else {
+                                console.warn('filterOverdueAccountsTable not found');
+                            }
+                        } catch (err) {
+                            console.error('Error running filterOverdueAccountsTable:', err);
+                            alert('An error occurred while applying filter. Check browser console for details.');
+                        }
+                    });
+                }
+
+                // Expose function to global in case inline onclick is executed before script loads
+                if (typeof filterOverdueAccountsTable === 'function') window.filterOverdueAccountsTable = filterOverdueAccountsTable;
+            } catch (ex) {
+                console.log('Error attaching filter button handler:', ex);
+            }
+
+            // Initialize sortable tables for accounts and books
+            try {
+                if (typeof initSortableTable === 'function') {
+                    initSortableTable('overdueBooksTable');
+                    initSortableTable('overdueBooksListTable');
+                }
+            } catch (e) {
+                console.error('Error initializing sortable tables', e);
+            }
+
+                // Helper: parse cell value according to type
+                function parseCellValue(text, type) {
+                    if (type === 'number') {
+                        const n = parseFloat(text.toString().replace(/[^0-9.-]/g, ''));
+                        return isNaN(n) ? 0 : n;
+                    }
+                    if (type === 'currency') {
+                        const n = parseFloat(text.toString().replace(/[^0-9.-]/g, ''));
+                        return isNaN(n) ? 0 : n;
+                    }
+                    if (type === 'date') {
+                        // try Date.parse on common formats
+                        const d = Date.parse(text);
+                        if (!isNaN(d)) return d;
+                        // fallback: try ISO chunk
+                        try {
+                            const parts = text.split(/[\-\/ ,]+/).filter(Boolean);
+                            if (parts.length >= 3) {
+                                const maybe = new Date(text);
+                                if (!isNaN(maybe)) return maybe.getTime();
+                            }
+                        } catch (ex) {}
+                        return 0;
+                    }
+                    return text.toString().trim().toLowerCase();
+                }
+
+                // Attach sortable behavior to a table by id
+                function initSortableTable(tableId) {
+                    const table = document.getElementById(tableId);
+                    if (!table) return;
+                    const thead = table.tHead || table.querySelector('thead');
+                    if (!thead) return;
+                    const headers = thead.querySelectorAll('th[style*="cursor:pointer"], th[data-col]');
+                    headers.forEach(th => {
+                        th.style.userSelect = 'none';
+                        th.addEventListener('click', function () {
+                            const type = th.getAttribute('data-type') || 'string';
+                            const colIndex = parseInt(th.getAttribute('data-col')) || Array.from(th.parentElement.children).indexOf(th);
+                            const tbody = table.tBodies[0];
+                            if (!tbody) return;
+                            const rows = Array.from(tbody.querySelectorAll('tr'));
+                            const currentOrder = th.getAttribute('data-sort') || 'none';
+                            const asc = currentOrder !== 'asc';
+                            // clear indicators
+                            headers.forEach(h => { h.setAttribute('data-sort', 'none'); const ind = h.querySelector('.sort-indicator'); if (ind) ind.textContent = ''; });
+                            th.setAttribute('data-sort', asc ? 'asc' : 'desc');
+                            const indicator = th.querySelector('.sort-indicator');
+                            if (indicator) indicator.textContent = asc ? ' ▲' : ' ▼';
+
+                            rows.sort((a, b) => {
+                                const aCell = a.children[colIndex] ? a.children[colIndex].innerText : '';
+                                const bCell = b.children[colIndex] ? b.children[colIndex].innerText : '';
+                                const aVal = parseCellValue(aCell, type);
+                                const bVal = parseCellValue(bCell, type);
+                                if (typeof aVal === 'number' && typeof bVal === 'number') {
+                                    return asc ? aVal - bVal : bVal - aVal;
+                                }
+                                if (typeof aVal === 'string' && typeof bVal === 'string') {
+                                    return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                                }
+                                return 0;
+                            });
+
+                            // reattach rows
+                            rows.forEach(r => tbody.appendChild(r));
+                        });
+                    });
+                }
         });
 
         async function loadDetailedData(type) {
@@ -421,12 +610,88 @@
                     currentDetailedTitle = result.data.type;
                     displayDetailedData(result.data, type);
                 } else {
-                    alert('Error loading detailed data: ' + result.message);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Error loading detailed data');
             }
+        }
+
+        // Filter the Overdue Books table by month range
+        function filterOverdueBooksTable() {
+            try {
+                const fromInput = document.getElementById('overdueBooksFrom');
+                const toInput = document.getElementById('overdueBooksTo');
+                const fromVal = fromInput && fromInput.value ? new Date(fromInput.value + '-01') : null;
+                const toVal = toInput && toInput.value ? new Date(toInput.value + '-01') : null;
+                if (toVal) {
+                    // move to last day of month
+                    toVal.setMonth(toVal.getMonth() + 1);
+                    toVal.setDate(0);
+                }
+
+                const table = document.getElementById('overdueBooksListTable');
+                if (!table) return;
+                const tbody = table.tBodies[0];
+                if (!tbody) return;
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                rows.forEach(row => {
+                    try {
+                        const dueCell = row.children[2];
+                        const text = dueCell ? dueCell.innerText.trim() : '';
+                        let due = Date.parse(text);
+                        if (isNaN(due)) {
+                            // try parsing MMM dd, yyyy
+                            const parts = text.split(/\s+/);
+                            if (parts.length >= 3) {
+                                due = Date.parse(text);
+                            }
+                        }
+                        const show = (function() {
+                            if (!fromVal && !toVal) return true;
+                            if (isNaN(due)) return false;
+                            const d = new Date(due);
+                            if (fromVal && d < fromVal) return false;
+                            if (toVal && d > toVal) return false;
+                            return true;
+                        })();
+                        row.style.display = show ? '' : 'none';
+                    } catch (e) {
+                        console.error('Error filtering overdue book row', e);
+                    }
+                });
+            } catch (err) {
+                console.error('Error in filterOverdueBooksTable:', err);
+                alert('An error occurred while filtering overdue books. Check console for details.');
+            }
+        }
+
+        function resetOverdueBooksTable() {
+            try {
+                const fromInput = document.getElementById('overdueBooksFrom');
+                const toInput = document.getElementById('overdueBooksTo');
+                if (fromInput) fromInput.value = '';
+                if (toInput) toInput.value = '';
+                const table = document.getElementById('overdueBooksListTable');
+                if (!table) return;
+                const tbody = table.tBodies[0];
+                if (!tbody) return;
+                Array.from(tbody.querySelectorAll('tr')).forEach(r => r.style.display = '');
+            } catch (err) {
+                console.error('Error resetting overdue books table:', err);
+            }
+        }
+
+        // Wire filter buttons for overdue books once DOM is ready
+        try {
+            const btnFilterBooks = document.getElementById('btnFilterOverdueBooks');
+            if (btnFilterBooks) btnFilterBooks.addEventListener('click', function() { try { filterOverdueBooksTable(); } catch(e){console.error(e);} });
+            const btnResetBooks = document.getElementById('btnResetOverdueBooks');
+            if (btnResetBooks) btnResetBooks.addEventListener('click', function() { try { resetOverdueBooksTable(); } catch(e){console.error(e);} });
+            // expose
+            window.filterOverdueBooksTable = filterOverdueBooksTable;
+            window.resetOverdueBooksTable = resetOverdueBooksTable;
+        } catch (ex) {
+            console.error('Error wiring overdue books filter buttons:', ex);
         }
 
         function displayDetailedData(data, type) {
@@ -449,12 +714,28 @@
                 return '<p>No data available for the selected period.</p>';
             }
 
+            // Sort items by date descending (newest first)
+            const sortedItems = [...items].sort((a, b) => {
+                let aDate = null, bDate = null;
+                if (type === 'overdueaccounts' || type === 'totalfees') {
+                    // Sort by earliest due date or max days overdue
+                    aDate = a.maxDaysOverdue ? new Date(Date.now() - (a.maxDaysOverdue * 24 * 60 * 60 * 1000)) : null;
+                    bDate = b.maxDaysOverdue ? new Date(Date.now() - (b.maxDaysOverdue * 24 * 60 * 60 * 1000)) : null;
+                } else if (type === 'overduebooks') {
+                    aDate = Date.parse(a.dueDate || 0);
+                    bDate = Date.parse(b.dueDate || 0);
+                }
+                if (!aDate || isNaN(aDate)) return 1;
+                if (!bDate || isNaN(bDate)) return -1;
+                return bDate - aDate; // newest first
+            });
+
             let table = '<table class="table table-striped table-hover">';
             
             if (type === 'overdueaccounts') {
                 table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Overdue Books</th><th>Max Days Overdue</th><th>Total Fees</th><th>Status</th></tr></thead>';
                 table += '<tbody>';
-                items.forEach(item => {
+                sortedItems.forEach(item => {
                     table += '<tr>';
                     table += `<td>${item.studentName || 'N/A'}</td>`;
                     table += `<td>${item.studentNumber || 'N/A'}</td>`;
@@ -467,7 +748,7 @@
             } else if (type === 'overduebooks') {
                 table += '<thead><tr><th>Book Title</th><th>Author</th><th>Student Name</th><th>Student Number</th><th>Due Date</th><th>Days Overdue</th><th>Late Fee</th><th>Copy ID</th></tr></thead>';
                 table += '<tbody>';
-                items.forEach(item => {
+                sortedItems.forEach(item => {
                     table += '<tr>';
                     table += `<td>${item.bookTitle || 'N/A'}</td>`;
                     table += `<td>${item.bookAuthor || 'N/A'}</td>`;
@@ -482,7 +763,7 @@
             } else if (type === 'totalfees') {
                 table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Overdue Books</th><th>Total Late Fees</th><th>Status</th></tr></thead>';
                 table += '<tbody>';
-                items.forEach(item => {
+                sortedItems.forEach(item => {
                     table += '<tr>';
                     table += `<td>${item.studentName || 'N/A'}</td>`;
                     table += `<td>${item.studentNumber || 'N/A'}</td>`;
@@ -501,6 +782,28 @@
             window.location.href = '@Url.Action("Overdue", "Librarian")?daysRange=' + days;
         }
 
+    // Show sections only when stats are clicked
+    document.addEventListener('DOMContentLoaded', function () {
+        const stats = document.querySelectorAll('.clickable-stat');
+        const accountsSection = document.getElementById('overdueAccountsSection');
+        const booksSection = document.getElementById('overdueBooksSection');
+
+        stats.forEach(stat => {
+            stat.addEventListener('click', function () {
+                const type = this.dataset.type;
+                if (type === 'overdueaccounts') {
+                    accountsSection.style.display = 'block';
+                    booksSection.style.display = 'none';
+                    accountsSection.scrollIntoView({ behavior: 'smooth' });
+                } else if (type === 'overduebooks') {
+                    booksSection.style.display = 'block';
+                    accountsSection.style.display = 'none';
+                    booksSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    });
+
         function searchOverdueAccounts() {
             const input = document.getElementById('searchOverdue').value.toLowerCase();
             const rows = document.querySelectorAll('.overdue-row');
@@ -509,8 +812,10 @@
                 const student = row.dataset.student;
                 const number = row.dataset.number;
                 const match = student.includes(input) || number.includes(input);
-                row.style.display = match ? '' : 'none';
+                row.dataset.hiddenBySearch = (!match).toString();
             });
+
+            filterOverdueAccountsTable();
         }
 
         function filterByStatus() {
@@ -527,8 +832,122 @@
                     show = !isRestricted;
                 }
 
-                row.style.display = show ? '' : 'none';
+                row.dataset.hiddenByStatus = (!show).toString();
             });
+
+            filterOverdueAccountsTable();
+        }
+
+        function filterOverdueAccountsTable() {
+            const fromVal = document.getElementById('overdueTableFrom')?.value;
+            const toVal = document.getElementById('overdueTableTo')?.value;
+        const fromDate = fromVal ? new Date(fromVal + '-01') : null;
+        const toDate = toVal ? new Date(toVal + '-01') : null;
+        if (toDate) { toDate.setMonth(toDate.getMonth() + 1); toDate.setDate(0); }
+
+            document.querySelectorAll('.overdue-row').forEach(row => {
+                const searchHidden = row.dataset.hiddenBySearch === 'true';
+                const statusHidden = row.dataset.hiddenByStatus === 'true';
+
+                // Determine visibility based on whether any overdue book for this account falls within the selected month range.
+                // Use serialized data-overdue-books JSON (array with DueDate properties) for accurate filtering.
+                let dateHidden = false;
+                try {
+                    const raw = row.getAttribute('data-overdue-books');
+                    const books = raw ? JSON.parse(raw) : [];
+
+                    if ((fromDate || toDate) && books && books.length > 0) {
+                        // If none of the overdue books have a due date inside the range, hide the row
+                        const anyInRange = books.some(b => {
+                            if (!b || !b.DueDate) return false;
+                            // Try to parse various possible formats
+                            const parsed = Date.parse(b.DueDate);
+                            let d = null;
+                            if (!isNaN(parsed)) d = new Date(parsed);
+                            else {
+                                // try YYYY-MM-DD or MM/dd/yyyy
+                                const parts = (b.DueDate || '').split(/[-/]/);
+                                if (parts.length === 3) {
+                                    // if year first
+                                    if (parts[0].length === 4) {
+                                        d = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+                                    } else {
+                                        // assume MM/DD/YYYY
+                                        d = new Date(parseInt(parts[2],10), parseInt(parts[0],10)-1, parseInt(parts[1],10));
+                                    }
+                                }
+                            }
+                            if (!d) return false;
+                            if (fromDate && d < fromDate) return false;
+                            if (toDate && d > toDate) return false;
+                            return true;
+                        });
+
+                        dateHidden = !anyInRange;
+                    } else {
+                        // if no range selected, don't hide by date
+                        dateHidden = false;
+                    }
+                } catch (e) {
+                    // fallback: if parsing fails and a range is specified, hide the row
+                    dateHidden = (fromDate || toDate) ? true : false;
+                }
+
+                const hide = searchHidden || statusHidden || dateHidden;
+                row.style.display = hide ? 'none' : '';
+            });
+
+            // Also filter the Overdue Books table (if present) by Due Date month range
+            try {
+                const booksTable = document.getElementById('overdueBooksTable');
+                if (booksTable) {
+                    const rows = Array.from(booksTable.querySelectorAll('tbody tr'));
+                    rows.forEach(r => {
+                        const dueText = r.children[2] ? r.children[2].innerText.trim() : '';
+                        let hide = false;
+                        if ((fromDate || toDate) && dueText) {
+                            // Try parse using Date.parse or MM/dd/yyyy formats
+                            let d = Date.parse(dueText);
+                            if (isNaN(d)) {
+                                const parts = dueText.split('/');
+                                if (parts.length === 3) {
+                                    d = Date.parse(`${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`);
+                                } else {
+                                    // try MMM dd, yyyy
+                                    d = Date.parse(dueText);
+                                }
+                            }
+                            if (isNaN(d)) {
+                                hide = true;
+                            } else {
+                                const dt = new Date(d);
+                                if (fromDate && dt < fromDate) hide = true;
+                                if (toDate && dt > toDate) hide = true;
+                            }
+                        }
+                        r.style.display = hide ? 'none' : '';
+                    });
+                }
+            } catch (e) {
+                console.log('Error filtering overdue books table:', e);
+            }
+        }
+
+        function resetOverdueAccountsTable() {
+            const f = document.getElementById('overdueTableFrom'); if (f) f.value = '';
+            const t = document.getElementById('overdueTableTo'); if (t) t.value = '';
+            document.querySelectorAll('.overdue-row').forEach(r => {
+                r.dataset.hiddenBySearch = 'false';
+                r.dataset.hiddenByStatus = 'false';
+                r.style.display = '';
+            });
+            // reset overdue books table if present
+            try {
+                const booksTable = document.getElementById('overdueBooksTable');
+                if (booksTable) {
+                    Array.from(booksTable.querySelectorAll('tbody tr')).forEach(r => r.style.display = '');
+                }
+            } catch (e) { console.log(e); }
         }
 
         function showOverdueBooks(studentName, books) {
@@ -726,7 +1145,7 @@
                         fontStyle: 'bold',
                         fontSize: 10
                     }
-                        styles: {
+                        ,styles: {
                             fontSize: 9,
                             cellPadding: 3
                         },
@@ -964,7 +1383,7 @@
                     console.error('Error generating PDF:', error);
                     alert('Error generating PDF. Please try again.');
                 } finally {
-                    exportBtn.disabled = false;
+                    exportBtn.disabled = false
                     exportBtn.innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 0 0 1-2-2v-4"></path>

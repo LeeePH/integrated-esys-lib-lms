@@ -3,112 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\admin\\usersettingsstudent.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\admin\\usersettingsstudent.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\wwwroot\\css\\catalogs.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:wwwroot\\css\\catalogs.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\librarian\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\librarian\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\controllers\\librariancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:controllers\\librariancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\wwwroot\\css\\dark-mode.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:wwwroot\\css\\dark-mode.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\student\\browsebooks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\student\\browsebooks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\librarian\\overdue.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\librarian\\overdue.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\librarian\\catalog.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\librarian\\catalog.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\admin\\usersettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\admin\\usersettings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\librarian\\notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\librarian\\notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\wwwroot\\css\\admin\\usermanage.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:wwwroot\\css\\admin\\usermanage.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\viewmodels\\studentaccountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:viewmodels\\studentaccountviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\student\\account.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\student\\account.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\usermanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\usermanagementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\adminuserseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\adminuserseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\services\\studentprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:services\\studentprofileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\wwwroot\\css\\student\\search.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:wwwroot\\css\\student\\search.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|c:\\users\\lee\\desktop\\integrated esys-lib-lms\\library system\\views\\librarian\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{08CD8AA4-1C94-4C50-A02B-53DA7B8BB890}|SystemLibrary.csproj|solutionrelative:views\\librarian\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -118,332 +30,68 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Dashboard.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\Dashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\Dashboard.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\Dashboard.cshtml",
-              "RelativeToolTip": "Views\\Admin\\Dashboard.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABAAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-07T10:00:30.718Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Dashboard.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Dashboard.cshtml",
-              "RelativeDocumentMoniker": "Views\\Librarian\\Dashboard.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Dashboard.cshtml",
-              "RelativeToolTip": "Views\\Librarian\\Dashboard.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-07T09:49:03.523Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BrowseBooks.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Student\\BrowseBooks.cshtml",
-              "RelativeDocumentMoniker": "Views\\Student\\BrowseBooks.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Student\\BrowseBooks.cshtml",
-              "RelativeToolTip": "Views\\Student\\BrowseBooks.cshtml",
-              "ViewState": "AgIAAKACAAAAAAAAAADgv7QCAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-28T02:47:11.398Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LibrarianController.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\LibrarianController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LibrarianController.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\LibrarianController.cs",
-              "RelativeToolTip": "Controllers\\LibrarianController.cs",
-              "ViewState": "AgIAAD8JAAAAAAAAAAAWwEoJAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T07:09:45.542Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UserSettingsStudent.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\UserSettingsStudent.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\UserSettingsStudent.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\UserSettingsStudent.cshtml",
-              "RelativeToolTip": "Views\\Admin\\UserSettingsStudent.cshtml",
-              "ViewState": "AgIAAFMBAAAAAAAAAAAAAFwBAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T07:47:32.142Z",
+              "Title": "catalogs.css",
+              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\catalogs.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\catalogs.css",
+              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\catalogs.css",
+              "RelativeToolTip": "wwwroot\\css\\catalogs.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-09T15:00:03.738Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Overdue.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Overdue.cshtml",
-              "RelativeDocumentMoniker": "Views\\Librarian\\Overdue.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Overdue.cshtml",
-              "RelativeToolTip": "Views\\Librarian\\Overdue.cshtml",
-              "ViewState": "AgIAAN8AAAAAAAAAAAAiwO8AAAAfAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Catalog.cshtml",
+              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Catalog.cshtml",
+              "RelativeDocumentMoniker": "Views\\Librarian\\Catalog.cshtml",
+              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Catalog.cshtml",
+              "RelativeToolTip": "Views\\Librarian\\Catalog.cshtml",
+              "ViewState": "AgIAAGwAAAAAAAAAAIAwwHsAAACDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-03T04:32:27.061Z"
+              "WhenOpened": "2025-12-09T14:59:46.013Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "dark-mode.css",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\dark-mode.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\dark-mode.css",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\dark-mode.css",
-              "RelativeToolTip": "wwwroot\\css\\dark-mode.css",
-              "ViewState": "AgIAAEAFAAAAAAAAAAASwEoFAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-23T10:46:40.83Z"
+              "DocumentIndex": 3,
+              "Title": "Notifications.cshtml",
+              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Notifications.cshtml",
+              "RelativeDocumentMoniker": "Views\\Librarian\\Notifications.cshtml",
+              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Notifications.cshtml",
+              "RelativeToolTip": "Views\\Librarian\\Notifications.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T14:58:18.795Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AgIAAIEEAAAAAAAAAAAAAJYEAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-28T02:35:21.424Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAFoAAAAAAAAAAAD4v2oAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAjwBIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T03:58:01.237Z"
+              "WhenOpened": "2025-12-09T14:55:34.054Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Usermanage.css",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\Usermanage.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\Admin\\Usermanage.css",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\Admin\\Usermanage.css",
-              "RelativeToolTip": "wwwroot\\css\\Admin\\Usermanage.css",
-              "ViewState": "AgIAAEAAAAAAAAAAAAArwFIAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-23T10:46:08.164Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "Services\\UserService.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\UserService.cs",
-              "RelativeToolTip": "Services\\UserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANEAAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:02:22.743Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAIwFcAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T15:51:01.905Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAJ4AAAAAAAAAAAAmwLcAAAAtAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Views\\Librarian\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Librarian\\Dashboard.cshtml",
+              "RelativeToolTip": "Views\\Librarian\\Dashboard.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T07:01:16.252Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserSettings.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\UserSettings.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\UserSettings.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Admin\\UserSettings.cshtml",
-              "RelativeToolTip": "Views\\Admin\\UserSettings.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-23T11:04:14.357Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvx8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-14T15:37:51.771Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Account.cshtml",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Student\\Account.cshtml",
-              "RelativeDocumentMoniker": "Views\\Student\\Account.cshtml",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Views\\Student\\Account.cshtml",
-              "RelativeToolTip": "Views\\Student\\Account.cshtml",
-              "ViewState": "AgIAABkAAAAAAAAAAAAiwCkAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-13T00:42:54.086Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "StudentAccountViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\ViewModels\\StudentAccountViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\StudentAccountViewModel.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\ViewModels\\StudentAccountViewModel.cs",
-              "RelativeToolTip": "ViewModels\\StudentAccountViewModel.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwCoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:51:24.705Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "UserManagementService.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\UserManagementService.cs",
-              "RelativeDocumentMoniker": "Services\\UserManagementService.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\UserManagementService.cs",
-              "RelativeToolTip": "Services\\UserManagementService.cs",
-              "ViewState": "AgIAAMwAAAAAAAAAAAAAADkAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:56:41.452Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "LoginViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\ViewModels\\LoginViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\LoginViewModel.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\ViewModels\\LoginViewModel.cs",
-              "RelativeToolTip": "ViewModels\\LoginViewModel.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAIwCgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:01:55.626Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAtwCYAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:02:16.219Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "DataSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\DataSeeder.cs",
-              "RelativeDocumentMoniker": "Services\\DataSeeder.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\DataSeeder.cs",
-              "RelativeToolTip": "Services\\DataSeeder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAL4AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:55:05.385Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAowGIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:54:54.107Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "AdminUserSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\AdminUserSeeder.cs",
-              "RelativeDocumentMoniker": "Services\\AdminUserSeeder.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\AdminUserSeeder.cs",
-              "RelativeToolTip": "Services\\AdminUserSeeder.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAD4vzEAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:54:25.598Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "StudentController.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\StudentController.cs",
-              "RelativeDocumentMoniker": "Controllers\\StudentController.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Controllers\\StudentController.cs",
-              "RelativeToolTip": "Controllers\\StudentController.cs",
-              "ViewState": "AgIAAMsBAAAAAAAAAAAIwMUBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T06:51:46.151Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "MongoDbService.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\MongoDbService.cs",
-              "RelativeDocumentMoniker": "Services\\MongoDbService.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\MongoDbService.cs",
-              "RelativeToolTip": "Services\\MongoDbService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T15:38:38.34Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "StudentProfileService.cs",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\StudentProfileService.cs",
-              "RelativeDocumentMoniker": "Services\\StudentProfileService.cs",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\Services\\StudentProfileService.cs",
-              "RelativeToolTip": "Services\\StudentProfileService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T15:39:00.096Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "Search.css",
-              "DocumentMoniker": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\Search.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\student\\Search.css",
-              "ToolTip": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\student\\Search.css",
-              "RelativeToolTip": "wwwroot\\css\\student\\Search.css",
-              "ViewState": "AgIAANwBAAAAAAAAAAAAAPQBAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-11T03:19:48.676Z"
+              "WhenOpened": "2025-12-09T14:47:06.419Z"
             }
           ]
         }

@@ -124,8 +124,24 @@
 
         <!-- Staff MOCK data -->
         <section id="staff-tab" class="tab-content">
-            <div class="data-header">
+            <div class="data-header" style="flex-wrap: wrap; gap: 12px;">
                 <h2>Staff MOCK data (@(ViewBag.Staff?.Count ?? 0) records)</h2>
+                <div style="margin-left: auto;">
+                    <form asp-action="AddStaff" method="post" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: end; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <input type="text" name="EmployeeId" placeholder="Employee ID" required />
+                        <input type="text" name="FullName" placeholder="Full Name" required />
+                        <input type="text" name="Department" placeholder="Department" />
+                        <input type="text" name="Position" placeholder="Position" />
+                        <input type="email" name="Email" placeholder="Email" />
+                        <input type="text" name="ContactNumber" placeholder="Contact Number" />
+                        <input type="text" name="EmploymentType" placeholder="Employment Type" />
+                        <input type="date" name="HireDate" placeholder="Hire Date" />
+                        <label style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
+                            <input type="checkbox" name="IsActive" value="true" checked /> Active
+                        </label>
+                        <button type="submit" class="seed-btn" style="height: 38px;">Add Staff</button>
+                    </form>
+                </div>
             </div>
             
             <div class="data-list">

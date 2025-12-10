@@ -89,6 +89,7 @@ builder.Services.AddSingleton<AdminUserSeeder>();
 builder.Services.AddSingleton<IEnrollmentSystemService, EnrollmentSystemService>();
 // MOCK data service removed - now using enrollment system integration
 // builder.Services.AddSingleton<IMOCKDataService, MOCKDataService>();
+builder.Services.AddSingleton<IMOCKDataService, MOCKDataService>();
 
 // Register Cloudinary (for book image storage)
 var cloudName = builder.Configuration["Cloudinary:CloudName"];

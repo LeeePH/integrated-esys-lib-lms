@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "p1XxBmgRZChSTbMIFjXqHCjJBKrFDjbIjTrK3Pxedj0=",
+  "Hash": "QQnJwK38vQOTIBxHWRYsOmGmaYvEqSJQFVLTlV3MVA4=",
   "Source": "SystemLibrary",
   "BasePath": "_content/SystemLibrary",
   "Mode": "Default",
@@ -120,6 +120,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\backups\\library_backup_20251021_120338.json"
+    },
+    {
+      "Identity": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251210_022213.json",
+      "SourceId": "SystemLibrary",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\",
+      "BasePath": "_content/SystemLibrary",
+      "RelativePath": "backups/library_backup_20251210_022213#[.{fingerprint}]?.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y9uebsxh65",
+      "Integrity": "OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\backups\\library_backup_20251210_022213.json"
     },
     {
       "Identity": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\css\\activity.css",
@@ -4251,6 +4272,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-pOXKiSsM4q3rMprjfSXJe1+JVZcam8+B1tlN4wP1/UQ="
+        }
+      ]
+    },
+    {
+      "Route": "backups/library_backup_20251210_022213.json",
+      "AssetFile": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251210_022213.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1037892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 10 Dec 2025 02:22:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s="
+        }
+      ]
+    },
+    {
+      "Route": "backups/library_backup_20251210_022213.y9uebsxh65.json",
+      "AssetFile": "C:\\Users\\Lee\\Desktop\\integrated esys-lib-lms\\Library System\\wwwroot\\backups\\library_backup_20251210_022213.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1037892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 10 Dec 2025 02:22:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y9uebsxh65"
+        },
+        {
+          "Name": "label",
+          "Value": "backups/library_backup_20251210_022213.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s="
         }
       ]
     },

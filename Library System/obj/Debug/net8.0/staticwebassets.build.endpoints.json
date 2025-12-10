@@ -331,6 +331,88 @@
       ]
     },
     {
+      "Route": "backups/library_backup_20251210_022213.json",
+      "AssetFile": "backups/library_backup_20251210_022213.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1037892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 10 Dec 2025 02:22:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s="
+        }
+      ]
+    },
+    {
+      "Route": "backups/library_backup_20251210_022213.y9uebsxh65.json",
+      "AssetFile": "backups/library_backup_20251210_022213.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1037892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 10 Dec 2025 02:22:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y9uebsxh65"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OkQkAzeyv43ajm/N/q7K3Wrk7NwpvgWcedqwB2jjO8s="
+        },
+        {
+          "Name": "label",
+          "Value": "backups/library_backup_20251210_022213.json"
+        }
+      ]
+    },
+    {
       "Route": "css/Admin/BookCondition.14de2fdy5b.css",
       "AssetFile": "css/Admin/BookCondition.css",
       "Selectors": [],

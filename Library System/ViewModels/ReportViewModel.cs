@@ -5,7 +5,9 @@ namespace SystemLibrary.ViewModels
 {
     public class ReportViewModel
     {
-        public string TimeRange { get; set; } = "Last30Days";
+        public string TimeRange { get; set; } = "ThisMonth";
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
         public BorrowingTrendReport BorrowingTrend { get; set; } = new BorrowingTrendReport();
         public List<OverdueAccountReport> OverdueAccounts { get; set; } = new List<OverdueAccountReport>();
         public InventoryStatusReport InventoryStatus { get; set; } = new InventoryStatusReport();

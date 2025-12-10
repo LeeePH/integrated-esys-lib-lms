@@ -277,6 +277,182 @@ namespace SystemLibrary.Services
             }
         }
 
+        public async Task<object> GetDetailedOverdueDataAsync(string type, int daysRange = 30)
+        {
+            var today = DateTime.UtcNow;
+            var startDate = today.AddDays(-daysRange);
+
+            // Get all overdue reservations
+            var overdueReservations = await _reservations
+                .Find(r => r.Status == "Borrowed" &&
+                           r.DueDate != null &&
+                           r.DueDate < today)
+                .ToListAsync();
+
+            // Get all overdue penalty records
+            var overduePenalties = await _penalties
+                .Find(p => p.PenaltyType == "Overdue")
+                .ToListAsync();
+
+            // Group overdue reservations by user
+            var overdueByUser = overdueReservations
+                .GroupBy(r => r.UserId)
+                .ToList();
+
+            switch (type.ToLower())
+            {
+                case "overdueaccounts":
+                    var accountDetails = new List<object>();
+                    foreach (var userGroup in overdueByUser)
+                    {
+                        var userId = userGroup.Key;
+                        var userObjectId = ObjectId.Parse(userId);
+                        var user = await _users.Find(u => u._id == userObjectId).FirstOrDefaultAsync();
+                        if (user == null) continue;
+
+                        var studentProfile = await _database.GetCollection<StudentProfile>("StudentProfiles")
+                            .Find(sp => sp.UserId == userObjectId)
+                            .FirstOrDefaultAsync();
+
+                        decimal userTotalFees = 0;
+                        int maxDaysOverdue = 0;
+                        int overdueBookCount = 0;
+
+                        foreach (var reservation in userGroup)
+                        {
+                            if (reservation.DueDate.HasValue)
+                            {
+                                var daysOverdue = (today - reservation.DueDate.Value).Days;
+                                var lateFee = daysOverdue * 10m;
+                                userTotalFees += lateFee;
+                                if (daysOverdue > maxDaysOverdue)
+                                    maxDaysOverdue = daysOverdue;
+                                overdueBookCount++;
+                            }
+                        }
+
+                        var userPenaltyRecords = overduePenalties.Where(p => p.UserId.ToString() == userId).ToList();
+                        foreach (var pen in userPenaltyRecords)
+                        {
+                            userTotalFees += pen.Amount;
+                            if ((today - pen.CreatedDate).Days > maxDaysOverdue)
+                                maxDaysOverdue = (today - pen.CreatedDate).Days;
+                            overdueBookCount++;
+                        }
+
+                        bool isRestricted = user.IsRestricted || (studentProfile?.IsFlagged ?? false);
+
+                        accountDetails.Add(new
+                        {
+                            StudentName = user.FullName ?? "Unknown",
+                            StudentNumber = studentProfile?.StudentNumber ?? "N/A",
+                            OverdueBookCount = overdueBookCount,
+                            MaxDaysOverdue = maxDaysOverdue,
+                            TotalFees = userTotalFees,
+                            IsRestricted = isRestricted
+                        });
+                    }
+
+                    // Sort by date descending (newest first)
+                    accountDetails = accountDetails.OrderByDescending(a => 
+                    {
+                        var maxDays = (int)(a.GetType().GetProperty("MaxDaysOverdue")?.GetValue(a) ?? 0);
+                        return maxDays > 0 ? new DateTime(today.Year, today.Month, today.Day).AddDays(-maxDays) : DateTime.MinValue;
+                    }).ToList();
+
+                    return new { type = "Overdue Accounts", data = accountDetails };
+
+                case "overduebooks":
+                    var bookDetails = new List<object>();
+                    foreach (var reservation in overdueReservations.OrderByDescending(r => r.DueDate ?? DateTime.MinValue))
+                    {
+                        if (!reservation.DueDate.HasValue) continue;
+
+                        var bookObjectId = ObjectId.Parse(reservation.BookId);
+                        var book = await _books.Find(b => b._id == bookObjectId).FirstOrDefaultAsync();
+                        var userObjectId = ObjectId.Parse(reservation.UserId);
+                        var user = await _users.Find(u => u._id == userObjectId).FirstOrDefaultAsync();
+                        var studentProfile = await _database.GetCollection<StudentProfile>("StudentProfiles")
+                            .Find(sp => sp.UserId == userObjectId)
+                            .FirstOrDefaultAsync();
+
+                        var daysOverdue = (today - reservation.DueDate.Value).Days;
+                        var lateFee = daysOverdue * 10m;
+
+                        bookDetails.Add(new
+                        {
+                            BookTitle = book?.Title ?? reservation.BookTitle ?? "N/A",
+                            BookAuthor = book?.Author ?? "N/A",
+                            StudentName = user?.FullName ?? "Unknown",
+                            StudentNumber = studentProfile?.StudentNumber ?? "N/A",
+                            DueDate = reservation.DueDate.Value.ToString("MMM dd, yyyy"),
+                            DaysOverdue = daysOverdue,
+                            LateFee = lateFee,
+                            CopyIdentifier = reservation.CopyIdentifier ?? "N/A"
+                        });
+                    }
+
+                    return new { type = "Overdue Books", data = bookDetails };
+
+                case "totalfees":
+                    var feeDetails = new List<object>();
+                    foreach (var userGroup in overdueByUser)
+                    {
+                        var userId = userGroup.Key;
+                        var userObjectId = ObjectId.Parse(userId);
+                        var user = await _users.Find(u => u._id == userObjectId).FirstOrDefaultAsync();
+                        if (user == null) continue;
+
+                        var studentProfile = await _database.GetCollection<StudentProfile>("StudentProfiles")
+                            .Find(sp => sp.UserId == userObjectId)
+                            .FirstOrDefaultAsync();
+
+                        decimal userTotalFees = 0;
+                        int overdueBookCount = 0;
+
+                        foreach (var reservation in userGroup)
+                        {
+                            if (reservation.DueDate.HasValue)
+                            {
+                                var daysOverdue = (today - reservation.DueDate.Value).Days;
+                                var lateFee = daysOverdue * 10m;
+                                userTotalFees += lateFee;
+                                overdueBookCount++;
+                            }
+                        }
+
+                        var userPenaltyRecords = overduePenalties.Where(p => p.UserId.ToString() == userId).ToList();
+                        foreach (var pen in userPenaltyRecords)
+                        {
+                            userTotalFees += pen.Amount;
+                            overdueBookCount++;
+                        }
+
+                        bool isRestricted = user.IsRestricted || (studentProfile?.IsFlagged ?? false);
+
+                        feeDetails.Add(new
+                        {
+                            StudentName = user.FullName ?? "Unknown",
+                            StudentNumber = studentProfile?.StudentNumber ?? "N/A",
+                            OverdueBookCount = overdueBookCount,
+                            TotalFees = userTotalFees,
+                            IsRestricted = isRestricted
+                        });
+                    }
+
+                    // Sort by total fees descending (highest first)
+                    feeDetails = feeDetails.OrderByDescending(f => 
+                    {
+                        return (decimal)(f.GetType().GetProperty("TotalFees")?.GetValue(f) ?? 0m);
+                    }).ToList();
+
+                    return new { type = "Total Fees", data = feeDetails };
+
+                default:
+                    return new { type = "Unknown", data = new List<object>() };
+            }
+        }
+
         private List<MonthlyBorrowingData> FillMissingMonths(List<MonthlyBorrowingData> data, int monthCount)
         {
             var result = new List<MonthlyBorrowingData>();
@@ -517,31 +693,37 @@ namespace SystemLibrary.Services
                 DaysRange = daysRange
             };
         }
-        public async Task<ReportViewModel> GetCompleteReportAsync(string timeRange)
+        public async Task<ReportViewModel> GetCompleteReportAsync(string timeRange, DateTime? from = null, DateTime? to = null)
         {
+            var start = from ?? GetDateFilter(timeRange);
+            var end = to ?? DateTime.UtcNow;
+
             var viewModel = new ReportViewModel
             {
                 TimeRange = timeRange,
-                BorrowingTrend = await GetBorrowingTrendAsync(timeRange),
-                OverdueAccounts = await GetOverdueAccountsAsync(),
+                FromDate = start,
+                ToDate = end,
+                BorrowingTrend = await GetBorrowingTrendAsync(timeRange, start, end),
+                OverdueAccounts = await GetOverdueAccountsAsync(start, end),
                 InventoryStatus = await GetInventoryStatusAsync(),
-                StudentActivity = await GetStudentActivityAsync(timeRange)
+                StudentActivity = await GetStudentActivityAsync(timeRange, start, end)
             };
 
             return viewModel;
         }
 
-        public async Task<BorrowingTrendReport> GetBorrowingTrendAsync(string timeRange)
+        public async Task<BorrowingTrendReport> GetBorrowingTrendAsync(string timeRange, DateTime? from = null, DateTime? to = null)
         {
-            var startDate = GetDateFilter(timeRange);
+            var startDate = from ?? GetDateFilter(timeRange);
+            var endDate = to ?? DateTime.UtcNow;
 
             var borrowedReservations = await _reservations
-                .Find(r => r.Status == "Approved" && r.ApprovalDate != null && r.ApprovalDate >= startDate)
+                .Find(r => r.Status == "Approved" && r.ApprovalDate != null && r.ApprovalDate >= startDate && r.ApprovalDate <= endDate)
                 .ToListAsync();
 
             // Get all return transactions (includes Good, Damaged-*, Lost conditions)
             var returnedBooks = await _returns
-                .Find(r => r.CreatedAt >= startDate)
+                .Find(r => r.CreatedAt >= startDate && r.CreatedAt <= endDate)
                 .ToListAsync();
 
             var currentlyBorrowed = await _reservations
@@ -550,7 +732,7 @@ namespace SystemLibrary.Services
             var monthlyData = new List<MonthlyTrendData>(); // CHANGED
             var currentDate = startDate;
 
-            while (currentDate <= DateTime.UtcNow)
+            while (currentDate <= endDate)
             {
                 var monthStart = new DateTime(currentDate.Year, currentDate.Month, 1);
                 var monthEnd = monthStart.AddMonths(1);
@@ -584,11 +766,14 @@ namespace SystemLibrary.Services
             };
         }
 
-        public async Task<List<OverdueAccountReport>> GetOverdueAccountsAsync()
+        public async Task<List<OverdueAccountReport>> GetOverdueAccountsAsync(DateTime? from = null, DateTime? to = null)
         {
+            var start = from ?? DateTime.MinValue;
+            var end = to ?? DateTime.UtcNow;
+
             // Only "Borrowed" status can be overdue since DueDate is set when book is picked up
             var overdueReservations = await _reservations
-                .Find(r => r.Status == "Borrowed" && r.DueDate != null && r.DueDate < DateTime.UtcNow)
+                .Find(r => r.Status == "Borrowed" && r.DueDate != null && r.DueDate < DateTime.UtcNow && r.DueDate >= start && r.DueDate <= end)
                 .ToListAsync();
 
             var overduePenalties = await _penalties
@@ -942,9 +1127,10 @@ namespace SystemLibrary.Services
         }
 
 
-        public async Task<List<StudentActivityReport>> GetStudentActivityAsync(string timeRange)
+        public async Task<List<StudentActivityReport>> GetStudentActivityAsync(string timeRange, DateTime? from = null, DateTime? to = null)
         {
-            var startDate = GetDateFilter(timeRange);
+            var startDate = from ?? GetDateFilter(timeRange);
+            var endDate = to ?? DateTime.UtcNow;
             var students = await _users.Find(u => u.Role == "student").ToListAsync();
             var studentActivity = new List<StudentActivityReport>();
             
@@ -961,7 +1147,7 @@ namespace SystemLibrary.Services
                 // Count borrowings that were actually borrowed within the time range
                 // Only count books that have been marked as borrowed (status is not "Approved" or "Pending")
                 var borrowingsInRange = allReservations
-                    .Where(r => r.ApprovalDate.HasValue && r.ApprovalDate.Value >= startDate && 
+                    .Where(r => r.ApprovalDate.HasValue && r.ApprovalDate.Value >= startDate && r.ApprovalDate.Value <= endDate &&
                                r.Status != "Approved" && r.Status != "Pending" && r.Status != "Rejected")
                     .ToList();
 
@@ -974,7 +1160,7 @@ namespace SystemLibrary.Services
                 // Returns within the selected time range - use ObjectId to match ReturnTransaction.UserId
                 var userObjectId = student._id;
                 var returnsInRange = await _returns
-                    .Find(r => r.UserId == userObjectId && r.CreatedAt >= startDate)
+                    .Find(r => r.UserId == userObjectId && r.CreatedAt >= startDate && r.CreatedAt <= endDate)
                     .ToListAsync();
 
                 // Also get ALL returns for this user to debug
@@ -1055,9 +1241,13 @@ namespace SystemLibrary.Services
             return timeRange switch
             {
                 "Last30Days" => DateTime.UtcNow.AddDays(-30),
+                "Last60Days" => DateTime.UtcNow.AddDays(-60),
                 "Last90Days" => DateTime.UtcNow.AddDays(-90),
                 "LastYear" => DateTime.UtcNow.AddYears(-1),
-                _ => DateTime.UtcNow.AddDays(-30)
+                "ThisMonth" => new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1),
+                "LastMonth" => new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1).AddMonths(-1),
+                "YearToDate" => new DateTime(DateTime.UtcNow.Year, 1, 1),
+                _ => new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1)
             };
         }
     }

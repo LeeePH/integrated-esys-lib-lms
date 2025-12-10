@@ -52,6 +52,13 @@
             <div class="detailed-data-header">
                 <h3 id="detailedDataTitle">Detailed Data</h3>
                 <div class="header-actions">
+                    <div class="filter-row borrowing-filter" id="borrowMonthControls" style="display:none; align-items:center; gap:8px; flex-wrap:wrap; margin-right:12px;">
+                        <strong>Filter by month:</strong>
+                        <input type="month" id="borrowMonthFrom" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                        <input type="month" id="borrowMonthTo" class="form-control" style="width:auto; padding:6px 8px; height:auto;">
+                        <button id="btnFilterBorrowing" class="btn btn-outline-primary btn-sm"><i class="fas fa-filter"></i> Filter</button>
+                        <button id="btnResetBorrowing" class="btn btn-outline-secondary btn-sm">Reset</button>
+                    </div>
                     <button id="exportPdfBtn" class="export-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -230,11 +237,27 @@
                 const modalDataTable = document.getElementById('modalDataTable');
                 const closeModal = document.getElementById('closeModal');
 
+                const monthFrom = document.getElementById('borrowMonthFrom');
+                const monthTo = document.getElementById('borrowMonthTo');
+                const filterBtn = document.getElementById('btnFilterBorrowing');
+                const resetBtn = document.getElementById('btnResetBorrowing');
+
                 statCards.forEach(card => {
                     card.addEventListener('click', function() {
                         const dataType = this.getAttribute('data-type');
+                        document.getElementById('borrowMonthControls').style.display = 'flex';
                         loadDetailedData(dataType);
                     });
+                });
+
+                filterBtn.addEventListener('click', function() {
+                    applyBorrowMonthFilter();
+                });
+
+                resetBtn.addEventListener('click', function() {
+                    monthFrom.value = '';
+                    monthTo.value = '';
+                    renderFilteredData();
                 });
 
                 closeDetailedData.addEventListener('click', function() {
@@ -306,7 +329,19 @@
 
                     table += '<tbody>';
 
-                    items.forEach(item => {
+                    const filteredItems = applyBorrowMonthFilter(true, items, type).sort((a, b) => {
+                        const getDate = (item) => {
+                            if (type === 'totalborrowing') return item.borrowDate || item.dueDate;
+                            if (type === 'totalreturns') return item.returnDate;
+                            if (type === 'currentlyborrowed') return item.dueDate || item.borrowDate;
+                            return null;
+                        };
+                        const ad = Date.parse(getDate(a) || 0);
+                        const bd = Date.parse(getDate(b) || 0);
+                        return isNaN(bd) ? -1 : isNaN(ad) ? 1 : bd - ad; // latest on top
+                    });
+
+                    filteredItems.forEach(item => {
                         table += '<tr>';
                         if (type === 'totalborrowing') {
                             table += `<td>${item.studentName || 'N/A'}</td>`;
@@ -342,6 +377,45 @@
 
                     table += '</tbody></table>';
                     return table;
+                }
+
+                function applyBorrowMonthFilter(returnListOnly = false, overrideItems = null, typeOverride = null) {
+                    const fromVal = monthFrom.value;
+                    const toVal = monthTo.value;
+                    const items = overrideItems || currentDataItems;
+                    const type = typeOverride || currentDataType;
+
+                    if (!items || items.length === 0) return returnListOnly ? items : detailedDataTable.innerHTML = createTable(items, type);
+
+                    const fromDate = fromVal ? new Date(fromVal + '-01') : null;
+                    const toDate = toVal ? new Date(toVal + '-01') : null;
+                    if (toDate) { toDate.setMonth(toDate.getMonth() + 1); toDate.setDate(0); }
+
+                    const getDateForItem = (item) => {
+                        if (type === 'totalborrowing') return item.borrowDate || item.dueDate;
+                        if (type === 'totalreturns') return item.returnDate;
+                        if (type === 'currentlyborrowed') return item.dueDate || item.borrowDate;
+                        return null;
+                    };
+
+                    const filtered = items.filter(i => {
+                        const dateString = getDateForItem(i);
+                        if (!dateString) return !fromDate && !toDate;
+                        const parsed = Date.parse(dateString);
+                        if (isNaN(parsed)) return !fromDate && !toDate;
+                        const d = new Date(parsed);
+                        if (fromDate && d < fromDate) return false;
+                        if (toDate && d > toDate) return false;
+                        return true;
+                    });
+
+                    if (returnListOnly) return filtered;
+                    detailedDataTable.innerHTML = createTable(filtered, type);
+                }
+
+                function renderFilteredData() {
+                    if (!currentDataItems || !currentDataType) return;
+                    detailedDataTable.innerHTML = createTable(applyBorrowMonthFilter(true), currentDataType);
                 }
 
                 function exportToPDF() {

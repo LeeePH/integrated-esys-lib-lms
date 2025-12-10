@@ -76,7 +76,138 @@
     .close-btn:hover {
         color: #333;
     }
-</style>
+    /* Inventory detailed filters styling - FIXED */
+    .detailed-filters {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        background: #f4f8ff;
+        border: 1px solid #e6eefc;
+        padding: 8px 12px;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(34,41,47,0.04);
+    }
+
+    .filter-label {
+        font-weight: 600;
+        color: #1f3a93;
+        font-size: 13px;
+        white-space: nowrap;
+        min-width: 80px; /* Fixed width for consistent alignment */
+    }
+
+    .filter-month {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #d0d7ee;
+        background: #fff;
+        min-width: 150px;
+        font-size: 13px;
+        height: 32px; /* Fixed height for consistency */
+    }
+
+    /* Separator between date inputs */
+    .filter-group > span[style*="color"] {
+        color: #667085;
+        font-weight: 500;
+        padding: 0 2px;
+    }
+
+    .filter-action-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+        background: #4285f4;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        height: 32px;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+        .filter-action-btn:hover {
+            background: #3367d6;
+        }
+
+    .filter-reset-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+        background: #eef4ff;
+        color: #1f3a93;
+        border: 1px solid #d0d7ee;
+        cursor: pointer;
+        height: 32px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+        .filter-reset-btn:hover {
+            background: #e0ebff;
+            border-color: #b8cef7;
+        }
+
+    /* Table header alignment to match filters */
+    .detailed-data-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    @@media (max-width: 768px) {
+        .detailed-filters
+
+    {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .filter-group {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .filter-label {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .filter-month {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    }
+
+    @@media (max-width: 640px) {
+        .filter-action-btn, .filter-reset-btn
+
+    {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    }</style>
 
 <main class="content">
     <header>
@@ -175,6 +306,24 @@
             <div class="detailed-data-header">
                 <h3 id="detailedDataTitle">Detailed Data</h3>
                 <div class="header-actions">
+                    <div id="detailedFilters" class="detailed-filters" style="display:none;">
+                        <div id="pubDateFilters" class="filter-group" style="display:none;">
+                            <span class="filter-label">Publication</span>
+                            <input type="month" id="pubFrom" class="filter-month" aria-label="Publication from" />
+                            <span style="color:#667085;">—</span>
+                            <input type="month" id="pubTo" class="filter-month" aria-label="Publication to" />
+                            <button id="btnFilterPubDate" class="filter-action-btn">Filter</button>
+                            <button id="btnResetPubDate" class="filter-reset-btn">Reset</button>
+                        </div>
+                        <div id="resDateFilters" class="filter-group" style="display:none;">
+                            <span class="filter-label">Reservation</span>
+                            <input type="month" id="resFrom" class="filter-month" aria-label="Reservation from" />
+                            <span style="color:#667085;">—</span>
+                            <input type="month" id="resTo" class="filter-month" aria-label="Reservation to" />
+                            <button id="btnFilterResDate" class="filter-action-btn">Filter</button>
+                            <button id="btnResetResDate" class="filter-reset-btn">Reset</button>
+                        </div>
+                    </div>
                     <button id="exportDetailedInventoryBtn" class="export-btn" onclick="exportDetailedInventoryToPDF()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -226,13 +375,34 @@
                     });
                 });
 
+                // Also add event delegation as a fallback (ensures clicks register even if elements change)
+                document.addEventListener('click', function(e) {
+                    const card = e.target.closest && e.target.closest('.clickable-stat');
+                    if (card) {
+                        try {
+                            const dataType = card.getAttribute('data-type');
+                            // show loading UI
+                            const detailedDataTable = document.getElementById('detailedDataTable');
+                            const detailedDataSection = document.getElementById('detailedDataSection');
+                            if (detailedDataTable) detailedDataTable.innerHTML = '<p>Loading...</p>';
+                            if (detailedDataSection) detailedDataSection.style.display = 'block';
+                            console.log('Inventory stat clicked, type=', dataType);
+                            loadDetailedData(dataType);
+                        } catch (err) {
+                            console.error('Error handling stat card click', err);
+                        }
+                    }
+                });
+
                 closeDetailedData.addEventListener('click', function() {
                     detailedDataSection.style.display = 'none';
                 });
 
                 async function loadDetailedData(type) {
                     try {
-                        const response = await fetch(`@Url.Action("GetDetailedInventoryData", "Librarian")?type=${type}&daysRange=@Model.DaysRange`);
+                        const url = `@Url.Action("GetDetailedInventoryData", "Librarian")?type=${type}&daysRange=@Model.DaysRange`;
+                        console.log('loadDetailedData -> fetching', url);
+                        const response = await fetch(url);
                         const result = await response.json();
 
                         if (result.success) {
@@ -256,16 +426,218 @@
                     // Show detailed data section below the table
                     detailedDataTitle.textContent = title;
                     detailedDataTable.innerHTML = createTable(items, type);
+                    // Show appropriate filters for this detailed view
+                    const detailedFilters = document.getElementById('detailedFilters');
+                    const pubDateFilters = document.getElementById('pubDateFilters');
+                    const resDateFilters = document.getElementById('resDateFilters');
+                    if (detailedFilters) detailedFilters.style.display = 'flex';
+                    if (type === 'totalreserved') {
+                        if (pubDateFilters) pubDateFilters.style.display = 'none';
+                        if (resDateFilters) resDateFilters.style.display = 'flex';
+                    } else {
+                        if (pubDateFilters) pubDateFilters.style.display = 'flex';
+                        if (resDateFilters) resDateFilters.style.display = 'none';
+                    }
                     detailedDataSection.style.display = 'block';
 
                     // Scroll to the detailed data section
                     detailedDataSection.scrollIntoView({ behavior: 'smooth' });
+
+                    // Wire filter buttons (safe binding)
+                    const btnFilterPub = document.getElementById('btnFilterPubDate');
+                    if (btnFilterPub) btnFilterPub.addEventListener('click', function() { filterDetailedByPubDate(); });
+                    const btnResetPub = document.getElementById('btnResetPubDate');
+                    if (btnResetPub) btnResetPub.addEventListener('click', function() { resetDetailedPubDate(); });
+                    const btnFilterRes = document.getElementById('btnFilterResDate');
+                    if (btnFilterRes) btnFilterRes.addEventListener('click', function() { filterDetailedByReservationDate(); });
+                    const btnResetRes = document.getElementById('btnResetResDate');
+                    if (btnResetRes) btnResetRes.addEventListener('click', function() { resetDetailedReservationDate(); });
+
+                    // Expose a renderer so filters outside this closure can re-render the table
+                    window.renderDetailedTable = function(items, type) {
+                        detailedDataTable.innerHTML = createTable(items, type);
+                    };
+
+                }
+            });
+
+            // Helper to render detailed table (uses currentDetailedItems/currentDetailedType)
+            function renderDetailedTable(items, type) {
+                const container = document.getElementById('detailedDataTable');
+                if (!container) return;
+                if (!items || items.length === 0) {
+                    container.innerHTML = '<p>No data available for the selected period.</p>';
+                    return;
                 }
 
+                // Sort items by date descending (newest first)
+                const sortedItems = [...items].sort((a, b) => {
+                    let aDate = null, bDate = null;
+                    if (type === 'totalreserved') {
+                        aDate = Date.parse(a.reservationDate || 0);
+                        bDate = Date.parse(b.reservationDate || 0);
+                    } else {
+                        // For books, sort by publication date
+                        aDate = Date.parse(a.publicationDate || a.pubDate || 0);
+                        bDate = Date.parse(b.publicationDate || b.pubDate || 0);
+                    }
+                    if (!aDate || isNaN(aDate)) return 1;
+                    if (!bDate || isNaN(bDate)) return -1;
+                    return bDate - aDate; // newest first
+                });
+
+                let table = '<table class="table table-striped table-hover">';
+                if (type === 'totalbooks') {
+                    table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Total Copies</th><th>Available</th><th>Borrowed</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                } else if (type === 'totalavailable') {
+                    table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Available Copies</th><th>Total Copies</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                } else if (type === 'totalborrowed') {
+                    table += '<thead><tr><th>Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Borrowed Copies</th><th>Total Copies</th><th>Available</th><th>Publisher</th><th>Publication Date</th><th>Classification No</th></tr></thead>';
+                } else if (type === 'totalreserved') {
+                    table += '<thead><tr><th>Student Name</th><th>Student Number</th><th>Book Title</th><th>Author</th><th>Subject</th><th>ISBN</th><th>Reservation Date</th><th>Status</th><th>Copy ID</th></tr></thead>';
+                }
+
+                table += '<tbody>';
+                sortedItems.forEach(item => {
+                    table += '<tr>';
+                    if (type === 'totalbooks') {
+                        table += `<td>${item.title || 'N/A'}</td>`;
+                        table += `<td>${item.author || 'N/A'}</td>`;
+                        table += `<td>${item.subject || 'N/A'}</td>`;
+                        table += `<td>${item.isbn || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                        table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                        table += `<td><span class="badge badge-warning">${item.borrowedCopies || 0}</span></td>`;
+                        table += `<td>${item.publisher || 'N/A'}</td>`;
+                        table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                        table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                    } else if (type === 'totalavailable') {
+                        table += `<td>${item.title || 'N/A'}</td>`;
+                        table += `<td>${item.author || 'N/A'}</td>`;
+                        table += `<td>${item.subject || 'N/A'}</td>`;
+                        table += `<td>${item.isbn || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                        table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                        table += `<td>${item.publisher || 'N/A'}</td>`;
+                        table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                        table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                    } else if (type === 'totalborrowed') {
+                        table += `<td>${item.title || 'N/A'}</td>`;
+                        table += `<td>${item.author || 'N/A'}</td>`;
+                        table += `<td>${item.subject || 'N/A'}</td>`;
+                        table += `<td>${item.isbn || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-warning">${item.borrowedCopies || 0}</span></td>`;
+                        table += `<td><span class="badge badge-info">${item.totalCopies || 0}</span></td>`;
+                        table += `<td><span class="badge badge-success">${item.availableCopies || 0}</span></td>`;
+                        table += `<td>${item.publisher || 'N/A'}</td>`;
+                        table += `<td>${item.publicationDate || 'N/A'}</td>`;
+                        table += `<td>${item.classificationNo || 'N/A'}</td>`;
+                    } else if (type === 'totalreserved') {
+                        table += `<td>${item.studentName || 'N/A'}</td>`;
+                        table += `<td>${item.studentNumber || 'N/A'}</td>`;
+                        table += `<td>${item.bookTitle || 'N/A'}</td>`;
+                        table += `<td>${item.bookAuthor || 'N/A'}</td>`;
+                        table += `<td>${item.subject || 'N/A'}</td>`;
+                        table += `<td>${item.isbn || 'N/A'}</td>`;
+                        table += `<td>${item.reservationDate || 'N/A'}</td>`;
+                        table += `<td><span class="badge badge-info">${item.status || 'N/A'}</span></td>`;
+                        table += `<td>${item.copyIdentifier || 'N/A'}</td>`;
+                    }
+                    table += '</tr>';
+                });
+                table += '</tbody></table>';
+                container.innerHTML = table;
+            }
+
+            // Filtering helpers
+            function parseMonthInputToRange(monthValue) {
+                if (!monthValue) return null;
+                const d = new Date(monthValue + '-01');
+                if (isNaN(d)) return null;
+                const start = new Date(d.getFullYear(), d.getMonth(), 1);
+                const end = new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+                return { start, end };
+            }
+
+            function filterDetailedByPubDate() {
+                if (!currentDetailedItems || currentDetailedItems.length === 0) return;
+                const from = document.getElementById('pubFrom').value;
+                const to = document.getElementById('pubTo').value;
+                const fromRange = parseMonthInputToRange(from);
+                const toRange = parseMonthInputToRange(to);
+
+                const filtered = currentDetailedItems.filter(item => {
+                    const raw = item.publicationDate || item.pubDate || item.publicationDateString;
+                    if (!raw) return false;
+                    const d = new Date(raw);
+                    if (isNaN(d)) return false;
+                    if (fromRange && d < fromRange.start) return false;
+                    if (toRange && d > toRange.end) return false;
+                    return true;
+                });
+
+                renderDetailedTable(filtered, currentDetailedType);
+            }
+
+            function resetDetailedPubDate() {
+                document.getElementById('pubFrom').value = '';
+                document.getElementById('pubTo').value = '';
+                renderDetailedTable(currentDetailedItems, currentDetailedType);
+            }
+
+            function filterDetailedByReservationDate() {
+                if (!currentDetailedItems || currentDetailedItems.length === 0) return;
+                const from = document.getElementById('resFrom').value;
+                const to = document.getElementById('resTo').value;
+                const fromRange = parseMonthInputToRange(from);
+                const toRange = parseMonthInputToRange(to);
+
+                const filtered = currentDetailedItems.filter(item => {
+                    const raw = item.reservationDate || item.resDate || item.reservationDateString;
+                    if (!raw) return false;
+                    const d = new Date(raw);
+                    if (isNaN(d)) return false;
+                    if (fromRange && d < fromRange.start) return false;
+                    if (toRange && d > toRange.end) return false;
+                    return true;
+                });
+
+                renderDetailedTable(filtered, currentDetailedType);
+            }
+
+            function resetDetailedReservationDate() {
+                document.getElementById('resFrom').value = '';
+                document.getElementById('resTo').value = '';
+                renderDetailedTable(currentDetailedItems, currentDetailedType);
+            }
+
+            // Expose filter helpers on window as a fallback
+            if (typeof window !== 'undefined') {
+                window.filterDetailedByPubDate = filterDetailedByPubDate;
+                window.resetDetailedPubDate = resetDetailedPubDate;
+                window.filterDetailedByReservationDate = filterDetailedByReservationDate;
+                window.resetDetailedReservationDate = resetDetailedReservationDate;
+            }
                 function createTable(items, type) {
                     if (!items || items.length === 0) {
                         return '<p>No data available for the selected period.</p>';
                     }
+
+                    // Sort items by date descending (newest first)
+                    const sortedItems = [...items].sort((a, b) => {
+                        let aDate = null, bDate = null;
+                        if (type === 'totalreserved') {
+                            aDate = Date.parse(a.reservationDate || 0);
+                            bDate = Date.parse(b.reservationDate || 0);
+                        } else {
+                            // For books, sort by publication date
+                            aDate = Date.parse(a.publicationDate || a.pubDate || 0);
+                            bDate = Date.parse(b.publicationDate || b.pubDate || 0);
+                        }
+                        if (!aDate || isNaN(aDate)) return 1;
+                        if (!bDate || isNaN(bDate)) return -1;
+                        return bDate - aDate; // newest first
+                    });
 
                     let table = '<table class="table table-striped table-hover">';
 
@@ -282,7 +654,7 @@
 
                     table += '<tbody>';
 
-                    items.forEach(item => {
+                    sortedItems.forEach(item => {
                         table += '<tr>';
                         if (type === 'totalbooks') {
                             table += `<td>${item.title || 'N/A'}</td>`;
@@ -332,10 +704,9 @@
 
                     table += '</tbody></table>';
                     return table;
-                }
-            });
+                    }
 
-            // PDF Export Functions
+                // PDF Export Functions
             function exportMainInventoryToPDF() {
                 const exportBtn = document.getElementById('exportMainInventoryBtn');
                 exportBtn.disabled = true;

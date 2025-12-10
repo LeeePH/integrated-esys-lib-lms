@@ -1036,11 +1036,11 @@ namespace SystemLibrary.Controllers
             }
         }
 
-        public async Task<IActionResult> Reports(string timeRange = "Last30Days")
+        public async Task<IActionResult> Reports(string timeRange = "ThisMonth", DateTime? from = null, DateTime? to = null)
         {
             ViewBag.Role = "Librarian";
 
-            var viewModel = await _reportService.GetCompleteReportAsync(timeRange);
+            var viewModel = await _reportService.GetCompleteReportAsync(timeRange, from, to);
             return View(viewModel);
         }
 

@@ -1,0 +1,141 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = StudentPortal
+build_property.RootNamespace = StudentPortal
+build_property.ProjectDir = C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Lee\Desktop\integrated esys-lib-lms\StudentPortal\StudentPortal
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminAssessmentList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkFzc2Vzc21lbnRMaXN0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminAssessment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkFzc2Vzc21lbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminCheckAssessment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkNoZWNrQXNzZXNzbWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminClass/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkNsYXNzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminCreateAssessment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkNyZWF0ZUFzc2Vzc21lbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminDb/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbkRiXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminManageClass/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbk1hbmFnZUNsYXNzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminManageGrades/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbk1hbmFnZUdyYWRlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminMaterial/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pbk1hdGVyaWFsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminSubject/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pblN1YmplY3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/AdminDb/AdminTask/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYlxBZG1pblRhc2tcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Library/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGlicmFyeVxTZWFyY2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/ProfessorDb/ProfessorDb/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmVzc29yRGJcUHJvZmVzc29yRGJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Shared/_AdminBottomBar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkJvdHRvbUJhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Shared/_StudentBottomBar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TdHVkZW50Qm90dG9tQmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Shared/_StudentLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TdHVkZW50TGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentAnswerAssessment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRBbnN3ZXJBc3Nlc3NtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentAssessment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRBc3Nlc3NtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentClass/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRDbGFzc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentDb/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnREYlxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentMaterial/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRNYXRlcmlhbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentTask/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRUYXNrXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/StudentDb/StudentTodo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudERiXFN0dWRlbnRUb2RvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lee/Desktop/integrated esys-lib-lms/StudentPortal/StudentPortal/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

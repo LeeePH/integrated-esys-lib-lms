@@ -44,6 +44,7 @@ namespace SystemLibrary.Controllers
         private readonly IEnrollmentSystemService _enrollmentSystemService;
         private readonly Cloudinary _cloudinary;
         private readonly IMongoDbService _mongoDbService;
+        private readonly IMOCKDataService _mockDataService;
 
 
         public AdminController(
@@ -67,7 +68,8 @@ namespace SystemLibrary.Controllers
             IBookImportService bookImportService,
             IEnrollmentSystemService enrollmentSystemService,
             Cloudinary cloudinary,
-            IMongoDbService mongoDbService)
+            IMongoDbService mongoDbService,
+            IMOCKDataService mockDataService)
         {
             _reservationService = reservationService;
             _bookService = bookService;
@@ -86,11 +88,11 @@ namespace SystemLibrary.Controllers
             _unrestrictRequestService = unrestrictRequestService;
             _notificationService = notificationService;
             _emailService = emailService;
-            // _MOCKDataService = MOCKDataService; // Removed
 			_bookImportService = bookImportService;
             _enrollmentSystemService = enrollmentSystemService;
             _cloudinary = cloudinary;
             _mongoDbService = mongoDbService;
+            _mockDataService = mockDataService;
 
 
 
@@ -407,6 +409,20 @@ namespace SystemLibrary.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetDetailedOverdueData(string type, int daysRange = 30)
+        {
+            try
+            {
+                var detailedData = await _reportService.GetDetailedOverdueDataAsync(type, daysRange);
+                return Json(new { success = true, data = detailedData });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpGet]
         public async Task<IActionResult> UserSettings()
         {
             ViewBag.Role = "Admin";
@@ -666,21 +682,128 @@ namespace SystemLibrary.Controllers
         [HttpGet]
         public async Task<IActionResult> LookupStaff(string employeeId)
         {
-            // Staff lookup removed - enrollment system only contains student data
-            // Staff accounts should be created manually through the user management interface
-            return Json(new { 
-                success = false, 
-                message = "Staff lookup from enrollment system is not available. Staff accounts should be created manually through the user management interface." 
+            if (string.IsNullOrWhiteSpace(employeeId))
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Employee ID is required for lookup."
+                });
+            }
+
+            // First try MOCK data lookup
+            var staff = await _mockDataService.GetStaffByEmployeeIdAsync(employeeId);
+            if (staff != null)
+            {
+                return Json(new
+                {
+                    success = true,
+                    source = "MOCK",
+                    data = new
+                    {
+                        employeeId = staff.EmployeeId,
+                        fullName = staff.FullName,
+                        department = staff.Department,
+                        position = staff.Position,
+                        email = staff.Email,
+                        contactNumber = staff.ContactNumber,
+                        employmentType = staff.EmploymentType,
+                        hireDate = staff.HireDate,
+                        isActive = staff.IsActive
+                    }
+                });
+            }
+
+            // Enrollment system staff lookup not available
+            return Json(new
+            {
+                success = false,
+                message = "Staff not found in MOCK data. Enrollment system staff lookup is not available; please add staff via MOCK data or manual user management."
             });
         }
 
-        // Create User from MOCK data - REMOVED
-        // Students are now automatically synced from the enrollment system during login
-        // This method is no longer needed as user accounts are created automatically
         [HttpPost]
 		public async Task<IActionResult> CreateUserFromMAC([FromBody] CreateUserFromMOCKViewModel model)
         {
-            return Json(new { success = false, message = "MOCK data integration has been removed. Students are automatically synced from the enrollment system during login. Please use the regular user creation form for staff accounts." });
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Invalid data provided." });
+            }
+
+            // Only staff flow is supported
+            if (!string.Equals(model.UserType, "staff", StringComparison.OrdinalIgnoreCase))
+            {
+                return Json(new { success = false, message = "Only staff creation from MOCK data is supported." });
+            }
+
+            if (string.IsNullOrWhiteSpace(model.EmployeeId))
+            {
+                return Json(new { success = false, message = "Employee ID is required." });
+            }
+
+            // Lookup staff in MOCK data
+            var staff = await _mockDataService.GetStaffByEmployeeIdAsync(model.EmployeeId);
+            if (staff == null)
+            {
+                return Json(new { success = false, message = "Staff not found in MOCK data." });
+            }
+
+            // If staff record has no email, generate a Gmail-like fallback so we can email credentials
+            var emailWasGenerated = false;
+            if (string.IsNullOrWhiteSpace(staff.Email))
+            {
+                var cleanId = (staff.EmployeeId ?? "").Replace(" ", "").ToLowerInvariant();
+                var generated = string.IsNullOrWhiteSpace(cleanId) ? $"staff{DateTime.UtcNow.Ticks}@gmail.com" : $"{cleanId}@gmail.com";
+                staff.Email = generated;
+                emailWasGenerated = true;
+            }
+
+            // Generate a random password
+            var password = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                .Replace("=", string.Empty)
+                .Replace("+", string.Empty)
+                .Replace("/", string.Empty);
+            password = password.Length > 12 ? password.Substring(0, 12) : password + "Xy1!";
+
+            var role = string.IsNullOrWhiteSpace(model.Role) ? "librarian" : model.Role.Trim().ToLowerInvariant();
+
+            var createModel = new CreateUserViewModel
+            {
+                Name = staff.FullName ?? staff.EmployeeId ?? "Staff",
+                Username = staff.EmployeeId?.Trim() ?? string.Empty,
+                Email = staff.Email?.Trim(),
+                Password = password,
+                ConfirmPassword = password,
+                Role = role,
+                Department = staff.Department,
+                Course = staff.Department,
+                ContactNumber = staff.ContactNumber
+            };
+
+            var created = await _userManagementService.AddUserAsync(createModel);
+            if (!created)
+            {
+                return Json(new { success = false, message = "User already exists or could not be created. Check for duplicate username/email." });
+            }
+
+            // Send credentials via email
+            try
+            {
+                var subject = "Your Library Account Credentials";
+                var body = $@"<p>Hello {staff.FullName ?? staff.EmployeeId},</p>
+<p>Your library account has been created.</p>
+<p><strong>Username:</strong> {createModel.Username}<br/>
+<strong>Password:</strong> {password}</p>
+{(emailWasGenerated ? $"<p><em>Note: An email address was generated for you: {createModel.Email}. If this is incorrect, contact your administrator.</em></p>" : string.Empty)}
+<p>Please log in and change your password.</p>";
+                await _emailService.SendEmailAsync(createModel.Email!, subject, body);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, message = $"User created, but failed to send email: {ex.Message}" });
+            }
+
+            return Json(new { success = true, message = "User created from MOCK staff and credentials emailed." });
         }
 
         // Update Password - POST
@@ -1398,11 +1521,11 @@ namespace SystemLibrary.Controllers
             }
         }
 
-        public async Task<IActionResult> Reports(string timeRange = "Last30Days")
+        public async Task<IActionResult> Reports(string timeRange = "ThisMonth", DateTime? from = null, DateTime? to = null)
         {
             ViewBag.Role = "Admin";
 
-            var viewModel = await _reportService.GetCompleteReportAsync(timeRange);
+            var viewModel = await _reportService.GetCompleteReportAsync(timeRange, from, to);
             return View(viewModel);
         }
 

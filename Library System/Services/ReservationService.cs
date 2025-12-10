@@ -187,6 +187,24 @@ namespace SystemLibrary.Services
                     };
                 }
 
+                // Prevent multiple active/ongoing reservations for the same book by the same user
+                // Allow if previous is already Returned, Cancelled, Rejected, or Lost/Damaged/Completed
+                var activeStatuses = new[] { "Pending", "Approved", "Borrowed", "Overdue", "ReturnPending", "RenewalPending" };
+                var existingActive = await _reservations
+                    .Find(r => r.UserId == userId
+                               && r.BookId == bookId
+                               && activeStatuses.Contains(r.Status))
+                    .FirstOrDefaultAsync();
+                if (existingActive != null)
+                {
+                    Console.WriteLine($"❌ [CREATE RESERVATION] User {userId} already has an active/ongoing reservation for book {bookId}");
+                    return new ReservationCreationResult
+                    {
+                        Success = false,
+                        Message = "You already have a reservation or borrowing for this book."
+                    };
+                }
+
                 var now = DateTime.UtcNow;
                 var suspiciousWindowStart = now.AddSeconds(-SuspiciousReservationWindowSeconds);
                 var suspiciousFilter = Builders<Reservation>.Filter.And(
